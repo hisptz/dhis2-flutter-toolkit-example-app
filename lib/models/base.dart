@@ -1,1 +1,1 @@
-class DHIS2Resource {}
+abstract class DHIS2Resource {}
