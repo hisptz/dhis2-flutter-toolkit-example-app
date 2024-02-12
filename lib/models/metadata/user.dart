@@ -18,11 +18,15 @@ class DHIS2User implements DHIS2MetadataResource {
   final organisationUnits = ToMany<OrganisationUnit>();
 
   @override
+  @Unique()
+  String uid;
+
+  @override
   DateTime created;
 
   @override
   DateTime lastUpdated;
 
   DHIS2User(this.id, this.username, this.firstName, this.lastName, this.email,
-      this.created, this.lastUpdated);
+      this.created, this.lastUpdated, this.uid);
 }
