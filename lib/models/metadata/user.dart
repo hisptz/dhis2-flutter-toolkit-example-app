@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2User extends DHIS2MetadataResource {
+class DHIS2User implements DHIS2MetadataResource {
   int id = 0;
 
   String username;
@@ -17,5 +17,12 @@ class DHIS2User extends DHIS2MetadataResource {
   final userGroups = ToMany<DHIS2UserGroup>();
   final organisationUnits = ToMany<OrganisationUnit>();
 
-  DHIS2User(this.username, this.firstName, this.lastName, this.email);
+  @override
+  DateTime created;
+
+  @override
+  DateTime lastUpdated;
+
+  DHIS2User(this.id, this.username, this.firstName, this.lastName, this.email,
+      this.created, this.lastUpdated);
 }

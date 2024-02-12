@@ -14,14 +14,8 @@ class SystemInfo {
   @Index()
   String systemName;
 
-  SystemInfo(
-      {required this.version,
-      required this.dateFormat,
-      required this.revision,
-      required this.calendar,
-      required this.systemId,
-      required this.contextPath,
-      required this.systemName});
+  SystemInfo(this.id, this.version, this.revision, this.calendar,
+      this.dateFormat, this.contextPath, this.systemId, this.systemName);
 
   SystemInfo.fromMap(Map json)
       : calendar = json["calendar"],
