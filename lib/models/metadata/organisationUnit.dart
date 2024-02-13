@@ -19,4 +19,13 @@ class OrganisationUnit implements DHIS2MetadataResource {
 
   OrganisationUnit(this.id, this.name, this.shortName, this.uid, this.path,
       this.level, this.created, this.lastUpdated);
+
+  OrganisationUnit.fromMap(Map json)
+      : name = json["name"],
+        shortName = json["shortName"],
+        uid = json["id"],
+        path = json["path"],
+        level = json["level"],
+        created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]);
 }
