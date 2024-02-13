@@ -21,4 +21,12 @@ class DHIS2Attribute implements DHIS2MetadataResource {
 
   DHIS2Attribute(this.created, this.lastUpdated, this.uid, this.name,
       this.valueType, this.objectTypes, this.mandatory, this.unique);
+
+  DHIS2Attribute.fromMap(Map json)
+      : created = DateTime(json["created"]),
+        lastUpdated = DateTime(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        objectTypes = json["objectTypes"],
+        valueType = json["valueType"];
 }
