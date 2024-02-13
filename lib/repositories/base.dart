@@ -5,8 +5,4 @@ class BaseSingleRepository<T> {
   late T entity;
 
   BaseSingleRepository({required this.resource, required this.fields, this.id});
-
-
-
-
 }

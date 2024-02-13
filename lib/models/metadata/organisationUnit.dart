@@ -7,6 +7,7 @@ class OrganisationUnit implements DHIS2MetadataResource {
 
   String name;
   String shortName;
+  @override
   @Unique()
   String uid;
   String path;

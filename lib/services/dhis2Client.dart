@@ -35,11 +35,13 @@ class DHIS2Client {
   }
 
   Uri get uri {
-    return Uri.https("$baseURL/api");
+    return Uri.parse("https://$baseURL/api");
   }
 
   Uri getApiUrl(String url, {Map<String, dynamic>? queryParameters}) {
-    return uri.replace(path: url, queryParameters: queryParameters);
+    return uri.replace(
+        pathSegments: [...uri.pathSegments, ...url.split("/")],
+        queryParameters: queryParameters);
   }
 
   //This is the function that sends a Post Request to the DHIS2 Instance
@@ -117,4 +119,14 @@ class DHIS2Client {
   String toString() {
     return '$baseURL => $username : $password';
   }
+}
+
+DHIS2Client? client;
+
+void initializeClient(
+    {required String baseURL,
+    required String username,
+    required String password}) {
+  DHIS2Credentials credentials = DHIS2Credentials(username, password, baseURL);
+  client = DHIS2Client(credentials);
 }

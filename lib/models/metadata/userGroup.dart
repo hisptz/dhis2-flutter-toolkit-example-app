@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 class DHIS2UserGroup implements DHIS2MetadataResource {
+  @override
   @Unique()
   String uid;
   @Index()
