@@ -1,3 +1,4 @@
+
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/relationshipType.dart';
@@ -18,5 +19,10 @@ class RelationshipConstraint {
 
   final programStage = ToOne<ProgramStage>();
 
-  RelationshipConstraint(this.relationshipEntity, this.name);
+  RelationshipConstraint(
+      {required this.relationshipEntity, required this.name});
+
+  RelationshipConstraint.fromMao(Map json)
+      : relationshipEntity = json["relationshipEntity"],
+        name = json["name"];
 }

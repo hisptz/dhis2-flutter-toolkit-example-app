@@ -6,7 +6,6 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class DHIS2MeUser extends DHIS2Resource {
-  int id = 0;
   String username;
   String firstName;
   String lastName;
@@ -35,6 +34,7 @@ class DHIS2MeUser extends DHIS2Resource {
         lastName = json["lastName"],
         email = json["email"],
         authorities = json["authorities"] {
+
     List<DHIS2UserRole> roles =
         json["userRoles"].map(DHIS2UserRole.fromMap).toList();
     userRoles.addAll(roles);

@@ -13,6 +13,7 @@ class RelationshipType extends DHIS2MetadataResource {
   DateTime lastUpdated;
 
   @override
+  @Unique()
   String uid;
   String name;
   String code;
@@ -25,13 +26,24 @@ class RelationshipType extends DHIS2MetadataResource {
   final toConstraint = ToOne<RelationshipConstraint>();
 
   RelationshipType(
-      this.created,
-      this.lastUpdated,
-      this.uid,
-      this.name,
-      this.code,
-      this.bidirectional,
-      this.referral,
-      this.fromToName,
-      this.toFromName);
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.code,
+      required this.bidirectional,
+      required this.referral,
+      required this.fromToName,
+      required this.toFromName});
+
+  RelationshipType.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        code = json["code"],
+        bidirectional = json["bidirectional"],
+        referral = json["referral"],
+        fromToName = json["fromToName"],
+        toFromName = json["toFromName"];
 }
