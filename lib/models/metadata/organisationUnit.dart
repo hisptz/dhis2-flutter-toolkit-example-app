@@ -3,8 +3,6 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class OrganisationUnit implements DHIS2MetadataResource {
-  int id = 0;
-
   String name;
   String shortName;
   @Unique()
@@ -17,6 +15,21 @@ class OrganisationUnit implements DHIS2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  OrganisationUnit(this.id, this.name, this.shortName, this.uid, this.path,
-      this.level, this.created, this.lastUpdated);
+  OrganisationUnit(
+      {required this.name,
+      required this.uid,
+      required this.shortName,
+      required this.path,
+      required this.level,
+      required this.created,
+      required this.lastUpdated});
+
+  OrganisationUnit.fromMap(Map json)
+      : uid = json["id"],
+        name = json["name"],
+        shortName = json["shortName"],
+        path = json["path"],
+        level = json["level"],
+        created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]);
 }

@@ -23,17 +23,27 @@ class ProgramRuleVariable implements DHIS2MetadataResource {
   String valueType;
   bool useCodeForOptionSet;
 
+//TODO: Add the one 2 one relationships to the constructor
   final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
   final dataElement = ToOne<DataElement>();
   final programStage = ToOne<ProgramStage>();
   final program = ToOne<Program>();
 
   ProgramRuleVariable(
-      this.created,
-      this.lastUpdated,
-      this.uid,
-      this.name,
-      this.programRuleVariableSourceType,
-      this.valueType,
-      this.useCodeForOptionSet);
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.programRuleVariableSourceType,
+      required this.valueType,
+      required this.useCodeForOptionSet});
+
+  ProgramRuleVariable.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        programRuleVariableSourceType = json["programRuleVariableSourceType"],
+        valueType = json["valueType"],
+        useCodeForOptionSet = json["useCodeForOptionSet"];
 }

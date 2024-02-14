@@ -30,15 +30,37 @@ class TrackedEntityAttribute implements DHIS2MetadataResource {
   final optionSet = ToOne<DHIS2OptionSet>();
 
   TrackedEntityAttribute(
-      this.created,
-      this.lastUpdated,
-      this.uid,
-      this.name,
-      this.code,
-      this.formName,
-      this.shortName,
-      this.description,
-      this.aggregationType,
-      this.valueType,
-      this.zeroIsSignificant);
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.code,
+      required this.formName,
+      required this.shortName,
+      required this.description,
+      required this.aggregationType,
+      required this.valueType,
+      required this.zeroIsSignificant});
+
+  TrackedEntityAttribute.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        code = json["code"],
+        formName = json["formName"],
+        shortName = json["shortName"],
+        description = json["description"],
+        aggregationType = json["aggregationType"],
+        valueType = json["valueType"],
+        zeroIsSignificant = json["zeroIsSignificant"] {
+    List<DHIS2AttributeValue> attributeValue =
+        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
+
+    attributeValues.addAll(attributeValue);
+
+    List<LegendSet> legendSet = json["attributeValues"].map(LegendSet.fromMap);
+
+    legendSets.addAll(legendSet);
+  }
 }

@@ -2,8 +2,6 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class SystemInfo {
-  int id = 0;
-
   String version;
   String revision;
   String calendar;
@@ -14,8 +12,14 @@ class SystemInfo {
   @Index()
   String systemName;
 
-  SystemInfo(this.id, this.version, this.revision, this.calendar,
-      this.dateFormat, this.contextPath, this.systemId, this.systemName);
+  SystemInfo(
+      {required this.version,
+      required this.revision,
+      required this.calendar,
+      required this.dateFormat,
+      required this.contextPath,
+      required this.systemId,
+      required this.systemName});
 
   SystemInfo.fromMap(Map json)
       : calendar = json["calendar"],

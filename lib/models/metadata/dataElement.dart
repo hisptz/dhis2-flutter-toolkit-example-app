@@ -31,16 +31,30 @@ class DataElement implements DHIS2MetadataResource {
   final optionSet = ToOne<DHIS2OptionSet>();
 
   DataElement(
-      this.created,
-      this.lastUpdated,
-      this.uid,
-      this.name,
-      this.code,
-      this.formName,
-      this.shortName,
-      this.description,
-      this.aggregationType,
-      this.valueType,
-      this.domainType,
-      this.zeroIsSignificant);
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.code,
+      required this.formName,
+      required this.shortName,
+      required this.description,
+      required this.aggregationType,
+      required this.valueType,
+      required this.domainType,
+      required this.zeroIsSignificant});
+
+  DataElement.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        code = json["code"],
+        formName = json["formName"],
+        shortName = json["shortName"],
+        description = json["description"],
+        aggregationType = json["aggregationType"],
+        valueType = json["valueType"],
+        domainType = json["domainType"],
+        zeroIsSignificant = json["zeroIsSignificant"];
 }

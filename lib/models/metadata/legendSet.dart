@@ -20,11 +20,21 @@ class LegendSet implements DHIS2MetadataResource {
 
   final legends = ToMany<Legend>();
 
-  LegendSet(
-    this.created,
-    this.lastUpdated,
-    this.uid,
-    this.name,
-    this.code,
-  );
+  LegendSet({
+    required this.created,
+    required this.lastUpdated,
+    required this.uid,
+    required this.name,
+    required this.code,
+  });
+
+  LegendSet.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        code = json["code"] {
+    List<Legend> allLegends = json["legends"].map(LegendSet.fromMap);
+    legends.addAll(allLegends);
+  }
 }

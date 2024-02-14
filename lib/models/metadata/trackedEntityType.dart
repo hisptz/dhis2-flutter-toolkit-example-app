@@ -20,5 +20,22 @@ class TrackedEntityType implements DHIS2MetadataResource {
   final trackedEntityTypeAttributes = ToMany<TrackedEntityTypeAttribute>();
 
   TrackedEntityType(
-      this.created, this.lastUpdated, this.uid, this.name, this.description);
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.description});
+
+  TrackedEntityType.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        description = json["description"] {
+    List<TrackedEntityTypeAttribute> attributes =
+        json["trackedEntityTypeAttributes"]
+            .map(TrackedEntityTypeAttribute.fromMap);
+
+    trackedEntityTypeAttributes.addAll(attributes);
+  }
 }

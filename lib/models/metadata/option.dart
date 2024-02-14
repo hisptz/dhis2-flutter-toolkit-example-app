@@ -18,6 +18,19 @@ class DHIS2Option implements DHIS2MetadataResource {
 
   final optionSet = ToOne<DHIS2OptionSet>();
 
-  DHIS2Option(this.created, this.lastUpdated, this.uid, this.name, this.code,
-      this.sortOrder);
+  DHIS2Option(
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.code,
+      required this.sortOrder});
+
+  DHIS2Option.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        code = json["code"],
+        sortOrder = json["sortOrder"];
 }

@@ -1,4 +1,7 @@
+import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
+import 'package:objectbox/objectbox.dart';
 
 class ProgramStageSection implements DHIS2MetadataResource {
   @override
@@ -8,7 +11,26 @@ class ProgramStageSection implements DHIS2MetadataResource {
   DateTime lastUpdated;
 
   @override
+  @Unique()
   String uid;
+  String name;
+  int sortOrder;
 
-  ProgramStageSection(this.created, this.lastUpdated, this.uid);
+  final programStage = ToOne<ProgramStage>();
+
+  final dataElements = ToMany<DataElement>();
+
+  ProgramStageSection(
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.sortOrder});
+
+  ProgramStageSection.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        name = json["name"],
+        sortOrder = json["sortOrder"];
 }
