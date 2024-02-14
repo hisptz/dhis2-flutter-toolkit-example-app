@@ -2,9 +2,9 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-
 class OrganisationUnitLevel implements DHIS2MetadataResource {
-
+  @override
+  int id = 0;
 
   String name;
   @override

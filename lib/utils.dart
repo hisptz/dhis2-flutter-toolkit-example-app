@@ -9,7 +9,6 @@ Future<DHIS2Credentials?> login(
   DHIS2Client client = DHIS2Client(credentials);
   try {
     Map response = await client.httpGet<Map>("me");
-    print(response);
     return credentials;
   } catch (e) {
     print(e);

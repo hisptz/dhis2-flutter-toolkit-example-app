@@ -14,7 +14,6 @@ class MetadataSync {
       return {"object": metaSync, "synced": status};
     }));
 
-    print(syncStatus);
     return syncStatus
         .where((element) => !element["synced"])
         .map((element) => element["object"] as BaseSyncService)

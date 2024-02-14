@@ -1,3 +1,5 @@
+import 'package:dhis2_flutter_toolkit/components/SystemInfo.dart';
+import 'package:dhis2_flutter_toolkit/components/UserInfoWidget.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -15,8 +17,14 @@ class Home extends StatelessWidget {
           ),
         ),
         body: const SingleChildScrollView(
-          child: Center(
-            child: Text("Things are taking shape"),
+          child: Column(
+            children: [
+              SystemInfoWidget(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+              ),
+              UserInfoWidget()
+            ],
           ),
         ),
       ),

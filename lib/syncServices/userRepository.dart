@@ -15,7 +15,6 @@ class UserSyncService extends BaseSyncService<DHIS2MeUser> {
     if (data == null) {
       return this;
     }
-    print(data);
     entity = DHIS2MeUser.fromMap(data);
     return this;
   }

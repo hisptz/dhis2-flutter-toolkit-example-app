@@ -31,7 +31,6 @@ class DataElement extends DHIS2MetadataResource {
   final optionSet = ToOne<DHIS2OptionSet>();
 
   DataElement(
-
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -66,4 +65,6 @@ class DataElement extends DHIS2MetadataResource {
     legendSets.addAll(set);
   }
 
+  @override
+  int id = 0;
 }

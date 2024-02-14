@@ -28,7 +28,6 @@ class _LoginState extends State<Login> {
 
     if (credentials != null) {
       await credentials.saveToPreference();
-      print(credentials);
     }
     setState(() {
       loading = false;

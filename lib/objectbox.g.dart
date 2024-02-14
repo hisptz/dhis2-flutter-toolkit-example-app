@@ -172,12 +172,7 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0)
       ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(2, 4966942760818989276),
-            name: 'organisationUnits',
-            targetId: const IdUid(1, 3157304700124096846))
-      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(4, 5746562288087590629),
@@ -232,57 +227,6 @@ final _entities = <ModelEntity>[
             name: 'unique',
             type: 1,
             flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(5, 1890676193673836562),
-      name: 'SystemInfo',
-      lastPropertyId: const IdUid(8, 6910308545814603590),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2029267228329315129),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 5264812842849128249),
-            name: 'version',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 6713491974457484880),
-            name: 'revision',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 2858686366903286858),
-            name: 'calendar',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 5554863321731916753),
-            name: 'dateFormat',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 8053055960544215690),
-            name: 'contextPath',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 5561991190173699760),
-            name: 'systemId',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(6, 4857119152297246429)),
-        ModelProperty(
-            id: const IdUid(8, 6910308545814603590),
-            name: 'systemName',
-            type: 9,
-            flags: 2048,
-            indexId: const IdUid(7, 7548179625613315611))
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -748,7 +692,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(15, 900010869586975097),
       name: 'Program',
-      lastPropertyId: const IdUid(4, 2459398241364805894),
+      lastPropertyId: const IdUid(7, 4979106521348804123),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -770,9 +714,46 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 2459398241364805894),
             name: 'uid',
             type: 9,
+            flags: 2080,
+            indexId: const IdUid(42, 3677667778792542062)),
+        ModelProperty(
+            id: const IdUid(5, 6979760762695358044),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8445002480272463015),
+            name: 'shortName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 4979106521348804123),
+            name: 'accessLevel',
+            type: 9,
             flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(14, 5045654148043847141),
+            name: 'attributeValues',
+            targetId: const IdUid(6, 4682159138495939191)),
+        ModelRelation(
+            id: const IdUid(15, 6878443873985571741),
+            name: 'organisationUnits',
+            targetId: const IdUid(1, 3157304700124096846)),
+        ModelRelation(
+            id: const IdUid(16, 1545779435038231041),
+            name: 'programStages',
+            targetId: const IdUid(20, 1968701549855660850)),
+        ModelRelation(
+            id: const IdUid(17, 5087962357507934901),
+            name: 'programSections',
+            targetId: const IdUid(19, 8998323607593693267)),
+        ModelRelation(
+            id: const IdUid(18, 2233863430032367490),
+            name: 'programTrackedEntityAttributes',
+            targetId: const IdUid(23, 2640479644037090191))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(16, 7828433541350092890),
@@ -995,7 +976,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(19, 8998323607593693267),
       name: 'ProgramSection',
-      lastPropertyId: const IdUid(4, 810653082250581587),
+      lastPropertyId: const IdUid(7, 8422357613216441030),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1017,14 +998,37 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 810653082250581587),
             name: 'uid',
             type: 9,
-            flags: 0)
+            flags: 2080,
+            indexId: const IdUid(43, 4327675558434138011)),
+        ModelProperty(
+            id: const IdUid(5, 7465070824631287867),
+            name: 'sortOrder',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 5069562163202259482),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8422357613216441030),
+            name: 'programId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(44, 253513724727102455),
+            relationTarget: 'Program')
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(19, 5633601578063056343),
+            name: 'trackedEntityAttributes',
+            targetId: const IdUid(23, 2640479644037090191))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(20, 1968701549855660850),
       name: 'ProgramStage',
-      lastPropertyId: const IdUid(4, 5548880116506714433),
+      lastPropertyId: const IdUid(11, 3738482661005077602),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1046,14 +1050,65 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 5548880116506714433),
             name: 'uid',
             type: 9,
-            flags: 0)
+            flags: 2080,
+            indexId: const IdUid(45, 2754540738017298966)),
+        ModelProperty(
+            id: const IdUid(5, 5770394807191392921),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1557470199178867331),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8905027388260174492),
+            name: 'sortOrder',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 6409307443463137345),
+            name: 'validationStrategy',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 2501716416625406027),
+            name: 'featureType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2087692589925470391),
+            name: 'reportDateToUse',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 3738482661005077602),
+            name: 'programId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(46, 1720334241710436077),
+            relationTarget: 'Program')
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(20, 6157521514374065028),
+            name: 'programStageDataElements',
+            targetId: const IdUid(12, 8548529336902318249)),
+        ModelRelation(
+            id: const IdUid(21, 5672041947153916973),
+            name: 'attributeValues',
+            targetId: const IdUid(6, 4682159138495939191)),
+        ModelRelation(
+            id: const IdUid(22, 6357623136356722808),
+            name: 'programStageSections',
+            targetId: const IdUid(21, 6496719795622765387))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(21, 6496719795622765387),
       name: 'ProgramStageSection',
-      lastPropertyId: const IdUid(4, 5626280016940972506),
+      lastPropertyId: const IdUid(7, 5336199077087970463),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1075,9 +1130,32 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 5626280016940972506),
             name: 'uid',
             type: 9,
-            flags: 0)
+            flags: 2080,
+            indexId: const IdUid(47, 6614353919659248007)),
+        ModelProperty(
+            id: const IdUid(5, 5841248787846717530),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 5471568150024409146),
+            name: 'sortOrder',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 5336199077087970463),
+            name: 'programStageId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(48, 9120673119650023242),
+            relationTarget: 'ProgramStage')
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(23, 971473354457919572),
+            name: 'dataElements',
+            targetId: const IdUid(12, 8548529336902318249))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(22, 4144499604677361893),
@@ -1104,7 +1182,8 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 1230413077417726071),
             name: 'uid',
             type: 9,
-            flags: 0),
+            flags: 2080,
+            indexId: const IdUid(49, 8523949959874071552)),
         ModelProperty(
             id: const IdUid(5, 8154564375168382929),
             name: 'name',
@@ -1397,6 +1476,57 @@ final _entities = <ModelEntity>[
             relationTarget: 'ProgramStage')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(27, 4257039281684597235),
+      name: 'SystemInfo',
+      lastPropertyId: const IdUid(8, 62391955650356334),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2541208731901252984),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2340296546758801012),
+            name: 'version',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 8147791544268911468),
+            name: 'revision',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 5678285837014437509),
+            name: 'calendar',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 8839843500406723456),
+            name: 'dateFormat',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 167422643529174646),
+            name: 'contextPath',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 6219267714700516130),
+            name: 'systemId',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(50, 3799113355042834058)),
+        ModelProperty(
+            id: const IdUid(8, 62391955650356334),
+            name: 'systemName',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(51, 6425864844828163502))
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -1427,18 +1557,26 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(26, 1594311483522671794),
-      lastIndexId: const IdUid(41, 183253394735194787),
-      lastRelationId: const IdUid(13, 920062547678254275),
+      lastEntityId: const IdUid(27, 4257039281684597235),
+      lastIndexId: const IdUid(51, 6425864844828163502),
+      lastRelationId: const IdUid(23, 971473354457919572),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [1890676193673836562],
       retiredIndexUids: const [8961184502700425506],
       retiredPropertyUids: const [
         7325042414150286768,
         856433523957166225,
-        4130433912790738396
+        4130433912790738396,
+        2029267228329315129,
+        5264812842849128249,
+        6713491974457484880,
+        2858686366903286858,
+        5554863321731916753,
+        8053055960544215690,
+        5561991190173699760,
+        6910308545814603590
       ],
-      retiredRelationUids: const [],
+      retiredRelationUids: const [4966942760818989276],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
@@ -1472,14 +1610,12 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final shortNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
+          final shortNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
           final pathParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
           final levelParam =
@@ -1488,8 +1624,15 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
           final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
-          final object = OrganisationUnit(idParam, nameParam, shortNameParam,
-              uidParam, pathParam, levelParam, createdParam, lastUpdatedParam);
+          final object = OrganisationUnit(
+              name: nameParam,
+              uid: uidParam,
+              shortName: shortNameParam,
+              path: pathParam,
+              level: levelParam,
+              created: createdParam,
+              lastUpdated: lastUpdatedParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         }),
@@ -1519,8 +1662,6 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
           final uidParam = const fb.StringReader(asciiOptimization: true)
@@ -1530,7 +1671,11 @@ ModelDefinition getObjectBoxModel() {
           final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
           final object = OrganisationUnitGroup(
-              idParam, nameParam, uidParam, createdParam, lastUpdatedParam);
+              name: nameParam,
+              uid: uidParam,
+              created: createdParam,
+              lastUpdated: lastUpdatedParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           InternalToManyAccess.setRelInfo<OrganisationUnitGroup>(
               object.organisationUnits,
               store,
@@ -1540,10 +1685,7 @@ ModelDefinition getObjectBoxModel() {
     OrganisationUnitLevel: EntityDefinition<OrganisationUnitLevel>(
         model: _entities[2],
         toOneRelations: (OrganisationUnitLevel object) => [],
-        toManyRelations: (OrganisationUnitLevel object) => {
-              RelInfo<OrganisationUnitLevel>.toMany(2, object.id):
-                  object.organisationUnits
-            },
+        toManyRelations: (OrganisationUnitLevel object) => {},
         getId: (OrganisationUnitLevel object) => object.id,
         setId: (OrganisationUnitLevel object, int id) {
           object.id = id;
@@ -1564,8 +1706,6 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
           final uidParam = const fb.StringReader(asciiOptimization: true)
@@ -1576,12 +1716,14 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
           final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
-          final object = OrganisationUnitLevel(idParam, nameParam, uidParam,
-              levelParam, createdParam, lastUpdatedParam);
-          InternalToManyAccess.setRelInfo<OrganisationUnitLevel>(
-              object.organisationUnits,
-              store,
-              RelInfo<OrganisationUnitLevel>.toMany(2, object.id));
+          final object = OrganisationUnitLevel(
+              name: nameParam,
+              uid: uidParam,
+              level: levelParam,
+              created: createdParam,
+              lastUpdated: lastUpdatedParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
           return object;
         }),
     DHIS2Attribute: EntityDefinition<DHIS2Attribute>(
@@ -1633,80 +1775,20 @@ ModelDefinition getObjectBoxModel() {
           final uniqueParam =
               const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 20);
           final object = DHIS2Attribute(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              valueTypeParam,
-              objectTypesParam,
-              mandatoryParam,
-              uniqueParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              valueType: valueTypeParam,
+              objectTypes: objectTypesParam,
+              mandatory: mandatoryParam,
+              unique: uniqueParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         }),
-    SystemInfo: EntityDefinition<SystemInfo>(
-        model: _entities[4],
-        toOneRelations: (SystemInfo object) => [],
-        toManyRelations: (SystemInfo object) => {},
-        getId: (SystemInfo object) => object.id,
-        setId: (SystemInfo object, int id) {
-          object.id = id;
-        },
-        objectToFB: (SystemInfo object, fb.Builder fbb) {
-          final versionOffset = fbb.writeString(object.version);
-          final revisionOffset = fbb.writeString(object.revision);
-          final calendarOffset = fbb.writeString(object.calendar);
-          final dateFormatOffset = fbb.writeString(object.dateFormat);
-          final contextPathOffset = fbb.writeString(object.contextPath);
-          final systemIdOffset = fbb.writeString(object.systemId);
-          final systemNameOffset = fbb.writeString(object.systemName);
-          fbb.startTable(9);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, versionOffset);
-          fbb.addOffset(2, revisionOffset);
-          fbb.addOffset(3, calendarOffset);
-          fbb.addOffset(4, dateFormatOffset);
-          fbb.addOffset(5, contextPathOffset);
-          fbb.addOffset(6, systemIdOffset);
-          fbb.addOffset(7, systemNameOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final versionParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final revisionParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
-          final calendarParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final dateFormatParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
-          final contextPathParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, '');
-          final systemIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
-          final systemNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
-          final object = SystemInfo(
-              idParam,
-              versionParam,
-              revisionParam,
-              calendarParam,
-              dateFormatParam,
-              contextPathParam,
-              systemIdParam,
-              systemNameParam);
-
-          return object;
-        }),
     DHIS2AttributeValue: EntityDefinition<DHIS2AttributeValue>(
-        model: _entities[5],
+        model: _entities[4],
         toOneRelations: (DHIS2AttributeValue object) => [
               object.attribute,
               object.dataElement,
@@ -1744,7 +1826,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     DHIS2MeUser: EntityDefinition<DHIS2MeUser>(
-        model: _entities[6],
+        model: _entities[5],
         toOneRelations: (DHIS2MeUser object) => [],
         toManyRelations: (DHIS2MeUser object) => {
               RelInfo<DHIS2MeUser>.toMany(3, object.id): object.userRoles,
@@ -1810,7 +1892,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     DHIS2Option: EntityDefinition<DHIS2Option>(
-        model: _entities[7],
+        model: _entities[6],
         toOneRelations: (DHIS2Option object) => [object.optionSet],
         toManyRelations: (DHIS2Option object) => {},
         getId: (DHIS2Option object) => object.id,
@@ -1848,8 +1930,13 @@ ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 14, '');
           final sortOrderParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
-          final object = DHIS2Option(createdParam, lastUpdatedParam, uidParam,
-              nameParam, codeParam, sortOrderParam)
+          final object = DHIS2Option(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam,
+              sortOrder: sortOrderParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.optionSet.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
@@ -1857,7 +1944,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     DHIS2OptionSet: EntityDefinition<DHIS2OptionSet>(
-        model: _entities[8],
+        model: _entities[7],
         toOneRelations: (DHIS2OptionSet object) => [],
         toManyRelations: (DHIS2OptionSet object) =>
             {RelInfo<DHIS2OptionSet>.toMany(6, object.id): object.options},
@@ -1896,15 +1983,20 @@ ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 14, '');
           final valueTypeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
-          final object = DHIS2OptionSet(createdParam, lastUpdatedParam,
-              uidParam, nameParam, codeParam, valueTypeParam)
+          final object = DHIS2OptionSet(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam,
+              valueType: valueTypeParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           InternalToManyAccess.setRelInfo<DHIS2OptionSet>(object.options, store,
               RelInfo<DHIS2OptionSet>.toMany(6, object.id));
           return object;
         }),
     DHIS2UserGroup: EntityDefinition<DHIS2UserGroup>(
-        model: _entities[9],
+        model: _entities[8],
         toOneRelations: (DHIS2UserGroup object) => [],
         toManyRelations: (DHIS2UserGroup object) => {},
         getId: (DHIS2UserGroup object) => object.id,
@@ -1941,7 +2033,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     DHIS2UserRole: EntityDefinition<DHIS2UserRole>(
-        model: _entities[10],
+        model: _entities[9],
         toOneRelations: (DHIS2UserRole object) => [],
         toManyRelations: (DHIS2UserRole object) => {},
         getId: (DHIS2UserRole object) => object.id,
@@ -1985,7 +2077,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     DataElement: EntityDefinition<DataElement>(
-        model: _entities[11],
+        model: _entities[10],
         toOneRelations: (DataElement object) => [object.optionSet],
         toManyRelations: (DataElement object) => {
               RelInfo<DataElement>.toMany(7, object.id): object.attributeValues,
@@ -2053,18 +2145,18 @@ ModelDefinition getObjectBoxModel() {
           final zeroIsSignificantParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = DataElement(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              codeParam,
-              formNameParam,
-              shortNameParam,
-              descriptionParam,
-              aggregationTypeParam,
-              valueTypeParam,
-              domainTypeParam,
-              zeroIsSignificantParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam,
+              formName: formNameParam,
+              shortName: shortNameParam,
+              description: descriptionParam,
+              aggregationType: aggregationTypeParam,
+              valueType: valueTypeParam,
+              domainType: domainTypeParam,
+              zeroIsSignificant: zeroIsSignificantParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.optionSet.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
@@ -2076,7 +2168,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Legend: EntityDefinition<Legend>(
-        model: _entities[12],
+        model: _entities[11],
         toOneRelations: (Legend object) => [],
         toManyRelations: (Legend object) => {},
         getId: (Legend object) => object.id,
@@ -2122,20 +2214,20 @@ ModelDefinition getObjectBoxModel() {
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 18, '');
           final object = Legend(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              startValueParam,
-              endValueParam,
-              colorParam,
-              displayNameParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              startValue: startValueParam,
+              endValue: endValueParam,
+              color: colorParam,
+              displayName: displayNameParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
 
           return object;
         }),
     LegendSet: EntityDefinition<LegendSet>(
-        model: _entities[13],
+        model: _entities[12],
         toOneRelations: (LegendSet object) => [],
         toManyRelations: (LegendSet object) =>
             {RelInfo<LegendSet>.toMany(9, object.id): object.legends},
@@ -2171,27 +2263,44 @@ ModelDefinition getObjectBoxModel() {
           final codeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 14, '');
           final object = LegendSet(
-              createdParam, lastUpdatedParam, uidParam, nameParam, codeParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           InternalToManyAccess.setRelInfo<LegendSet>(
               object.legends, store, RelInfo<LegendSet>.toMany(9, object.id));
           return object;
         }),
     Program: EntityDefinition<Program>(
-        model: _entities[14],
+        model: _entities[13],
         toOneRelations: (Program object) => [],
-        toManyRelations: (Program object) => {},
+        toManyRelations: (Program object) => {
+              RelInfo<Program>.toMany(14, object.id): object.attributeValues,
+              RelInfo<Program>.toMany(15, object.id): object.organisationUnits,
+              RelInfo<Program>.toMany(16, object.id): object.programStages,
+              RelInfo<Program>.toMany(17, object.id): object.programSections,
+              RelInfo<Program>.toMany(18, object.id):
+                  object.programTrackedEntityAttributes
+            },
         getId: (Program object) => object.id,
         setId: (Program object, int id) {
           object.id = id;
         },
         objectToFB: (Program object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          fbb.startTable(5);
+          final nameOffset = fbb.writeString(object.name);
+          final shortNameOffset = fbb.writeString(object.shortName);
+          final accessLevelOffset = fbb.writeString(object.accessLevel);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, nameOffset);
+          fbb.addOffset(5, shortNameOffset);
+          fbb.addOffset(6, accessLevelOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2204,13 +2313,37 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final object = Program(createdParam, lastUpdatedParam, uidParam)
+          final accessLevelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final shortNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = Program(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              accessLevel: accessLevelParam,
+              name: nameParam,
+              shortName: shortNameParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
+          InternalToManyAccess.setRelInfo<Program>(object.attributeValues,
+              store, RelInfo<Program>.toMany(14, object.id));
+          InternalToManyAccess.setRelInfo<Program>(object.organisationUnits,
+              store, RelInfo<Program>.toMany(15, object.id));
+          InternalToManyAccess.setRelInfo<Program>(object.programStages, store,
+              RelInfo<Program>.toMany(16, object.id));
+          InternalToManyAccess.setRelInfo<Program>(object.programSections,
+              store, RelInfo<Program>.toMany(17, object.id));
+          InternalToManyAccess.setRelInfo<Program>(
+              object.programTrackedEntityAttributes,
+              store,
+              RelInfo<Program>.toMany(18, object.id));
           return object;
         }),
     ProgramRule: EntityDefinition<ProgramRule>(
-        model: _entities[15],
+        model: _entities[14],
         toOneRelations: (ProgramRule object) => [object.program],
         toManyRelations: (ProgramRule object) => {
               RelInfo<ProgramRule>.toMany(10, object.id):
@@ -2253,8 +2386,13 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 14, '');
           final conditionParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
-          final object = ProgramRule(createdParam, lastUpdatedParam, uidParam,
-              nameParam, descriptionParam, conditionParam)
+          final object = ProgramRule(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              description: descriptionParam,
+              condition: conditionParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.program.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
@@ -2266,7 +2404,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     ProgramRuleAction: EntityDefinition<ProgramRuleAction>(
-        model: _entities[16],
+        model: _entities[15],
         toOneRelations: (ProgramRuleAction object) => [
               object.programRule,
               object.dataElement,
@@ -2326,13 +2464,13 @@ ModelDefinition getObjectBoxModel() {
           final locationParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 18);
           final object = ProgramRuleAction(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              programRuleActionTypeParam,
-              contentParam,
-              dataParam,
-              locationParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              programRuleActionType: programRuleActionTypeParam,
+              content: contentParam,
+              data: dataParam,
+              location: locationParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.programRule.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
@@ -2352,7 +2490,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     ProgramRuleVariable: EntityDefinition<ProgramRuleVariable>(
-        model: _entities[17],
+        model: _entities[16],
         toOneRelations: (ProgramRuleVariable object) => [
               object.trackedEntityAttribute,
               object.dataElement,
@@ -2405,13 +2543,13 @@ ModelDefinition getObjectBoxModel() {
           final useCodeForOptionSetParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
           final object = ProgramRuleVariable(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              programRuleVariableSourceTypeParam,
-              valueTypeParam,
-              useCodeForOptionSetParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              programRuleVariableSourceType: programRuleVariableSourceTypeParam,
+              valueType: valueTypeParam,
+              useCodeForOptionSet: useCodeForOptionSetParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.trackedEntityAttribute.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
@@ -2428,20 +2566,27 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     ProgramSection: EntityDefinition<ProgramSection>(
-        model: _entities[18],
-        toOneRelations: (ProgramSection object) => [],
-        toManyRelations: (ProgramSection object) => {},
+        model: _entities[17],
+        toOneRelations: (ProgramSection object) => [object.program],
+        toManyRelations: (ProgramSection object) => {
+              RelInfo<ProgramSection>.toMany(19, object.id):
+                  object.trackedEntityAttributes
+            },
         getId: (ProgramSection object) => object.id,
         setId: (ProgramSection object, int id) {
           object.id = id;
         },
         objectToFB: (ProgramSection object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          fbb.startTable(5);
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
+          fbb.addInt64(4, object.sortOrder);
+          fbb.addOffset(5, nameOffset);
+          fbb.addInt64(6, object.program.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2454,27 +2599,61 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final sortOrderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final object = ProgramSection(
-              createdParam, lastUpdatedParam, uidParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              sortOrder: sortOrderParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
+          object.program.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.program.attach(store);
+          InternalToManyAccess.setRelInfo<ProgramSection>(
+              object.trackedEntityAttributes,
+              store,
+              RelInfo<ProgramSection>.toMany(19, object.id));
           return object;
         }),
     ProgramStage: EntityDefinition<ProgramStage>(
-        model: _entities[19],
-        toOneRelations: (ProgramStage object) => [],
-        toManyRelations: (ProgramStage object) => {},
+        model: _entities[18],
+        toOneRelations: (ProgramStage object) => [object.program],
+        toManyRelations: (ProgramStage object) => {
+              RelInfo<ProgramStage>.toMany(20, object.id):
+                  object.programStageDataElements,
+              RelInfo<ProgramStage>.toMany(21, object.id):
+                  object.attributeValues,
+              RelInfo<ProgramStage>.toMany(22, object.id):
+                  object.programStageSections
+            },
         getId: (ProgramStage object) => object.id,
         setId: (ProgramStage object, int id) {
           object.id = id;
         },
         objectToFB: (ProgramStage object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          fbb.startTable(5);
+          final nameOffset = fbb.writeString(object.name);
+          final descriptionOffset = fbb.writeString(object.description);
+          final validationStrategyOffset =
+              fbb.writeString(object.validationStrategy);
+          final featureTypeOffset = fbb.writeString(object.featureType);
+          final reportDateToUseOffset = fbb.writeString(object.reportDateToUse);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, nameOffset);
+          fbb.addOffset(5, descriptionOffset);
+          fbb.addInt64(6, object.sortOrder);
+          fbb.addOffset(7, validationStrategyOffset);
+          fbb.addOffset(8, featureTypeOffset);
+          fbb.addOffset(9, reportDateToUseOffset);
+          fbb.addInt64(10, object.program.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2487,26 +2666,70 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final object = ProgramStage(createdParam, lastUpdatedParam, uidParam)
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final sortOrderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final validationStrategyParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final reportDateToUseParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 22, '');
+          final featureTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final object = ProgramStage(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              sortOrder: sortOrderParam,
+              validationStrategy: validationStrategyParam,
+              reportDateToUse: reportDateToUseParam,
+              featureType: featureTypeParam,
+              description: descriptionParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
+          object.program.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          object.program.attach(store);
+          InternalToManyAccess.setRelInfo<ProgramStage>(
+              object.programStageDataElements,
+              store,
+              RelInfo<ProgramStage>.toMany(20, object.id));
+          InternalToManyAccess.setRelInfo<ProgramStage>(object.attributeValues,
+              store, RelInfo<ProgramStage>.toMany(21, object.id));
+          InternalToManyAccess.setRelInfo<ProgramStage>(
+              object.programStageSections,
+              store,
+              RelInfo<ProgramStage>.toMany(22, object.id));
           return object;
         }),
     ProgramStageSection: EntityDefinition<ProgramStageSection>(
-        model: _entities[20],
-        toOneRelations: (ProgramStageSection object) => [],
-        toManyRelations: (ProgramStageSection object) => {},
+        model: _entities[19],
+        toOneRelations: (ProgramStageSection object) => [object.programStage],
+        toManyRelations: (ProgramStageSection object) => {
+              RelInfo<ProgramStageSection>.toMany(23, object.id):
+                  object.dataElements
+            },
         getId: (ProgramStageSection object) => object.id,
         setId: (ProgramStageSection object, int id) {
           object.id = id;
         },
         objectToFB: (ProgramStageSection object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          fbb.startTable(5);
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, nameOffset);
+          fbb.addInt64(5, object.sortOrder);
+          fbb.addInt64(6, object.programStage.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2519,14 +2742,28 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final sortOrderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           final object = ProgramStageSection(
-              createdParam, lastUpdatedParam, uidParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              sortOrder: sortOrderParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
+          object.programStage.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.programStage.attach(store);
+          InternalToManyAccess.setRelInfo<ProgramStageSection>(
+              object.dataElements,
+              store,
+              RelInfo<ProgramStageSection>.toMany(23, object.id));
           return object;
         }),
     RelationshipType: EntityDefinition<RelationshipType>(
-        model: _entities[21],
+        model: _entities[20],
         toOneRelations: (RelationshipType object) =>
             [object.fromConstraint, object.toConstraint],
         toManyRelations: (RelationshipType object) => {},
@@ -2578,15 +2815,15 @@ ModelDefinition getObjectBoxModel() {
           final toFromNameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 22, '');
           final object = RelationshipType(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              codeParam,
-              bidirectionalParam,
-              referralParam,
-              fromToNameParam,
-              toFromNameParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam,
+              bidirectional: bidirectionalParam,
+              referral: referralParam,
+              fromToName: fromToNameParam,
+              toFromName: toFromNameParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.fromConstraint.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
@@ -2597,7 +2834,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TrackedEntityAttribute: EntityDefinition<TrackedEntityAttribute>(
-        model: _entities[22],
+        model: _entities[21],
         toOneRelations: (TrackedEntityAttribute object) => [object.optionSet],
         toManyRelations: (TrackedEntityAttribute object) => {
               RelInfo<TrackedEntityAttribute>.toMany(11, object.id):
@@ -2663,17 +2900,17 @@ ModelDefinition getObjectBoxModel() {
           final zeroIsSignificantParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = TrackedEntityAttribute(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              nameParam,
-              codeParam,
-              formNameParam,
-              shortNameParam,
-              descriptionParam,
-              aggregationTypeParam,
-              valueTypeParam,
-              zeroIsSignificantParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              code: codeParam,
+              formName: formNameParam,
+              shortName: shortNameParam,
+              description: descriptionParam,
+              aggregationType: aggregationTypeParam,
+              valueType: valueTypeParam,
+              zeroIsSignificant: zeroIsSignificantParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.optionSet.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
@@ -2689,7 +2926,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TrackedEntityType: EntityDefinition<TrackedEntityType>(
-        model: _entities[23],
+        model: _entities[22],
         toOneRelations: (TrackedEntityType object) => [],
         toManyRelations: (TrackedEntityType object) => {
               RelInfo<TrackedEntityType>.toMany(13, object.id):
@@ -2727,8 +2964,12 @@ ModelDefinition getObjectBoxModel() {
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, '');
-          final object = TrackedEntityType(createdParam, lastUpdatedParam,
-              uidParam, nameParam, descriptionParam)
+          final object = TrackedEntityType(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              name: nameParam,
+              description: descriptionParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           InternalToManyAccess.setRelInfo<TrackedEntityType>(
               object.trackedEntityTypeAttributes,
@@ -2737,7 +2978,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TrackedEntityTypeAttribute: EntityDefinition<TrackedEntityTypeAttribute>(
-        model: _entities[24],
+        model: _entities[23],
         toOneRelations: (TrackedEntityTypeAttribute object) =>
             [object.trackedEntityType, object.trackedEntityAttribute],
         toManyRelations: (TrackedEntityTypeAttribute object) => {},
@@ -2785,13 +3026,13 @@ ModelDefinition getObjectBoxModel() {
           final mandatoryParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
           final object = TrackedEntityTypeAttribute(
-              createdParam,
-              lastUpdatedParam,
-              uidParam,
-              valueTypeParam,
-              displayNameParam,
-              displayShortNameParam,
-              mandatoryParam)
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              valueType: valueTypeParam,
+              displayName: displayNameParam,
+              displayShortName: displayShortNameParam,
+              mandatory: mandatoryParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.trackedEntityType.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
@@ -2802,7 +3043,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     RelationshipConstraint: EntityDefinition<RelationshipConstraint>(
-        model: _entities[25],
+        model: _entities[24],
         toOneRelations: (RelationshipConstraint object) => [
               object.trackedEntityType,
               object.relationshipType,
@@ -2838,7 +3079,7 @@ ModelDefinition getObjectBoxModel() {
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 8, '');
           final object = RelationshipConstraint(
-              relationshipEntityParam, nameParam)
+              relationshipEntity: relationshipEntityParam, name: nameParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.trackedEntityType.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
@@ -2852,6 +3093,64 @@ ModelDefinition getObjectBoxModel() {
           object.programStage.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.programStage.attach(store);
+          return object;
+        }),
+    SystemInfo: EntityDefinition<SystemInfo>(
+        model: _entities[25],
+        toOneRelations: (SystemInfo object) => [],
+        toManyRelations: (SystemInfo object) => {},
+        getId: (SystemInfo object) => object.id,
+        setId: (SystemInfo object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SystemInfo object, fb.Builder fbb) {
+          final versionOffset = fbb.writeString(object.version);
+          final revisionOffset = fbb.writeString(object.revision);
+          final calendarOffset = fbb.writeString(object.calendar);
+          final dateFormatOffset = fbb.writeString(object.dateFormat);
+          final contextPathOffset = fbb.writeString(object.contextPath);
+          final systemIdOffset = fbb.writeString(object.systemId);
+          final systemNameOffset = fbb.writeString(object.systemName);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, versionOffset);
+          fbb.addOffset(2, revisionOffset);
+          fbb.addOffset(3, calendarOffset);
+          fbb.addOffset(4, dateFormatOffset);
+          fbb.addOffset(5, contextPathOffset);
+          fbb.addOffset(6, systemIdOffset);
+          fbb.addOffset(7, systemNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final versionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final revisionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final calendarParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final dateFormatParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final contextPathParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final systemIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final systemNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 18, '');
+          final object = SystemInfo(
+              version: versionParam,
+              revision: revisionParam,
+              calendar: calendarParam,
+              dateFormat: dateFormatParam,
+              contextPath: contextPathParam,
+              systemId: systemIdParam,
+              systemName: systemNameParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
           return object;
         })
   };
@@ -2947,11 +3246,6 @@ class OrganisationUnitLevel_ {
   /// see [OrganisationUnitLevel.lastUpdated]
   static final lastUpdated =
       QueryIntegerProperty<OrganisationUnitLevel>(_entities[2].properties[5]);
-
-  /// see [OrganisationUnitLevel.organisationUnits]
-  static final organisationUnits =
-      QueryRelationToMany<OrganisationUnitLevel, OrganisationUnit>(
-          _entities[2].relations[0]);
 }
 
 /// [DHIS2Attribute] entity fields to define ObjectBox queries.
@@ -2993,814 +3287,926 @@ class DHIS2Attribute_ {
       QueryBooleanProperty<DHIS2Attribute>(_entities[3].properties[8]);
 }
 
-/// [SystemInfo] entity fields to define ObjectBox queries.
-class SystemInfo_ {
-  /// see [SystemInfo.id]
-  static final id =
-      QueryIntegerProperty<SystemInfo>(_entities[4].properties[0]);
-
-  /// see [SystemInfo.version]
-  static final version =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[1]);
-
-  /// see [SystemInfo.revision]
-  static final revision =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[2]);
-
-  /// see [SystemInfo.calendar]
-  static final calendar =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[3]);
-
-  /// see [SystemInfo.dateFormat]
-  static final dateFormat =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[4]);
-
-  /// see [SystemInfo.contextPath]
-  static final contextPath =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[5]);
-
-  /// see [SystemInfo.systemId]
-  static final systemId =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[6]);
-
-  /// see [SystemInfo.systemName]
-  static final systemName =
-      QueryStringProperty<SystemInfo>(_entities[4].properties[7]);
-}
-
 /// [DHIS2AttributeValue] entity fields to define ObjectBox queries.
 class DHIS2AttributeValue_ {
   /// see [DHIS2AttributeValue.id]
   static final id =
-      QueryIntegerProperty<DHIS2AttributeValue>(_entities[5].properties[0]);
+      QueryIntegerProperty<DHIS2AttributeValue>(_entities[4].properties[0]);
 
   /// see [DHIS2AttributeValue.attribute]
   static final attribute =
       QueryRelationToOne<DHIS2AttributeValue, DHIS2Attribute>(
-          _entities[5].properties[1]);
+          _entities[4].properties[1]);
 
   /// see [DHIS2AttributeValue.dataElement]
   static final dataElement =
       QueryRelationToOne<DHIS2AttributeValue, DataElement>(
-          _entities[5].properties[2]);
+          _entities[4].properties[2]);
 
   /// see [DHIS2AttributeValue.trackedEntityAttribute]
   static final trackedEntityAttribute =
       QueryRelationToOne<DHIS2AttributeValue, TrackedEntityAttribute>(
-          _entities[5].properties[3]);
+          _entities[4].properties[3]);
 }
 
 /// [DHIS2MeUser] entity fields to define ObjectBox queries.
 class DHIS2MeUser_ {
   /// see [DHIS2MeUser.id]
   static final id =
-      QueryIntegerProperty<DHIS2MeUser>(_entities[6].properties[0]);
+      QueryIntegerProperty<DHIS2MeUser>(_entities[5].properties[0]);
 
   /// see [DHIS2MeUser.username]
   static final username =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[1]);
+      QueryStringProperty<DHIS2MeUser>(_entities[5].properties[1]);
 
   /// see [DHIS2MeUser.firstName]
   static final firstName =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[2]);
+      QueryStringProperty<DHIS2MeUser>(_entities[5].properties[2]);
 
   /// see [DHIS2MeUser.email]
   static final email =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[3]);
+      QueryStringProperty<DHIS2MeUser>(_entities[5].properties[3]);
 
   /// see [DHIS2MeUser.authorities]
   static final authorities =
-      QueryStringVectorProperty<DHIS2MeUser>(_entities[6].properties[4]);
+      QueryStringVectorProperty<DHIS2MeUser>(_entities[5].properties[4]);
 
   /// see [DHIS2MeUser.uid]
   static final uid =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[5]);
+      QueryStringProperty<DHIS2MeUser>(_entities[5].properties[5]);
 
   /// see [DHIS2MeUser.surname]
   static final surname =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[6]);
+      QueryStringProperty<DHIS2MeUser>(_entities[5].properties[6]);
 
   /// see [DHIS2MeUser.userRoles]
   static final userRoles = QueryRelationToMany<DHIS2MeUser, DHIS2UserRole>(
-      _entities[6].relations[0]);
+      _entities[5].relations[0]);
 
   /// see [DHIS2MeUser.userGroups]
   static final userGroups = QueryRelationToMany<DHIS2MeUser, DHIS2UserGroup>(
-      _entities[6].relations[1]);
+      _entities[5].relations[1]);
 
   /// see [DHIS2MeUser.organisationUnits]
   static final organisationUnits =
       QueryRelationToMany<DHIS2MeUser, OrganisationUnit>(
-          _entities[6].relations[2]);
+          _entities[5].relations[2]);
 }
 
 /// [DHIS2Option] entity fields to define ObjectBox queries.
 class DHIS2Option_ {
   /// see [DHIS2Option.id]
   static final id =
-      QueryIntegerProperty<DHIS2Option>(_entities[7].properties[0]);
+      QueryIntegerProperty<DHIS2Option>(_entities[6].properties[0]);
 
   /// see [DHIS2Option.created]
   static final created =
-      QueryIntegerProperty<DHIS2Option>(_entities[7].properties[1]);
+      QueryIntegerProperty<DHIS2Option>(_entities[6].properties[1]);
 
   /// see [DHIS2Option.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2Option>(_entities[7].properties[2]);
+      QueryIntegerProperty<DHIS2Option>(_entities[6].properties[2]);
 
   /// see [DHIS2Option.uid]
   static final uid =
-      QueryStringProperty<DHIS2Option>(_entities[7].properties[3]);
+      QueryStringProperty<DHIS2Option>(_entities[6].properties[3]);
 
   /// see [DHIS2Option.name]
   static final name =
-      QueryStringProperty<DHIS2Option>(_entities[7].properties[4]);
+      QueryStringProperty<DHIS2Option>(_entities[6].properties[4]);
 
   /// see [DHIS2Option.code]
   static final code =
-      QueryStringProperty<DHIS2Option>(_entities[7].properties[5]);
+      QueryStringProperty<DHIS2Option>(_entities[6].properties[5]);
 
   /// see [DHIS2Option.sortOrder]
   static final sortOrder =
-      QueryIntegerProperty<DHIS2Option>(_entities[7].properties[6]);
+      QueryIntegerProperty<DHIS2Option>(_entities[6].properties[6]);
 
   /// see [DHIS2Option.optionSet]
   static final optionSet = QueryRelationToOne<DHIS2Option, DHIS2OptionSet>(
-      _entities[7].properties[7]);
+      _entities[6].properties[7]);
 }
 
 /// [DHIS2OptionSet] entity fields to define ObjectBox queries.
 class DHIS2OptionSet_ {
   /// see [DHIS2OptionSet.id]
   static final id =
-      QueryIntegerProperty<DHIS2OptionSet>(_entities[8].properties[0]);
+      QueryIntegerProperty<DHIS2OptionSet>(_entities[7].properties[0]);
 
   /// see [DHIS2OptionSet.created]
   static final created =
-      QueryIntegerProperty<DHIS2OptionSet>(_entities[8].properties[1]);
+      QueryIntegerProperty<DHIS2OptionSet>(_entities[7].properties[1]);
 
   /// see [DHIS2OptionSet.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2OptionSet>(_entities[8].properties[2]);
+      QueryIntegerProperty<DHIS2OptionSet>(_entities[7].properties[2]);
 
   /// see [DHIS2OptionSet.uid]
   static final uid =
-      QueryStringProperty<DHIS2OptionSet>(_entities[8].properties[3]);
+      QueryStringProperty<DHIS2OptionSet>(_entities[7].properties[3]);
 
   /// see [DHIS2OptionSet.name]
   static final name =
-      QueryStringProperty<DHIS2OptionSet>(_entities[8].properties[4]);
+      QueryStringProperty<DHIS2OptionSet>(_entities[7].properties[4]);
 
   /// see [DHIS2OptionSet.code]
   static final code =
-      QueryStringProperty<DHIS2OptionSet>(_entities[8].properties[5]);
+      QueryStringProperty<DHIS2OptionSet>(_entities[7].properties[5]);
 
   /// see [DHIS2OptionSet.valueType]
   static final valueType =
-      QueryStringProperty<DHIS2OptionSet>(_entities[8].properties[6]);
+      QueryStringProperty<DHIS2OptionSet>(_entities[7].properties[6]);
 
   /// see [DHIS2OptionSet.options]
   static final options = QueryRelationToMany<DHIS2OptionSet, DHIS2Option>(
-      _entities[8].relations[0]);
+      _entities[7].relations[0]);
 }
 
 /// [DHIS2UserGroup] entity fields to define ObjectBox queries.
 class DHIS2UserGroup_ {
   /// see [DHIS2UserGroup.id]
   static final id =
-      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[0]);
+      QueryIntegerProperty<DHIS2UserGroup>(_entities[8].properties[0]);
 
   /// see [DHIS2UserGroup.uid]
   static final uid =
-      QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[1]);
+      QueryStringProperty<DHIS2UserGroup>(_entities[8].properties[1]);
 
   /// see [DHIS2UserGroup.name]
   static final name =
-      QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[2]);
+      QueryStringProperty<DHIS2UserGroup>(_entities[8].properties[2]);
 
   /// see [DHIS2UserGroup.created]
   static final created =
-      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[3]);
+      QueryIntegerProperty<DHIS2UserGroup>(_entities[8].properties[3]);
 
   /// see [DHIS2UserGroup.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[4]);
+      QueryIntegerProperty<DHIS2UserGroup>(_entities[8].properties[4]);
 }
 
 /// [DHIS2UserRole] entity fields to define ObjectBox queries.
 class DHIS2UserRole_ {
   /// see [DHIS2UserRole.id]
   static final id =
-      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[0]);
+      QueryIntegerProperty<DHIS2UserRole>(_entities[9].properties[0]);
 
   /// see [DHIS2UserRole.uid]
   static final uid =
-      QueryStringProperty<DHIS2UserRole>(_entities[10].properties[1]);
+      QueryStringProperty<DHIS2UserRole>(_entities[9].properties[1]);
 
   /// see [DHIS2UserRole.name]
   static final name =
-      QueryStringProperty<DHIS2UserRole>(_entities[10].properties[2]);
+      QueryStringProperty<DHIS2UserRole>(_entities[9].properties[2]);
 
   /// see [DHIS2UserRole.authorities]
   static final authorities =
-      QueryStringVectorProperty<DHIS2UserRole>(_entities[10].properties[3]);
+      QueryStringVectorProperty<DHIS2UserRole>(_entities[9].properties[3]);
 
   /// see [DHIS2UserRole.created]
   static final created =
-      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[4]);
+      QueryIntegerProperty<DHIS2UserRole>(_entities[9].properties[4]);
 
   /// see [DHIS2UserRole.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[5]);
+      QueryIntegerProperty<DHIS2UserRole>(_entities[9].properties[5]);
 }
 
 /// [DataElement] entity fields to define ObjectBox queries.
 class DataElement_ {
   /// see [DataElement.created]
   static final created =
-      QueryIntegerProperty<DataElement>(_entities[11].properties[0]);
+      QueryIntegerProperty<DataElement>(_entities[10].properties[0]);
 
   /// see [DataElement.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DataElement>(_entities[11].properties[1]);
+      QueryIntegerProperty<DataElement>(_entities[10].properties[1]);
 
   /// see [DataElement.uid]
   static final uid =
-      QueryStringProperty<DataElement>(_entities[11].properties[2]);
+      QueryStringProperty<DataElement>(_entities[10].properties[2]);
 
   /// see [DataElement.name]
   static final name =
-      QueryStringProperty<DataElement>(_entities[11].properties[3]);
+      QueryStringProperty<DataElement>(_entities[10].properties[3]);
 
   /// see [DataElement.code]
   static final code =
-      QueryStringProperty<DataElement>(_entities[11].properties[4]);
+      QueryStringProperty<DataElement>(_entities[10].properties[4]);
 
   /// see [DataElement.formName]
   static final formName =
-      QueryStringProperty<DataElement>(_entities[11].properties[5]);
+      QueryStringProperty<DataElement>(_entities[10].properties[5]);
 
   /// see [DataElement.shortName]
   static final shortName =
-      QueryStringProperty<DataElement>(_entities[11].properties[6]);
+      QueryStringProperty<DataElement>(_entities[10].properties[6]);
 
   /// see [DataElement.description]
   static final description =
-      QueryStringProperty<DataElement>(_entities[11].properties[7]);
+      QueryStringProperty<DataElement>(_entities[10].properties[7]);
 
   /// see [DataElement.aggregationType]
   static final aggregationType =
-      QueryStringProperty<DataElement>(_entities[11].properties[8]);
+      QueryStringProperty<DataElement>(_entities[10].properties[8]);
 
   /// see [DataElement.valueType]
   static final valueType =
-      QueryStringProperty<DataElement>(_entities[11].properties[9]);
+      QueryStringProperty<DataElement>(_entities[10].properties[9]);
 
   /// see [DataElement.domainType]
   static final domainType =
-      QueryStringProperty<DataElement>(_entities[11].properties[10]);
+      QueryStringProperty<DataElement>(_entities[10].properties[10]);
 
   /// see [DataElement.zeroIsSignificant]
   static final zeroIsSignificant =
-      QueryBooleanProperty<DataElement>(_entities[11].properties[11]);
+      QueryBooleanProperty<DataElement>(_entities[10].properties[11]);
 
   /// see [DataElement.optionSet]
   static final optionSet = QueryRelationToOne<DataElement, DHIS2OptionSet>(
-      _entities[11].properties[12]);
+      _entities[10].properties[12]);
 
   /// see [DataElement.id]
   static final id =
-      QueryIntegerProperty<DataElement>(_entities[11].properties[13]);
+      QueryIntegerProperty<DataElement>(_entities[10].properties[13]);
 
   /// see [DataElement.attributeValues]
   static final attributeValues =
       QueryRelationToMany<DataElement, DHIS2AttributeValue>(
-          _entities[11].relations[0]);
+          _entities[10].relations[0]);
 
   /// see [DataElement.legendSets]
   static final legendSets =
-      QueryRelationToMany<DataElement, LegendSet>(_entities[11].relations[1]);
+      QueryRelationToMany<DataElement, LegendSet>(_entities[10].relations[1]);
 }
 
 /// [Legend] entity fields to define ObjectBox queries.
 class Legend_ {
   /// see [Legend.created]
   static final created =
-      QueryIntegerProperty<Legend>(_entities[12].properties[0]);
+      QueryIntegerProperty<Legend>(_entities[11].properties[0]);
 
   /// see [Legend.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<Legend>(_entities[12].properties[1]);
+      QueryIntegerProperty<Legend>(_entities[11].properties[1]);
 
   /// see [Legend.uid]
-  static final uid = QueryStringProperty<Legend>(_entities[12].properties[2]);
+  static final uid = QueryStringProperty<Legend>(_entities[11].properties[2]);
 
   /// see [Legend.name]
-  static final name = QueryStringProperty<Legend>(_entities[12].properties[3]);
+  static final name = QueryStringProperty<Legend>(_entities[11].properties[3]);
 
   /// see [Legend.startValue]
   static final startValue =
-      QueryIntegerProperty<Legend>(_entities[12].properties[4]);
+      QueryIntegerProperty<Legend>(_entities[11].properties[4]);
 
   /// see [Legend.endValue]
   static final endValue =
-      QueryIntegerProperty<Legend>(_entities[12].properties[5]);
+      QueryIntegerProperty<Legend>(_entities[11].properties[5]);
 
   /// see [Legend.color]
-  static final color = QueryStringProperty<Legend>(_entities[12].properties[6]);
+  static final color = QueryStringProperty<Legend>(_entities[11].properties[6]);
 
   /// see [Legend.displayName]
   static final displayName =
-      QueryStringProperty<Legend>(_entities[12].properties[7]);
+      QueryStringProperty<Legend>(_entities[11].properties[7]);
 
   /// see [Legend.id]
-  static final id = QueryIntegerProperty<Legend>(_entities[12].properties[8]);
+  static final id = QueryIntegerProperty<Legend>(_entities[11].properties[8]);
 }
 
 /// [LegendSet] entity fields to define ObjectBox queries.
 class LegendSet_ {
   /// see [LegendSet.id]
   static final id =
-      QueryIntegerProperty<LegendSet>(_entities[13].properties[0]);
+      QueryIntegerProperty<LegendSet>(_entities[12].properties[0]);
 
   /// see [LegendSet.created]
   static final created =
-      QueryIntegerProperty<LegendSet>(_entities[13].properties[1]);
+      QueryIntegerProperty<LegendSet>(_entities[12].properties[1]);
 
   /// see [LegendSet.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<LegendSet>(_entities[13].properties[2]);
+      QueryIntegerProperty<LegendSet>(_entities[12].properties[2]);
 
   /// see [LegendSet.uid]
   static final uid =
-      QueryStringProperty<LegendSet>(_entities[13].properties[3]);
+      QueryStringProperty<LegendSet>(_entities[12].properties[3]);
 
   /// see [LegendSet.name]
   static final name =
-      QueryStringProperty<LegendSet>(_entities[13].properties[4]);
+      QueryStringProperty<LegendSet>(_entities[12].properties[4]);
 
   /// see [LegendSet.code]
   static final code =
-      QueryStringProperty<LegendSet>(_entities[13].properties[5]);
+      QueryStringProperty<LegendSet>(_entities[12].properties[5]);
 
   /// see [LegendSet.legends]
   static final legends =
-      QueryRelationToMany<LegendSet, Legend>(_entities[13].relations[0]);
+      QueryRelationToMany<LegendSet, Legend>(_entities[12].relations[0]);
 }
 
 /// [Program] entity fields to define ObjectBox queries.
 class Program_ {
   /// see [Program.id]
-  static final id = QueryIntegerProperty<Program>(_entities[14].properties[0]);
+  static final id = QueryIntegerProperty<Program>(_entities[13].properties[0]);
 
   /// see [Program.created]
   static final created =
-      QueryIntegerProperty<Program>(_entities[14].properties[1]);
+      QueryIntegerProperty<Program>(_entities[13].properties[1]);
 
   /// see [Program.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<Program>(_entities[14].properties[2]);
+      QueryIntegerProperty<Program>(_entities[13].properties[2]);
 
   /// see [Program.uid]
-  static final uid = QueryStringProperty<Program>(_entities[14].properties[3]);
+  static final uid = QueryStringProperty<Program>(_entities[13].properties[3]);
+
+  /// see [Program.name]
+  static final name = QueryStringProperty<Program>(_entities[13].properties[4]);
+
+  /// see [Program.shortName]
+  static final shortName =
+      QueryStringProperty<Program>(_entities[13].properties[5]);
+
+  /// see [Program.accessLevel]
+  static final accessLevel =
+      QueryStringProperty<Program>(_entities[13].properties[6]);
+
+  /// see [Program.attributeValues]
+  static final attributeValues =
+      QueryRelationToMany<Program, DHIS2AttributeValue>(
+          _entities[13].relations[0]);
+
+  /// see [Program.organisationUnits]
+  static final organisationUnits =
+      QueryRelationToMany<Program, OrganisationUnit>(
+          _entities[13].relations[1]);
+
+  /// see [Program.programStages]
+  static final programStages =
+      QueryRelationToMany<Program, ProgramStage>(_entities[13].relations[2]);
+
+  /// see [Program.programSections]
+  static final programSections =
+      QueryRelationToMany<Program, ProgramSection>(_entities[13].relations[3]);
+
+  /// see [Program.programTrackedEntityAttributes]
+  static final programTrackedEntityAttributes =
+      QueryRelationToMany<Program, TrackedEntityAttribute>(
+          _entities[13].relations[4]);
 }
 
 /// [ProgramRule] entity fields to define ObjectBox queries.
 class ProgramRule_ {
   /// see [ProgramRule.id]
   static final id =
-      QueryIntegerProperty<ProgramRule>(_entities[15].properties[0]);
+      QueryIntegerProperty<ProgramRule>(_entities[14].properties[0]);
 
   /// see [ProgramRule.created]
   static final created =
-      QueryIntegerProperty<ProgramRule>(_entities[15].properties[1]);
+      QueryIntegerProperty<ProgramRule>(_entities[14].properties[1]);
 
   /// see [ProgramRule.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramRule>(_entities[15].properties[2]);
+      QueryIntegerProperty<ProgramRule>(_entities[14].properties[2]);
 
   /// see [ProgramRule.uid]
   static final uid =
-      QueryStringProperty<ProgramRule>(_entities[15].properties[3]);
+      QueryStringProperty<ProgramRule>(_entities[14].properties[3]);
 
   /// see [ProgramRule.name]
   static final name =
-      QueryStringProperty<ProgramRule>(_entities[15].properties[4]);
+      QueryStringProperty<ProgramRule>(_entities[14].properties[4]);
 
   /// see [ProgramRule.description]
   static final description =
-      QueryStringProperty<ProgramRule>(_entities[15].properties[5]);
+      QueryStringProperty<ProgramRule>(_entities[14].properties[5]);
 
   /// see [ProgramRule.condition]
   static final condition =
-      QueryStringProperty<ProgramRule>(_entities[15].properties[6]);
+      QueryStringProperty<ProgramRule>(_entities[14].properties[6]);
 
   /// see [ProgramRule.program]
   static final program =
-      QueryRelationToOne<ProgramRule, Program>(_entities[15].properties[7]);
+      QueryRelationToOne<ProgramRule, Program>(_entities[14].properties[7]);
 
   /// see [ProgramRule.programRuleActions]
   static final programRuleActions =
       QueryRelationToMany<ProgramRule, ProgramRuleAction>(
-          _entities[15].relations[0]);
+          _entities[14].relations[0]);
 }
 
 /// [ProgramRuleAction] entity fields to define ObjectBox queries.
 class ProgramRuleAction_ {
   /// see [ProgramRuleAction.id]
   static final id =
-      QueryIntegerProperty<ProgramRuleAction>(_entities[16].properties[0]);
+      QueryIntegerProperty<ProgramRuleAction>(_entities[15].properties[0]);
 
   /// see [ProgramRuleAction.created]
   static final created =
-      QueryIntegerProperty<ProgramRuleAction>(_entities[16].properties[1]);
+      QueryIntegerProperty<ProgramRuleAction>(_entities[15].properties[1]);
 
   /// see [ProgramRuleAction.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramRuleAction>(_entities[16].properties[2]);
+      QueryIntegerProperty<ProgramRuleAction>(_entities[15].properties[2]);
 
   /// see [ProgramRuleAction.uid]
   static final uid =
-      QueryStringProperty<ProgramRuleAction>(_entities[16].properties[3]);
+      QueryStringProperty<ProgramRuleAction>(_entities[15].properties[3]);
 
   /// see [ProgramRuleAction.programRuleActionType]
   static final programRuleActionType =
-      QueryStringProperty<ProgramRuleAction>(_entities[16].properties[4]);
+      QueryStringProperty<ProgramRuleAction>(_entities[15].properties[4]);
 
   /// see [ProgramRuleAction.content]
   static final content =
-      QueryStringProperty<ProgramRuleAction>(_entities[16].properties[5]);
+      QueryStringProperty<ProgramRuleAction>(_entities[15].properties[5]);
 
   /// see [ProgramRuleAction.data]
   static final data =
-      QueryStringProperty<ProgramRuleAction>(_entities[16].properties[6]);
+      QueryStringProperty<ProgramRuleAction>(_entities[15].properties[6]);
 
   /// see [ProgramRuleAction.location]
   static final location =
-      QueryStringProperty<ProgramRuleAction>(_entities[16].properties[7]);
+      QueryStringProperty<ProgramRuleAction>(_entities[15].properties[7]);
 
   /// see [ProgramRuleAction.programRule]
   static final programRule = QueryRelationToOne<ProgramRuleAction, ProgramRule>(
-      _entities[16].properties[8]);
+      _entities[15].properties[8]);
 
   /// see [ProgramRuleAction.dataElement]
   static final dataElement = QueryRelationToOne<ProgramRuleAction, DataElement>(
-      _entities[16].properties[9]);
+      _entities[15].properties[9]);
 
   /// see [ProgramRuleAction.programStageSection]
   static final programStageSection =
       QueryRelationToOne<ProgramRuleAction, ProgramStageSection>(
-          _entities[16].properties[10]);
+          _entities[15].properties[10]);
 
   /// see [ProgramRuleAction.programSection]
   static final programSection =
       QueryRelationToOne<ProgramRuleAction, ProgramSection>(
-          _entities[16].properties[11]);
+          _entities[15].properties[11]);
 
   /// see [ProgramRuleAction.trackedEntityAttribute]
   static final trackedEntityAttribute =
       QueryRelationToOne<ProgramRuleAction, TrackedEntityAttribute>(
-          _entities[16].properties[12]);
+          _entities[15].properties[12]);
 }
 
 /// [ProgramRuleVariable] entity fields to define ObjectBox queries.
 class ProgramRuleVariable_ {
   /// see [ProgramRuleVariable.id]
   static final id =
-      QueryIntegerProperty<ProgramRuleVariable>(_entities[17].properties[0]);
+      QueryIntegerProperty<ProgramRuleVariable>(_entities[16].properties[0]);
 
   /// see [ProgramRuleVariable.created]
   static final created =
-      QueryIntegerProperty<ProgramRuleVariable>(_entities[17].properties[1]);
+      QueryIntegerProperty<ProgramRuleVariable>(_entities[16].properties[1]);
 
   /// see [ProgramRuleVariable.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramRuleVariable>(_entities[17].properties[2]);
+      QueryIntegerProperty<ProgramRuleVariable>(_entities[16].properties[2]);
 
   /// see [ProgramRuleVariable.uid]
   static final uid =
-      QueryStringProperty<ProgramRuleVariable>(_entities[17].properties[3]);
+      QueryStringProperty<ProgramRuleVariable>(_entities[16].properties[3]);
 
   /// see [ProgramRuleVariable.name]
   static final name =
-      QueryStringProperty<ProgramRuleVariable>(_entities[17].properties[4]);
+      QueryStringProperty<ProgramRuleVariable>(_entities[16].properties[4]);
 
   /// see [ProgramRuleVariable.programRuleVariableSourceType]
   static final programRuleVariableSourceType =
-      QueryStringProperty<ProgramRuleVariable>(_entities[17].properties[5]);
+      QueryStringProperty<ProgramRuleVariable>(_entities[16].properties[5]);
 
   /// see [ProgramRuleVariable.valueType]
   static final valueType =
-      QueryStringProperty<ProgramRuleVariable>(_entities[17].properties[6]);
+      QueryStringProperty<ProgramRuleVariable>(_entities[16].properties[6]);
 
   /// see [ProgramRuleVariable.useCodeForOptionSet]
   static final useCodeForOptionSet =
-      QueryBooleanProperty<ProgramRuleVariable>(_entities[17].properties[7]);
+      QueryBooleanProperty<ProgramRuleVariable>(_entities[16].properties[7]);
 
   /// see [ProgramRuleVariable.trackedEntityAttribute]
   static final trackedEntityAttribute =
       QueryRelationToOne<ProgramRuleVariable, TrackedEntityAttribute>(
-          _entities[17].properties[8]);
+          _entities[16].properties[8]);
 
   /// see [ProgramRuleVariable.dataElement]
   static final dataElement =
       QueryRelationToOne<ProgramRuleVariable, DataElement>(
-          _entities[17].properties[9]);
+          _entities[16].properties[9]);
 
   /// see [ProgramRuleVariable.programStage]
   static final programStage =
       QueryRelationToOne<ProgramRuleVariable, ProgramStage>(
-          _entities[17].properties[10]);
+          _entities[16].properties[10]);
 
   /// see [ProgramRuleVariable.program]
   static final program = QueryRelationToOne<ProgramRuleVariable, Program>(
-      _entities[17].properties[11]);
+      _entities[16].properties[11]);
 }
 
 /// [ProgramSection] entity fields to define ObjectBox queries.
 class ProgramSection_ {
   /// see [ProgramSection.id]
   static final id =
-      QueryIntegerProperty<ProgramSection>(_entities[18].properties[0]);
+      QueryIntegerProperty<ProgramSection>(_entities[17].properties[0]);
 
   /// see [ProgramSection.created]
   static final created =
-      QueryIntegerProperty<ProgramSection>(_entities[18].properties[1]);
+      QueryIntegerProperty<ProgramSection>(_entities[17].properties[1]);
 
   /// see [ProgramSection.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramSection>(_entities[18].properties[2]);
+      QueryIntegerProperty<ProgramSection>(_entities[17].properties[2]);
 
   /// see [ProgramSection.uid]
   static final uid =
-      QueryStringProperty<ProgramSection>(_entities[18].properties[3]);
+      QueryStringProperty<ProgramSection>(_entities[17].properties[3]);
+
+  /// see [ProgramSection.sortOrder]
+  static final sortOrder =
+      QueryIntegerProperty<ProgramSection>(_entities[17].properties[4]);
+
+  /// see [ProgramSection.name]
+  static final name =
+      QueryStringProperty<ProgramSection>(_entities[17].properties[5]);
+
+  /// see [ProgramSection.program]
+  static final program =
+      QueryRelationToOne<ProgramSection, Program>(_entities[17].properties[6]);
+
+  /// see [ProgramSection.trackedEntityAttributes]
+  static final trackedEntityAttributes =
+      QueryRelationToMany<ProgramSection, TrackedEntityAttribute>(
+          _entities[17].relations[0]);
 }
 
 /// [ProgramStage] entity fields to define ObjectBox queries.
 class ProgramStage_ {
   /// see [ProgramStage.id]
   static final id =
-      QueryIntegerProperty<ProgramStage>(_entities[19].properties[0]);
+      QueryIntegerProperty<ProgramStage>(_entities[18].properties[0]);
 
   /// see [ProgramStage.created]
   static final created =
-      QueryIntegerProperty<ProgramStage>(_entities[19].properties[1]);
+      QueryIntegerProperty<ProgramStage>(_entities[18].properties[1]);
 
   /// see [ProgramStage.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramStage>(_entities[19].properties[2]);
+      QueryIntegerProperty<ProgramStage>(_entities[18].properties[2]);
 
   /// see [ProgramStage.uid]
   static final uid =
-      QueryStringProperty<ProgramStage>(_entities[19].properties[3]);
+      QueryStringProperty<ProgramStage>(_entities[18].properties[3]);
+
+  /// see [ProgramStage.name]
+  static final name =
+      QueryStringProperty<ProgramStage>(_entities[18].properties[4]);
+
+  /// see [ProgramStage.description]
+  static final description =
+      QueryStringProperty<ProgramStage>(_entities[18].properties[5]);
+
+  /// see [ProgramStage.sortOrder]
+  static final sortOrder =
+      QueryIntegerProperty<ProgramStage>(_entities[18].properties[6]);
+
+  /// see [ProgramStage.validationStrategy]
+  static final validationStrategy =
+      QueryStringProperty<ProgramStage>(_entities[18].properties[7]);
+
+  /// see [ProgramStage.featureType]
+  static final featureType =
+      QueryStringProperty<ProgramStage>(_entities[18].properties[8]);
+
+  /// see [ProgramStage.reportDateToUse]
+  static final reportDateToUse =
+      QueryStringProperty<ProgramStage>(_entities[18].properties[9]);
+
+  /// see [ProgramStage.program]
+  static final program =
+      QueryRelationToOne<ProgramStage, Program>(_entities[18].properties[10]);
+
+  /// see [ProgramStage.programStageDataElements]
+  static final programStageDataElements =
+      QueryRelationToMany<ProgramStage, DataElement>(
+          _entities[18].relations[0]);
+
+  /// see [ProgramStage.attributeValues]
+  static final attributeValues =
+      QueryRelationToMany<ProgramStage, DHIS2AttributeValue>(
+          _entities[18].relations[1]);
+
+  /// see [ProgramStage.programStageSections]
+  static final programStageSections =
+      QueryRelationToMany<ProgramStage, ProgramStageSection>(
+          _entities[18].relations[2]);
 }
 
 /// [ProgramStageSection] entity fields to define ObjectBox queries.
 class ProgramStageSection_ {
   /// see [ProgramStageSection.id]
   static final id =
-      QueryIntegerProperty<ProgramStageSection>(_entities[20].properties[0]);
+      QueryIntegerProperty<ProgramStageSection>(_entities[19].properties[0]);
 
   /// see [ProgramStageSection.created]
   static final created =
-      QueryIntegerProperty<ProgramStageSection>(_entities[20].properties[1]);
+      QueryIntegerProperty<ProgramStageSection>(_entities[19].properties[1]);
 
   /// see [ProgramStageSection.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<ProgramStageSection>(_entities[20].properties[2]);
+      QueryIntegerProperty<ProgramStageSection>(_entities[19].properties[2]);
 
   /// see [ProgramStageSection.uid]
   static final uid =
-      QueryStringProperty<ProgramStageSection>(_entities[20].properties[3]);
+      QueryStringProperty<ProgramStageSection>(_entities[19].properties[3]);
+
+  /// see [ProgramStageSection.name]
+  static final name =
+      QueryStringProperty<ProgramStageSection>(_entities[19].properties[4]);
+
+  /// see [ProgramStageSection.sortOrder]
+  static final sortOrder =
+      QueryIntegerProperty<ProgramStageSection>(_entities[19].properties[5]);
+
+  /// see [ProgramStageSection.programStage]
+  static final programStage =
+      QueryRelationToOne<ProgramStageSection, ProgramStage>(
+          _entities[19].properties[6]);
+
+  /// see [ProgramStageSection.dataElements]
+  static final dataElements =
+      QueryRelationToMany<ProgramStageSection, DataElement>(
+          _entities[19].relations[0]);
 }
 
 /// [RelationshipType] entity fields to define ObjectBox queries.
 class RelationshipType_ {
   /// see [RelationshipType.id]
   static final id =
-      QueryIntegerProperty<RelationshipType>(_entities[21].properties[0]);
+      QueryIntegerProperty<RelationshipType>(_entities[20].properties[0]);
 
   /// see [RelationshipType.created]
   static final created =
-      QueryIntegerProperty<RelationshipType>(_entities[21].properties[1]);
+      QueryIntegerProperty<RelationshipType>(_entities[20].properties[1]);
 
   /// see [RelationshipType.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<RelationshipType>(_entities[21].properties[2]);
+      QueryIntegerProperty<RelationshipType>(_entities[20].properties[2]);
 
   /// see [RelationshipType.uid]
   static final uid =
-      QueryStringProperty<RelationshipType>(_entities[21].properties[3]);
+      QueryStringProperty<RelationshipType>(_entities[20].properties[3]);
 
   /// see [RelationshipType.name]
   static final name =
-      QueryStringProperty<RelationshipType>(_entities[21].properties[4]);
+      QueryStringProperty<RelationshipType>(_entities[20].properties[4]);
 
   /// see [RelationshipType.code]
   static final code =
-      QueryStringProperty<RelationshipType>(_entities[21].properties[5]);
+      QueryStringProperty<RelationshipType>(_entities[20].properties[5]);
 
   /// see [RelationshipType.bidirectional]
   static final bidirectional =
-      QueryBooleanProperty<RelationshipType>(_entities[21].properties[6]);
+      QueryBooleanProperty<RelationshipType>(_entities[20].properties[6]);
 
   /// see [RelationshipType.referral]
   static final referral =
-      QueryBooleanProperty<RelationshipType>(_entities[21].properties[7]);
+      QueryBooleanProperty<RelationshipType>(_entities[20].properties[7]);
 
   /// see [RelationshipType.fromToName]
   static final fromToName =
-      QueryStringProperty<RelationshipType>(_entities[21].properties[8]);
+      QueryStringProperty<RelationshipType>(_entities[20].properties[8]);
 
   /// see [RelationshipType.toFromName]
   static final toFromName =
-      QueryStringProperty<RelationshipType>(_entities[21].properties[9]);
+      QueryStringProperty<RelationshipType>(_entities[20].properties[9]);
 
   /// see [RelationshipType.fromConstraint]
   static final fromConstraint =
       QueryRelationToOne<RelationshipType, RelationshipConstraint>(
-          _entities[21].properties[10]);
+          _entities[20].properties[10]);
 
   /// see [RelationshipType.toConstraint]
   static final toConstraint =
       QueryRelationToOne<RelationshipType, RelationshipConstraint>(
-          _entities[21].properties[11]);
+          _entities[20].properties[11]);
 }
 
 /// [TrackedEntityAttribute] entity fields to define ObjectBox queries.
 class TrackedEntityAttribute_ {
   /// see [TrackedEntityAttribute.id]
   static final id =
-      QueryIntegerProperty<TrackedEntityAttribute>(_entities[22].properties[0]);
+      QueryIntegerProperty<TrackedEntityAttribute>(_entities[21].properties[0]);
 
   /// see [TrackedEntityAttribute.created]
   static final created =
-      QueryIntegerProperty<TrackedEntityAttribute>(_entities[22].properties[1]);
+      QueryIntegerProperty<TrackedEntityAttribute>(_entities[21].properties[1]);
 
   /// see [TrackedEntityAttribute.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<TrackedEntityAttribute>(_entities[22].properties[2]);
+      QueryIntegerProperty<TrackedEntityAttribute>(_entities[21].properties[2]);
 
   /// see [TrackedEntityAttribute.uid]
   static final uid =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[3]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[3]);
 
   /// see [TrackedEntityAttribute.name]
   static final name =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[4]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[4]);
 
   /// see [TrackedEntityAttribute.code]
   static final code =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[5]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[5]);
 
   /// see [TrackedEntityAttribute.formName]
   static final formName =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[6]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[6]);
 
   /// see [TrackedEntityAttribute.shortName]
   static final shortName =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[7]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[7]);
 
   /// see [TrackedEntityAttribute.description]
   static final description =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[8]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[8]);
 
   /// see [TrackedEntityAttribute.aggregationType]
   static final aggregationType =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[9]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[9]);
 
   /// see [TrackedEntityAttribute.valueType]
   static final valueType =
-      QueryStringProperty<TrackedEntityAttribute>(_entities[22].properties[10]);
+      QueryStringProperty<TrackedEntityAttribute>(_entities[21].properties[10]);
 
   /// see [TrackedEntityAttribute.zeroIsSignificant]
   static final zeroIsSignificant = QueryBooleanProperty<TrackedEntityAttribute>(
-      _entities[22].properties[11]);
+      _entities[21].properties[11]);
 
   /// see [TrackedEntityAttribute.optionSet]
   static final optionSet =
       QueryRelationToOne<TrackedEntityAttribute, DHIS2OptionSet>(
-          _entities[22].properties[12]);
+          _entities[21].properties[12]);
 
   /// see [TrackedEntityAttribute.attributeValues]
   static final attributeValues =
       QueryRelationToMany<TrackedEntityAttribute, DHIS2AttributeValue>(
-          _entities[22].relations[0]);
+          _entities[21].relations[0]);
 
   /// see [TrackedEntityAttribute.legendSets]
   static final legendSets =
       QueryRelationToMany<TrackedEntityAttribute, LegendSet>(
-          _entities[22].relations[1]);
+          _entities[21].relations[1]);
 }
 
 /// [TrackedEntityType] entity fields to define ObjectBox queries.
 class TrackedEntityType_ {
   /// see [TrackedEntityType.id]
   static final id =
-      QueryIntegerProperty<TrackedEntityType>(_entities[23].properties[0]);
+      QueryIntegerProperty<TrackedEntityType>(_entities[22].properties[0]);
 
   /// see [TrackedEntityType.created]
   static final created =
-      QueryIntegerProperty<TrackedEntityType>(_entities[23].properties[1]);
+      QueryIntegerProperty<TrackedEntityType>(_entities[22].properties[1]);
 
   /// see [TrackedEntityType.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<TrackedEntityType>(_entities[23].properties[2]);
+      QueryIntegerProperty<TrackedEntityType>(_entities[22].properties[2]);
 
   /// see [TrackedEntityType.uid]
   static final uid =
-      QueryStringProperty<TrackedEntityType>(_entities[23].properties[3]);
+      QueryStringProperty<TrackedEntityType>(_entities[22].properties[3]);
 
   /// see [TrackedEntityType.name]
   static final name =
-      QueryStringProperty<TrackedEntityType>(_entities[23].properties[4]);
+      QueryStringProperty<TrackedEntityType>(_entities[22].properties[4]);
 
   /// see [TrackedEntityType.description]
   static final description =
-      QueryStringProperty<TrackedEntityType>(_entities[23].properties[5]);
+      QueryStringProperty<TrackedEntityType>(_entities[22].properties[5]);
 
   /// see [TrackedEntityType.trackedEntityTypeAttributes]
   static final trackedEntityTypeAttributes =
       QueryRelationToMany<TrackedEntityType, TrackedEntityTypeAttribute>(
-          _entities[23].relations[0]);
+          _entities[22].relations[0]);
 }
 
 /// [TrackedEntityTypeAttribute] entity fields to define ObjectBox queries.
 class TrackedEntityTypeAttribute_ {
   /// see [TrackedEntityTypeAttribute.id]
   static final id = QueryIntegerProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[0]);
+      _entities[23].properties[0]);
 
   /// see [TrackedEntityTypeAttribute.created]
   static final created = QueryIntegerProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[1]);
+      _entities[23].properties[1]);
 
   /// see [TrackedEntityTypeAttribute.lastUpdated]
   static final lastUpdated = QueryIntegerProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[2]);
+      _entities[23].properties[2]);
 
   /// see [TrackedEntityTypeAttribute.uid]
   static final uid = QueryStringProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[3]);
+      _entities[23].properties[3]);
 
   /// see [TrackedEntityTypeAttribute.trackedEntityType]
   static final trackedEntityType =
       QueryRelationToOne<TrackedEntityTypeAttribute, TrackedEntityType>(
-          _entities[24].properties[4]);
+          _entities[23].properties[4]);
 
   /// see [TrackedEntityTypeAttribute.trackedEntityAttribute]
   static final trackedEntityAttribute =
       QueryRelationToOne<TrackedEntityTypeAttribute, TrackedEntityAttribute>(
-          _entities[24].properties[5]);
+          _entities[23].properties[5]);
 
   /// see [TrackedEntityTypeAttribute.valueType]
   static final valueType = QueryStringProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[6]);
+      _entities[23].properties[6]);
 
   /// see [TrackedEntityTypeAttribute.displayName]
   static final displayName = QueryStringProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[7]);
+      _entities[23].properties[7]);
 
   /// see [TrackedEntityTypeAttribute.displayShortName]
   static final displayShortName =
       QueryStringProperty<TrackedEntityTypeAttribute>(
-          _entities[24].properties[8]);
+          _entities[23].properties[8]);
 
   /// see [TrackedEntityTypeAttribute.mandatory]
   static final mandatory = QueryBooleanProperty<TrackedEntityTypeAttribute>(
-      _entities[24].properties[9]);
+      _entities[23].properties[9]);
 }
 
 /// [RelationshipConstraint] entity fields to define ObjectBox queries.
 class RelationshipConstraint_ {
   /// see [RelationshipConstraint.id]
   static final id =
-      QueryIntegerProperty<RelationshipConstraint>(_entities[25].properties[0]);
+      QueryIntegerProperty<RelationshipConstraint>(_entities[24].properties[0]);
 
   /// see [RelationshipConstraint.relationshipEntity]
   static final relationshipEntity =
-      QueryStringProperty<RelationshipConstraint>(_entities[25].properties[1]);
+      QueryStringProperty<RelationshipConstraint>(_entities[24].properties[1]);
 
   /// see [RelationshipConstraint.name]
   static final name =
-      QueryStringProperty<RelationshipConstraint>(_entities[25].properties[2]);
+      QueryStringProperty<RelationshipConstraint>(_entities[24].properties[2]);
 
   /// see [RelationshipConstraint.trackedEntityType]
   static final trackedEntityType =
       QueryRelationToOne<RelationshipConstraint, TrackedEntityType>(
-          _entities[25].properties[3]);
+          _entities[24].properties[3]);
 
   /// see [RelationshipConstraint.relationshipType]
   static final relationshipType =
       QueryRelationToOne<RelationshipConstraint, RelationshipType>(
-          _entities[25].properties[4]);
+          _entities[24].properties[4]);
 
   /// see [RelationshipConstraint.program]
   static final program = QueryRelationToOne<RelationshipConstraint, Program>(
-      _entities[25].properties[5]);
+      _entities[24].properties[5]);
 
   /// see [RelationshipConstraint.programStage]
   static final programStage =
       QueryRelationToOne<RelationshipConstraint, ProgramStage>(
-          _entities[25].properties[6]);
+          _entities[24].properties[6]);
+}
+
+/// [SystemInfo] entity fields to define ObjectBox queries.
+class SystemInfo_ {
+  /// see [SystemInfo.id]
+  static final id =
+      QueryIntegerProperty<SystemInfo>(_entities[25].properties[0]);
+
+  /// see [SystemInfo.version]
+  static final version =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[1]);
+
+  /// see [SystemInfo.revision]
+  static final revision =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[2]);
+
+  /// see [SystemInfo.calendar]
+  static final calendar =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[3]);
+
+  /// see [SystemInfo.dateFormat]
+  static final dateFormat =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[4]);
+
+  /// see [SystemInfo.contextPath]
+  static final contextPath =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[5]);
+
+  /// see [SystemInfo.systemId]
+  static final systemId =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[6]);
+
+  /// see [SystemInfo.systemName]
+  static final systemName =
+      QueryStringProperty<SystemInfo>(_entities[25].properties[7]);
 }

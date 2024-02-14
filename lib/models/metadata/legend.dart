@@ -4,6 +4,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Legend extends DHIS2MetadataResource {
   @override
+  int id = 0;
+  @override
   DateTime created;
 
   @override
@@ -17,7 +19,6 @@ class Legend extends DHIS2MetadataResource {
   int endValue;
   String color;
   String displayName;
-
 
   Legend(
       {required this.created,
@@ -38,5 +39,4 @@ class Legend extends DHIS2MetadataResource {
         endValue = json["endValue"],
         color = json["color"],
         displayName = json["displayName"];
-
 }

@@ -135,13 +135,7 @@
           "type": 10
         }
       ],
-      "relations": [
-        {
-          "id": "2:4966942760818989276",
-          "name": "organisationUnits",
-          "targetId": "1:3157304700124096846"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "4:5746562288087590629",
@@ -197,59 +191,6 @@
           "id": "9:7850464300548363043",
           "name": "unique",
           "type": 1
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "5:1890676193673836562",
-      "lastPropertyId": "8:6910308545814603590",
-      "name": "SystemInfo",
-      "properties": [
-        {
-          "id": "1:2029267228329315129",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:5264812842849128249",
-          "name": "version",
-          "type": 9
-        },
-        {
-          "id": "3:6713491974457484880",
-          "name": "revision",
-          "type": 9
-        },
-        {
-          "id": "4:2858686366903286858",
-          "name": "calendar",
-          "type": 9
-        },
-        {
-          "id": "5:5554863321731916753",
-          "name": "dateFormat",
-          "type": 9
-        },
-        {
-          "id": "6:8053055960544215690",
-          "name": "contextPath",
-          "type": 9
-        },
-        {
-          "id": "7:5561991190173699760",
-          "name": "systemId",
-          "type": 9,
-          "flags": 2080,
-          "indexId": "6:4857119152297246429"
-        },
-        {
-          "id": "8:6910308545814603590",
-          "name": "systemName",
-          "type": 9,
-          "flags": 2048,
-          "indexId": "7:7548179625613315611"
         }
       ],
       "relations": []
@@ -733,7 +674,7 @@
     },
     {
       "id": "15:900010869586975097",
-      "lastPropertyId": "4:2459398241364805894",
+      "lastPropertyId": "7:4979106521348804123",
       "name": "Program",
       "properties": [
         {
@@ -755,10 +696,53 @@
         {
           "id": "4:2459398241364805894",
           "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "42:3677667778792542062"
+        },
+        {
+          "id": "5:6979760762695358044",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:8445002480272463015",
+          "name": "shortName",
+          "type": 9
+        },
+        {
+          "id": "7:4979106521348804123",
+          "name": "accessLevel",
           "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "14:5045654148043847141",
+          "name": "attributeValues",
+          "targetId": "6:4682159138495939191"
+        },
+        {
+          "id": "15:6878443873985571741",
+          "name": "organisationUnits",
+          "targetId": "1:3157304700124096846"
+        },
+        {
+          "id": "16:1545779435038231041",
+          "name": "programStages",
+          "targetId": "20:1968701549855660850"
+        },
+        {
+          "id": "17:5087962357507934901",
+          "name": "programSections",
+          "targetId": "19:8998323607593693267"
+        },
+        {
+          "id": "18:2233863430032367490",
+          "name": "programTrackedEntityAttributes",
+          "targetId": "23:2640479644037090191"
+        }
+      ]
     },
     {
       "id": "16:7828433541350092890",
@@ -992,7 +976,7 @@
     },
     {
       "id": "19:8998323607593693267",
-      "lastPropertyId": "4:810653082250581587",
+      "lastPropertyId": "7:8422357613216441030",
       "name": "ProgramSection",
       "properties": [
         {
@@ -1014,14 +998,40 @@
         {
           "id": "4:810653082250581587",
           "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "43:4327675558434138011"
+        },
+        {
+          "id": "5:7465070824631287867",
+          "name": "sortOrder",
+          "type": 6
+        },
+        {
+          "id": "6:5069562163202259482",
+          "name": "name",
           "type": 9
+        },
+        {
+          "id": "7:8422357613216441030",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "44:253513724727102455",
+          "relationTarget": "Program"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "19:5633601578063056343",
+          "name": "trackedEntityAttributes",
+          "targetId": "23:2640479644037090191"
+        }
+      ]
     },
     {
       "id": "20:1968701549855660850",
-      "lastPropertyId": "4:5548880116506714433",
+      "lastPropertyId": "11:3738482661005077602",
       "name": "ProgramStage",
       "properties": [
         {
@@ -1043,14 +1053,70 @@
         {
           "id": "4:5548880116506714433",
           "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "45:2754540738017298966"
+        },
+        {
+          "id": "5:5770394807191392921",
+          "name": "name",
           "type": 9
+        },
+        {
+          "id": "6:1557470199178867331",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "7:8905027388260174492",
+          "name": "sortOrder",
+          "type": 6
+        },
+        {
+          "id": "8:6409307443463137345",
+          "name": "validationStrategy",
+          "type": 9
+        },
+        {
+          "id": "9:2501716416625406027",
+          "name": "featureType",
+          "type": 9
+        },
+        {
+          "id": "10:2087692589925470391",
+          "name": "reportDateToUse",
+          "type": 9
+        },
+        {
+          "id": "11:3738482661005077602",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "46:1720334241710436077",
+          "relationTarget": "Program"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "20:6157521514374065028",
+          "name": "programStageDataElements",
+          "targetId": "12:8548529336902318249"
+        },
+        {
+          "id": "21:5672041947153916973",
+          "name": "attributeValues",
+          "targetId": "6:4682159138495939191"
+        },
+        {
+          "id": "22:6357623136356722808",
+          "name": "programStageSections",
+          "targetId": "21:6496719795622765387"
+        }
+      ]
     },
     {
       "id": "21:6496719795622765387",
-      "lastPropertyId": "4:5626280016940972506",
+      "lastPropertyId": "7:5336199077087970463",
       "name": "ProgramStageSection",
       "properties": [
         {
@@ -1072,10 +1138,36 @@
         {
           "id": "4:5626280016940972506",
           "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "47:6614353919659248007"
+        },
+        {
+          "id": "5:5841248787846717530",
+          "name": "name",
           "type": 9
+        },
+        {
+          "id": "6:5471568150024409146",
+          "name": "sortOrder",
+          "type": 6
+        },
+        {
+          "id": "7:5336199077087970463",
+          "name": "programStageId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "48:9120673119650023242",
+          "relationTarget": "ProgramStage"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "23:971473354457919572",
+          "name": "dataElements",
+          "targetId": "12:8548529336902318249"
+        }
+      ]
     },
     {
       "id": "22:4144499604677361893",
@@ -1101,7 +1193,9 @@
         {
           "id": "4:1230413077417726071",
           "name": "uid",
-          "type": 9
+          "type": 9,
+          "flags": 2080,
+          "indexId": "49:8523949959874071552"
         },
         {
           "id": "5:8154564375168382929",
@@ -1409,23 +1503,88 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "27:4257039281684597235",
+      "lastPropertyId": "8:62391955650356334",
+      "name": "SystemInfo",
+      "properties": [
+        {
+          "id": "1:2541208731901252984",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2340296546758801012",
+          "name": "version",
+          "type": 9
+        },
+        {
+          "id": "3:8147791544268911468",
+          "name": "revision",
+          "type": 9
+        },
+        {
+          "id": "4:5678285837014437509",
+          "name": "calendar",
+          "type": 9
+        },
+        {
+          "id": "5:8839843500406723456",
+          "name": "dateFormat",
+          "type": 9
+        },
+        {
+          "id": "6:167422643529174646",
+          "name": "contextPath",
+          "type": 9
+        },
+        {
+          "id": "7:6219267714700516130",
+          "name": "systemId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "50:3799113355042834058"
+        },
+        {
+          "id": "8:62391955650356334",
+          "name": "systemName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "51:6425864844828163502"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "26:1594311483522671794",
-  "lastIndexId": "41:183253394735194787",
-  "lastRelationId": "13:920062547678254275",
+  "lastEntityId": "27:4257039281684597235",
+  "lastIndexId": "51:6425864844828163502",
+  "lastRelationId": "23:971473354457919572",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    1890676193673836562
+  ],
   "retiredIndexUids": [
     8961184502700425506
   ],
   "retiredPropertyUids": [
     7325042414150286768,
     856433523957166225,
-    4130433912790738396
+    4130433912790738396,
+    2029267228329315129,
+    5264812842849128249,
+    6713491974457484880,
+    2858686366903286858,
+    5554863321731916753,
+    8053055960544215690,
+    5561991190173699760,
+    6910308545814603590
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    4966942760818989276
+  ],
   "version": 1
 }

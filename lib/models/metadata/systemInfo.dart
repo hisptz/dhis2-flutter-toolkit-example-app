@@ -5,7 +5,8 @@ import 'package:objectbox/objectbox.dart';
 final systemInfoBox = db.store.box<SystemInfo>();
 
 @Entity()
-class SystemInfo {
+class SystemInfo extends DHIS2Resource {
+  int id = 0;
 
   String version;
   String revision;
