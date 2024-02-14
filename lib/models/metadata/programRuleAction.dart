@@ -25,12 +25,28 @@ class ProgramRuleAction extends DHIS2MetadataResource {
   String? data;
   String? location;
 
+//TODO: Add the one 2 one relationships to the constructor
   final programRule = ToOne<ProgramRule>();
   final dataElement = ToOne<DataElement>();
   final programStageSection = ToOne<ProgramStageSection>();
   final programSection = ToOne<ProgramSection>();
   final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
 
-  ProgramRuleAction(this.created, this.lastUpdated, this.uid,
-      this.programRuleActionType, this.content, this.data, this.location);
+  ProgramRuleAction(
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.programRuleActionType,
+      this.content,
+      this.data,
+      this.location});
+
+  ProgramRuleAction.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        programRuleActionType = json["programRuleActionType"],
+        content = json["content"],
+        data = json["data"],
+        location = json["location"];
 }

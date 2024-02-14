@@ -25,6 +25,21 @@ class TrackedEntityTypeAttribute extends DHIS2MetadataResource {
   String displayShortName;
   bool mandatory;
 
-  TrackedEntityTypeAttribute(this.created, this.lastUpdated, this.uid,
-      this.valueType, this.displayName, this.displayShortName, this.mandatory);
+  TrackedEntityTypeAttribute(
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.valueType,
+      required this.displayName,
+      required this.displayShortName,
+      required this.mandatory});
+
+  TrackedEntityTypeAttribute.fromMap(Map json)
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        uid = json["id"],
+        valueType = json["valueType"],
+        displayName = json["displayName"],
+        displayShortName = json["displayShortName"],
+        mandatory = json["mandatory"];
 }

@@ -5,8 +5,7 @@ import 'package:objectbox/objectbox.dart';
 final systemInfoBox = db.store.box<SystemInfo>();
 
 @Entity()
-class SystemInfo extends DHIS2Resource {
-  int id = 0;
+class SystemInfo {
 
   String version;
   String revision;
@@ -18,8 +17,14 @@ class SystemInfo extends DHIS2Resource {
   @Index()
   String systemName;
 
-  SystemInfo(this.id, this.version, this.revision, this.calendar,
-      this.dateFormat, this.contextPath, this.systemId, this.systemName);
+  SystemInfo(
+      {required this.version,
+      required this.revision,
+      required this.calendar,
+      required this.dateFormat,
+      required this.contextPath,
+      required this.systemId,
+      required this.systemName});
 
   SystemInfo.fromMap(Map json)
       : calendar = json["calendar"],

@@ -21,12 +21,19 @@ class DHIS2Attribute extends DHIS2MetadataResource {
   bool? mandatory;
   bool? unique;
 
-  DHIS2Attribute(this.created, this.lastUpdated, this.uid, this.name,
-      this.valueType, this.objectTypes, this.mandatory, this.unique);
+  DHIS2Attribute(
+      {required this.created,
+      required this.lastUpdated,
+      required this.uid,
+      required this.name,
+      required this.valueType,
+      required this.objectTypes,
+      this.mandatory,
+      this.unique});
 
   DHIS2Attribute.fromMap(Map json)
-      : created = DateTime(json["created"]),
-        lastUpdated = DateTime(json["lastUpdated"]),
+      : created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         objectTypes = json["objectTypes"],

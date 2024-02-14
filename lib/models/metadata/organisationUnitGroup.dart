@@ -3,8 +3,8 @@ import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class OrganisationUnitGroup extends DHIS2MetadataResource {
-  int id = 0;
+
+class OrganisationUnitGroup implements DHIS2MetadataResource {
 
   String name;
   @override
@@ -20,5 +20,19 @@ class OrganisationUnitGroup extends DHIS2MetadataResource {
   DateTime lastUpdated;
 
   OrganisationUnitGroup(
-      this.id, this.name, this.uid, this.created, this.lastUpdated);
+      {required this.name,
+      required this.uid,
+      required this.created,
+      required this.lastUpdated});
+
+  OrganisationUnitGroup.fromMap(Map json)
+      : name = json["name"],
+        uid = json["id"],
+        created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["lastUpdated"]) {
+    List<OrganisationUnit> orgUnits =
+        json["organisationUnits"].map(OrganisationUnit.fromMap);
+
+    organisationUnits.addAll(orgUnits);
+  }
 }
