@@ -56,5 +56,12 @@ class DataElement implements DHIS2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         domainType = json["domainType"],
-        zeroIsSignificant = json["zeroIsSignificant"];
+        zeroIsSignificant = json["zeroIsSignificant"] {
+    List<DHIS2AttributeValue> value =
+        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
+    attributeValues.addAll(value);
+
+    List<LegendSet> set = json["legendSets"].map(LegendSet.fromMap);
+    legendSets.addAll(set);
+  }
 }
