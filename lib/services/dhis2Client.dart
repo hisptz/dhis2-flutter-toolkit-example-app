@@ -100,6 +100,9 @@ class DHIS2Client {
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.get(apiUrl, headers: headers);
+
+    print(apiUrl);
+
     return jsonDecode(response.body) as T;
   }
 

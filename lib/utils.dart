@@ -1,6 +1,5 @@
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:http/http.dart';
 
 Future<DHIS2Credentials?> login(
     {required String baseURL,
@@ -9,7 +8,7 @@ Future<DHIS2Credentials?> login(
   DHIS2Credentials credentials = DHIS2Credentials(username, password, baseURL);
   DHIS2Client client = DHIS2Client(credentials);
   try {
-    Response response = await client.httpGet("me");
+    Map response = await client.httpGet<Map>("me");
     print(response);
     return credentials;
   } catch (e) {

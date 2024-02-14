@@ -1,10 +1,13 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 
-class SystemInfoRepository extends BaseSyncService<SystemInfo> {
-  SystemInfoRepository()
+class SystemInfoSync extends BaseSyncService<SystemInfo> {
+  SystemInfoSync()
       : super(
-            fields: ["*"], resource: "system/info", mapper: SystemInfo.fromMap);
+            fields: ["*"],
+            resource: "system/info",
+            box: systemInfoBox,
+            label: "System Information");
 
   @override
   Future<BaseSyncService<SystemInfo>> get() async {
@@ -13,11 +16,6 @@ class SystemInfoRepository extends BaseSyncService<SystemInfo> {
       return this;
     }
     entity = SystemInfo.fromMap(data);
-    return this;
-  }
-
-  @override
-  Future<BaseSyncService<SystemInfo>> save() async {
     return this;
   }
 }

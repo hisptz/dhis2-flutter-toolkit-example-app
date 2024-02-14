@@ -9,8 +9,6 @@ class DHIS2UserGroup extends DHIS2MetadataResource {
   @Unique()
   String uid;
   @Index()
-  String code;
-  @Index()
   String name;
 
   @override
@@ -19,12 +17,10 @@ class DHIS2UserGroup extends DHIS2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  DHIS2UserGroup(
-      this.uid, this.code, this.name, this.created, this.lastUpdated);
+  DHIS2UserGroup(this.uid, this.name, this.created, this.lastUpdated);
 
   DHIS2UserGroup.fromMap(Map json)
       : uid = json["id"],
-        code = json["code"],
         name = json["name"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]);

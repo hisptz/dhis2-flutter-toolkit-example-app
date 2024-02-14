@@ -324,7 +324,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(7, 951536014289620099),
       name: 'DHIS2MeUser',
-      lastPropertyId: const IdUid(7, 2455375250497227660),
+      lastPropertyId: const IdUid(8, 2297156150837807418),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -343,11 +343,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 7325042414150286768),
-            name: 'lastName',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(5, 5076240480301039137),
             name: 'email',
             type: 9,
@@ -362,7 +357,12 @@ final _entities = <ModelEntity>[
             name: 'uid',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(11, 6007481385327701377))
+            indexId: const IdUid(11, 6007481385327701377)),
+        ModelProperty(
+            id: const IdUid(8, 2297156150837807418),
+            name: 'surname',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -497,12 +497,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(13, 2707531061137777322)),
         ModelProperty(
-            id: const IdUid(3, 4130433912790738396),
-            name: 'code',
-            type: 9,
-            flags: 2048,
-            indexId: const IdUid(14, 8961184502700425506)),
-        ModelProperty(
             id: const IdUid(4, 3216744724704235948),
             name: 'name',
             type: 9,
@@ -538,11 +532,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 2080,
             indexId: const IdUid(16, 332822280872704035)),
-        ModelProperty(
-            id: const IdUid(3, 856433523957166225),
-            name: 'code',
-            type: 9,
-            flags: 0),
         ModelProperty(
             id: const IdUid(4, 1451925082958681367),
             name: 'name',
@@ -1443,8 +1432,12 @@ ModelDefinition getObjectBoxModel() {
       lastRelationId: const IdUid(13, 920062547678254275),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredIndexUids: const [8961184502700425506],
+      retiredPropertyUids: const [
+        7325042414150286768,
+        856433523957166225,
+        4130433912790738396
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -1766,20 +1759,20 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (DHIS2MeUser object, fb.Builder fbb) {
           final usernameOffset = fbb.writeString(object.username);
           final firstNameOffset = fbb.writeString(object.firstName);
-          final lastNameOffset = fbb.writeString(object.lastName);
           final emailOffset =
               object.email == null ? null : fbb.writeString(object.email!);
           final authoritiesOffset = fbb.writeList(
               object.authorities.map(fbb.writeString).toList(growable: false));
           final uidOffset = fbb.writeString(object.uid);
-          fbb.startTable(8);
+          final surnameOffset = fbb.writeString(object.surname);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, usernameOffset);
           fbb.addOffset(2, firstNameOffset);
-          fbb.addOffset(3, lastNameOffset);
           fbb.addOffset(4, emailOffset);
           fbb.addOffset(5, authoritiesOffset);
           fbb.addOffset(6, uidOffset);
+          fbb.addOffset(7, surnameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1790,8 +1783,8 @@ ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 6, '');
           final firstNameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 8, '');
-          final lastNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
+          final surnameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 18, '');
           final emailParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 12);
           final authoritiesParam = const fb.ListReader<String>(
@@ -1803,7 +1796,7 @@ ModelDefinition getObjectBoxModel() {
           final object = DHIS2MeUser(
               username: usernameParam,
               firstName: firstNameParam,
-              lastName: lastNameParam,
+              surname: surnameParam,
               email: emailParam,
               authorities: authoritiesParam,
               uid: uidParam)
@@ -1920,12 +1913,10 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (DHIS2UserGroup object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          final codeOffset = fbb.writeString(object.code);
           final nameOffset = fbb.writeString(object.name);
           fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, uidOffset);
-          fbb.addOffset(2, codeOffset);
           fbb.addOffset(3, nameOffset);
           fbb.addInt64(4, object.created.millisecondsSinceEpoch);
           fbb.addInt64(5, object.lastUpdated.millisecondsSinceEpoch);
@@ -1937,8 +1928,6 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final codeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
           final createdParam = DateTime.fromMillisecondsSinceEpoch(
@@ -1946,7 +1935,7 @@ ModelDefinition getObjectBoxModel() {
           final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
           final object = DHIS2UserGroup(
-              uidParam, codeParam, nameParam, createdParam, lastUpdatedParam)
+              uidParam, nameParam, createdParam, lastUpdatedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -1961,14 +1950,12 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (DHIS2UserRole object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          final codeOffset = fbb.writeString(object.code);
           final nameOffset = fbb.writeString(object.name);
           final authoritiesOffset = fbb.writeList(
               object.authorities.map(fbb.writeString).toList(growable: false));
           fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, uidOffset);
-          fbb.addOffset(2, codeOffset);
           fbb.addOffset(3, nameOffset);
           fbb.addOffset(4, authoritiesOffset);
           fbb.addInt64(5, object.created.millisecondsSinceEpoch);
@@ -1981,8 +1968,6 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final codeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
           final authoritiesParam = const fb.ListReader<String>(
@@ -1993,8 +1978,8 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
           final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
-          final object = DHIS2UserRole(uidParam, codeParam, nameParam,
-              authoritiesParam, createdParam, lastUpdatedParam)
+          final object = DHIS2UserRole(uidParam, nameParam, authoritiesParam,
+              createdParam, lastUpdatedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -3079,20 +3064,20 @@ class DHIS2MeUser_ {
   static final firstName =
       QueryStringProperty<DHIS2MeUser>(_entities[6].properties[2]);
 
-  /// see [DHIS2MeUser.lastName]
-  static final lastName =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[3]);
-
   /// see [DHIS2MeUser.email]
   static final email =
-      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[4]);
+      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[3]);
 
   /// see [DHIS2MeUser.authorities]
   static final authorities =
-      QueryStringVectorProperty<DHIS2MeUser>(_entities[6].properties[5]);
+      QueryStringVectorProperty<DHIS2MeUser>(_entities[6].properties[4]);
 
   /// see [DHIS2MeUser.uid]
   static final uid =
+      QueryStringProperty<DHIS2MeUser>(_entities[6].properties[5]);
+
+  /// see [DHIS2MeUser.surname]
+  static final surname =
       QueryStringProperty<DHIS2MeUser>(_entities[6].properties[6]);
 
   /// see [DHIS2MeUser.userRoles]
@@ -3189,21 +3174,17 @@ class DHIS2UserGroup_ {
   static final uid =
       QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[1]);
 
-  /// see [DHIS2UserGroup.code]
-  static final code =
-      QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[2]);
-
   /// see [DHIS2UserGroup.name]
   static final name =
-      QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[3]);
+      QueryStringProperty<DHIS2UserGroup>(_entities[9].properties[2]);
 
   /// see [DHIS2UserGroup.created]
   static final created =
-      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[4]);
+      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[3]);
 
   /// see [DHIS2UserGroup.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[5]);
+      QueryIntegerProperty<DHIS2UserGroup>(_entities[9].properties[4]);
 }
 
 /// [DHIS2UserRole] entity fields to define ObjectBox queries.
@@ -3216,25 +3197,21 @@ class DHIS2UserRole_ {
   static final uid =
       QueryStringProperty<DHIS2UserRole>(_entities[10].properties[1]);
 
-  /// see [DHIS2UserRole.code]
-  static final code =
-      QueryStringProperty<DHIS2UserRole>(_entities[10].properties[2]);
-
   /// see [DHIS2UserRole.name]
   static final name =
-      QueryStringProperty<DHIS2UserRole>(_entities[10].properties[3]);
+      QueryStringProperty<DHIS2UserRole>(_entities[10].properties[2]);
 
   /// see [DHIS2UserRole.authorities]
   static final authorities =
-      QueryStringVectorProperty<DHIS2UserRole>(_entities[10].properties[4]);
+      QueryStringVectorProperty<DHIS2UserRole>(_entities[10].properties[3]);
 
   /// see [DHIS2UserRole.created]
   static final created =
-      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[5]);
+      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[4]);
 
   /// see [DHIS2UserRole.lastUpdated]
   static final lastUpdated =
-      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[6]);
+      QueryIntegerProperty<DHIS2UserRole>(_entities[10].properties[5]);
 }
 
 /// [DataElement] entity fields to define ObjectBox queries.

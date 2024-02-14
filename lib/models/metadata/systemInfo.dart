@@ -1,5 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
+
+final systemInfoBox = db.store.box<SystemInfo>();
 
 @Entity()
 class SystemInfo extends DHIS2Resource {

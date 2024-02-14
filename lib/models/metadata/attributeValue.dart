@@ -1,5 +1,4 @@
-import 'dart:html';
-
+import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
 import 'package:objectbox/objectbox.dart';
 

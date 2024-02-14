@@ -294,7 +294,7 @@
     },
     {
       "id": "7:951536014289620099",
-      "lastPropertyId": "7:2455375250497227660",
+      "lastPropertyId": "8:2297156150837807418",
       "name": "DHIS2MeUser",
       "properties": [
         {
@@ -314,11 +314,6 @@
           "type": 9
         },
         {
-          "id": "4:7325042414150286768",
-          "name": "lastName",
-          "type": 9
-        },
-        {
           "id": "5:5076240480301039137",
           "name": "email",
           "type": 9
@@ -334,6 +329,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "11:6007481385327701377"
+        },
+        {
+          "id": "8:2297156150837807418",
+          "name": "surname",
+          "type": 9
         }
       ],
       "relations": [
@@ -475,13 +475,6 @@
           "indexId": "13:2707531061137777322"
         },
         {
-          "id": "3:4130433912790738396",
-          "name": "code",
-          "type": 9,
-          "flags": 2048,
-          "indexId": "14:8961184502700425506"
-        },
-        {
           "id": "4:3216744724704235948",
           "name": "name",
           "type": 9,
@@ -518,11 +511,6 @@
           "type": 9,
           "flags": 2080,
           "indexId": "16:332822280872704035"
-        },
-        {
-          "id": "3:856433523957166225",
-          "name": "code",
-          "type": 9
         },
         {
           "id": "4:1451925082958681367",
@@ -1430,8 +1418,14 @@
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredIndexUids": [
+    8961184502700425506
+  ],
+  "retiredPropertyUids": [
+    7325042414150286768,
+    856433523957166225,
+    4130433912790738396
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

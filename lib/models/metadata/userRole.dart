@@ -8,7 +8,6 @@ class DHIS2UserRole extends DHIS2MetadataResource {
   @override
   @Unique()
   String uid;
-  String code;
   String name;
   List<String> authorities;
 
@@ -18,14 +17,13 @@ class DHIS2UserRole extends DHIS2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  DHIS2UserRole(this.uid, this.code, this.name, this.authorities, this.created,
-      this.lastUpdated);
+  DHIS2UserRole(
+      this.uid, this.name, this.authorities, this.created, this.lastUpdated);
 
   DHIS2UserRole.fromMap(Map json)
       : uid = json["id"],
-        code = json["code"],
         name = json["name"],
-        authorities = json["authorities"],
+        authorities = json["authorities"].cast<String>(),
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]);
 }

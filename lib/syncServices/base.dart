@@ -1,24 +1,35 @@
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 
 import '../models/base.dart';
+import '../objectbox.g.dart';
 
 abstract class BaseSyncService<T extends DHIS2Resource> {
   String resource;
   List<String> fields = [];
   List<String> filters = [];
-  Function mapper;
   T? entity;
   List<T>? entities;
+  Box<T> box;
+  String label;
 
   BaseSyncService(
-      {required this.resource, required this.fields, required this.mapper});
+      {required this.resource,
+      required this.fields,
+      required this.box,
+      required this.label});
 
   get url {
     return resource;
   }
 
   get queryParams {
-    return {"fields": fields.isEmpty ? fields.join(",") : ":owner"};
+    return {"fields": fields.isNotEmpty ? fields.join(",") : ""};
+  }
+
+  //Currently just checks if there is any data on the specific data model
+  Future<bool> isSynced() async {
+    List<T> entity = await box.getAllAsync();
+    return entity.isNotEmpty;
   }
 
   Future<D?> getData<D>() async {
@@ -27,5 +38,17 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
 
   Future<BaseSyncService<T>> get();
 
-  Future<BaseSyncService<T>> save();
+  Future<BaseSyncService<T>> save() async {
+    if (entity == null) {
+      throw "Entity not found. Make sure get is called first";
+    }
+    entity = await box.putAndGetAsync(entity!);
+    return this;
+  }
+
+  Future<BaseSyncService<T>> sync() async {
+    await get();
+    await save();
+    return this;
+  }
 }

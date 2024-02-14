@@ -1,5 +1,5 @@
-import 'package:dhis2_flutter_toolkit/modules/home.dart';
 import 'package:dhis2_flutter_toolkit/modules/login.dart';
+import 'package:dhis2_flutter_toolkit/modules/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,6 @@ class MainNavigation extends StatelessWidget {
       return const Login();
     }
 
-    return const Home();
+    return const SyncPage();
   }
 }
