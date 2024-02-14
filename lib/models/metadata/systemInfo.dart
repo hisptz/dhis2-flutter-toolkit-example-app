@@ -1,7 +1,8 @@
+import 'package:dhis2_flutter_toolkit/models/base.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class SystemInfo {
+class SystemInfo extends DHIS2Resource {
   int id = 0;
 
   String version;

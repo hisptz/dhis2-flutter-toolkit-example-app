@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 import 'organisationUnit.dart';
 
 @Entity()
-class OrganisationUnitLevel implements DHIS2MetadataResource {
+class OrganisationUnitLevel extends DHIS2MetadataResource {
   int id = 0;
 
   String name;

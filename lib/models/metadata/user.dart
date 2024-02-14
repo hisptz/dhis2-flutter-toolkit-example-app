@@ -1,10 +1,12 @@
+import 'package:dhis2_flutter_toolkit/models/base.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2MeUser {
+class DHIS2MeUser extends DHIS2Resource {
+  int id = 0;
   String username;
   String firstName;
   String lastName;

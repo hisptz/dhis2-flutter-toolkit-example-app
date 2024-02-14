@@ -1,0 +1,1437 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3157304700124096846",
+      "lastPropertyId": "8:5745814136480360495",
+      "name": "OrganisationUnit",
+      "properties": [
+        {
+          "id": "1:7778394961380106787",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6492232295611842729",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:2721667509635852493",
+          "name": "shortName",
+          "type": 9
+        },
+        {
+          "id": "4:2202927438804631493",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "1:699385692073055346"
+        },
+        {
+          "id": "5:1298814386914377053",
+          "name": "path",
+          "type": 9
+        },
+        {
+          "id": "6:1001448372725749582",
+          "name": "level",
+          "type": 6
+        },
+        {
+          "id": "7:6252541271763862655",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "8:5745814136480360495",
+          "name": "lastUpdated",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:237539528438513958",
+      "lastPropertyId": "5:8840816767693680134",
+      "name": "OrganisationUnitGroup",
+      "properties": [
+        {
+          "id": "1:7524869732918002550",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2042321883363497405",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8149287354897302411",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "2:1670748863137258552"
+        },
+        {
+          "id": "4:1114671843039616703",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "5:8840816767693680134",
+          "name": "lastUpdated",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:6900659298229635834",
+          "name": "organisationUnits",
+          "targetId": "1:3157304700124096846"
+        }
+      ]
+    },
+    {
+      "id": "3:330940200820770746",
+      "lastPropertyId": "6:4038491512021710271",
+      "name": "OrganisationUnitLevel",
+      "properties": [
+        {
+          "id": "1:7105230090558465040",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6683756563053641795",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6868096094096377695",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "3:801110034033103900"
+        },
+        {
+          "id": "4:9002833822897695057",
+          "name": "level",
+          "type": 6
+        },
+        {
+          "id": "5:9199371862550189703",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "6:4038491512021710271",
+          "name": "lastUpdated",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:4966942760818989276",
+          "name": "organisationUnits",
+          "targetId": "1:3157304700124096846"
+        }
+      ]
+    },
+    {
+      "id": "4:5746562288087590629",
+      "lastPropertyId": "9:7850464300548363043",
+      "name": "DHIS2Attribute",
+      "properties": [
+        {
+          "id": "1:5179732917305871876",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6377042710121150527",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:1873544617297222729",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:3703449442706819745",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "4:7628889367295447108"
+        },
+        {
+          "id": "5:9076484895674357180",
+          "name": "name",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "5:6259325880524263927"
+        },
+        {
+          "id": "6:7208687289250264075",
+          "name": "valueType",
+          "type": 9
+        },
+        {
+          "id": "7:8993717799992782050",
+          "name": "objectTypes",
+          "type": 30
+        },
+        {
+          "id": "8:2722049394428470543",
+          "name": "mandatory",
+          "type": 1
+        },
+        {
+          "id": "9:7850464300548363043",
+          "name": "unique",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1890676193673836562",
+      "lastPropertyId": "8:6910308545814603590",
+      "name": "SystemInfo",
+      "properties": [
+        {
+          "id": "1:2029267228329315129",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5264812842849128249",
+          "name": "version",
+          "type": 9
+        },
+        {
+          "id": "3:6713491974457484880",
+          "name": "revision",
+          "type": 9
+        },
+        {
+          "id": "4:2858686366903286858",
+          "name": "calendar",
+          "type": 9
+        },
+        {
+          "id": "5:5554863321731916753",
+          "name": "dateFormat",
+          "type": 9
+        },
+        {
+          "id": "6:8053055960544215690",
+          "name": "contextPath",
+          "type": 9
+        },
+        {
+          "id": "7:5561991190173699760",
+          "name": "systemId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "6:4857119152297246429"
+        },
+        {
+          "id": "8:6910308545814603590",
+          "name": "systemName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "7:7548179625613315611"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:4682159138495939191",
+      "lastPropertyId": "4:8529443069058324952",
+      "name": "DHIS2AttributeValue",
+      "properties": [
+        {
+          "id": "1:3287267681609999160",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6270168319196248471",
+          "name": "attributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "8:2460665742992103097",
+          "relationTarget": "DHIS2Attribute"
+        },
+        {
+          "id": "3:5790523148832597516",
+          "name": "dataElementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "9:8597277955312187051",
+          "relationTarget": "DataElement"
+        },
+        {
+          "id": "4:8529443069058324952",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "10:7943533425462088865",
+          "relationTarget": "TrackedEntityAttribute"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:951536014289620099",
+      "lastPropertyId": "7:2455375250497227660",
+      "name": "DHIS2MeUser",
+      "properties": [
+        {
+          "id": "1:7498367863798359120",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7904504124752273923",
+          "name": "username",
+          "type": 9
+        },
+        {
+          "id": "3:3506207185042319304",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "4:7325042414150286768",
+          "name": "lastName",
+          "type": 9
+        },
+        {
+          "id": "5:5076240480301039137",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "6:3896267454910306894",
+          "name": "authorities",
+          "type": 30
+        },
+        {
+          "id": "7:2455375250497227660",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "11:6007481385327701377"
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:4123498115819803584",
+          "name": "userRoles",
+          "targetId": "11:1978420831454939557"
+        },
+        {
+          "id": "4:2434782697553525840",
+          "name": "userGroups",
+          "targetId": "10:2915475660950608768"
+        },
+        {
+          "id": "5:3056061024851391692",
+          "name": "organisationUnits",
+          "targetId": "1:3157304700124096846"
+        }
+      ]
+    },
+    {
+      "id": "8:6966380446773749992",
+      "lastPropertyId": "8:5008967087979167828",
+      "name": "DHIS2Option",
+      "properties": [
+        {
+          "id": "1:2197145987733448287",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3601531762971740140",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:1399867337052049713",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:168172692336054715",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:7430017917217714432",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:2361760847988681468",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "7:3775606183871942692",
+          "name": "sortOrder",
+          "type": 6
+        },
+        {
+          "id": "8:5008967087979167828",
+          "name": "optionSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "12:7837653138915068179",
+          "relationTarget": "DHIS2OptionSet"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:5874170899826926039",
+      "lastPropertyId": "7:5083844055645166764",
+      "name": "DHIS2OptionSet",
+      "properties": [
+        {
+          "id": "1:3230927143394377745",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5375840053832032167",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:366642334865401877",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:8970679747854789135",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:938015507868335795",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:4982707860816127301",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "7:5083844055645166764",
+          "name": "valueType",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "6:9146650170576977834",
+          "name": "options",
+          "targetId": "8:6966380446773749992"
+        }
+      ]
+    },
+    {
+      "id": "10:2915475660950608768",
+      "lastPropertyId": "6:1286102686332120830",
+      "name": "DHIS2UserGroup",
+      "properties": [
+        {
+          "id": "1:7384986417088904271",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3939334856932525745",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "13:2707531061137777322"
+        },
+        {
+          "id": "3:4130433912790738396",
+          "name": "code",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "14:8961184502700425506"
+        },
+        {
+          "id": "4:3216744724704235948",
+          "name": "name",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "15:942431021170245756"
+        },
+        {
+          "id": "5:746197186595579849",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "6:1286102686332120830",
+          "name": "lastUpdated",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "11:1978420831454939557",
+      "lastPropertyId": "7:8422053376859537120",
+      "name": "DHIS2UserRole",
+      "properties": [
+        {
+          "id": "1:8739977781064343943",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3452461767046840135",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "16:332822280872704035"
+        },
+        {
+          "id": "3:856433523957166225",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "4:1451925082958681367",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:8605322945724214622",
+          "name": "authorities",
+          "type": 30
+        },
+        {
+          "id": "6:1931245622518880216",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "7:8422053376859537120",
+          "name": "lastUpdated",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "12:8548529336902318249",
+      "lastPropertyId": "14:6003243507206886547",
+      "name": "DataElement",
+      "properties": [
+        {
+          "id": "1:2950320049721240064",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "2:4476568711456095213",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "3:1946577452860575016",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "17:756011349301268535"
+        },
+        {
+          "id": "4:7607992391864126142",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:989648172677148850",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "6:3768252674118506026",
+          "name": "formName",
+          "type": 9
+        },
+        {
+          "id": "7:3758445740994270495",
+          "name": "shortName",
+          "type": 9
+        },
+        {
+          "id": "8:5178913974159846898",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "9:7993021921152350411",
+          "name": "aggregationType",
+          "type": 9
+        },
+        {
+          "id": "10:6344708447471141133",
+          "name": "valueType",
+          "type": 9
+        },
+        {
+          "id": "11:5448680695704199539",
+          "name": "domainType",
+          "type": 9
+        },
+        {
+          "id": "12:5938138383642929682",
+          "name": "zeroIsSignificant",
+          "type": 1
+        },
+        {
+          "id": "13:2157323036423865416",
+          "name": "optionSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "18:5417634589666719209",
+          "relationTarget": "DHIS2OptionSet"
+        },
+        {
+          "id": "14:6003243507206886547",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "7:1057043709914922110",
+          "name": "attributeValues",
+          "targetId": "6:4682159138495939191"
+        },
+        {
+          "id": "8:1810305865487753088",
+          "name": "legendSets",
+          "targetId": "14:1407655794943967659"
+        }
+      ]
+    },
+    {
+      "id": "13:3020524125395928760",
+      "lastPropertyId": "9:5475360347844038217",
+      "name": "Legend",
+      "properties": [
+        {
+          "id": "1:5237937834125289524",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "2:2535836097331701091",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "3:2681418256123158399",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "4:8041216553375072674",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:4621193480594969649",
+          "name": "startValue",
+          "type": 6
+        },
+        {
+          "id": "6:4943575638748499688",
+          "name": "endValue",
+          "type": 6
+        },
+        {
+          "id": "7:3684362386285474050",
+          "name": "color",
+          "type": 9
+        },
+        {
+          "id": "8:1405462965726332195",
+          "name": "displayName",
+          "type": 9
+        },
+        {
+          "id": "9:5475360347844038217",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "14:1407655794943967659",
+      "lastPropertyId": "6:5000923350987022046",
+      "name": "LegendSet",
+      "properties": [
+        {
+          "id": "1:2383628197638702771",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3217763065701748771",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:841952445209763884",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:4593574894166605846",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "19:6351401570636041004"
+        },
+        {
+          "id": "5:7286444294635885090",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:5000923350987022046",
+          "name": "code",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "9:6326956477776142574",
+          "name": "legends",
+          "targetId": "13:3020524125395928760"
+        }
+      ]
+    },
+    {
+      "id": "15:900010869586975097",
+      "lastPropertyId": "4:2459398241364805894",
+      "name": "Program",
+      "properties": [
+        {
+          "id": "1:1114261887460256635",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4566544435840602736",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:2599291002707701301",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:2459398241364805894",
+          "name": "uid",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "16:7828433541350092890",
+      "lastPropertyId": "8:4596175496504436089",
+      "name": "ProgramRule",
+      "properties": [
+        {
+          "id": "1:4722674754377328058",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9145402416712312117",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:146154362307388528",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:7295951471130527335",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:1425710328384433210",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:5849191959009867970",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "7:3870006738378911432",
+          "name": "condition",
+          "type": 9
+        },
+        {
+          "id": "8:4596175496504436089",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "20:8225616375226766870",
+          "relationTarget": "Program"
+        }
+      ],
+      "relations": [
+        {
+          "id": "10:5553415640848727571",
+          "name": "programRuleActions",
+          "targetId": "17:6235587652090588023"
+        }
+      ]
+    },
+    {
+      "id": "17:6235587652090588023",
+      "lastPropertyId": "13:2162201218574620295",
+      "name": "ProgramRuleAction",
+      "properties": [
+        {
+          "id": "1:5032788779881530892",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7227271925168658450",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:5419583755376326692",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:8471469415156513490",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:8616009002710068821",
+          "name": "programRuleActionType",
+          "type": 9
+        },
+        {
+          "id": "6:8435568219233091313",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "7:1790157756534968889",
+          "name": "data",
+          "type": 9
+        },
+        {
+          "id": "8:5538946093615325925",
+          "name": "location",
+          "type": 9
+        },
+        {
+          "id": "9:5043608102327937481",
+          "name": "programRuleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "21:9156874611618072498",
+          "relationTarget": "ProgramRule"
+        },
+        {
+          "id": "10:3273867237847334791",
+          "name": "dataElementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "22:4869739014432729703",
+          "relationTarget": "DataElement"
+        },
+        {
+          "id": "11:5242855173580746779",
+          "name": "programStageSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "23:1782017455477155345",
+          "relationTarget": "ProgramStageSection"
+        },
+        {
+          "id": "12:1820638713782713345",
+          "name": "programSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "24:5716874700528927585",
+          "relationTarget": "ProgramSection"
+        },
+        {
+          "id": "13:2162201218574620295",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "25:8774307487488549696",
+          "relationTarget": "TrackedEntityAttribute"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "18:4084959408941274488",
+      "lastPropertyId": "12:7166540533095467216",
+      "name": "ProgramRuleVariable",
+      "properties": [
+        {
+          "id": "1:6218624441072324881",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6944750135761012689",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:2357155752046875505",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:7794482751902920",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "26:1695248266608157229"
+        },
+        {
+          "id": "5:3926068691182116413",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:7665392560993937526",
+          "name": "programRuleVariableSourceType",
+          "type": 9
+        },
+        {
+          "id": "7:4453163740176389884",
+          "name": "valueType",
+          "type": 9
+        },
+        {
+          "id": "8:3804757602977995483",
+          "name": "useCodeForOptionSet",
+          "type": 1
+        },
+        {
+          "id": "9:2455647965954255329",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "27:7475789079064311663",
+          "relationTarget": "TrackedEntityAttribute"
+        },
+        {
+          "id": "10:3153537616468481354",
+          "name": "dataElementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "28:3410288237879073727",
+          "relationTarget": "DataElement"
+        },
+        {
+          "id": "11:1388970138298344838",
+          "name": "programStageId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "29:8445394614214995919",
+          "relationTarget": "ProgramStage"
+        },
+        {
+          "id": "12:7166540533095467216",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "30:4183065374477117207",
+          "relationTarget": "Program"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "19:8998323607593693267",
+      "lastPropertyId": "4:810653082250581587",
+      "name": "ProgramSection",
+      "properties": [
+        {
+          "id": "1:2266148421333834519",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8756873085833029779",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:3287504464575145877",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:810653082250581587",
+          "name": "uid",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "20:1968701549855660850",
+      "lastPropertyId": "4:5548880116506714433",
+      "name": "ProgramStage",
+      "properties": [
+        {
+          "id": "1:617434412115760678",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2267359699024215515",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:3740475897296642593",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:5548880116506714433",
+          "name": "uid",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "21:6496719795622765387",
+      "lastPropertyId": "4:5626280016940972506",
+      "name": "ProgramStageSection",
+      "properties": [
+        {
+          "id": "1:5132313766833593514",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7131877717865652277",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:9208448860481717034",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:5626280016940972506",
+          "name": "uid",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "22:4144499604677361893",
+      "lastPropertyId": "12:6374128428311917756",
+      "name": "RelationshipType",
+      "properties": [
+        {
+          "id": "1:3681051067206930875",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2431434309650962270",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:4130879412561088098",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:1230413077417726071",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:8154564375168382929",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:2580827294357115359",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "7:1474234612385014818",
+          "name": "bidirectional",
+          "type": 1
+        },
+        {
+          "id": "8:2566599683033561367",
+          "name": "referral",
+          "type": 1
+        },
+        {
+          "id": "9:161242157200750945",
+          "name": "fromToName",
+          "type": 9
+        },
+        {
+          "id": "10:914331836487107113",
+          "name": "toFromName",
+          "type": 9
+        },
+        {
+          "id": "11:9191113453512339640",
+          "name": "fromConstraintId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "31:4943343298518238315",
+          "relationTarget": "RelationshipConstraint"
+        },
+        {
+          "id": "12:6374128428311917756",
+          "name": "toConstraintId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "32:7955539201632284640",
+          "relationTarget": "RelationshipConstraint"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "23:2640479644037090191",
+      "lastPropertyId": "13:5697938382514020091",
+      "name": "TrackedEntityAttribute",
+      "properties": [
+        {
+          "id": "1:2320398857072015923",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4493200662211744703",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:1855169405427120883",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:5333301862264972594",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "33:477320925987229450"
+        },
+        {
+          "id": "5:2169587847350860774",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:8659666314069188782",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "7:5258683259509848527",
+          "name": "formName",
+          "type": 9
+        },
+        {
+          "id": "8:5060582612581327141",
+          "name": "shortName",
+          "type": 9
+        },
+        {
+          "id": "9:3650169200936915799",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "10:4820658848590174945",
+          "name": "aggregationType",
+          "type": 9
+        },
+        {
+          "id": "11:2485487627973959391",
+          "name": "valueType",
+          "type": 9
+        },
+        {
+          "id": "12:7125293477854820653",
+          "name": "zeroIsSignificant",
+          "type": 1
+        },
+        {
+          "id": "13:5697938382514020091",
+          "name": "optionSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "34:911841268383280371",
+          "relationTarget": "DHIS2OptionSet"
+        }
+      ],
+      "relations": [
+        {
+          "id": "11:2740652281233492510",
+          "name": "attributeValues",
+          "targetId": "6:4682159138495939191"
+        },
+        {
+          "id": "12:349630473432731419",
+          "name": "legendSets",
+          "targetId": "14:1407655794943967659"
+        }
+      ]
+    },
+    {
+      "id": "24:1739967874137306785",
+      "lastPropertyId": "6:6636905537691598511",
+      "name": "TrackedEntityType",
+      "properties": [
+        {
+          "id": "1:3581058671183033343",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4752546330920066857",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:8864183082173667657",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:2318729054995068157",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "35:2585692370893144483"
+        },
+        {
+          "id": "5:7328645149766686972",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:6636905537691598511",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "13:920062547678254275",
+          "name": "trackedEntityTypeAttributes",
+          "targetId": "25:8224540364192530902"
+        }
+      ]
+    },
+    {
+      "id": "25:8224540364192530902",
+      "lastPropertyId": "10:6565645919549780012",
+      "name": "TrackedEntityTypeAttribute",
+      "properties": [
+        {
+          "id": "1:1829808014553468662",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6678667406081247924",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:605202127560855051",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:8781437333901562472",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "5:3178920350625700000",
+          "name": "trackedEntityTypeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "36:6746681908510274671",
+          "relationTarget": "TrackedEntityType"
+        },
+        {
+          "id": "6:2743747458103961293",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "37:6079947760883912791",
+          "relationTarget": "TrackedEntityAttribute"
+        },
+        {
+          "id": "7:2403250058594915335",
+          "name": "valueType",
+          "type": 9
+        },
+        {
+          "id": "8:626449854648814964",
+          "name": "displayName",
+          "type": 9
+        },
+        {
+          "id": "9:3922232190517425436",
+          "name": "displayShortName",
+          "type": 9
+        },
+        {
+          "id": "10:6565645919549780012",
+          "name": "mandatory",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "26:1594311483522671794",
+      "lastPropertyId": "7:7136213345804377941",
+      "name": "RelationshipConstraint",
+      "properties": [
+        {
+          "id": "1:5359003994764421232",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1341947896388537381",
+          "name": "relationshipEntity",
+          "type": 9
+        },
+        {
+          "id": "3:4754234759964620515",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6610727248290263347",
+          "name": "trackedEntityTypeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "38:2327862521981802113",
+          "relationTarget": "TrackedEntityType"
+        },
+        {
+          "id": "5:6957144985565889535",
+          "name": "relationshipTypeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "39:4801487745142423174",
+          "relationTarget": "RelationshipType"
+        },
+        {
+          "id": "6:1242716170531260502",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "40:4106012477761887537",
+          "relationTarget": "Program"
+        },
+        {
+          "id": "7:7136213345804377941",
+          "name": "programStageId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "41:183253394735194787",
+          "relationTarget": "ProgramStage"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "26:1594311483522671794",
+  "lastIndexId": "41:183253394735194787",
+  "lastRelationId": "13:920062547678254275",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

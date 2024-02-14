@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class OrganisationUnitGroup implements DHIS2MetadataResource {
+class OrganisationUnitGroup extends DHIS2MetadataResource {
   int id = 0;
 
   String name;

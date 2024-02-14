@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DataElement implements DHIS2MetadataResource {
+class DataElement extends DHIS2MetadataResource {
   @override
   DateTime created;
 
@@ -43,4 +43,7 @@ class DataElement implements DHIS2MetadataResource {
       this.valueType,
       this.domainType,
       this.zeroIsSignificant);
+
+  @override
+  int id = 0;
 }

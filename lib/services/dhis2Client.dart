@@ -46,62 +46,67 @@ class DHIS2Client {
 
   //This is the function that sends a Post Request to the DHIS2 Instance
 //The function creates a new entity in the DHIS2 Instance Server
-//This method accepts url String, query parameters, body of Json data and returns a response object
-  Future<http.Response> httpPost(
+//This method accepts url String, query parameters, body of Json data and returns a Map
+  Future<T> httpPost<T>(
     String url,
     body, {
     Map<String, dynamic>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
-    return http.post(
+    http.Response response = await http.post(
       apiUrl,
       headers: headers,
       body: body,
     );
+    return jsonDecode(response.body) as T;
   }
 
 //This is the function that sends a Put Request to the DHIS2 Instance with a JSON body
 //The function updates an existing entity in the DHIS2 Instance Server
 //This method accepts url String, query parameters, body of Json data and returns a response object
-  Future<http.Response> httpPut(
+  Future<T> httpPut<T>(
     String url,
     body, {
     Map<String, dynamic>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
-    return http.put(
+    http.Response response = await http.put(
       apiUrl,
       headers: headers,
       body: body,
     );
+
+    return jsonDecode(response.body) as T;
   }
 
 //This is the function that sends a Delete Request to the DHIS2 Instance
 //The function deletes an existing entity in the DHIS2 Instance Server
 //This method accepts url String, query parameters and returns a response object
-  Future<http.Response> httpDelete(
+  Future<T> httpDelete<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
-    return await http.delete(apiUrl, headers: headers);
+    http.Response response = await http.delete(apiUrl, headers: headers);
+    return jsonDecode(response.body) as T;
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
 //The function Reads entities in the DHIS2 Instance Server
 //This method accepts url String, query parameters and returns a response object
-  Future<http.Response> httpGet(
+  Future<T> httpGet<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
-    return await http.get(apiUrl, headers: headers);
+    http.Response response = await http.get(apiUrl, headers: headers);
+    return jsonDecode(response.body) as T;
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
 //The function Reads entities in the DHIS2 Instance Server
   ///This method accepts url String, query parameters and returns a response object with a page size of 1
-  Future<http.Response> httpGetPagination(
+  Future<T> httpGetPagination<T>(
     String url,
     Map<String, dynamic> queryParameters,
   ) async {
@@ -111,7 +116,7 @@ class DHIS2Client {
       'fields': 'none',
     };
     dataQueryParameters.addAll(queryParameters);
-    return await httpGet(url, queryParameters: dataQueryParameters);
+    return await httpGet<T>(url, queryParameters: dataQueryParameters);
   }
 
   ///This method returns a String of server url
@@ -121,12 +126,8 @@ class DHIS2Client {
   }
 }
 
-DHIS2Client? client;
+DHIS2Client? dhis2client;
 
-void initializeClient(
-    {required String baseURL,
-    required String username,
-    required String password}) {
-  DHIS2Credentials credentials = DHIS2Credentials(username, password, baseURL);
-  client = DHIS2Client(credentials);
+void initializeClient(DHIS2Credentials credentials) {
+  dhis2client = DHIS2Client(credentials);
 }

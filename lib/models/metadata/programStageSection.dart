@@ -1,6 +1,10 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:objectbox/objectbox.dart';
 
-class ProgramStageSection implements DHIS2MetadataResource {
+@Entity()
+class ProgramStageSection extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

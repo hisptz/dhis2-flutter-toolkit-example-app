@@ -2,7 +2,10 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/relationshipConstraint.dart';
 import 'package:objectbox/objectbox.dart';
 
-class RelationshipType implements DHIS2MetadataResource {
+@Entity()
+class RelationshipType extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

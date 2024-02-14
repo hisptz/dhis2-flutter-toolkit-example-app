@@ -8,7 +8,10 @@ import 'package:objectbox/objectbox.dart';
 
 import 'programRule.dart';
 
-class ProgramRuleAction implements DHIS2MetadataResource {
+@Entity()
+class ProgramRuleAction extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

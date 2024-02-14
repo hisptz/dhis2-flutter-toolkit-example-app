@@ -2,7 +2,10 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/option.dart';
 import 'package:objectbox/objectbox.dart';
 
-class DHIS2OptionSet implements DHIS2MetadataResource {
+@Entity()
+class DHIS2OptionSet extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

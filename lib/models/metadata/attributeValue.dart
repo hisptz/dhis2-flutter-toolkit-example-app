@@ -5,11 +5,11 @@ import 'package:objectbox/objectbox.dart';
 
 import 'attribute.dart';
 
+@Entity()
 class DHIS2AttributeValue {
+  int id = 0;
   final attribute = ToOne<DHIS2Attribute>();
   final dataElement = ToOne<DataElement>();
   final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
   dynamic value;
-
-  DHIS2AttributeValue(this.value);
 }
