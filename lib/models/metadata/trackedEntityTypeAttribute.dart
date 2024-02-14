@@ -4,7 +4,10 @@ import 'package:objectbox/objectbox.dart';
 
 import 'trackedEntityType.dart';
 
-class TrackedEntityTypeAttribute implements DHIS2MetadataResource {
+@Entity()
+class TrackedEntityTypeAttribute extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

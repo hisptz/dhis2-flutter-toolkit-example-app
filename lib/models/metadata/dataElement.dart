@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DataElement implements DHIS2MetadataResource {
+class DataElement extends DHIS2MetadataResource {
   @override
   DateTime created;
 
@@ -31,6 +31,7 @@ class DataElement implements DHIS2MetadataResource {
   final optionSet = ToOne<DHIS2OptionSet>();
 
   DataElement(
+
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -64,4 +65,5 @@ class DataElement implements DHIS2MetadataResource {
     List<LegendSet> set = json["legendSets"].map(LegendSet.fromMap);
     legendSets.addAll(set);
   }
+
 }

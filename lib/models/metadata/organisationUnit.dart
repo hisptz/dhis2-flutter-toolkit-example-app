@@ -2,9 +2,13 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
+
 class OrganisationUnit implements DHIS2MetadataResource {
+
+
   String name;
   String shortName;
+  @override
   @Unique()
   String uid;
   String path;
@@ -14,6 +18,7 @@ class OrganisationUnit implements DHIS2MetadataResource {
 
   @override
   DateTime lastUpdated;
+
 
   OrganisationUnit(
       {required this.name,

@@ -1,7 +1,9 @@
+import 'package:dhis2_flutter_toolkit/models/base.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class SystemInfo {
+
   String version;
   String revision;
   String calendar;

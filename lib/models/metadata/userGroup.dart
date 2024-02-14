@@ -1,13 +1,18 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
+
 class DHIS2UserGroup implements DHIS2MetadataResource {
+
+@Entity()
+
   @override
   @Unique()
   String uid;
+  @Index()
   String code;
+  @Index()
   String name;
-  List<String> authorities;
 
   @override
   DateTime created;
@@ -23,11 +28,12 @@ class DHIS2UserGroup implements DHIS2MetadataResource {
       required this.created,
       required this.lastUpdated});
 
+
   DHIS2UserGroup.fromMap(Map json)
       : uid = json["id"],
         code = json["code"],
         name = json["name"],
         authorities = json["authorities"],
-        created = json["created"],
+        created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]);
 }

@@ -3,7 +3,9 @@ import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityTypeAttribute
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class TrackedEntityType implements DHIS2MetadataResource {
+class TrackedEntityType extends DHIS2MetadataResource {
+  @override
+  int id = 0;
   @override
   DateTime created;
 

@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Legend implements DHIS2MetadataResource {
+class Legend extends DHIS2MetadataResource {
   @override
   DateTime created;
 
@@ -17,6 +17,7 @@ class Legend implements DHIS2MetadataResource {
   int endValue;
   String color;
   String displayName;
+
 
   Legend(
       {required this.created,
@@ -37,4 +38,5 @@ class Legend implements DHIS2MetadataResource {
         endValue = json["endValue"],
         color = json["color"],
         displayName = json["displayName"];
+
 }
