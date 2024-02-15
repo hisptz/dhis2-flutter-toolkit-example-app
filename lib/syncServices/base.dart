@@ -5,7 +5,7 @@ import '../objectbox.g.dart';
 
 abstract class BaseSyncService<T extends DHIS2Resource> {
   String resource;
-  List<String> fields = [];
+  List<String>? fields = [];
   List<String> filters = [];
   T? entity;
   List<T>? entities;
@@ -14,7 +14,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
 
   BaseSyncService(
       {required this.resource,
-      required this.fields,
+      this.fields,
       required this.box,
       required this.label});
 
@@ -23,7 +23,9 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
   }
 
   get queryParams {
-    return {"fields": fields.isNotEmpty ? fields.join(",") : ""};
+    if (fields != null) {
+      return {"fields": fields!.isNotEmpty ? fields!.join(",") : ""};
+    }
   }
 
   //Currently just checks if there is any data on the specific data model

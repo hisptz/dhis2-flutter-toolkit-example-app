@@ -8,7 +8,7 @@ import 'package:objectbox/objectbox.dart';
 import 'programRule.dart';
 
 @Entity()
-class ProgramRuleAction extends DHIS2MetadataResource {
+class ProgramRuleAction extends D2MetadataResource {
   @override
   int id = 0;
   @override

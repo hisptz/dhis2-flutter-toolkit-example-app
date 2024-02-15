@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 import 'trackedEntityType.dart';
 
 @Entity()
-class TrackedEntityTypeAttribute extends DHIS2MetadataResource {
+class TrackedEntityTypeAttribute extends D2MetadataResource {
   @override
   int id = 0;
   @override

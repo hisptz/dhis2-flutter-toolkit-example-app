@@ -2,10 +2,15 @@ import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../../objectbox.g.dart';
+
+final trackedEntityAttributeBox = db.store.box<TrackedEntityAttribute>();
+
 @Entity()
-class TrackedEntityAttribute extends DHIS2MetadataResource {
+class TrackedEntityAttribute extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -30,6 +35,13 @@ class TrackedEntityAttribute extends DHIS2MetadataResource {
   final attributeValues = ToMany<DHIS2AttributeValue>();
   final legendSets = ToMany<LegendSet>();
   final optionSet = ToOne<DHIS2OptionSet>();
+
+  static TrackedEntityAttribute? getByUid(String id) {
+    Query query = trackedEntityAttributeBox
+        .query(TrackedEntityAttribute_.uid.equals(id))
+        .build();
+    return query.findFirst();
+  }
 
   TrackedEntityAttribute(
       {required this.created,

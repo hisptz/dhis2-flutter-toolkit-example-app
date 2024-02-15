@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2UserRole extends DHIS2MetadataResource {
+class DHIS2UserRole extends D2MetadataResource {
   @override
   int id = 0;
   @override

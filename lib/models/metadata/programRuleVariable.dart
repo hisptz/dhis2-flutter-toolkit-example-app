@@ -7,7 +7,7 @@ import 'program.dart';
 import 'programStage.dart';
 
 @Entity()
-class ProgramRuleVariable extends DHIS2MetadataResource {
+class ProgramRuleVariable extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -29,7 +29,7 @@ class ProgramRuleVariable extends DHIS2MetadataResource {
   final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
   final dataElement = ToOne<DataElement>();
   final programStage = ToOne<ProgramStage>();
-  final program = ToOne<Program>();
+  final program = ToOne<D2Program>();
 
   ProgramRuleVariable(
       {required this.created,

@@ -2,10 +2,15 @@ import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../../objectbox.g.dart';
+
+final dataElementBox = db.store.box<DataElement>();
+
 @Entity()
-class DataElement extends DHIS2MetadataResource {
+class DataElement extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -43,6 +48,11 @@ class DataElement extends DHIS2MetadataResource {
       required this.valueType,
       required this.domainType,
       required this.zeroIsSignificant});
+
+  static DataElement? getByUid(String id) {
+    Query query = dataElementBox.query(DataElement_.uid.equals(id)).build();
+    return query.findFirst();
+  }
 
   DataElement.fromMap(Map json)
       : created = DateTime.parse(json["created"]),

@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 import 'program.dart';
 
 @Entity()
-class ProgramRule extends DHIS2MetadataResource {
+class ProgramRule extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -21,7 +21,7 @@ class ProgramRule extends DHIS2MetadataResource {
   String description;
   String condition;
 
-  var program = ToOne<Program>();
+  var program = ToOne<D2Program>();
   final programRuleActions = ToMany<ProgramRuleAction>();
 
   ProgramRule(

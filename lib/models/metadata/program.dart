@@ -3,11 +3,14 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
+final programBox = db.store.box<D2Program>();
+
 @Entity()
-class Program extends DHIS2MetadataResource {
+class D2Program extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -32,9 +35,10 @@ class Program extends DHIS2MetadataResource {
 
   final programSections = ToMany<ProgramSection>();
 
-  final programTrackedEntityAttributes = ToMany<TrackedEntityAttribute>();
+  final programTrackedEntityAttributes =
+      ToMany<ProgramTrackedEntityAttribute>();
 
-  Program({
+  D2Program({
     required this.created,
     required this.lastUpdated,
     required this.uid,
@@ -43,7 +47,7 @@ class Program extends DHIS2MetadataResource {
     required this.shortName,
   });
 
-  Program.fromMap(Map json)
+  D2Program.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -55,8 +59,8 @@ class Program extends DHIS2MetadataResource {
 
     attributeValues.addAll(attributeValue);
 
-    List<OrganisationUnit> orgUnits =
-        json["organisationUnits"].map(OrganisationUnit.fromMap);
+    List<OrganisationUnit> orgUnits = json["organisationUnits"]
+        .map((Map orgUnit) => OrganisationUnit.getByUid(orgUnit["id"]));
     organisationUnits.addAll(orgUnits);
 
     List<ProgramStage> programStage =
@@ -67,8 +71,9 @@ class Program extends DHIS2MetadataResource {
         json["programSections"].map(ProgramSection.fromMap);
     programSections.addAll(programSection);
 
-    List<TrackedEntityAttribute> tei = json["programTrackedEntityAttributes"]
-        .map(TrackedEntityAttribute.fromMap);
-    programTrackedEntityAttributes.addAll(tei);
+    List<ProgramTrackedEntityAttribute> ptea =
+        json["programTrackedEntityAttributes"]
+            .map(ProgramTrackedEntityAttribute.fromMap);
+    programTrackedEntityAttributes.addAll(ptea);
   }
 }

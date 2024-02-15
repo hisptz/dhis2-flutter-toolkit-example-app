@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 import 'legend.dart';
 
 @Entity()
-class LegendSet extends DHIS2MetadataResource {
+class LegendSet extends D2MetadataResource {
   @override
   int id = 0;
   @override

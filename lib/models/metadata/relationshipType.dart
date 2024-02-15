@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/relationshipConstraint.dar
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class RelationshipType extends DHIS2MetadataResource {
+class RelationshipType extends D2MetadataResource {
   @override
   int id = 0;
   @override

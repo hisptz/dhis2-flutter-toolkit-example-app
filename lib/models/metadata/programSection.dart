@@ -4,7 +4,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.da
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramSection extends DHIS2MetadataResource {
+class ProgramSection extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -19,7 +19,7 @@ class ProgramSection extends DHIS2MetadataResource {
   int sortOrder;
   String name;
 
-  final program = ToOne<Program>();
+  final program = ToOne<D2Program>();
   final trackedEntityAttributes = ToMany<TrackedEntityAttribute>();
 
   ProgramSection(
@@ -35,9 +35,8 @@ class ProgramSection extends DHIS2MetadataResource {
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
-    List<TrackedEntityAttribute> tei =
-        json["trackedEntityAttributes"].map(TrackedEntityAttribute.fromMap);
-
+    List<TrackedEntityAttribute> tei = json["trackedEntityAttributes"]
+        .map((Map tea) => TrackedEntityAttribute.getByUid(tea["id"]));
     trackedEntityAttributes.addAll(tei);
   }
 }

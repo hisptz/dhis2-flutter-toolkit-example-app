@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/option.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2OptionSet extends DHIS2MetadataResource {
+class DHIS2OptionSet extends D2MetadataResource {
   @override
   int id = 0;
   @override

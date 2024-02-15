@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializePreference();
   db = await ObjectBox.create();
-  DHIS2Credentials? credentials = await DHIS2Credentials.fromPreferences();
+  DHIS2Credentials? credentials = DHIS2Credentials.fromPreferences();
   if (credentials != null) {
     initializeClient(credentials);
   }

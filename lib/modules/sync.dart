@@ -70,14 +70,14 @@ class _SyncPageState extends State<SyncPage> {
           children: loading
               ? [
                   const CircularProgressIndicator(),
-                  Padding(padding: EdgeInsets.all(16.0)),
-                  Text("Checking for metadata...")
+                  const Padding(padding: EdgeInsets.all(16.0)),
+                  const Text("Checking for metadata...")
                 ]
               : [
                   LinearProgressIndicator(
                     value: progressPercentage,
                   ),
-                  Padding(padding: EdgeInsets.all(16.0)),
+                  const Padding(padding: EdgeInsets.all(16.0)),
                   Text("Syncing $currentSyncLabel")
                 ],
         ),

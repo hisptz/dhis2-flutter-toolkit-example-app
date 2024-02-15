@@ -1,12 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramStage extends DHIS2MetadataResource {
+class ProgramStage extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -25,9 +25,9 @@ class ProgramStage extends DHIS2MetadataResource {
   String featureType;
   String reportDateToUse;
 
-  final program = ToOne<Program>();
+  final program = ToOne<D2Program>();
 
-  final programStageDataElements = ToMany<DataElement>();
+  final programStageDataElements = ToMany<ProgramStageDataElement>();
 
   final attributeValues = ToMany<DHIS2AttributeValue>();
 
@@ -55,19 +55,19 @@ class ProgramStage extends DHIS2MetadataResource {
         reportDateToUse = json["reportDateToUse"],
         featureType = json["featureType"],
         description = json["description"] {
-    List<DataElement> dataElement =
-        json["programStageDataElements"].map(DataElement.fromMap);
+    List<ProgramStageDataElement> programStageDataElements =
+        json["programStageDataElements"].map(ProgramStageDataElement.fromMap);
 
-    programStageDataElements.addAll(dataElement);
+    programStageDataElements.addAll(programStageDataElements);
 
-    List<DHIS2AttributeValue> attributeValue =
+    List<DHIS2AttributeValue> attributeValues =
         json["attributeValues"].map(DHIS2AttributeValue.fromMap);
 
-    attributeValues.addAll(attributeValue);
+    attributeValues.addAll(attributeValues);
 
-    List<ProgramStageSection> programSection =
+    List<ProgramStageSection> programSections =
         json["programStageSections"].map(ProgramStageSection.fromMap);
 
-    programStageSections.addAll(programSection);
+    programStageSections.addAll(programSections);
   }
 }

@@ -4,7 +4,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramStageSection extends DHIS2MetadataResource {
+class ProgramStageSection extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -35,5 +35,10 @@ class ProgramStageSection extends DHIS2MetadataResource {
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
-        sortOrder = json["sortOrder"];
+        sortOrder = json["sortOrder"] {
+    List<DataElement> dataElementObjects = json["dataElements"]
+        .map((Map de) => DataElement.getByUid(de["id"]))
+        .toList();
+    dataElements.addAll(dataElementObjects);
+  }
 }

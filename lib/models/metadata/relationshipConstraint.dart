@@ -1,4 +1,3 @@
-
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/relationshipType.dart';
@@ -15,7 +14,7 @@ class RelationshipConstraint {
 
   final relationshipType = ToOne<RelationshipType>();
 
-  final program = ToOne<Program>();
+  final program = ToOne<D2Program>();
 
   final programStage = ToOne<ProgramStage>();
 
