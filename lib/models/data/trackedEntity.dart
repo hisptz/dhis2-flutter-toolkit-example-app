@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';
 
@@ -28,7 +29,7 @@ class TrackedEntity extends D2DataResource {
 
   final enrollments = ToMany<D2Enrollment>();
   final relationships = ToMany<Relationship>();
-  final attributes = ToMany<D2TrackedEntityAttributeValues>();
+  final attributes = ToMany<D2TrackedEntityAttributeValue>();
 
   TrackedEntity(
       {required this.uid,
@@ -60,8 +61,8 @@ class TrackedEntity extends D2DataResource {
 
     enrollments.addAll(enrollment);
 
-    List<D2TrackedEntityAttributeValues> attributeValue =
-        json["attributes"].map(D2TrackedEntityAttributeValues.fromMap);
+    List<D2TrackedEntityAttributeValue> attributeValue =
+        json["attributes"].map(D2TrackedEntityAttributeValue.fromMap);
 
     attributes.addAll(attributeValue);
 

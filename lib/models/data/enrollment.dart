@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';
 
@@ -31,7 +32,7 @@ class D2Enrollment extends D2DataResource {
 
   final events = ToMany<D2Event>();
   final relationships = ToMany<Relationship>();
-  final attributes = ToMany<D2TrackedEntityAttributeValues>();
+  final attributes = ToMany<D2TrackedEntityAttributeValue>();
 
   D2Enrollment({
     required this.enrollment,
@@ -76,8 +77,8 @@ class D2Enrollment extends D2DataResource {
 
     relationships.addAll(relationship);
 
-    List<D2TrackedEntityAttributeValues> attributeValue =
-        json["attributes"].map(D2TrackedEntityAttributeValues.fromMap);
+    List<D2TrackedEntityAttributeValue> attributeValue =
+        json["attributes"].map(D2TrackedEntityAttributeValue.fromMap);
 
     attributes.addAll(attributeValue);
   }
