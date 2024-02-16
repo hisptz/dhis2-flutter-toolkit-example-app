@@ -14,8 +14,9 @@ class D2Event extends D2DataResource {
 
   DateTime createdAtClient;
 
+  @override
   @Unique()
-  String event;
+  String uid;
   DateTime dueDate;
   String program;
   String programStage;
@@ -52,7 +53,7 @@ class D2Event extends D2DataResource {
       required this.notes,
       required this.dueDate,
       required this.enrollmentStatus,
-      required this.event,
+      required this.uid,
       required this.programStage,
       required this.eventDate});
 
@@ -73,7 +74,7 @@ class D2Event extends D2DataResource {
         notes = json["notes"],
         dueDate = DateTime.parse(json["dueDate"]),
         enrollmentStatus = json["enrollmentStatus"],
-        event = json["event"],
+        uid = json["event"],
         programStage = json["programStage"],
         eventDate = DateTime.parse(json["eventDate"]) {
     List<Relationship> relationship =
