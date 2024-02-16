@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 
 import '../../objectbox.g.dart';
 
@@ -25,7 +26,7 @@ class TrackedEntity extends D2DataResource {
   bool deleted;
   bool inactive;
 
-  final enrollments = ToMany<D2Enrollments>();
+  final enrollments = ToMany<D2Enrollment>();
   final relationships = ToMany<Relationship>();
   final attributes = ToMany<D2TrackedEntityAttributeValues>();
 
@@ -54,8 +55,8 @@ class TrackedEntity extends D2DataResource {
         featureType = json["featureType"],
         programOwners = json["programOwners"],
         inactive = json["inactive"] {
-    List<D2Enrollments> enrollment =
-        json["enrollments"].map(D2Enrollments.fromMap);
+    List<D2Enrollment> enrollment =
+        json["enrollments"].map(D2Enrollment.fromMap);
 
     enrollments.addAll(enrollment);
 

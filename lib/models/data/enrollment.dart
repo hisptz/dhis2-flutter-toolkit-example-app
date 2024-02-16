@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 
 import '../../objectbox.g.dart';
 
