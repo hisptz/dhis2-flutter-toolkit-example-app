@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';

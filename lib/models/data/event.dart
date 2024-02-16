@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
+import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 
 import '../../objectbox.g.dart';
 

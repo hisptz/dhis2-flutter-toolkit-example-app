@@ -1,9 +1,9 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 
 import '../../objectbox.g.dart';
 
 @Entity()
-class D2TrackedEntityAttributeValue extends D2MetadataResource {
+class D2TrackedEntityAttributeValue extends D2DataResource {
   @override
   int id = 0;
   @override

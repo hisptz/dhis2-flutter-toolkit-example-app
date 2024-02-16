@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
+import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';
@@ -16,8 +17,9 @@ class D2Enrollment extends D2DataResource {
 
   DateTime createdAtClient;
 
+  @override
   @Unique()
-  String enrollment;
+  String uid;
   String program;
   String trackedEntityInstance;
   String trackedEntityType;
@@ -35,7 +37,7 @@ class D2Enrollment extends D2DataResource {
   final attributes = ToMany<D2TrackedEntityAttributeValue>();
 
   D2Enrollment({
-    required this.enrollment,
+    required this.uid,
     required this.program,
     required this.lastUpdated,
     required this.created,
@@ -53,7 +55,7 @@ class D2Enrollment extends D2DataResource {
   });
 
   D2Enrollment.fromMap(Map json)
-      : enrollment = json["enrollment"],
+      : uid = json["enrollment"],
         program = json["program"],
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         created = DateTime.parse(json["created"]),
