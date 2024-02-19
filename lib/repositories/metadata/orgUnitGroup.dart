@@ -5,8 +5,8 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
 final d2OrganisationUnitGroupBox = db.store.box<D2OrganisationUnitGroup>();
 
-class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnitGroup> {
-  D2OrgUnitRepository() : super(d2OrganisationUnitGroupBox);
+class D2OrgUnitGroupRepository extends BaseRepository<D2OrganisationUnitGroup> {
+  D2OrgUnitGroupRepository() : super(d2OrganisationUnitGroupBox);
 
   @override
   D2OrganisationUnitGroup? getByUid(String uid) {

@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnitGroup.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -32,7 +33,7 @@ class D2OrganisationUnitGroup implements D2MetadataResource {
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
     List<D2OrganisationUnit> orgUnits =
         json["organisationUnits"].map(D2OrganisationUnit.fromMap);
-
     organisationUnits.addAll(orgUnits);
+    id = D2OrgUnitGroupRepository().getIdByUid(json["id"]) ?? 0;
   }
 }

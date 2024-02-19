@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleVariable.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'program.dart';
@@ -47,5 +48,7 @@ class D2ProgramRuleVariable extends D2MetadataResource {
         name = json["name"],
         programRuleVariableSourceType = json["programRuleVariableSourceType"],
         valueType = json["valueType"],
-        useCodeForOptionSet = json["useCodeForOptionSet"];
+        useCodeForOptionSet = json["useCodeForOptionSet"] {
+    id = D2ProgramRuleVariableRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

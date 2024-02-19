@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2OrgUnitLevelBox = db.store.box<D2OrganisationUnitLevel>();
 
 class D2OrgUnitLevelRepository extends BaseRepository<D2OrganisationUnitLevel> {
-  D2OrgUnitLevelRepository(super.box);
+  D2OrgUnitLevelRepository() : super(d2OrgUnitLevelBox);
 
   @override
   D2OrganisationUnitLevel? getByUid(String uid) {

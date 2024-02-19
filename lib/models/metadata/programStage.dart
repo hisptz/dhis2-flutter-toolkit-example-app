@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -52,6 +53,7 @@ class D2ProgramStage extends D2MetadataResource {
         reportDateToUse = json["reportDateToUse"],
         featureType = json["featureType"],
         description = json["description"] {
+    id = D2ProgramStageRepository().getIdByUid(json["id"]) ?? 0;
     List<D2ProgramStageDataElement> psde = json["programStageDataElements"]
         .cast<Map>()
         .map<D2ProgramStageDataElement>(D2ProgramStageDataElement.fromMap)

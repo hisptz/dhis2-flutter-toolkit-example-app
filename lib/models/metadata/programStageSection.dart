@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStageSection.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -37,6 +38,7 @@ class D2ProgramStageSection extends D2MetadataResource {
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
+    id = D2ProgramStageSectionRepository().getIdByUid(json["id"]) ?? 0;
     List<D2DataElement?> dataElementObjects = json["dataElements"]
         .cast<Map>()
         .map<D2DataElement?>(

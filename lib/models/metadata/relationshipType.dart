@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/relationshipConstraint.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/relationshipType.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -45,5 +46,7 @@ class D2RelationshipType extends D2MetadataResource {
         bidirectional = json["bidirectional"],
         referral = json["referral"],
         fromToName = json["fromToName"],
-        toFromName = json["toFromName"];
+        toFromName = json["toFromName"] {
+    id = D2RelationshipTypeRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

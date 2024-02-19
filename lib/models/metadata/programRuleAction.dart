@@ -3,6 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleVariable.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'programRule.dart';
@@ -48,5 +49,7 @@ class D2ProgramRuleAction extends D2MetadataResource {
         programRuleActionType = json["programRuleActionType"],
         content = json["content"],
         data = json["data"],
-        location = json["location"];
+        location = json["location"] {
+    id = D2ProgramRuleVariableRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

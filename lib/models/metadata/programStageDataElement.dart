@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStageDataElement.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -32,6 +33,7 @@ class D2ProgramStageDataElement extends D2MetadataResource {
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         compulsory = json["compulsory"],
         sortOrder = json["sortOrder"] {
+    id = D2ProgramStageDataElementRepository().getIdByUid(json["id"]) ?? 0;
     dataElement.target = D2DataElement.fromMap(json["dataElement"]);
   }
 }

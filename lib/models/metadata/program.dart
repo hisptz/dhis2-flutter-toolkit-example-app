@@ -5,6 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
 
 final programBox = db.store.box<D2Program>();
@@ -52,6 +53,7 @@ class D2Program extends D2MetadataResource {
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"] {
+    id = D2ProgramRepository().getIdByUid(json["id"]) ?? 0;
     List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
         .map<D2OrganisationUnit?>(

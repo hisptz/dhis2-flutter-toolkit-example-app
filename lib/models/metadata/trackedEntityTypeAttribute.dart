@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'trackedEntityType.dart';
@@ -41,5 +42,7 @@ class D2TrackedEntityTypeAttribute extends D2MetadataResource {
         valueType = json["valueType"],
         displayName = json["displayName"],
         displayShortName = json["displayShortName"],
-        mandatory = json["mandatory"];
+        mandatory = json["mandatory"] {
+    id = D2TrackedEntityAttributeRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

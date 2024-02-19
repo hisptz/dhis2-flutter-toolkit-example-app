@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 final trackedEntityAttributeBox = db.store.box<D2TrackedEntityAttribute>();
@@ -57,6 +58,7 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
+    id = D2TrackedEntityAttributeRepository().getIdByUid(json["id"]) ?? 0;
     List<D2LegendSet> legendSet = json["attributeValues"]
         .cast<Map>()
         .map<D2LegendSet>(D2LegendSet.fromMap)
