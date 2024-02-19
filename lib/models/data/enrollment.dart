@@ -2,8 +2,11 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 
 import '../../objectbox.g.dart';
+
+final d2EnrollmentBox = db.store.box<D2Enrollment>();
 
 @Entity()
 class D2Enrollment extends D2DataResource {

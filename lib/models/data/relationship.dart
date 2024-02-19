@@ -1,5 +1,10 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
+
+import '../../objectbox.g.dart';
+
+final relationshipBox = db.store.box<Relationship>();
 
 @Entity()
 class Relationship extends D2DataResource {
