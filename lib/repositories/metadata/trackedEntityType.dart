@@ -7,7 +7,7 @@ final d2TrackedEntityTypeBox = db.store.box<D2TrackedEntityType>();
 
 class D2TrackedEntityTypeRepository
     extends BaseRepository<D2TrackedEntityType> {
-  D2TrackedEntityTypeRepository(super.box);
+  D2TrackedEntityTypeRepository() : super(d2TrackedEntityTypeBox);
 
   @override
   D2TrackedEntityType? getByUid(String uid) {

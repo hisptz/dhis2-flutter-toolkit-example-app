@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityTypeAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
@@ -9,7 +8,8 @@ final d2TrackedEntityTypeAttributeBox =
 
 class D2TrackedEntityTypeAttributeRepository
     extends BaseRepository<D2TrackedEntityTypeAttribute> {
-  D2TrackedEntityTypeAttributeRepository(super.box);
+  D2TrackedEntityTypeAttributeRepository()
+      : super(d2TrackedEntityTypeAttributeBox);
 
   @override
   D2TrackedEntityTypeAttribute? getByUid(String uid) {

@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -60,6 +61,8 @@ class D2DataElement extends D2MetadataResource {
         .map<D2LegendSet>(D2LegendSet.fromMap)
         .toList();
     legendSets.addAll(set);
+
+    id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
   }
 
   @override

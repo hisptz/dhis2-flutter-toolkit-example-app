@@ -6,7 +6,7 @@ final d2RelationshipConstraintBox = db.store.box<D2RelationshipConstraint>();
 
 class D2RelationshipConstraintRepository
     extends BaseRepository<D2RelationshipConstraint> {
-  D2RelationshipConstraintRepository(super.box);
+  D2RelationshipConstraintRepository() : super(d2RelationshipConstraintBox);
 
   @override
   D2RelationshipConstraint? getByUid(String uid) {

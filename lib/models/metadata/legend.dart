@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -38,5 +39,7 @@ class D2Legend extends D2MetadataResource {
         startValue = json["startValue"].toDouble(),
         endValue = json["endValue"].toDouble(),
         color = json["color"],
-        displayName = json["displayName"];
+        displayName = json["displayName"] {
+    id = D2LegendRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

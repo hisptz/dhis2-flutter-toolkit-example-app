@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/legendSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'legend.dart';
@@ -39,5 +40,7 @@ class D2LegendSet extends D2MetadataResource {
     List<D2Legend> allLegends =
         json["legends"].cast<Map>().map<D2Legend>(D2Legend.fromMap).toList();
     legends.addAll(allLegends);
+
+    id = D2LegendSetRepository().getIdByUid(json["id"]) ?? 0;
   }
 }

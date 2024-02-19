@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2OptionBox = db.store.box<D2Option>();
 
 class D2OptionRepository extends BaseRepository<D2Option> {
-  D2OptionRepository(super.box);
+  D2OptionRepository() : super(d2OptionBox);
 
   @override
   D2Option? getByUid(String uid) {

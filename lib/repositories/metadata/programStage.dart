@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2ProgramStageBox = db.store.box<D2ProgramStage>();
 
 class D2ProgramStageRepository extends BaseRepository<D2ProgramStage> {
-  D2ProgramStageRepository(super.box);
+  D2ProgramStageRepository() : super(d2ProgramStageBox);
 
   @override
   D2ProgramStage? getByUid(String uid) {

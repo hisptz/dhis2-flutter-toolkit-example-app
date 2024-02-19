@@ -8,7 +8,8 @@ final d2ProgramTrackedEntityAttributeBox =
 
 class D2ProgramTrackedEntityAttributeRepository
     extends BaseRepository<D2ProgramTrackedEntityAttribute> {
-  D2ProgramTrackedEntityAttributeRepository(super.box);
+  D2ProgramTrackedEntityAttributeRepository()
+      : super(d2ProgramTrackedEntityAttributeBox);
 
   @override
   D2ProgramTrackedEntityAttribute? getByUid(String uid) {

@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/option.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -39,5 +40,6 @@ class D2OptionSet extends D2MetadataResource {
         valueType = json["valueType"] {
     List<D2Option> option = json["options"].map(D2Option.fromMap);
     options.addAll(option);
+    id = D2OptionSetRepository().getIdByUid(json["id"]) ?? 0;
   }
 }

@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programRule.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
@@ -7,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2ProgramRuleBox = db.store.box<D2ProgramRule>();
 
 class D2ProgramRuleRepository extends BaseRepository<D2ProgramRule> {
-  D2ProgramRuleRepository(super.box);
+  D2ProgramRuleRepository() : super(d2ProgramRuleBox);
 
   @override
   D2ProgramRule? getByUid(String uid) {

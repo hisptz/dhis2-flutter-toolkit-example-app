@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2ProgramBox = db.store.box<D2Program>();
 
 class D2ProgramRepository extends BaseRepository<D2Program> {
-  D2ProgramRepository(super.box);
+  D2ProgramRepository() : super(d2ProgramBox);
 
   @override
   D2Program? getByUid(String uid) {

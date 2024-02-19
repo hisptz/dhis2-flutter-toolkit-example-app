@@ -7,7 +7,7 @@ final d2ProgramRuleVariableBox = db.store.box<D2ProgramRuleVariable>();
 
 class D2ProgramRuleVariableRepository
     extends BaseRepository<D2ProgramRuleVariable> {
-  D2ProgramRuleVariableRepository(super.box);
+  D2ProgramRuleVariableRepository() : super(d2ProgramRuleVariableBox);
 
   @override
   D2ProgramRuleVariable? getByUid(String uid) {

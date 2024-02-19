@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 final d2RelationshipTypeBox = db.store.box<D2RelationshipType>();
 
 class D2RelationshipTypeRepository extends BaseRepository<D2RelationshipType> {
-  D2RelationshipTypeRepository(super.box);
+  D2RelationshipTypeRepository() : super(d2RelationshipTypeBox);
 
   @override
   D2RelationshipType? getByUid(String uid) {
