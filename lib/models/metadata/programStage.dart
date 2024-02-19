@@ -19,11 +19,11 @@ class ProgramStage extends D2MetadataResource {
   @Unique()
   String uid;
   String name;
-  String description;
+  String? description;
   int sortOrder;
-  String validationStrategy;
-  String featureType;
-  String reportDateToUse;
+  String? validationStrategy;
+  String? featureType;
+  String? reportDateToUse;
 
   final program = ToOne<D2Program>();
 
@@ -39,10 +39,10 @@ class ProgramStage extends D2MetadataResource {
     required this.uid,
     required this.name,
     required this.sortOrder,
-    required this.validationStrategy,
-    required this.reportDateToUse,
-    required this.featureType,
-    required this.description,
+    this.validationStrategy,
+    this.reportDateToUse,
+    this.featureType,
+    this.description,
   });
 
   ProgramStage.fromMap(Map json)
@@ -55,19 +55,25 @@ class ProgramStage extends D2MetadataResource {
         reportDateToUse = json["reportDateToUse"],
         featureType = json["featureType"],
         description = json["description"] {
-    List<ProgramStageDataElement> programStageDataElements =
-        json["programStageDataElements"].map(ProgramStageDataElement.fromMap);
+    List<ProgramStageDataElement> psde = json["programStageDataElements"]
+        .cast<Map>()
+        .map<ProgramStageDataElement>(ProgramStageDataElement.fromMap)
+        .toList();
 
-    programStageDataElements.addAll(programStageDataElements);
+    programStageDataElements.addAll(psde);
 
-    List<DHIS2AttributeValue> attributeValues =
-        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
+    List<DHIS2AttributeValue> av = json["attributeValues"]
+        .cast<Map>()
+        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
+        .toList();
 
-    attributeValues.addAll(attributeValues);
+    attributeValues.addAll(av);
 
-    List<ProgramStageSection> programSections =
-        json["programStageSections"].map(ProgramStageSection.fromMap);
+    List<ProgramStageSection> ps = json["programStageSections"]
+        .cast<Map>()
+        .map<ProgramStageSection>(ProgramStageSection.fromMap)
+        .toList();
 
-    programStageSections.addAll(programSections);
+    programStageSections.addAll(ps);
   }
 }

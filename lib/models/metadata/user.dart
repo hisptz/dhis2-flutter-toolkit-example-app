@@ -1,43 +1,49 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/user.dart';
 import 'package:objectbox/objectbox.dart';
 
-final dhis2MeUserBox = db.store.box<DHIS2MeUser>();
-
 @Entity()
-class DHIS2MeUser extends DHIS2Resource {
+class D2User extends DHIS2Resource {
   int id = 0;
   String username;
   String firstName;
   String surname;
   String? email;
   List<String> authorities;
+  List<String> programs;
+  List<String> organisationUnits;
 
   final userRoles = ToMany<DHIS2UserRole>();
   final userGroups = ToMany<DHIS2UserGroup>();
-  final organisationUnits = ToMany<OrganisationUnit>();
 
   @Unique()
   String uid;
 
-  DHIS2MeUser(
+  D2User(
       {required this.username,
       required this.firstName,
       required this.surname,
       this.email,
       required this.authorities,
-      required this.uid});
+      required this.uid,
+      required this.programs,
+      required this.organisationUnits});
 
-  DHIS2MeUser.fromMap(Map<String, dynamic> json)
+  D2User.fromMap(Map<String, dynamic> json)
       : uid = json["id"],
         username = json["username"],
         firstName = json["firstName"],
         surname = json["surname"],
         email = json["email"],
-        authorities = json["authorities"].cast<String>() {
+        authorities = json["authorities"].cast<String>(),
+        programs = json["programs"].cast<String>(),
+        organisationUnits = json["organisationUnits"]
+            .map((orgUnit) => orgUnit["id"])
+            .toList()
+            .cast<String>() {
+    id = D2UserRepository().getIdByUid(json["id"]) ?? 0;
     List<DHIS2UserRole> roles = json["userRoles"]
         .cast<Map>()
         .map(DHIS2UserRole.fromMap)
@@ -50,12 +56,6 @@ class DHIS2MeUser extends DHIS2Resource {
         .toList()
         .cast<DHIS2UserGroup>();
     userGroups.addAll(groups);
-    List<OrganisationUnit> orgUnits = json["organisationUnits"]
-        .cast<Map>()
-        .map(OrganisationUnit.fromMap)
-        .toList()
-        .cast<OrganisationUnit>();
-    organisationUnits.addAll(orgUnits);
   }
 
   @override

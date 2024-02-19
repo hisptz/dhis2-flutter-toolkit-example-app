@@ -1,6 +1,6 @@
-import 'package:dhis2_flutter_toolkit/modules/home.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
 
 class SyncPage extends StatefulWidget {
@@ -11,77 +11,45 @@ class SyncPage extends StatefulWidget {
 }
 
 class _SyncPageState extends State<SyncPage> {
-  bool loading = false;
-  bool syncing = false;
   String currentSyncLabel = "";
   MetadataSync metadataSyncService = MetadataSync();
   int progress = 0;
   List<BaseSyncService> unSyncedMeta = [];
 
-  initializeSync() async {
-    if (unSyncedMeta.isNotEmpty) {
-      setState(() {
-        syncing = true;
-      });
-      await Future.forEach(unSyncedMeta, (element) {
-        setState(() {
-          currentSyncLabel = element.label;
-        });
-        element.sync().then((value) {
-          setState(() {
-            progress = progress + 1;
-            currentSyncLabel = "";
-          });
-        });
-      });
-      setState(() {
-        syncing = false;
-      });
-    } else {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Home()));
-    }
-  }
-
   @override
   void initState() {
     setState(() {
-      loading = true;
-    });
-    metadataSyncService.checkUnSynced().then((value) {
-      setState(() {
-        unSyncedMeta = value;
-        loading = false;
-      });
-      initializeSync();
+      metadataSyncService.sync();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double progressPercentage = progress / (unSyncedMeta.length + 1) * 100;
+    return StreamBuilder<SyncStatus>(
+      stream: metadataSyncService.stream,
+      builder: (context, data) {
+        SyncStatus? status = data.data;
+        var error = data.error;
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: loading
-              ? [
-                  const CircularProgressIndicator(),
-                  const Padding(padding: EdgeInsets.all(16.0)),
-                  const Text("Checking for metadata...")
-                ]
-              : [
-                  LinearProgressIndicator(
-                    value: progressPercentage,
-                  ),
-                  const Padding(padding: EdgeInsets.all(16.0)),
-                  Text("Syncing $currentSyncLabel")
-                ],
-        ),
-      ),
+        return Scaffold(
+            body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Syncing Metadata",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              ),
+              status != null
+                  ? Text(
+                      "Syncing ${status.label} ${status.synced}/${status.total}")
+                  : const Text("Please wait..."),
+              error != null ? Text(error.toString()) : Text(""),
+            ],
+          ),
+        ));
+      },
     );
   }
 }

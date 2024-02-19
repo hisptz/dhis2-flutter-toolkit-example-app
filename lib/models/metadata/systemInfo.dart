@@ -1,8 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/systemInfo.dart';
 import 'package:objectbox/objectbox.dart';
-
-final systemInfoBox = db.store.box<SystemInfo>();
 
 @Entity()
 class SystemInfo extends DHIS2Resource {
@@ -34,5 +32,7 @@ class SystemInfo extends DHIS2Resource {
         version = json["version"],
         contextPath = json["contextPath"],
         systemName = json["systemName"],
-        systemId = json["systemId"];
+        systemId = json["systemId"] {
+    id = SystemInfoRepository().getIdByUid(json["systemId"]) ?? 0;
+  }
 }

@@ -12,8 +12,8 @@ class UserInfoWidget extends StatefulWidget {
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
   bool loading = false;
-  UserRepository repository = UserRepository();
-  DHIS2MeUser? info;
+  D2UserRepository repository = D2UserRepository();
+  D2User? info;
 
   @override
   void initState() {

@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,7 +16,7 @@ class _LoginState extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future onLogin() async {
+  Future onLogin(BuildContext context) async {
     setState(() {
       loading = true;
     });
@@ -32,6 +33,7 @@ class _LoginState extends State<Login> {
     setState(() {
       loading = false;
     });
+    context.go("/sync");
   }
 
   @override
@@ -109,7 +111,7 @@ class _LoginState extends State<Login> {
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: TextButton(
-                onPressed: onLogin,
+                onPressed: () => onLogin(context),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateColor.resolveWith(
                         (states) => Theme.of(context).primaryColor)),

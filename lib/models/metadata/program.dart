@@ -5,6 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 final programBox = db.store.box<D2Program>();
@@ -54,26 +55,43 @@ class D2Program extends D2MetadataResource {
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"] {
-    List<DHIS2AttributeValue> attributeValue =
-        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
+    List<DHIS2AttributeValue> attributeValue = json["attributeValues"]
+        .cast<Map>()
+        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
+        .toList();
 
     attributeValues.addAll(attributeValue);
 
-    List<OrganisationUnit> orgUnits = json["organisationUnits"]
-        .map((Map orgUnit) => OrganisationUnit.getByUid(orgUnit["id"]));
+    List<OrganisationUnit?> programOrgUnits = json["organisationUnits"]
+        .cast<Map>()
+        .map<OrganisationUnit?>(
+            (Map orgUnit) => D2OrgUnitRepository().getByUid(orgUnit["id"]))
+        .toList();
+
+    List<OrganisationUnit> orgUnits = programOrgUnits
+        .where((OrganisationUnit? element) => element != null)
+        .toList()
+        .cast<OrganisationUnit>();
     organisationUnits.addAll(orgUnits);
 
-    List<ProgramStage> programStage =
-        json["programStages"].map(ProgramStage.fromMap);
-    programStages.addAll(programStage);
+    List<ProgramStage> ps = json["programStages"]
+        .cast<Map>()
+        .map<ProgramStage>(ProgramStage.fromMap)
+        .toList();
+    programStages.addAll(ps);
 
-    List<ProgramSection> programSection =
-        json["programSections"].map(ProgramSection.fromMap);
+    List<ProgramSection> programSection = json["programSections"]
+        .cast<Map>()
+        .map<ProgramSection>(ProgramSection.fromMap)
+        .toList();
     programSections.addAll(programSection);
 
     List<ProgramTrackedEntityAttribute> ptea =
         json["programTrackedEntityAttributes"]
-            .map(ProgramTrackedEntityAttribute.fromMap);
+            .cast<Map>()
+            .map<ProgramTrackedEntityAttribute>(
+                ProgramTrackedEntityAttribute.fromMap)
+            .toList();
     programTrackedEntityAttributes.addAll(ptea);
   }
 }

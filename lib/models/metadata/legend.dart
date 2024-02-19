@@ -15,8 +15,8 @@ class Legend extends D2MetadataResource {
   String uid;
 
   String name;
-  int startValue;
-  int endValue;
+  double startValue;
+  double endValue;
   String color;
   String displayName;
 
@@ -35,8 +35,8 @@ class Legend extends D2MetadataResource {
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
-        startValue = json["startValue"],
-        endValue = json["endValue"],
+        startValue = json["startValue"].toDouble(),
+        endValue = json["endValue"].toDouble(),
         color = json["color"],
         displayName = json["displayName"];
 }

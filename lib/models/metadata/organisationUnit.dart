@@ -1,10 +1,11 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
 
-final organisationUnitBox = db.store.box();
+final organisationUnitBox = db.store.box<OrganisationUnit>();
 
 @Entity()
 class OrganisationUnit implements D2MetadataResource {
@@ -32,12 +33,6 @@ class OrganisationUnit implements D2MetadataResource {
       required this.created,
       required this.lastUpdated});
 
-  static OrganisationUnit? getByUid(String id) {
-    Query query =
-        organisationUnitBox.query(OrganisationUnit_.uid.equals(id)).build();
-    return query.findFirst();
-  }
-
   OrganisationUnit.fromMap(Map json)
       : uid = json["id"],
         name = json["name"],
@@ -45,5 +40,7 @@ class OrganisationUnit implements D2MetadataResource {
         path = json["path"],
         level = json["level"],
         created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]);
+        lastUpdated = DateTime.parse(json["lastUpdated"]) {
+    id = D2OrgUnitRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

@@ -18,7 +18,7 @@ class LegendSet extends D2MetadataResource {
   String uid;
 
   String name;
-  String code;
+  String? code;
 
   final legends = ToMany<Legend>();
 
@@ -27,7 +27,7 @@ class LegendSet extends D2MetadataResource {
     required this.lastUpdated,
     required this.uid,
     required this.name,
-    required this.code,
+    this.code,
   });
 
   LegendSet.fromMap(Map json)
@@ -36,7 +36,8 @@ class LegendSet extends D2MetadataResource {
         uid = json["id"],
         name = json["name"],
         code = json["code"] {
-    List<Legend> allLegends = json["legends"].map(LegendSet.fromMap);
+    List<Legend> allLegends =
+        json["legends"].cast<Map>().map<Legend>(Legend.fromMap).toList();
     legends.addAll(allLegends);
   }
 }

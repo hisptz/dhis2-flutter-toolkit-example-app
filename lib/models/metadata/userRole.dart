@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/repositories/userRole.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -25,5 +26,7 @@ class DHIS2UserRole extends D2MetadataResource {
         name = json["name"],
         authorities = json["authorities"].cast<String>(),
         created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]);
+        lastUpdated = DateTime.parse(json["lastUpdated"]) {
+    id = D2UserRoleRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

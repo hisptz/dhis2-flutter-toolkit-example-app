@@ -19,7 +19,7 @@ class ProgramStageDataElement extends D2MetadataResource {
   String uid;
 
   bool compulsory;
-  int sortOrder;
+  int? sortOrder;
 
   final programStage = ToOne<ProgramStage>();
   final dataElement = ToOne<DataElement>();

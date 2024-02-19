@@ -30,7 +30,8 @@ class DHIS2Client {
   get headers {
     return {
       "Authorization":
-          "Basic ${base64Encode(utf8.encode('$username:$password'))}"
+          "Basic ${base64Encode(utf8.encode('$username:$password'))}",
+      "Content-Type": "application/json"
     };
   }
 
@@ -38,7 +39,7 @@ class DHIS2Client {
     return Uri.parse("https://$baseURL/api");
   }
 
-  Uri getApiUrl(String url, {Map<String, dynamic>? queryParameters}) {
+  Uri getApiUrl(String url, {Map<String, String>? queryParameters}) {
     return uri.replace(
         pathSegments: [...uri.pathSegments, ...url.split("/")],
         queryParameters: queryParameters);
@@ -50,7 +51,7 @@ class DHIS2Client {
   Future<T> httpPost<T>(
     String url,
     body, {
-    Map<String, dynamic>? queryParameters,
+    Map<String, String>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.post(
@@ -67,7 +68,7 @@ class DHIS2Client {
   Future<T> httpPut<T>(
     String url,
     body, {
-    Map<String, dynamic>? queryParameters,
+    Map<String, String>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.put(
@@ -84,7 +85,7 @@ class DHIS2Client {
 //This method accepts url String, query parameters and returns a response object
   Future<T> httpDelete<T>(
     String url, {
-    Map<String, dynamic>? queryParameters,
+    Map<String, String>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.delete(apiUrl, headers: headers);
@@ -94,31 +95,32 @@ class DHIS2Client {
 //This is the function that sends a Get Request to the DHIS2 Instance
 //The function Reads entities in the DHIS2 Instance Server
 //This method accepts url String, query parameters and returns a response object
-  Future<T> httpGet<T>(
+  Future<T?> httpGet<T>(
     String url, {
-    Map<String, dynamic>? queryParameters,
+    Map<String, String>? queryParameters,
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.get(apiUrl, headers: headers);
-
-    print(apiUrl);
-
-    return jsonDecode(response.body) as T;
+    try {
+      return jsonDecode(response.body) as T;
+    } catch (e) {
+      return null;
+    }
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
 //The function Reads entities in the DHIS2 Instance Server
   ///This method accepts url String, query parameters and returns a response object with a page size of 1
-  Future<T> httpGetPagination<T>(
-    String url,
-    Map<String, dynamic> queryParameters,
-  ) async {
-    Map<String, dynamic> dataQueryParameters = {
+  Future<T?> httpGetPagination<T>(
+    String url, {
+    Map<String, String>? queryParameters,
+  }) async {
+    Map<String, String> dataQueryParameters = {
       'totalPages': 'true',
       'pageSize': '1',
       'fields': 'none',
     };
-    dataQueryParameters.addAll(queryParameters);
+    dataQueryParameters.addAll(queryParameters ?? {});
     return await httpGet<T>(url, queryParameters: dataQueryParameters);
   }
 

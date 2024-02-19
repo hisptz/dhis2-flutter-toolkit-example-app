@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -35,8 +36,16 @@ class ProgramSection extends D2MetadataResource {
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
-    List<TrackedEntityAttribute> tei = json["trackedEntityAttributes"]
-        .map((Map tea) => TrackedEntityAttribute.getByUid(tea["id"]));
-    trackedEntityAttributes.addAll(tei);
+    List<TrackedEntityAttribute?> tei = json["trackedEntityAttributes"]
+        .cast<Map>()
+        .map<TrackedEntityAttribute?>((Map tea) =>
+            D2TrackedEntityAttributeRepository().getByUid(tea["id"]))
+        .toList();
+
+    List<TrackedEntityAttribute> actualTea = tei
+        .where((element) => element != null)
+        .toList()
+        .cast<TrackedEntityAttribute>();
+    trackedEntityAttributes.addAll(actualTea);
   }
 }
