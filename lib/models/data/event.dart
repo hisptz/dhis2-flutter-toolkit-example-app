@@ -1,8 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-
-import '../../objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class D2Event extends D2DataResource {
@@ -33,7 +32,7 @@ class D2Event extends D2DataResource {
   bool deleted;
   bool followup;
   String attributeOptionCombo;
-  List notes;
+  List<String> notes;
 
   final relationships = ToMany<Relationship>();
   final dataValues = ToMany<D2DataValue>();

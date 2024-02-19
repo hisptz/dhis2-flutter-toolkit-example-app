@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/repositories/user.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';

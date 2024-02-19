@@ -17,8 +17,9 @@ class Relationship extends D2DataResource {
   String relationshipName;
   bool bidirectional;
   String relationshipType;
-  Map<String, dynamic> from;
-  Map<String, dynamic> to;
+
+  // Map<String, dynamic> from; TODO: Setup actual relationship links
+  // Map<String, dynamic> to;
 
   Relationship({
     required this.created,
@@ -27,8 +28,6 @@ class Relationship extends D2DataResource {
     required this.relationshipName,
     required this.relationshipType,
     required this.bidirectional,
-    required this.from,
-    required this.to,
   });
 
   Relationship.fromMap(Map json)
@@ -37,7 +36,5 @@ class Relationship extends D2DataResource {
         uid = json["relationship"],
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
-        bidirectional = json["bidirectional"],
-        from = json["from"],
-        to = json["to"];
+        bidirectional = json["bidirectional"];
 }

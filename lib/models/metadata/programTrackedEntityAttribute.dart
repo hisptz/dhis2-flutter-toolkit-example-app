@@ -1,7 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

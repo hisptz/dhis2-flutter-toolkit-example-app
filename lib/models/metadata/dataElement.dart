@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
@@ -29,7 +28,6 @@ class DataElement extends D2MetadataResource {
   String valueType;
   String domainType;
   bool? zeroIsSignificant;
-  final attributeValues = ToMany<DHIS2AttributeValue>();
   final legendSets = ToMany<LegendSet>();
   final optionSet = ToOne<DHIS2OptionSet>();
 
@@ -60,12 +58,6 @@ class DataElement extends D2MetadataResource {
         valueType = json["valueType"],
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    List<DHIS2AttributeValue> value = json["attributeValues"]
-        .cast<Map>()
-        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
-        .toList();
-    attributeValues.addAll(value);
-
     List<LegendSet> set = json["legendSets"]
         .cast<Map>()
         .map<LegendSet>(LegendSet.fromMap)

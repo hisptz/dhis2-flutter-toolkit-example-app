@@ -1,11 +1,10 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
-import 'package:dhis2_flutter_toolkit/repositories/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 final programBox = db.store.box<D2Program>();
@@ -27,8 +26,6 @@ class D2Program extends D2MetadataResource {
   String name;
   String shortName;
   String accessLevel;
-
-  final attributeValues = ToMany<DHIS2AttributeValue>();
 
   final organisationUnits = ToMany<OrganisationUnit>();
 
@@ -55,13 +52,6 @@ class D2Program extends D2MetadataResource {
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"] {
-    List<DHIS2AttributeValue> attributeValue = json["attributeValues"]
-        .cast<Map>()
-        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
-        .toList();
-
-    attributeValues.addAll(attributeValue);
-
     List<OrganisationUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
         .map<OrganisationUnit?>(

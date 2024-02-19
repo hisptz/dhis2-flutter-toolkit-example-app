@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-import '../objectbox.g.dart';
+import '../../objectbox.g.dart';
 
 final d2UserGroupBox = db.store.box<DHIS2UserGroup>();
 

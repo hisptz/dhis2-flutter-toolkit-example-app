@@ -1,5 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/repositories/user.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/singleBase.dart';
 
 class UserSyncService extends BaseSingleSyncService<D2User> {

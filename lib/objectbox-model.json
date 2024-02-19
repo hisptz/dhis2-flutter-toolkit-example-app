@@ -49,11 +49,6 @@
       ],
       "relations": [
         {
-          "id": "1:5838287942449585018",
-          "name": "attributeValues",
-          "targetId": "4:598410469256371632"
-        },
-        {
           "id": "2:7678144714398439279",
           "name": "organisationUnits",
           "targetId": "12:3533115219003406950"
@@ -141,107 +136,6 @@
           "targetId": "7:5214832957591990080"
         }
       ]
-    },
-    {
-      "id": "3:5637203997911158031",
-      "lastPropertyId": "9:4646037120569572171",
-      "name": "DHIS2Attribute",
-      "properties": [
-        {
-          "id": "1:82235738519103936",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:403808371593073696",
-          "name": "created",
-          "type": 10
-        },
-        {
-          "id": "3:8616989213677647021",
-          "name": "lastUpdated",
-          "type": 10
-        },
-        {
-          "id": "4:8950466612973647863",
-          "name": "uid",
-          "type": 9,
-          "flags": 2080,
-          "indexId": "3:7266889047360182828"
-        },
-        {
-          "id": "5:5921625464559883086",
-          "name": "name",
-          "type": 9,
-          "flags": 2048,
-          "indexId": "4:8920343348563263390"
-        },
-        {
-          "id": "6:5523196749819846977",
-          "name": "valueType",
-          "type": 9
-        },
-        {
-          "id": "7:254383119267113271",
-          "name": "objectTypes",
-          "type": 30
-        },
-        {
-          "id": "8:2411042416098426399",
-          "name": "mandatory",
-          "type": 1
-        },
-        {
-          "id": "9:4646037120569572171",
-          "name": "unique",
-          "type": 1
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "4:598410469256371632",
-      "lastPropertyId": "5:8266288267874819745",
-      "name": "DHIS2AttributeValue",
-      "properties": [
-        {
-          "id": "1:1714758982607303889",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:17200739312737981",
-          "name": "attributeId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "5:8893095931382908911",
-          "relationTarget": "DHIS2Attribute"
-        },
-        {
-          "id": "3:7421780827153282234",
-          "name": "dataElementId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "6:648014670606926067",
-          "relationTarget": "DataElement"
-        },
-        {
-          "id": "4:7109035275505833358",
-          "name": "trackedEntityAttributeId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "7:8789949282953385159",
-          "relationTarget": "TrackedEntityAttribute"
-        },
-        {
-          "id": "5:8266288267874819745",
-          "name": "value",
-          "type": 9
-        }
-      ],
-      "relations": []
     },
     {
       "id": "5:2220575794087642993",
@@ -507,11 +401,6 @@
         }
       ],
       "relations": [
-        {
-          "id": "9:1962859954478409914",
-          "name": "attributeValues",
-          "targetId": "4:598410469256371632"
-        },
         {
           "id": "10:7120825854978993706",
           "name": "legendSets",
@@ -1113,11 +1002,6 @@
           "targetId": "20:2261360780583041541"
         },
         {
-          "id": "16:3146968381427680074",
-          "name": "attributeValues",
-          "targetId": "4:598410469256371632"
-        },
-        {
           "id": "17:2971089296658598238",
           "name": "programStageSections",
           "targetId": "21:3571748021839996533"
@@ -1574,11 +1458,6 @@
       ],
       "relations": [
         {
-          "id": "19:3523552853779902789",
-          "name": "attributeValues",
-          "targetId": "4:598410469256371632"
-        },
-        {
           "id": "20:4061338680625878338",
           "name": "legendSets",
           "targetId": "11:5416231374184059532"
@@ -1696,17 +1575,489 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "29:1680174850476511536",
+      "lastPropertyId": "7:1206613619187722001",
+      "name": "Relationship",
+      "properties": [
+        {
+          "id": "1:8608167624842572838",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1288498881761116155",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:2940149278471267410",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:1037942075188614745",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "53:1140901694077457150"
+        },
+        {
+          "id": "5:6645608367409971850",
+          "name": "relationshipName",
+          "type": 9
+        },
+        {
+          "id": "6:4660725307458690279",
+          "name": "bidirectional",
+          "type": 1
+        },
+        {
+          "id": "7:1206613619187722001",
+          "name": "relationshipType",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "30:4671447972053549030",
+      "lastPropertyId": "8:4079151054876851006",
+      "name": "D2TrackedEntityAttributeValue",
+      "properties": [
+        {
+          "id": "1:1597471358745812880",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1445473185722176380",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:6250046030138461846",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:8779981595465299881",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "54:6342907513951789755"
+        },
+        {
+          "id": "5:3621563677355900638",
+          "name": "displayName",
+          "type": 9
+        },
+        {
+          "id": "6:1835597514610971026",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "7:6252684930755108613",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "8:4079151054876851006",
+          "name": "valueType",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "31:7886743192280178822",
+      "lastPropertyId": "6:9048590662611885802",
+      "name": "D2DataValue",
+      "properties": [
+        {
+          "id": "1:5535717467081303129",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4562473253155914380",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:5422955088639017189",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:2991210894102872240",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "55:3532051144991834701"
+        },
+        {
+          "id": "5:2994415794750963878",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "6:9048590662611885802",
+          "name": "providedElsewhere",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "32:4261893493899220119",
+      "lastPropertyId": "16:4264863304418819468",
+      "name": "D2Enrollment",
+      "properties": [
+        {
+          "id": "1:688877645369783857",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:644164196918367996",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:6535273921399987289",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:5118192830158727392",
+          "name": "createdAtClient",
+          "type": 10
+        },
+        {
+          "id": "5:3894261335204544388",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "56:3832023302225712333"
+        },
+        {
+          "id": "6:8425447781816580096",
+          "name": "program",
+          "type": 9
+        },
+        {
+          "id": "7:3812990436745275761",
+          "name": "trackedEntityInstance",
+          "type": 9
+        },
+        {
+          "id": "8:6300255255555473693",
+          "name": "trackedEntityType",
+          "type": 9
+        },
+        {
+          "id": "9:5260007141716365645",
+          "name": "orgUnit",
+          "type": 9
+        },
+        {
+          "id": "10:3574313520841939457",
+          "name": "orgUnitName",
+          "type": 9
+        },
+        {
+          "id": "11:4075565776398457301",
+          "name": "enrollmentDate",
+          "type": 10
+        },
+        {
+          "id": "12:3794264425269624044",
+          "name": "deleted",
+          "type": 1
+        },
+        {
+          "id": "13:7123766516599670812",
+          "name": "followup",
+          "type": 1
+        },
+        {
+          "id": "14:1000486696740954286",
+          "name": "incidentDate",
+          "type": 10
+        },
+        {
+          "id": "15:936701018909644294",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "16:4264863304418819468",
+          "name": "notes",
+          "type": 30
+        }
+      ],
+      "relations": [
+        {
+          "id": "22:5764096518053636714",
+          "name": "events",
+          "targetId": "33:7539469880098407378"
+        },
+        {
+          "id": "23:8264834252891566529",
+          "name": "relationships",
+          "targetId": "29:1680174850476511536"
+        },
+        {
+          "id": "24:6963301067344549194",
+          "name": "attributes",
+          "targetId": "30:4671447972053549030"
+        }
+      ]
+    },
+    {
+      "id": "33:7539469880098407378",
+      "lastPropertyId": "20:3489409064105281681",
+      "name": "D2Event",
+      "properties": [
+        {
+          "id": "1:5860999012816468314",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2380701257273437091",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:4644554687434737279",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:1942335019237750368",
+          "name": "createdAtClient",
+          "type": 10
+        },
+        {
+          "id": "5:5422496940084628419",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "57:2758874653281131793"
+        },
+        {
+          "id": "6:6515907299542175979",
+          "name": "dueDate",
+          "type": 10
+        },
+        {
+          "id": "7:8571226850017186914",
+          "name": "program",
+          "type": 9
+        },
+        {
+          "id": "8:3619482424146435179",
+          "name": "programStage",
+          "type": 9
+        },
+        {
+          "id": "9:4490352019858861928",
+          "name": "orgUnit",
+          "type": 9
+        },
+        {
+          "id": "10:4332450352351897411",
+          "name": "enrollment",
+          "type": 9
+        },
+        {
+          "id": "11:5566476568216533404",
+          "name": "trackedEntityInstance",
+          "type": 9
+        },
+        {
+          "id": "12:1581914737185102931",
+          "name": "enrollmentStatus",
+          "type": 9
+        },
+        {
+          "id": "13:2770551023658418307",
+          "name": "eventDate",
+          "type": 10
+        },
+        {
+          "id": "14:8613491335750999475",
+          "name": "orgUnitName",
+          "type": 9
+        },
+        {
+          "id": "15:6502161260151057587",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "16:5204843542992323534",
+          "name": "attributeCategoryOptions",
+          "type": 9
+        },
+        {
+          "id": "17:2685607471060619154",
+          "name": "deleted",
+          "type": 1
+        },
+        {
+          "id": "18:156436423910573448",
+          "name": "followup",
+          "type": 1
+        },
+        {
+          "id": "19:5171937161443153139",
+          "name": "attributeOptionCombo",
+          "type": 9
+        },
+        {
+          "id": "20:3489409064105281681",
+          "name": "notes",
+          "type": 30
+        }
+      ],
+      "relations": [
+        {
+          "id": "25:3167065835942327359",
+          "name": "relationships",
+          "targetId": "29:1680174850476511536"
+        },
+        {
+          "id": "26:5542458923651039429",
+          "name": "dataValues",
+          "targetId": "31:7886743192280178822"
+        }
+      ]
+    },
+    {
+      "id": "34:5427219103956396213",
+      "lastPropertyId": "11:1105412760166889361",
+      "name": "TrackedEntity",
+      "properties": [
+        {
+          "id": "1:5458000489026996101",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2253753330825044258",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "3:4674968428776830503",
+          "name": "lastUpdated",
+          "type": 10
+        },
+        {
+          "id": "4:6718997862424425637",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "58:4553908165506063622"
+        },
+        {
+          "id": "5:1118828497335190076",
+          "name": "trackedEntityType",
+          "type": 9
+        },
+        {
+          "id": "6:34630043783339494",
+          "name": "featureType",
+          "type": 9
+        },
+        {
+          "id": "7:6690360695247343608",
+          "name": "orgUnit",
+          "type": 9
+        },
+        {
+          "id": "8:3869040888040823936",
+          "name": "createdAtClient",
+          "type": 10
+        },
+        {
+          "id": "9:7755755348145759498",
+          "name": "potentialDuplicate",
+          "type": 1
+        },
+        {
+          "id": "10:5089428316303634727",
+          "name": "deleted",
+          "type": 1
+        },
+        {
+          "id": "11:1105412760166889361",
+          "name": "inactive",
+          "type": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "27:8015490331094678882",
+          "name": "enrollments",
+          "targetId": "32:4261893493899220119"
+        },
+        {
+          "id": "28:8662107146866269435",
+          "name": "relationships",
+          "targetId": "29:1680174850476511536"
+        },
+        {
+          "id": "29:1692222066398657444",
+          "name": "attributes",
+          "targetId": "30:4671447972053549030"
+        }
+      ]
     }
   ],
-  "lastEntityId": "28:8896307101484717442",
-  "lastIndexId": "52:7204231197721431357",
-  "lastRelationId": "21:8329869220563268752",
+  "lastEntityId": "34:5427219103956396213",
+  "lastIndexId": "58:4553908165506063622",
+  "lastRelationId": "29:1692222066398657444",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    5637203997911158031,
+    598410469256371632
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredPropertyUids": [
+    82235738519103936,
+    403808371593073696,
+    8616989213677647021,
+    8950466612973647863,
+    5921625464559883086,
+    5523196749819846977,
+    254383119267113271,
+    2411042416098426399,
+    4646037120569572171,
+    1714758982607303889,
+    17200739312737981,
+    7421780827153282234,
+    7109035275505833358,
+    8266288267874819745
+  ],
+  "retiredRelationUids": [
+    5838287942449585018,
+    1962859954478409914,
+    3146968381427680074,
+    3523552853779902789
+  ],
   "version": 1
 }

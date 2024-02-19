@@ -1,9 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
-import 'package:dhis2_flutter_toolkit/repositories/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
-
-import '../../objectbox.g.dart';
 
 final organisationUnitBox = db.store.box<OrganisationUnit>();
 

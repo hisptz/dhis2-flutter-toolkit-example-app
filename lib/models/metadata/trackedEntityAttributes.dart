@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
@@ -30,7 +29,6 @@ class TrackedEntityAttribute extends D2MetadataResource {
   String aggregationType;
   String valueType;
   bool? zeroIsSignificant;
-  final attributeValues = ToMany<DHIS2AttributeValue>();
   final legendSets = ToMany<LegendSet>();
   final optionSet = ToOne<DHIS2OptionSet>();
 
@@ -59,13 +57,6 @@ class TrackedEntityAttribute extends D2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    List<DHIS2AttributeValue> attributeValue = json["attributeValues"]
-        .cast<Map>()
-        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
-        .toList();
-
-    attributeValues.addAll(attributeValue);
-
     List<LegendSet> legendSet = json["attributeValues"]
         .cast<Map>()
         .map<LegendSet>(LegendSet.fromMap)

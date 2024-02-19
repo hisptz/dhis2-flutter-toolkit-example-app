@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-import '../objectbox.g.dart';
+import '../../objectbox.g.dart';
 
 final systemInfoBox = db.store.box<SystemInfo>();
 

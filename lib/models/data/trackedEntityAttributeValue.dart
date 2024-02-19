@@ -1,6 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
-
-import '../../objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class D2TrackedEntityAttributeValue extends D2DataResource {

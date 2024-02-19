@@ -1,7 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
-import 'package:dhis2_flutter_toolkit/repositories/user.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

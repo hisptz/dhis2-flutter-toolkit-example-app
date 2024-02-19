@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-import '../objectbox.g.dart';
+import '../../objectbox.g.dart';
 
 final dhis2MeUserBox = db.store.box<D2User>();
 

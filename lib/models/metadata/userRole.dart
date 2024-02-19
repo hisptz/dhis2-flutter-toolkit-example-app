@@ -1,5 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
-import 'package:dhis2_flutter_toolkit/repositories/userRole.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/userRole.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

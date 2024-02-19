@@ -1,5 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/repositories/systemInfo.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/singleBase.dart';
 
 class SystemInfoSync extends BaseSingleSyncService<SystemInfo> {

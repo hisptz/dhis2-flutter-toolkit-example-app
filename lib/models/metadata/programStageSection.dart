@@ -1,7 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
-import 'package:dhis2_flutter_toolkit/repositories/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

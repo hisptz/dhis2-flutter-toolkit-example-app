@@ -2,8 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-
-import '../../objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class D2Enrollment extends D2DataResource {
@@ -30,7 +29,7 @@ class D2Enrollment extends D2DataResource {
   bool followup;
   DateTime incidentDate;
   String status;
-  List notes;
+  List<String> notes;
 
   final events = ToMany<D2Event>();
   final relationships = ToMany<Relationship>();

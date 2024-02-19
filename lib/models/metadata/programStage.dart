@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
@@ -28,8 +27,6 @@ class ProgramStage extends D2MetadataResource {
   final program = ToOne<D2Program>();
 
   final programStageDataElements = ToMany<ProgramStageDataElement>();
-
-  final attributeValues = ToMany<DHIS2AttributeValue>();
 
   final programStageSections = ToMany<ProgramStageSection>();
 
@@ -61,13 +58,6 @@ class ProgramStage extends D2MetadataResource {
         .toList();
 
     programStageDataElements.addAll(psde);
-
-    List<DHIS2AttributeValue> av = json["attributeValues"]
-        .cast<Map>()
-        .map<DHIS2AttributeValue>(DHIS2AttributeValue.fromMap)
-        .toList();
-
-    attributeValues.addAll(av);
 
     List<ProgramStageSection> ps = json["programStageSections"]
         .cast<Map>()
