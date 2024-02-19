@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 import 'program.dart';
 
 @Entity()
-class ProgramRule extends D2MetadataResource {
+class D2ProgramRule extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -22,9 +22,9 @@ class ProgramRule extends D2MetadataResource {
   String condition;
 
   var program = ToOne<D2Program>();
-  final programRuleActions = ToMany<ProgramRuleAction>();
+  final programRuleActions = ToMany<D2ProgramRuleAction>();
 
-  ProgramRule(
+  D2ProgramRule(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -32,15 +32,15 @@ class ProgramRule extends D2MetadataResource {
       required this.description,
       required this.condition});
 
-  ProgramRule.fromMap(Map json)
+  D2ProgramRule.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         description = json["description"],
         condition = json["condition"] {
-    List<ProgramRuleAction> attributeValue =
-        json["programRuleActions"].map(ProgramRuleAction.fromMap);
+    List<D2ProgramRuleAction> attributeValue =
+        json["programRuleActions"].map(D2ProgramRuleAction.fromMap);
 
     programRuleActions.addAll(attributeValue);
   }

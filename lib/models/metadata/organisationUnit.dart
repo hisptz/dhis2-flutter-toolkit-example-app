@@ -3,10 +3,10 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
-final organisationUnitBox = db.store.box<OrganisationUnit>();
+final organisationUnitBox = db.store.box<D2OrganisationUnit>();
 
 @Entity()
-class OrganisationUnit implements D2MetadataResource {
+class D2OrganisationUnit implements D2MetadataResource {
   @override
   int id = 0;
   String name;
@@ -22,7 +22,7 @@ class OrganisationUnit implements D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  OrganisationUnit(
+  D2OrganisationUnit(
       {required this.name,
       required this.uid,
       required this.shortName,
@@ -31,7 +31,7 @@ class OrganisationUnit implements D2MetadataResource {
       required this.created,
       required this.lastUpdated});
 
-  OrganisationUnit.fromMap(Map json)
+  D2OrganisationUnit.fromMap(Map json)
       : uid = json["id"],
         name = json["name"],
         shortName = json["shortName"],

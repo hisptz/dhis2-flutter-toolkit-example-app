@@ -4,7 +4,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramStageDataElement extends D2MetadataResource {
+class D2ProgramStageDataElement extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -20,18 +20,18 @@ class ProgramStageDataElement extends D2MetadataResource {
   bool compulsory;
   int? sortOrder;
 
-  final programStage = ToOne<ProgramStage>();
-  final dataElement = ToOne<DataElement>();
+  final programStage = ToOne<D2ProgramStage>();
+  final dataElement = ToOne<D2DataElement>();
 
-  ProgramStageDataElement(this.created, this.id, this.lastUpdated, this.uid,
+  D2ProgramStageDataElement(this.created, this.id, this.lastUpdated, this.uid,
       this.compulsory, this.sortOrder);
 
-  ProgramStageDataElement.fromMap(Map json)
+  D2ProgramStageDataElement.fromMap(Map json)
       : uid = json["id"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         compulsory = json["compulsory"],
         sortOrder = json["sortOrder"] {
-    dataElement.target = DataElement.fromMap(json["dataElement"]);
+    dataElement.target = D2DataElement.fromMap(json["dataElement"]);
   }
 }

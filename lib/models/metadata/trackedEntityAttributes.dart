@@ -4,10 +4,10 @@ import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
-final trackedEntityAttributeBox = db.store.box<TrackedEntityAttribute>();
+final trackedEntityAttributeBox = db.store.box<D2TrackedEntityAttribute>();
 
 @Entity()
-class TrackedEntityAttribute extends D2MetadataResource {
+class D2TrackedEntityAttribute extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -29,10 +29,10 @@ class TrackedEntityAttribute extends D2MetadataResource {
   String aggregationType;
   String valueType;
   bool? zeroIsSignificant;
-  final legendSets = ToMany<LegendSet>();
-  final optionSet = ToOne<DHIS2OptionSet>();
+  final legendSets = ToMany<D2LegendSet>();
+  final optionSet = ToOne<D2OptionSet>();
 
-  TrackedEntityAttribute(
+  D2TrackedEntityAttribute(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -45,7 +45,7 @@ class TrackedEntityAttribute extends D2MetadataResource {
       required this.valueType,
       this.zeroIsSignificant});
 
-  TrackedEntityAttribute.fromMap(Map json)
+  D2TrackedEntityAttribute.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -57,9 +57,9 @@ class TrackedEntityAttribute extends D2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    List<LegendSet> legendSet = json["attributeValues"]
+    List<D2LegendSet> legendSet = json["attributeValues"]
         .cast<Map>()
-        .map<LegendSet>(LegendSet.fromMap)
+        .map<D2LegendSet>(D2LegendSet.fromMap)
         .toList();
 
     legendSets.addAll(legendSet);

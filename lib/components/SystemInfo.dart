@@ -12,7 +12,7 @@ class SystemInfoWidget extends StatefulWidget {
 class _SystemInfoWidgetState extends State<SystemInfoWidget> {
   bool loading = false;
   SystemInfoRepository repository = SystemInfoRepository();
-  SystemInfo? info;
+  D2SystemInfo? info;
 
   @override
   void initState() {

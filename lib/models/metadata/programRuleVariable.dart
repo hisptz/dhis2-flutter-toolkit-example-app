@@ -7,7 +7,7 @@ import 'program.dart';
 import 'programStage.dart';
 
 @Entity()
-class ProgramRuleVariable extends D2MetadataResource {
+class D2ProgramRuleVariable extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -26,12 +26,12 @@ class ProgramRuleVariable extends D2MetadataResource {
   bool useCodeForOptionSet;
 
 //TODO: Add the one 2 one relationships to the constructor
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
-  final dataElement = ToOne<DataElement>();
-  final programStage = ToOne<ProgramStage>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
+  final dataElement = ToOne<D2DataElement>();
+  final programStage = ToOne<D2ProgramStage>();
   final program = ToOne<D2Program>();
 
-  ProgramRuleVariable(
+  D2ProgramRuleVariable(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -40,7 +40,7 @@ class ProgramRuleVariable extends D2MetadataResource {
       required this.valueType,
       required this.useCodeForOptionSet});
 
-  ProgramRuleVariable.fromMap(Map json)
+  D2ProgramRuleVariable.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],

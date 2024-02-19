@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 import 'trackedEntityType.dart';
 
 @Entity()
-class TrackedEntityTypeAttribute extends D2MetadataResource {
+class D2TrackedEntityTypeAttribute extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -17,15 +17,15 @@ class TrackedEntityTypeAttribute extends D2MetadataResource {
   @override
   String uid;
 
-  final trackedEntityType = ToOne<TrackedEntityType>();
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
+  final trackedEntityType = ToOne<D2TrackedEntityType>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
   String valueType;
   String displayName;
   String displayShortName;
   bool mandatory;
 
-  TrackedEntityTypeAttribute(
+  D2TrackedEntityTypeAttribute(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -34,7 +34,7 @@ class TrackedEntityTypeAttribute extends D2MetadataResource {
       required this.displayShortName,
       required this.mandatory});
 
-  TrackedEntityTypeAttribute.fromMap(Map json)
+  D2TrackedEntityTypeAttribute.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],

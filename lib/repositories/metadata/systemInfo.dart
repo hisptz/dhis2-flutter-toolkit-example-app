@@ -4,9 +4,9 @@ import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
 import '../../objectbox.g.dart';
 
-final systemInfoBox = db.store.box<SystemInfo>();
+final systemInfoBox = db.store.box<D2SystemInfo>();
 
-class SystemInfoRepository extends BaseRepository<SystemInfo> {
+class SystemInfoRepository extends BaseRepository<D2SystemInfo> {
   SystemInfoRepository() : super(systemInfoBox);
 
   @override
@@ -14,15 +14,15 @@ class SystemInfoRepository extends BaseRepository<SystemInfo> {
     return getByUid(uid)?.id;
   }
 
-  SystemInfo? get() {
-    Query<SystemInfo> query = box.query().build();
+  D2SystemInfo? get() {
+    Query<D2SystemInfo> query = box.query().build();
     return query.findFirst();
   }
 
   @override
-  SystemInfo? getByUid(String uid) {
-    Query<SystemInfo> query =
-        systemInfoBox.query(SystemInfo_.systemId.equals(uid)).build();
+  D2SystemInfo? getByUid(String uid) {
+    Query<D2SystemInfo> query =
+        systemInfoBox.query(D2SystemInfo_.systemId.equals(uid)).build();
     return query.findFirst();
   }
 }

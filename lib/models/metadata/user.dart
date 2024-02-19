@@ -15,8 +15,8 @@ class D2User extends DHIS2Resource {
   List<String> programs;
   List<String> organisationUnits;
 
-  final userRoles = ToMany<DHIS2UserRole>();
-  final userGroups = ToMany<DHIS2UserGroup>();
+  final userRoles = ToMany<D2UserRole>();
+  final userGroups = ToMany<D2UserGroup>();
 
   @Unique()
   String uid;
@@ -44,17 +44,17 @@ class D2User extends DHIS2Resource {
             .toList()
             .cast<String>() {
     id = D2UserRepository().getIdByUid(json["id"]) ?? 0;
-    List<DHIS2UserRole> roles = json["userRoles"]
+    List<D2UserRole> roles = json["userRoles"]
         .cast<Map>()
-        .map(DHIS2UserRole.fromMap)
+        .map(D2UserRole.fromMap)
         .toList()
-        .cast<DHIS2UserRole>();
+        .cast<D2UserRole>();
     userRoles.addAll(roles);
-    List<DHIS2UserGroup> groups = json["userGroups"]
+    List<D2UserGroup> groups = json["userGroups"]
         .cast<Map>()
-        .map(DHIS2UserGroup.fromMap)
+        .map(D2UserGroup.fromMap)
         .toList()
-        .cast<DHIS2UserGroup>();
+        .cast<D2UserGroup>();
     userGroups.addAll(groups);
   }
 

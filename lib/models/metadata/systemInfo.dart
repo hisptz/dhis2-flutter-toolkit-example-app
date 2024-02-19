@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class SystemInfo extends DHIS2Resource {
+class D2SystemInfo extends DHIS2Resource {
   int id = 0;
 
   String version;
@@ -16,7 +16,7 @@ class SystemInfo extends DHIS2Resource {
   @Index()
   String systemName;
 
-  SystemInfo(
+  D2SystemInfo(
       {required this.version,
       required this.revision,
       required this.calendar,
@@ -25,7 +25,7 @@ class SystemInfo extends DHIS2Resource {
       required this.systemId,
       required this.systemName});
 
-  SystemInfo.fromMap(Map json)
+  D2SystemInfo.fromMap(Map json)
       : calendar = json["calendar"],
         revision = json["revision"],
         dateFormat = json["dateFormat"],

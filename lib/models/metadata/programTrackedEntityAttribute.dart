@@ -4,7 +4,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.da
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramTrackedEntityAttribute extends D2MetadataResource {
+class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -24,9 +24,9 @@ class ProgramTrackedEntityAttribute extends D2MetadataResource {
   String displayName;
 
   final program = ToOne<D2Program>();
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
-  ProgramTrackedEntityAttribute(
+  D2ProgramTrackedEntityAttribute(
       this.created,
       this.id,
       this.lastUpdated,
@@ -38,7 +38,7 @@ class ProgramTrackedEntityAttribute extends D2MetadataResource {
       this.valueType,
       this.displayName);
 
-  ProgramTrackedEntityAttribute.fromMap(Map json)
+  D2ProgramTrackedEntityAttribute.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -48,8 +48,8 @@ class ProgramTrackedEntityAttribute extends D2MetadataResource {
         mandatory = json["mandatory"],
         valueType = json["valueType"],
         displayName = json["displayName"] {
-    TrackedEntityAttribute attribute =
-        TrackedEntityAttribute.fromMap(json["trackedEntityAttribute"]);
+    D2TrackedEntityAttribute attribute =
+        D2TrackedEntityAttribute.fromMap(json["trackedEntityAttribute"]);
     trackedEntityAttribute.target = attribute;
   }
 }

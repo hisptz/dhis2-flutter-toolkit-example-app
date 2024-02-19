@@ -3,9 +3,9 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-final d2OrgUnitBox = db.store.box<OrganisationUnit>();
+final d2OrgUnitBox = db.store.box<D2OrganisationUnit>();
 
-class D2OrgUnitRepository extends BaseRepository<OrganisationUnit> {
+class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnit> {
   D2OrgUnitRepository() : super(d2OrgUnitBox);
 
   @override
@@ -14,9 +14,9 @@ class D2OrgUnitRepository extends BaseRepository<OrganisationUnit> {
   }
 
   @override
-  OrganisationUnit? getByUid(String uid) {
-    Query<OrganisationUnit> query =
-        d2OrgUnitBox.query(OrganisationUnit_.uid.equals(uid)).build();
+  D2OrganisationUnit? getByUid(String uid) {
+    Query<D2OrganisationUnit> query =
+        d2OrgUnitBox.query(D2OrganisationUnit_.uid.equals(uid)).build();
     return query.findFirst();
   }
 }

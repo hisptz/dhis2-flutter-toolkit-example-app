@@ -3,16 +3,16 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-final d2TrackedEntityAttributeBox = db.store.box<TrackedEntityAttribute>();
+final d2TrackedEntityAttributeBox = db.store.box<D2TrackedEntityAttribute>();
 
 class D2TrackedEntityAttributeRepository
-    extends BaseRepository<TrackedEntityAttribute> {
+    extends BaseRepository<D2TrackedEntityAttribute> {
   D2TrackedEntityAttributeRepository() : super(d2TrackedEntityAttributeBox);
 
   @override
-  TrackedEntityAttribute? getByUid(String uid) {
-    Query<TrackedEntityAttribute> query = d2TrackedEntityAttributeBox
-        .query(TrackedEntityAttribute_.uid.equals(uid))
+  D2TrackedEntityAttribute? getByUid(String uid) {
+    Query<D2TrackedEntityAttribute> query = d2TrackedEntityAttributeBox
+        .query(D2TrackedEntityAttribute_.uid.equals(uid))
         .build();
 
     return query.findFirst();

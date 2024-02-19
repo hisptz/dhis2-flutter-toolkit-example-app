@@ -3,9 +3,9 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-final d2UserRoleBox = db.store.box<DHIS2UserRole>();
+final d2UserRoleBox = db.store.box<D2UserRole>();
 
-class D2UserRoleRepository extends BaseRepository<DHIS2UserRole> {
+class D2UserRoleRepository extends BaseRepository<D2UserRole> {
   D2UserRoleRepository() : super(d2UserRoleBox);
 
   @override
@@ -14,9 +14,9 @@ class D2UserRoleRepository extends BaseRepository<DHIS2UserRole> {
   }
 
   @override
-  DHIS2UserRole? getByUid(String uid) {
-    Query<DHIS2UserRole> query =
-        d2UserRoleBox.query(DHIS2UserRole_.uid.equals(uid)).build();
+  D2UserRole? getByUid(String uid) {
+    Query<D2UserRole> query =
+        d2UserRoleBox.query(D2UserRole_.uid.equals(uid)).build();
     return query.findFirst();
   }
 }

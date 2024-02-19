@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/option.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2OptionSet extends D2MetadataResource {
+class D2OptionSet extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -20,9 +20,9 @@ class DHIS2OptionSet extends D2MetadataResource {
 
   String valueType;
 
-  final options = ToMany<DHIS2Option>();
+  final options = ToMany<D2Option>();
 
-  DHIS2OptionSet(
+  D2OptionSet(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -30,14 +30,14 @@ class DHIS2OptionSet extends D2MetadataResource {
       required this.code,
       required this.valueType});
 
-  DHIS2OptionSet.fromMap(Map json)
+  D2OptionSet.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         code = json["code"],
         valueType = json["valueType"] {
-    List<DHIS2Option> option = json["options"].map(DHIS2Option.fromMap);
+    List<D2Option> option = json["options"].map(D2Option.fromMap);
     options.addAll(option);
   }
 }

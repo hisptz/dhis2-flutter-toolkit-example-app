@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramStageSection extends D2MetadataResource {
+class D2ProgramStageSection extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -20,33 +20,33 @@ class ProgramStageSection extends D2MetadataResource {
   String name;
   int sortOrder;
 
-  final programStage = ToOne<ProgramStage>();
+  final programStage = ToOne<D2ProgramStage>();
 
-  final dataElements = ToMany<DataElement>();
+  final dataElements = ToMany<D2DataElement>();
 
-  ProgramStageSection(
+  D2ProgramStageSection(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
       required this.name,
       required this.sortOrder});
 
-  ProgramStageSection.fromMap(Map json)
+  D2ProgramStageSection.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
-    List<DataElement?> dataElementObjects = json["dataElements"]
+    List<D2DataElement?> dataElementObjects = json["dataElements"]
         .cast<Map>()
-        .map<DataElement?>(
+        .map<D2DataElement?>(
             (Map de) => D2DataElementRepository().getByUid(de["id"]))
         .toList();
 
-    List<DataElement> des = dataElementObjects
-        .where((DataElement? element) => element != null)
+    List<D2DataElement> des = dataElementObjects
+        .where((D2DataElement? element) => element != null)
         .toList()
-        .cast<DataElement>();
+        .cast<D2DataElement>();
     dataElements.addAll(des);
   }
 }

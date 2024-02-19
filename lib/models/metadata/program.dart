@@ -27,14 +27,14 @@ class D2Program extends D2MetadataResource {
   String shortName;
   String accessLevel;
 
-  final organisationUnits = ToMany<OrganisationUnit>();
+  final organisationUnits = ToMany<D2OrganisationUnit>();
 
-  final programStages = ToMany<ProgramStage>();
+  final programStages = ToMany<D2ProgramStage>();
 
-  final programSections = ToMany<ProgramSection>();
+  final programSections = ToMany<D2ProgramSection>();
 
   final programTrackedEntityAttributes =
-      ToMany<ProgramTrackedEntityAttribute>();
+      ToMany<D2ProgramTrackedEntityAttribute>();
 
   D2Program({
     required this.created,
@@ -52,35 +52,35 @@ class D2Program extends D2MetadataResource {
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"] {
-    List<OrganisationUnit?> programOrgUnits = json["organisationUnits"]
+    List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
-        .map<OrganisationUnit?>(
+        .map<D2OrganisationUnit?>(
             (Map orgUnit) => D2OrgUnitRepository().getByUid(orgUnit["id"]))
         .toList();
 
-    List<OrganisationUnit> orgUnits = programOrgUnits
-        .where((OrganisationUnit? element) => element != null)
+    List<D2OrganisationUnit> orgUnits = programOrgUnits
+        .where((D2OrganisationUnit? element) => element != null)
         .toList()
-        .cast<OrganisationUnit>();
+        .cast<D2OrganisationUnit>();
     organisationUnits.addAll(orgUnits);
 
-    List<ProgramStage> ps = json["programStages"]
+    List<D2ProgramStage> ps = json["programStages"]
         .cast<Map>()
-        .map<ProgramStage>(ProgramStage.fromMap)
+        .map<D2ProgramStage>(D2ProgramStage.fromMap)
         .toList();
     programStages.addAll(ps);
 
-    List<ProgramSection> programSection = json["programSections"]
+    List<D2ProgramSection> programSection = json["programSections"]
         .cast<Map>()
-        .map<ProgramSection>(ProgramSection.fromMap)
+        .map<D2ProgramSection>(D2ProgramSection.fromMap)
         .toList();
     programSections.addAll(programSection);
 
-    List<ProgramTrackedEntityAttribute> ptea =
+    List<D2ProgramTrackedEntityAttribute> ptea =
         json["programTrackedEntityAttributes"]
             .cast<Map>()
-            .map<ProgramTrackedEntityAttribute>(
-                ProgramTrackedEntityAttribute.fromMap)
+            .map<D2ProgramTrackedEntityAttribute>(
+                D2ProgramTrackedEntityAttribute.fromMap)
             .toList();
     programTrackedEntityAttributes.addAll(ptea);
   }

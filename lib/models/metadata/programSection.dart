@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribu
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramSection extends D2MetadataResource {
+class D2ProgramSection extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -21,31 +21,31 @@ class ProgramSection extends D2MetadataResource {
   String name;
 
   final program = ToOne<D2Program>();
-  final trackedEntityAttributes = ToMany<TrackedEntityAttribute>();
+  final trackedEntityAttributes = ToMany<D2TrackedEntityAttribute>();
 
-  ProgramSection(
+  D2ProgramSection(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
       required this.name,
       required this.sortOrder});
 
-  ProgramSection.fromMap(Map json)
+  D2ProgramSection.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
-    List<TrackedEntityAttribute?> tei = json["trackedEntityAttributes"]
+    List<D2TrackedEntityAttribute?> tei = json["trackedEntityAttributes"]
         .cast<Map>()
-        .map<TrackedEntityAttribute?>((Map tea) =>
+        .map<D2TrackedEntityAttribute?>((Map tea) =>
             D2TrackedEntityAttributeRepository().getByUid(tea["id"]))
         .toList();
 
-    List<TrackedEntityAttribute> actualTea = tei
+    List<D2TrackedEntityAttribute> actualTea = tei
         .where((element) => element != null)
         .toList()
-        .cast<TrackedEntityAttribute>();
+        .cast<D2TrackedEntityAttribute>();
     trackedEntityAttributes.addAll(actualTea);
   }
 }

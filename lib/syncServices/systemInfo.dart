@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/singleBase.dart';
 
-class SystemInfoSync extends BaseSingleSyncService<SystemInfo> {
+class SystemInfoSync extends BaseSingleSyncService<D2SystemInfo> {
   SystemInfoSync()
       : super(
             fields: ["*"],
@@ -11,7 +11,7 @@ class SystemInfoSync extends BaseSingleSyncService<SystemInfo> {
             label: "System Information");
 
   @override
-  SystemInfo mapper(Map<String, dynamic> json) {
-    return SystemInfo.fromMap(json);
+  D2SystemInfo mapper(Map<String, dynamic> json) {
+    return D2SystemInfo.fromMap(json);
   }
 }

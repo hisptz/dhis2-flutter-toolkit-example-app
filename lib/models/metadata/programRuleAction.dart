@@ -8,7 +8,7 @@ import 'package:objectbox/objectbox.dart';
 import 'programRule.dart';
 
 @Entity()
-class ProgramRuleAction extends D2MetadataResource {
+class D2ProgramRuleAction extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -26,13 +26,13 @@ class ProgramRuleAction extends D2MetadataResource {
   String? location;
 
 //TODO: Add the one 2 one relationships to the constructor
-  final programRule = ToOne<ProgramRule>();
-  final dataElement = ToOne<DataElement>();
-  final programStageSection = ToOne<ProgramStageSection>();
-  final programSection = ToOne<ProgramSection>();
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
+  final programRule = ToOne<D2ProgramRule>();
+  final dataElement = ToOne<D2DataElement>();
+  final programStageSection = ToOne<D2ProgramStageSection>();
+  final programSection = ToOne<D2ProgramSection>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
-  ProgramRuleAction(
+  D2ProgramRuleAction(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -41,7 +41,7 @@ class ProgramRuleAction extends D2MetadataResource {
       this.data,
       this.location});
 
-  ProgramRuleAction.fromMap(Map json)
+  D2ProgramRuleAction.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],

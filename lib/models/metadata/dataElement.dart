@@ -1,13 +1,10 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
-final dataElementBox = db.store.box<DataElement>();
-
 @Entity()
-class DataElement extends D2MetadataResource {
+class D2DataElement extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -28,10 +25,10 @@ class DataElement extends D2MetadataResource {
   String valueType;
   String domainType;
   bool? zeroIsSignificant;
-  final legendSets = ToMany<LegendSet>();
-  final optionSet = ToOne<DHIS2OptionSet>();
+  final legendSets = ToMany<D2LegendSet>();
+  final optionSet = ToOne<D2OptionSet>();
 
-  DataElement(
+  D2DataElement(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -45,7 +42,7 @@ class DataElement extends D2MetadataResource {
       required this.domainType,
       this.zeroIsSignificant});
 
-  DataElement.fromMap(Map json)
+  D2DataElement.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -58,9 +55,9 @@ class DataElement extends D2MetadataResource {
         valueType = json["valueType"],
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    List<LegendSet> set = json["legendSets"]
+    List<D2LegendSet> set = json["legendSets"]
         .cast<Map>()
-        .map<LegendSet>(LegendSet.fromMap)
+        .map<D2LegendSet>(D2LegendSet.fromMap)
         .toList();
     legendSets.addAll(set);
   }

@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityTypeAttribute
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class TrackedEntityType extends D2MetadataResource {
+class D2TrackedEntityType extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -19,24 +19,24 @@ class TrackedEntityType extends D2MetadataResource {
   String name;
   String description;
 
-  final trackedEntityTypeAttributes = ToMany<TrackedEntityTypeAttribute>();
+  final trackedEntityTypeAttributes = ToMany<D2TrackedEntityTypeAttribute>();
 
-  TrackedEntityType(
+  D2TrackedEntityType(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
       required this.name,
       required this.description});
 
-  TrackedEntityType.fromMap(Map json)
+  D2TrackedEntityType.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         description = json["description"] {
-    List<TrackedEntityTypeAttribute> attributes =
+    List<D2TrackedEntityTypeAttribute> attributes =
         json["trackedEntityTypeAttributes"]
-            .map(TrackedEntityTypeAttribute.fromMap);
+            .map(D2TrackedEntityTypeAttribute.fromMap);
 
     trackedEntityTypeAttributes.addAll(attributes);
   }

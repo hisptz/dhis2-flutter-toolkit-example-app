@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramStage extends D2MetadataResource {
+class D2ProgramStage extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -26,11 +26,11 @@ class ProgramStage extends D2MetadataResource {
 
   final program = ToOne<D2Program>();
 
-  final programStageDataElements = ToMany<ProgramStageDataElement>();
+  final programStageDataElements = ToMany<D2ProgramStageDataElement>();
 
-  final programStageSections = ToMany<ProgramStageSection>();
+  final programStageSections = ToMany<D2ProgramStageSection>();
 
-  ProgramStage({
+  D2ProgramStage({
     required this.created,
     required this.lastUpdated,
     required this.uid,
@@ -42,7 +42,7 @@ class ProgramStage extends D2MetadataResource {
     this.description,
   });
 
-  ProgramStage.fromMap(Map json)
+  D2ProgramStage.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -52,16 +52,16 @@ class ProgramStage extends D2MetadataResource {
         reportDateToUse = json["reportDateToUse"],
         featureType = json["featureType"],
         description = json["description"] {
-    List<ProgramStageDataElement> psde = json["programStageDataElements"]
+    List<D2ProgramStageDataElement> psde = json["programStageDataElements"]
         .cast<Map>()
-        .map<ProgramStageDataElement>(ProgramStageDataElement.fromMap)
+        .map<D2ProgramStageDataElement>(D2ProgramStageDataElement.fromMap)
         .toList();
 
     programStageDataElements.addAll(psde);
 
-    List<ProgramStageSection> ps = json["programStageSections"]
+    List<D2ProgramStageSection> ps = json["programStageSections"]
         .cast<Map>()
-        .map<ProgramStageSection>(ProgramStageSection.fromMap)
+        .map<D2ProgramStageSection>(D2ProgramStageSection.fromMap)
         .toList();
 
     programStageSections.addAll(ps);

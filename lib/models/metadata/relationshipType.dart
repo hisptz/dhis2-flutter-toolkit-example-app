@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/relationshipConstraint.dar
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class RelationshipType extends D2MetadataResource {
+class D2RelationshipType extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -22,10 +22,10 @@ class RelationshipType extends D2MetadataResource {
   String fromToName;
   String toFromName;
 
-  final fromConstraint = ToOne<RelationshipConstraint>();
-  final toConstraint = ToOne<RelationshipConstraint>();
+  final fromConstraint = ToOne<D2RelationshipConstraint>();
+  final toConstraint = ToOne<D2RelationshipConstraint>();
 
-  RelationshipType(
+  D2RelationshipType(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -36,7 +36,7 @@ class RelationshipType extends D2MetadataResource {
       required this.fromToName,
       required this.toFromName});
 
-  RelationshipType.fromMap(Map json)
+  D2RelationshipType.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],

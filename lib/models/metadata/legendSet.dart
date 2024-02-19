@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 import 'legend.dart';
 
 @Entity()
-class LegendSet extends D2MetadataResource {
+class D2LegendSet extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -20,9 +20,9 @@ class LegendSet extends D2MetadataResource {
   String name;
   String? code;
 
-  final legends = ToMany<Legend>();
+  final legends = ToMany<D2Legend>();
 
-  LegendSet({
+  D2LegendSet({
     required this.created,
     required this.lastUpdated,
     required this.uid,
@@ -30,14 +30,14 @@ class LegendSet extends D2MetadataResource {
     this.code,
   });
 
-  LegendSet.fromMap(Map json)
+  D2LegendSet.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         code = json["code"] {
-    List<Legend> allLegends =
-        json["legends"].cast<Map>().map<Legend>(Legend.fromMap).toList();
+    List<D2Legend> allLegends =
+        json["legends"].cast<Map>().map<D2Legend>(D2Legend.fromMap).toList();
     legends.addAll(allLegends);
   }
 }
