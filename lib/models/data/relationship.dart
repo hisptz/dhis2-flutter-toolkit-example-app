@@ -1,5 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/fromRelationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/toRelationship.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
+
+import '../../objectbox.g.dart';
+
+final relationshipBox = db.store.box<Relationship>();
 
 @Entity()
 class Relationship extends D2DataResource {
@@ -18,8 +25,8 @@ class Relationship extends D2DataResource {
   bool bidirectional;
   String relationshipType;
 
-  // Map<String, dynamic> from; TODO: Setup actual relationship links
-  // Map<String, dynamic> to;
+  final from = ToOne<FromRelationship>();
+  final to = ToOne<ToRelationship>();
 
   Relationship({
     required this.created,

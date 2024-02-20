@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
+
+import '../../objectbox.g.dart';
+
+final d2EnrollmentBox = db.store.box<D2Enrollment>();
 
 @Entity()
 class D2Enrollment extends D2DataResource {
@@ -29,7 +36,7 @@ class D2Enrollment extends D2DataResource {
   bool followup;
   DateTime incidentDate;
   String status;
-  List<String> notes;
+  String notes;
 
   final events = ToMany<D2Event>();
   final relationships = ToMany<Relationship>();
@@ -68,7 +75,7 @@ class D2Enrollment extends D2DataResource {
         deleted = json["deleted"],
         incidentDate = DateTime.parse(json["incidentDate"]),
         status = json["status"],
-        notes = json["notes"] {
+        notes = jsonEncode(json["notes"]) {
     List<D2Event> event = json["events"].map(D2Event.fromMap);
 
     events.addAll(event);

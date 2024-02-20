@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
+
+import '../../objectbox.g.dart';
+
+final trackedEntityBox = db.store.box<TrackedEntity>();
 
 @Entity()
 class TrackedEntity extends D2DataResource {
@@ -20,8 +27,7 @@ class TrackedEntity extends D2DataResource {
   String trackedEntityType;
 
   String featureType;
-
-  // List<Map<String, dynamic>> programOwners;
+  String programOwners;
   String orgUnit;
   DateTime createdAtClient;
   bool potentialDuplicate;
@@ -42,7 +48,8 @@ class TrackedEntity extends D2DataResource {
       required this.deleted,
       required this.potentialDuplicate,
       required this.featureType,
-      required this.inactive});
+      required this.inactive,
+      required this.programOwners});
 
   TrackedEntity.fromMap(Map json)
       : uid = json["trackedEntityInstance"],
@@ -54,6 +61,7 @@ class TrackedEntity extends D2DataResource {
         deleted = json["deleted"],
         potentialDuplicate = json["potentialDuplicate"],
         featureType = json["featureType"],
+        programOwners = jsonEncode(json["programOwners"]),
         inactive = json["inactive"] {
     List<D2Enrollment> enrollment =
         json["enrollments"].map(D2Enrollment.fromMap);

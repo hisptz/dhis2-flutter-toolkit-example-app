@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:objectbox/objectbox.dart';
 
 import '../models/base.dart';
 import '../objectbox.g.dart';

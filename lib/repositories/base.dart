@@ -1,5 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 abstract class BaseRepository<T extends DHIS2Resource> {
   Box<T> box;
