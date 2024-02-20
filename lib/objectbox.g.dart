@@ -14,6 +14,15 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'models/data/attributeValue.dart';
+import 'models/data/dataValue.dart';
+import 'models/data/enrollment.dart';
+import 'models/data/event.dart';
+import 'models/data/fromRelationship.dart';
+import 'models/data/relationship.dart';
+import 'models/data/toRelationship.dart';
+import 'models/data/trackedEntity.dart';
+import 'models/data/trackedEntityAttributeValue.dart';
 import 'models/metadata/attribute.dart';
 import 'models/metadata/attributeValue.dart';
 import 'models/metadata/dataElement.dart';
@@ -1655,6 +1664,502 @@ final _entities = <ModelEntity>[
             relationTarget: 'TrackedEntityAttribute')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(31, 7072767907122780465),
+      name: 'Relationship',
+      lastPropertyId: const IdUid(11, 2714035779627179964),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7475160319913330378),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3787048159450933726),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1383138646868854992),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1807092333559354452),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(57, 1514311822115373860)),
+        ModelProperty(
+            id: const IdUid(5, 5863865046460960070),
+            name: 'relationshipName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 2867417870374200986),
+            name: 'bidirectional',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 210538568998053548),
+            name: 'relationshipType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 6943670070644194382),
+            name: 'fromId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(64, 7872642126663391728),
+            relationTarget: 'FromRelationship'),
+        ModelProperty(
+            id: const IdUid(11, 2714035779627179964),
+            name: 'toId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(65, 1983936423461266821),
+            relationTarget: 'ToRelationship')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(32, 6472727175644197671),
+      name: 'D2DataValue',
+      lastPropertyId: const IdUid(6, 536894220266181506),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8331222033942316750),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1757224796815834010),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5463133890165608507),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1673318220193367882),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(58, 1348498202247754805)),
+        ModelProperty(
+            id: const IdUid(5, 7743053924543570655),
+            name: 'value',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 536894220266181506),
+            name: 'providedElsewhere',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(33, 3341482574135796038),
+      name: 'D2Enrollment',
+      lastPropertyId: const IdUid(16, 1132398682051084299),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2982649107397746863),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5564133164018018410),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1918109981832255597),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6665934437668776759),
+            name: 'createdAtClient',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 4313700084200873096),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(59, 7841847207707566127)),
+        ModelProperty(
+            id: const IdUid(6, 8270080494803258668),
+            name: 'program',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 38853595033812515),
+            name: 'trackedEntityInstance',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5008367745695107144),
+            name: 'trackedEntityType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 7512051959213761645),
+            name: 'orgUnit',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 1779842395155542048),
+            name: 'orgUnitName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 5874554010291021040),
+            name: 'enrollmentDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 1349775019279832961),
+            name: 'deleted',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 3862788198755665799),
+            name: 'followup',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 639903690723989160),
+            name: 'incidentDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 2482592974780067134),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 1132398682051084299),
+            name: 'notes',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(29, 671168373289330676),
+            name: 'events',
+            targetId: const IdUid(34, 959038627194745037)),
+        ModelRelation(
+            id: const IdUid(30, 1598066358571289087),
+            name: 'relationships',
+            targetId: const IdUid(31, 7072767907122780465)),
+        ModelRelation(
+            id: const IdUid(31, 4663666900159278540),
+            name: 'attributes',
+            targetId: const IdUid(35, 3004618996913035376))
+      ],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(34, 959038627194745037),
+      name: 'D2Event',
+      lastPropertyId: const IdUid(20, 4844548141429087007),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2012317479066991889),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4285584982693689557),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4554426808175948123),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 7588424155556286607),
+            name: 'createdAtClient',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 9207971170010759195),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(60, 3685424446050028822)),
+        ModelProperty(
+            id: const IdUid(6, 1614868408764069334),
+            name: 'dueDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 2377484375402422936),
+            name: 'program',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5788908955395568565),
+            name: 'programStage',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 7567141241169225354),
+            name: 'orgUnit',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 8888155320084391935),
+            name: 'enrollment',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 1499018449804023006),
+            name: 'trackedEntityInstance',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 6156018523162676004),
+            name: 'enrollmentStatus',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 2616496463896078334),
+            name: 'eventDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 7216438410623136795),
+            name: 'orgUnitName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 134944005977958105),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 6202873091319648558),
+            name: 'attributeCategoryOptions',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 3558509355212889934),
+            name: 'deleted',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 2814427174997799250),
+            name: 'followup',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 5493269960048473510),
+            name: 'attributeOptionCombo',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 4844548141429087007),
+            name: 'notes',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(32, 6496131436029973380),
+            name: 'relationships',
+            targetId: const IdUid(31, 7072767907122780465)),
+        ModelRelation(
+            id: const IdUid(33, 2959828460959787417),
+            name: 'dataValues',
+            targetId: const IdUid(32, 6472727175644197671))
+      ],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(35, 3004618996913035376),
+      name: 'D2TrackedEntityAttributeValue',
+      lastPropertyId: const IdUid(8, 8830479633924640640),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 50648015515137990),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2816068450559795593),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3649733850123108159),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4970526156611539583),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(61, 1019212535219513510)),
+        ModelProperty(
+            id: const IdUid(5, 7438742260480006217),
+            name: 'displayName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3250383523841390046),
+            name: 'code',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8760465565837045394),
+            name: 'value',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8830479633924640640),
+            name: 'valueType',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(36, 6333977726134262728),
+      name: 'TrackedEntity',
+      lastPropertyId: const IdUid(12, 166426852099964997),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8405298983906192880),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5772174841591537150),
+            name: 'created',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6518783725239188523),
+            name: 'lastUpdated',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4807343511989406332),
+            name: 'uid',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(62, 8635238764909532388)),
+        ModelProperty(
+            id: const IdUid(5, 847883787843578171),
+            name: 'trackedEntityType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1438831511321483694),
+            name: 'featureType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 694131243946843923),
+            name: 'orgUnit',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 3052266907873078990),
+            name: 'createdAtClient',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6257595198985060531),
+            name: 'potentialDuplicate',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 3345112309813223786),
+            name: 'deleted',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 6490696117286541845),
+            name: 'inactive',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 166426852099964997),
+            name: 'programOwners',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(34, 5980404072717220606),
+            name: 'enrollments',
+            targetId: const IdUid(33, 3341482574135796038)),
+        ModelRelation(
+            id: const IdUid(35, 8176499038140169434),
+            name: 'relationships',
+            targetId: const IdUid(31, 7072767907122780465)),
+        ModelRelation(
+            id: const IdUid(36, 2345101310134726632),
+            name: 'attributes',
+            targetId: const IdUid(35, 3004618996913035376))
+      ],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(37, 8345039839514690163),
+      name: 'FromRelationship',
+      lastPropertyId: const IdUid(2, 483845897889214286),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2967629658835931542),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 483845897889214286),
+            name: 'trackedEntityInstanceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(63, 7553561899601981535),
+            relationTarget: 'TrackedEntity')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(38, 479145967139231261),
+      name: 'ToRelationship',
+      lastPropertyId: const IdUid(2, 6223731000115784105),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4641954509416958636),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 6223731000115784105),
+            name: 'trackedEntityInstanceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(66, 3194976135782875466),
+            relationTarget: 'TrackedEntity')
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -1685,9 +2190,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(30, 6221516206459388647),
-      lastIndexId: const IdUid(56, 1340576823164761945),
-      lastRelationId: const IdUid(28, 6551904508148908519),
+      lastEntityId: const IdUid(38, 479145967139231261),
+      lastIndexId: const IdUid(66, 3194976135782875466),
+      lastRelationId: const IdUid(36, 2345101310134726632),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [1890676193673836562, 900010869586975097],
       retiredIndexUids: const [8961184502700425506],
@@ -1709,7 +2214,9 @@ ModelDefinition getObjectBoxModel() {
         2459398241364805894,
         6979760762695358044,
         8445002480272463015,
-        4979106521348804123
+        4979106521348804123,
+        9223029421380505930,
+        7403225029808369467
       ],
       retiredRelationUids: const [4966942760818989276],
       modelVersion: 5,
@@ -3410,6 +3917,538 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
           object.trackedEntityAttribute.attach(store);
           return object;
+        }),
+    Relationship: EntityDefinition<Relationship>(
+        model: _entities[28],
+        toOneRelations: (Relationship object) => [object.from, object.to],
+        toManyRelations: (Relationship object) => {},
+        getId: (Relationship object) => object.id,
+        setId: (Relationship object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Relationship object, fb.Builder fbb) {
+          final uidOffset = fbb.writeString(object.uid);
+          final relationshipNameOffset =
+              fbb.writeString(object.relationshipName);
+          final relationshipTypeOffset =
+              fbb.writeString(object.relationshipType);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+          fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, relationshipNameOffset);
+          fbb.addBool(5, object.bidirectional);
+          fbb.addOffset(6, relationshipTypeOffset);
+          fbb.addInt64(9, object.from.targetId);
+          fbb.addInt64(10, object.to.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final createdParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+          final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final relationshipNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final relationshipTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final bidirectionalParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final object = Relationship(
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              uid: uidParam,
+              relationshipName: relationshipNameParam,
+              relationshipType: relationshipTypeParam,
+              bidirectional: bidirectionalParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.from.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.from.attach(store);
+          object.to.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          object.to.attach(store);
+          return object;
+        }),
+    D2DataValue: EntityDefinition<D2DataValue>(
+        model: _entities[29],
+        toOneRelations: (D2DataValue object) => [],
+        toManyRelations: (D2DataValue object) => {},
+        getId: (D2DataValue object) => object.id,
+        setId: (D2DataValue object, int id) {
+          object.id = id;
+        },
+        objectToFB: (D2DataValue object, fb.Builder fbb) {
+          final uidOffset = fbb.writeString(object.uid);
+          final valueOffset = fbb.writeString(object.value);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+          fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, valueOffset);
+          fbb.addBool(5, object.providedElsewhere);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final createdParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final valueParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final providedElsewhereParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final object = D2DataValue(
+              lastUpdated: lastUpdatedParam,
+              created: createdParam,
+              uid: uidParam,
+              value: valueParam,
+              providedElsewhere: providedElsewhereParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    D2Enrollment: EntityDefinition<D2Enrollment>(
+        model: _entities[30],
+        toOneRelations: (D2Enrollment object) => [],
+        toManyRelations: (D2Enrollment object) => {
+              RelInfo<D2Enrollment>.toMany(29, object.id): object.events,
+              RelInfo<D2Enrollment>.toMany(30, object.id): object.relationships,
+              RelInfo<D2Enrollment>.toMany(31, object.id): object.attributes
+            },
+        getId: (D2Enrollment object) => object.id,
+        setId: (D2Enrollment object, int id) {
+          object.id = id;
+        },
+        objectToFB: (D2Enrollment object, fb.Builder fbb) {
+          final uidOffset = fbb.writeString(object.uid);
+          final programOffset = fbb.writeString(object.program);
+          final trackedEntityInstanceOffset =
+              fbb.writeString(object.trackedEntityInstance);
+          final trackedEntityTypeOffset =
+              fbb.writeString(object.trackedEntityType);
+          final orgUnitOffset = fbb.writeString(object.orgUnit);
+          final orgUnitNameOffset = fbb.writeString(object.orgUnitName);
+          final statusOffset = fbb.writeString(object.status);
+          final notesOffset = fbb.writeString(object.notes);
+          fbb.startTable(17);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.createdAtClient.millisecondsSinceEpoch);
+          fbb.addOffset(4, uidOffset);
+          fbb.addOffset(5, programOffset);
+          fbb.addOffset(6, trackedEntityInstanceOffset);
+          fbb.addOffset(7, trackedEntityTypeOffset);
+          fbb.addOffset(8, orgUnitOffset);
+          fbb.addOffset(9, orgUnitNameOffset);
+          fbb.addInt64(10, object.enrollmentDate.millisecondsSinceEpoch);
+          fbb.addBool(11, object.deleted);
+          fbb.addBool(12, object.followup);
+          fbb.addInt64(13, object.incidentDate.millisecondsSinceEpoch);
+          fbb.addOffset(14, statusOffset);
+          fbb.addOffset(15, notesOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final programParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final createdParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+          final createdAtClientParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final orgUnitParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 20, '');
+          final orgUnitNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 22, '');
+          final trackedEntityInstanceParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final trackedEntityTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final enrollmentDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
+          final followupParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 28, false);
+          final deletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
+          final incidentDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0));
+          final statusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 32, '');
+          final notesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 34, '');
+          final object = D2Enrollment(
+              uid: uidParam,
+              program: programParam,
+              lastUpdated: lastUpdatedParam,
+              created: createdParam,
+              createdAtClient: createdAtClientParam,
+              orgUnit: orgUnitParam,
+              orgUnitName: orgUnitNameParam,
+              trackedEntityInstance: trackedEntityInstanceParam,
+              trackedEntityType: trackedEntityTypeParam,
+              enrollmentDate: enrollmentDateParam,
+              followup: followupParam,
+              deleted: deletedParam,
+              incidentDate: incidentDateParam,
+              status: statusParam,
+              notes: notesParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          InternalToManyAccess.setRelInfo<D2Enrollment>(object.events, store,
+              RelInfo<D2Enrollment>.toMany(29, object.id));
+          InternalToManyAccess.setRelInfo<D2Enrollment>(object.relationships,
+              store, RelInfo<D2Enrollment>.toMany(30, object.id));
+          InternalToManyAccess.setRelInfo<D2Enrollment>(object.attributes,
+              store, RelInfo<D2Enrollment>.toMany(31, object.id));
+          return object;
+        }),
+    D2Event: EntityDefinition<D2Event>(
+        model: _entities[31],
+        toOneRelations: (D2Event object) => [],
+        toManyRelations: (D2Event object) => {
+              RelInfo<D2Event>.toMany(32, object.id): object.relationships,
+              RelInfo<D2Event>.toMany(33, object.id): object.dataValues
+            },
+        getId: (D2Event object) => object.id,
+        setId: (D2Event object, int id) {
+          object.id = id;
+        },
+        objectToFB: (D2Event object, fb.Builder fbb) {
+          final uidOffset = fbb.writeString(object.uid);
+          final programOffset = fbb.writeString(object.program);
+          final programStageOffset = fbb.writeString(object.programStage);
+          final orgUnitOffset = fbb.writeString(object.orgUnit);
+          final enrollmentOffset = fbb.writeString(object.enrollment);
+          final trackedEntityInstanceOffset =
+              fbb.writeString(object.trackedEntityInstance);
+          final enrollmentStatusOffset =
+              fbb.writeString(object.enrollmentStatus);
+          final orgUnitNameOffset = fbb.writeString(object.orgUnitName);
+          final statusOffset = fbb.writeString(object.status);
+          final attributeCategoryOptionsOffset =
+              fbb.writeString(object.attributeCategoryOptions);
+          final attributeOptionComboOffset =
+              fbb.writeString(object.attributeOptionCombo);
+          final notesOffset = fbb.writeString(object.notes);
+          fbb.startTable(21);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.createdAtClient.millisecondsSinceEpoch);
+          fbb.addOffset(4, uidOffset);
+          fbb.addInt64(5, object.dueDate.millisecondsSinceEpoch);
+          fbb.addOffset(6, programOffset);
+          fbb.addOffset(7, programStageOffset);
+          fbb.addOffset(8, orgUnitOffset);
+          fbb.addOffset(9, enrollmentOffset);
+          fbb.addOffset(10, trackedEntityInstanceOffset);
+          fbb.addOffset(11, enrollmentStatusOffset);
+          fbb.addInt64(12, object.eventDate.millisecondsSinceEpoch);
+          fbb.addOffset(13, orgUnitNameOffset);
+          fbb.addOffset(14, statusOffset);
+          fbb.addOffset(15, attributeCategoryOptionsOffset);
+          fbb.addBool(16, object.deleted);
+          fbb.addBool(17, object.followup);
+          fbb.addOffset(18, attributeOptionComboOffset);
+          fbb.addOffset(19, notesOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final attributeCategoryOptionsParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 34, '');
+          final attributeOptionComboParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 40, '');
+          final enrollmentParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
+          final programParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final createdParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+          final createdAtClientParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final orgUnitParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 20, '');
+          final orgUnitNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 30, '');
+          final trackedEntityInstanceParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 24, '');
+          final followupParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false);
+          final deletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 36, false);
+          final statusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 32, '');
+          final notesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 42, '');
+          final dueDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final enrollmentStatusParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 26, '');
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final programStageParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final eventDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0));
+          final object = D2Event(
+              attributeCategoryOptions: attributeCategoryOptionsParam,
+              attributeOptionCombo: attributeOptionComboParam,
+              enrollment: enrollmentParam,
+              program: programParam,
+              lastUpdated: lastUpdatedParam,
+              created: createdParam,
+              createdAtClient: createdAtClientParam,
+              orgUnit: orgUnitParam,
+              orgUnitName: orgUnitNameParam,
+              trackedEntityInstance: trackedEntityInstanceParam,
+              followup: followupParam,
+              deleted: deletedParam,
+              status: statusParam,
+              notes: notesParam,
+              dueDate: dueDateParam,
+              enrollmentStatus: enrollmentStatusParam,
+              uid: uidParam,
+              programStage: programStageParam,
+              eventDate: eventDateParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          InternalToManyAccess.setRelInfo<D2Event>(object.relationships, store,
+              RelInfo<D2Event>.toMany(32, object.id));
+          InternalToManyAccess.setRelInfo<D2Event>(
+              object.dataValues, store, RelInfo<D2Event>.toMany(33, object.id));
+          return object;
+        }),
+    D2TrackedEntityAttributeValue:
+        EntityDefinition<D2TrackedEntityAttributeValue>(
+            model: _entities[32],
+            toOneRelations: (D2TrackedEntityAttributeValue object) => [],
+            toManyRelations: (D2TrackedEntityAttributeValue object) => {},
+            getId: (D2TrackedEntityAttributeValue object) => object.id,
+            setId: (D2TrackedEntityAttributeValue object, int id) {
+              object.id = id;
+            },
+            objectToFB: (D2TrackedEntityAttributeValue object, fb.Builder fbb) {
+              final uidOffset = fbb.writeString(object.uid);
+              final displayNameOffset = fbb.writeString(object.displayName);
+              final codeOffset = fbb.writeString(object.code);
+              final valueOffset = fbb.writeString(object.value);
+              final valueTypeOffset = fbb.writeString(object.valueType);
+              fbb.startTable(9);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+              fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+              fbb.addOffset(3, uidOffset);
+              fbb.addOffset(4, displayNameOffset);
+              fbb.addOffset(5, codeOffset);
+              fbb.addOffset(6, valueOffset);
+              fbb.addOffset(7, valueTypeOffset);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final createdParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+              final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+              final uidParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+              final displayNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final codeParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+              final valueParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+              final valueTypeParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 18, '');
+              final object = D2TrackedEntityAttributeValue(
+                  created: createdParam,
+                  lastUpdated: lastUpdatedParam,
+                  uid: uidParam,
+                  displayName: displayNameParam,
+                  code: codeParam,
+                  value: valueParam,
+                  valueType: valueTypeParam)
+                ..id =
+                    const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+              return object;
+            }),
+    TrackedEntity: EntityDefinition<TrackedEntity>(
+        model: _entities[33],
+        toOneRelations: (TrackedEntity object) => [],
+        toManyRelations: (TrackedEntity object) => {
+              RelInfo<TrackedEntity>.toMany(34, object.id): object.enrollments,
+              RelInfo<TrackedEntity>.toMany(35, object.id):
+                  object.relationships,
+              RelInfo<TrackedEntity>.toMany(36, object.id): object.attributes
+            },
+        getId: (TrackedEntity object) => object.id,
+        setId: (TrackedEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TrackedEntity object, fb.Builder fbb) {
+          final uidOffset = fbb.writeString(object.uid);
+          final trackedEntityTypeOffset =
+              fbb.writeString(object.trackedEntityType);
+          final featureTypeOffset = fbb.writeString(object.featureType);
+          final orgUnitOffset = fbb.writeString(object.orgUnit);
+          final programOwnersOffset = fbb.writeString(object.programOwners);
+          fbb.startTable(13);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.created.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
+          fbb.addOffset(3, uidOffset);
+          fbb.addOffset(4, trackedEntityTypeOffset);
+          fbb.addOffset(5, featureTypeOffset);
+          fbb.addOffset(6, orgUnitOffset);
+          fbb.addInt64(7, object.createdAtClient.millisecondsSinceEpoch);
+          fbb.addBool(8, object.potentialDuplicate);
+          fbb.addBool(9, object.deleted);
+          fbb.addBool(10, object.inactive);
+          fbb.addOffset(11, programOwnersOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final trackedEntityTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final orgUnitParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final createdAtClientParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final createdParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+          final lastUpdatedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final deletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final potentialDuplicateParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final featureTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final programOwnersParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 26, '');
+          final inactiveParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          final object = TrackedEntity(
+              uid: uidParam,
+              trackedEntityType: trackedEntityTypeParam,
+              orgUnit: orgUnitParam,
+              createdAtClient: createdAtClientParam,
+              created: createdParam,
+              lastUpdated: lastUpdatedParam,
+              deleted: deletedParam,
+              potentialDuplicate: potentialDuplicateParam,
+              featureType: featureTypeParam,
+              programOwners: programOwnersParam,
+              inactive: inactiveParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          InternalToManyAccess.setRelInfo<TrackedEntity>(object.enrollments,
+              store, RelInfo<TrackedEntity>.toMany(34, object.id));
+          InternalToManyAccess.setRelInfo<TrackedEntity>(object.relationships,
+              store, RelInfo<TrackedEntity>.toMany(35, object.id));
+          InternalToManyAccess.setRelInfo<TrackedEntity>(object.attributes,
+              store, RelInfo<TrackedEntity>.toMany(36, object.id));
+          return object;
+        }),
+    FromRelationship: EntityDefinition<FromRelationship>(
+        model: _entities[34],
+        toOneRelations: (FromRelationship object) =>
+            [object.trackedEntityInstance],
+        toManyRelations: (FromRelationship object) => {},
+        getId: (FromRelationship object) => object.id,
+        setId: (FromRelationship object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FromRelationship object, fb.Builder fbb) {
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.trackedEntityInstance.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = FromRelationship()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.trackedEntityInstance.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.trackedEntityInstance.attach(store);
+          return object;
+        }),
+    ToRelationship: EntityDefinition<ToRelationship>(
+        model: _entities[35],
+        toOneRelations: (ToRelationship object) =>
+            [object.trackedEntityInstance],
+        toManyRelations: (ToRelationship object) => {},
+        getId: (ToRelationship object) => object.id,
+        setId: (ToRelationship object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ToRelationship object, fb.Builder fbb) {
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.trackedEntityInstance.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ToRelationship()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.trackedEntityInstance.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.trackedEntityInstance.attach(store);
+          return object;
         })
   };
 
@@ -4562,4 +5601,363 @@ class ProgramTrackedEntityAttribute_ {
   static final trackedEntityAttribute =
       QueryRelationToOne<ProgramTrackedEntityAttribute, TrackedEntityAttribute>(
           _entities[27].properties[11]);
+}
+
+/// [Relationship] entity fields to define ObjectBox queries.
+class Relationship_ {
+  /// see [Relationship.id]
+  static final id =
+      QueryIntegerProperty<Relationship>(_entities[28].properties[0]);
+
+  /// see [Relationship.created]
+  static final created =
+      QueryIntegerProperty<Relationship>(_entities[28].properties[1]);
+
+  /// see [Relationship.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<Relationship>(_entities[28].properties[2]);
+
+  /// see [Relationship.uid]
+  static final uid =
+      QueryStringProperty<Relationship>(_entities[28].properties[3]);
+
+  /// see [Relationship.relationshipName]
+  static final relationshipName =
+      QueryStringProperty<Relationship>(_entities[28].properties[4]);
+
+  /// see [Relationship.bidirectional]
+  static final bidirectional =
+      QueryBooleanProperty<Relationship>(_entities[28].properties[5]);
+
+  /// see [Relationship.relationshipType]
+  static final relationshipType =
+      QueryStringProperty<Relationship>(_entities[28].properties[6]);
+
+  /// see [Relationship.from]
+  static final from = QueryRelationToOne<Relationship, FromRelationship>(
+      _entities[28].properties[7]);
+
+  /// see [Relationship.to]
+  static final to = QueryRelationToOne<Relationship, ToRelationship>(
+      _entities[28].properties[8]);
+}
+
+/// [D2DataValue] entity fields to define ObjectBox queries.
+class D2DataValue_ {
+  /// see [D2DataValue.id]
+  static final id =
+      QueryIntegerProperty<D2DataValue>(_entities[29].properties[0]);
+
+  /// see [D2DataValue.created]
+  static final created =
+      QueryIntegerProperty<D2DataValue>(_entities[29].properties[1]);
+
+  /// see [D2DataValue.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<D2DataValue>(_entities[29].properties[2]);
+
+  /// see [D2DataValue.uid]
+  static final uid =
+      QueryStringProperty<D2DataValue>(_entities[29].properties[3]);
+
+  /// see [D2DataValue.value]
+  static final value =
+      QueryStringProperty<D2DataValue>(_entities[29].properties[4]);
+
+  /// see [D2DataValue.providedElsewhere]
+  static final providedElsewhere =
+      QueryBooleanProperty<D2DataValue>(_entities[29].properties[5]);
+}
+
+/// [D2Enrollment] entity fields to define ObjectBox queries.
+class D2Enrollment_ {
+  /// see [D2Enrollment.id]
+  static final id =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[0]);
+
+  /// see [D2Enrollment.created]
+  static final created =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[1]);
+
+  /// see [D2Enrollment.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[2]);
+
+  /// see [D2Enrollment.createdAtClient]
+  static final createdAtClient =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[3]);
+
+  /// see [D2Enrollment.uid]
+  static final uid =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[4]);
+
+  /// see [D2Enrollment.program]
+  static final program =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[5]);
+
+  /// see [D2Enrollment.trackedEntityInstance]
+  static final trackedEntityInstance =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[6]);
+
+  /// see [D2Enrollment.trackedEntityType]
+  static final trackedEntityType =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[7]);
+
+  /// see [D2Enrollment.orgUnit]
+  static final orgUnit =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[8]);
+
+  /// see [D2Enrollment.orgUnitName]
+  static final orgUnitName =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[9]);
+
+  /// see [D2Enrollment.enrollmentDate]
+  static final enrollmentDate =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[10]);
+
+  /// see [D2Enrollment.deleted]
+  static final deleted =
+      QueryBooleanProperty<D2Enrollment>(_entities[30].properties[11]);
+
+  /// see [D2Enrollment.followup]
+  static final followup =
+      QueryBooleanProperty<D2Enrollment>(_entities[30].properties[12]);
+
+  /// see [D2Enrollment.incidentDate]
+  static final incidentDate =
+      QueryIntegerProperty<D2Enrollment>(_entities[30].properties[13]);
+
+  /// see [D2Enrollment.status]
+  static final status =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[14]);
+
+  /// see [D2Enrollment.notes]
+  static final notes =
+      QueryStringProperty<D2Enrollment>(_entities[30].properties[15]);
+
+  /// see [D2Enrollment.events]
+  static final events =
+      QueryRelationToMany<D2Enrollment, D2Event>(_entities[30].relations[0]);
+
+  /// see [D2Enrollment.relationships]
+  static final relationships = QueryRelationToMany<D2Enrollment, Relationship>(
+      _entities[30].relations[1]);
+
+  /// see [D2Enrollment.attributes]
+  static final attributes =
+      QueryRelationToMany<D2Enrollment, D2TrackedEntityAttributeValue>(
+          _entities[30].relations[2]);
+}
+
+/// [D2Event] entity fields to define ObjectBox queries.
+class D2Event_ {
+  /// see [D2Event.id]
+  static final id = QueryIntegerProperty<D2Event>(_entities[31].properties[0]);
+
+  /// see [D2Event.created]
+  static final created =
+      QueryIntegerProperty<D2Event>(_entities[31].properties[1]);
+
+  /// see [D2Event.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<D2Event>(_entities[31].properties[2]);
+
+  /// see [D2Event.createdAtClient]
+  static final createdAtClient =
+      QueryIntegerProperty<D2Event>(_entities[31].properties[3]);
+
+  /// see [D2Event.uid]
+  static final uid = QueryStringProperty<D2Event>(_entities[31].properties[4]);
+
+  /// see [D2Event.dueDate]
+  static final dueDate =
+      QueryIntegerProperty<D2Event>(_entities[31].properties[5]);
+
+  /// see [D2Event.program]
+  static final program =
+      QueryStringProperty<D2Event>(_entities[31].properties[6]);
+
+  /// see [D2Event.programStage]
+  static final programStage =
+      QueryStringProperty<D2Event>(_entities[31].properties[7]);
+
+  /// see [D2Event.orgUnit]
+  static final orgUnit =
+      QueryStringProperty<D2Event>(_entities[31].properties[8]);
+
+  /// see [D2Event.enrollment]
+  static final enrollment =
+      QueryStringProperty<D2Event>(_entities[31].properties[9]);
+
+  /// see [D2Event.trackedEntityInstance]
+  static final trackedEntityInstance =
+      QueryStringProperty<D2Event>(_entities[31].properties[10]);
+
+  /// see [D2Event.enrollmentStatus]
+  static final enrollmentStatus =
+      QueryStringProperty<D2Event>(_entities[31].properties[11]);
+
+  /// see [D2Event.eventDate]
+  static final eventDate =
+      QueryIntegerProperty<D2Event>(_entities[31].properties[12]);
+
+  /// see [D2Event.orgUnitName]
+  static final orgUnitName =
+      QueryStringProperty<D2Event>(_entities[31].properties[13]);
+
+  /// see [D2Event.status]
+  static final status =
+      QueryStringProperty<D2Event>(_entities[31].properties[14]);
+
+  /// see [D2Event.attributeCategoryOptions]
+  static final attributeCategoryOptions =
+      QueryStringProperty<D2Event>(_entities[31].properties[15]);
+
+  /// see [D2Event.deleted]
+  static final deleted =
+      QueryBooleanProperty<D2Event>(_entities[31].properties[16]);
+
+  /// see [D2Event.followup]
+  static final followup =
+      QueryBooleanProperty<D2Event>(_entities[31].properties[17]);
+
+  /// see [D2Event.attributeOptionCombo]
+  static final attributeOptionCombo =
+      QueryStringProperty<D2Event>(_entities[31].properties[18]);
+
+  /// see [D2Event.notes]
+  static final notes =
+      QueryStringProperty<D2Event>(_entities[31].properties[19]);
+
+  /// see [D2Event.relationships]
+  static final relationships =
+      QueryRelationToMany<D2Event, Relationship>(_entities[31].relations[0]);
+
+  /// see [D2Event.dataValues]
+  static final dataValues =
+      QueryRelationToMany<D2Event, D2DataValue>(_entities[31].relations[1]);
+}
+
+/// [D2TrackedEntityAttributeValue] entity fields to define ObjectBox queries.
+class D2TrackedEntityAttributeValue_ {
+  /// see [D2TrackedEntityAttributeValue.id]
+  static final id = QueryIntegerProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[0]);
+
+  /// see [D2TrackedEntityAttributeValue.created]
+  static final created = QueryIntegerProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[1]);
+
+  /// see [D2TrackedEntityAttributeValue.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<D2TrackedEntityAttributeValue>(
+          _entities[32].properties[2]);
+
+  /// see [D2TrackedEntityAttributeValue.uid]
+  static final uid = QueryStringProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[3]);
+
+  /// see [D2TrackedEntityAttributeValue.displayName]
+  static final displayName = QueryStringProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[4]);
+
+  /// see [D2TrackedEntityAttributeValue.code]
+  static final code = QueryStringProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[5]);
+
+  /// see [D2TrackedEntityAttributeValue.value]
+  static final value = QueryStringProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[6]);
+
+  /// see [D2TrackedEntityAttributeValue.valueType]
+  static final valueType = QueryStringProperty<D2TrackedEntityAttributeValue>(
+      _entities[32].properties[7]);
+}
+
+/// [TrackedEntity] entity fields to define ObjectBox queries.
+class TrackedEntity_ {
+  /// see [TrackedEntity.id]
+  static final id =
+      QueryIntegerProperty<TrackedEntity>(_entities[33].properties[0]);
+
+  /// see [TrackedEntity.created]
+  static final created =
+      QueryIntegerProperty<TrackedEntity>(_entities[33].properties[1]);
+
+  /// see [TrackedEntity.lastUpdated]
+  static final lastUpdated =
+      QueryIntegerProperty<TrackedEntity>(_entities[33].properties[2]);
+
+  /// see [TrackedEntity.uid]
+  static final uid =
+      QueryStringProperty<TrackedEntity>(_entities[33].properties[3]);
+
+  /// see [TrackedEntity.trackedEntityType]
+  static final trackedEntityType =
+      QueryStringProperty<TrackedEntity>(_entities[33].properties[4]);
+
+  /// see [TrackedEntity.featureType]
+  static final featureType =
+      QueryStringProperty<TrackedEntity>(_entities[33].properties[5]);
+
+  /// see [TrackedEntity.orgUnit]
+  static final orgUnit =
+      QueryStringProperty<TrackedEntity>(_entities[33].properties[6]);
+
+  /// see [TrackedEntity.createdAtClient]
+  static final createdAtClient =
+      QueryIntegerProperty<TrackedEntity>(_entities[33].properties[7]);
+
+  /// see [TrackedEntity.potentialDuplicate]
+  static final potentialDuplicate =
+      QueryBooleanProperty<TrackedEntity>(_entities[33].properties[8]);
+
+  /// see [TrackedEntity.deleted]
+  static final deleted =
+      QueryBooleanProperty<TrackedEntity>(_entities[33].properties[9]);
+
+  /// see [TrackedEntity.inactive]
+  static final inactive =
+      QueryBooleanProperty<TrackedEntity>(_entities[33].properties[10]);
+
+  /// see [TrackedEntity.programOwners]
+  static final programOwners =
+      QueryStringProperty<TrackedEntity>(_entities[33].properties[11]);
+
+  /// see [TrackedEntity.enrollments]
+  static final enrollments = QueryRelationToMany<TrackedEntity, D2Enrollment>(
+      _entities[33].relations[0]);
+
+  /// see [TrackedEntity.relationships]
+  static final relationships = QueryRelationToMany<TrackedEntity, Relationship>(
+      _entities[33].relations[1]);
+
+  /// see [TrackedEntity.attributes]
+  static final attributes =
+      QueryRelationToMany<TrackedEntity, D2TrackedEntityAttributeValue>(
+          _entities[33].relations[2]);
+}
+
+/// [FromRelationship] entity fields to define ObjectBox queries.
+class FromRelationship_ {
+  /// see [FromRelationship.id]
+  static final id =
+      QueryIntegerProperty<FromRelationship>(_entities[34].properties[0]);
+
+  /// see [FromRelationship.trackedEntityInstance]
+  static final trackedEntityInstance =
+      QueryRelationToOne<FromRelationship, TrackedEntity>(
+          _entities[34].properties[1]);
+}
+
+/// [ToRelationship] entity fields to define ObjectBox queries.
+class ToRelationship_ {
+  /// see [ToRelationship.id]
+  static final id =
+      QueryIntegerProperty<ToRelationship>(_entities[35].properties[0]);
+
+  /// see [ToRelationship.trackedEntityInstance]
+  static final trackedEntityInstance =
+      QueryRelationToOne<ToRelationship, TrackedEntity>(
+          _entities[35].properties[1]);
 }

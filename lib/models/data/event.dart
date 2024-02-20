@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
 
@@ -36,7 +39,7 @@ class D2Event extends D2DataResource {
   bool deleted;
   bool followup;
   String attributeOptionCombo;
-  List notes;
+  String notes;
 
   final relationships = ToMany<Relationship>();
   final dataValues = ToMany<D2DataValue>();
@@ -76,7 +79,7 @@ class D2Event extends D2DataResource {
         followup = json["followup"],
         deleted = json["deleted"],
         status = json["status"],
-        notes = json["notes"],
+        notes = jsonEncode(json["notes"]),
         dueDate = DateTime.parse(json["dueDate"]),
         enrollmentStatus = json["enrollmentStatus"],
         uid = json["event"],

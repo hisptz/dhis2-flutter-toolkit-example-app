@@ -1,4 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/fromRelationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/toRelationship.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -22,8 +24,9 @@ class Relationship extends D2DataResource {
   String relationshipName;
   bool bidirectional;
   String relationshipType;
-  Map<String, dynamic> from;
-  Map<String, dynamic> to;
+
+  final from = ToOne<FromRelationship>();
+  final to = ToOne<ToRelationship>();
 
   Relationship({
     required this.created,
@@ -32,8 +35,6 @@ class Relationship extends D2DataResource {
     required this.relationshipName,
     required this.relationshipType,
     required this.bidirectional,
-    required this.from,
-    required this.to,
   });
 
   Relationship.fromMap(Map json)
@@ -42,7 +43,5 @@ class Relationship extends D2DataResource {
         uid = json["relationship"],
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
-        bidirectional = json["bidirectional"],
-        from = json["from"],
-        to = json["to"];
+        bidirectional = json["bidirectional"];
 }
