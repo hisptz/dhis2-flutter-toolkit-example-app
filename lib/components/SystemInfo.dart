@@ -1,5 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/repositories/systemInfo.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:flutter/material.dart';
 
 class SystemInfoWidget extends StatefulWidget {
@@ -12,7 +12,7 @@ class SystemInfoWidget extends StatefulWidget {
 class _SystemInfoWidgetState extends State<SystemInfoWidget> {
   bool loading = false;
   SystemInfoRepository repository = SystemInfoRepository();
-  SystemInfo? info;
+  D2SystemInfo? info;
 
   @override
   void initState() {

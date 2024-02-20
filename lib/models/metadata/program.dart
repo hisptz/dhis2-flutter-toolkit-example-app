@@ -1,10 +1,11 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
 
 final programBox = db.store.box<D2Program>();
@@ -27,16 +28,14 @@ class D2Program extends D2MetadataResource {
   String shortName;
   String accessLevel;
 
-  final attributeValues = ToMany<DHIS2AttributeValue>();
+  final organisationUnits = ToMany<D2OrganisationUnit>();
 
-  final organisationUnits = ToMany<OrganisationUnit>();
+  final programStages = ToMany<D2ProgramStage>();
 
-  final programStages = ToMany<ProgramStage>();
-
-  final programSections = ToMany<ProgramSection>();
+  final programSections = ToMany<D2ProgramSection>();
 
   final programTrackedEntityAttributes =
-      ToMany<ProgramTrackedEntityAttribute>();
+      ToMany<D2ProgramTrackedEntityAttribute>();
 
   D2Program({
     required this.created,
@@ -54,26 +53,17 @@ class D2Program extends D2MetadataResource {
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"] {
-    List<DHIS2AttributeValue> attributeValue =
-        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
+    id = D2ProgramRepository().getIdByUid(json["id"]) ?? 0;
+    List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
+        .cast<Map>()
+        .map<D2OrganisationUnit?>(
+            (Map orgUnit) => D2OrgUnitRepository().getByUid(orgUnit["id"]))
+        .toList();
 
-    attributeValues.addAll(attributeValue);
-
-    List<OrganisationUnit> orgUnits = json["organisationUnits"]
-        .map((Map orgUnit) => OrganisationUnit.getByUid(orgUnit["id"]));
+    List<D2OrganisationUnit> orgUnits = programOrgUnits
+        .where((D2OrganisationUnit? element) => element != null)
+        .toList()
+        .cast<D2OrganisationUnit>();
     organisationUnits.addAll(orgUnits);
-
-    List<ProgramStage> programStage =
-        json["programStages"].map(ProgramStage.fromMap);
-    programStages.addAll(programStage);
-
-    List<ProgramSection> programSection =
-        json["programSections"].map(ProgramSection.fromMap);
-    programSections.addAll(programSection);
-
-    List<ProgramTrackedEntityAttribute> ptea =
-        json["programTrackedEntityAttributes"]
-            .map(ProgramTrackedEntityAttribute.fromMap);
-    programTrackedEntityAttributes.addAll(ptea);
   }
 }

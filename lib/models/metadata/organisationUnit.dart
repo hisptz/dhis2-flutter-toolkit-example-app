@@ -1,13 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../objectbox.g.dart';
-
-final organisationUnitBox = db.store.box();
+final organisationUnitBox = db.store.box<D2OrganisationUnit>();
 
 @Entity()
-class OrganisationUnit implements D2MetadataResource {
+class D2OrganisationUnit implements D2MetadataResource {
   @override
   int id = 0;
   String name;
@@ -23,7 +22,7 @@ class OrganisationUnit implements D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  OrganisationUnit(
+  D2OrganisationUnit(
       {required this.name,
       required this.uid,
       required this.shortName,
@@ -32,18 +31,14 @@ class OrganisationUnit implements D2MetadataResource {
       required this.created,
       required this.lastUpdated});
 
-  static OrganisationUnit? getByUid(String id) {
-    Query query =
-        organisationUnitBox.query(OrganisationUnit_.uid.equals(id)).build();
-    return query.findFirst();
-  }
-
-  OrganisationUnit.fromMap(Map json)
+  D2OrganisationUnit.fromMap(Map json)
       : uid = json["id"],
         name = json["name"],
         shortName = json["shortName"],
         path = json["path"],
         level = json["level"],
         created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]);
+        lastUpdated = DateTime.parse(json["lastUpdated"]) {
+    id = D2OrgUnitRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

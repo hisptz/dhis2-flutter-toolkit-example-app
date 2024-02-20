@@ -1,8 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+<<<<<<< HEAD
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
+=======
+import 'package:objectbox/objectbox.dart';
+>>>>>>> feature/metadata-models
 
 final d2TrackedEntityAttributeValueBox =
     db.store.box<D2TrackedEntityAttributeValue>();

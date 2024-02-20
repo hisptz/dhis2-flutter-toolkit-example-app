@@ -1,9 +1,10 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnitGroup.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class OrganisationUnitGroup implements D2MetadataResource {
+class D2OrganisationUnitGroup implements D2MetadataResource {
   @override
   int id = 0;
   String name;
@@ -11,7 +12,7 @@ class OrganisationUnitGroup implements D2MetadataResource {
   @Unique()
   String uid;
 
-  final organisationUnits = ToMany<OrganisationUnit>();
+  final organisationUnits = ToMany<D2OrganisationUnit>();
 
   @override
   DateTime created;
@@ -19,20 +20,20 @@ class OrganisationUnitGroup implements D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  OrganisationUnitGroup(
+  D2OrganisationUnitGroup(
       {required this.name,
       required this.uid,
       required this.created,
       required this.lastUpdated});
 
-  OrganisationUnitGroup.fromMap(Map json)
+  D2OrganisationUnitGroup.fromMap(Map json)
       : name = json["name"],
         uid = json["id"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
-    List<OrganisationUnit> orgUnits =
-        json["organisationUnits"].map(OrganisationUnit.fromMap);
-
+    List<D2OrganisationUnit> orgUnits =
+        json["organisationUnits"].map(D2OrganisationUnit.fromMap);
     organisationUnits.addAll(orgUnits);
+    id = D2OrgUnitGroupRepository().getIdByUid(json["id"]) ?? 0;
   }
 }

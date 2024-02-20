@@ -8,7 +8,7 @@ Future<DHIS2Credentials?> login(
   DHIS2Credentials credentials = DHIS2Credentials(username, password, baseURL);
   DHIS2Client client = DHIS2Client(credentials);
   try {
-    Map response = await client.httpGet<Map>("me");
+    await client.httpGet<Map>("me");
     return credentials;
   } catch (e) {
     print(e);

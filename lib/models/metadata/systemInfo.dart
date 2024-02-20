@@ -1,11 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:objectbox/objectbox.dart';
 
-final systemInfoBox = db.store.box<SystemInfo>();
-
 @Entity()
-class SystemInfo extends DHIS2Resource {
+class D2SystemInfo extends DHIS2Resource {
   int id = 0;
 
   String version;
@@ -18,7 +16,7 @@ class SystemInfo extends DHIS2Resource {
   @Index()
   String systemName;
 
-  SystemInfo(
+  D2SystemInfo(
       {required this.version,
       required this.revision,
       required this.calendar,
@@ -27,12 +25,14 @@ class SystemInfo extends DHIS2Resource {
       required this.systemId,
       required this.systemName});
 
-  SystemInfo.fromMap(Map json)
+  D2SystemInfo.fromMap(Map json)
       : calendar = json["calendar"],
         revision = json["revision"],
         dateFormat = json["dateFormat"],
         version = json["version"],
         contextPath = json["contextPath"],
         systemName = json["systemName"],
-        systemId = json["systemId"];
+        systemId = json["systemId"] {
+    id = SystemInfoRepository().getIdByUid(json["systemId"]) ?? 0;
+  }
 }

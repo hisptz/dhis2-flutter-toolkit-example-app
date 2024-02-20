@@ -1,16 +1,12 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attributeValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../objectbox.g.dart';
-
-final dataElementBox = db.store.box<DataElement>();
-
 @Entity()
-class DataElement extends D2MetadataResource {
+class D2DataElement extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -22,39 +18,33 @@ class DataElement extends D2MetadataResource {
   String uid;
 
   String name;
-  String code;
+  String? code;
 
-  String formName;
+  String? formName;
   String shortName;
-  String description;
+  String? description;
   String aggregationType;
   String valueType;
   String domainType;
-  bool zeroIsSignificant;
-  final attributeValues = ToMany<DHIS2AttributeValue>();
-  final legendSets = ToMany<LegendSet>();
-  final optionSet = ToOne<DHIS2OptionSet>();
+  bool? zeroIsSignificant;
+  final legendSets = ToMany<D2LegendSet>();
+  final optionSet = ToOne<D2OptionSet>();
 
-  DataElement(
+  D2DataElement(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
       required this.name,
-      required this.code,
-      required this.formName,
+      this.code,
+      this.formName,
       required this.shortName,
-      required this.description,
+      this.description,
       required this.aggregationType,
       required this.valueType,
       required this.domainType,
-      required this.zeroIsSignificant});
+      this.zeroIsSignificant});
 
-  static DataElement? getByUid(String id) {
-    Query query = dataElementBox.query(DataElement_.uid.equals(id)).build();
-    return query.findFirst();
-  }
-
-  DataElement.fromMap(Map json)
+  D2DataElement.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -67,12 +57,12 @@ class DataElement extends D2MetadataResource {
         valueType = json["valueType"],
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    List<DHIS2AttributeValue> value =
-        json["attributeValues"].map(DHIS2AttributeValue.fromMap);
-    attributeValues.addAll(value);
+    id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
 
-    List<LegendSet> set = json["legendSets"].map(LegendSet.fromMap);
-    legendSets.addAll(set);
+    if (json["optionSet"] != null) {
+      optionSet.target =
+          D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+    }
   }
 
   @override

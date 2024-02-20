@@ -1,9 +1,11 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/option.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DHIS2Option extends D2MetadataResource {
+class D2Option extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -19,9 +21,9 @@ class DHIS2Option extends D2MetadataResource {
   String code;
   int sortOrder;
 
-  final optionSet = ToOne<DHIS2OptionSet>();
+  final optionSet = ToOne<D2OptionSet>();
 
-  DHIS2Option(
+  D2Option(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -29,11 +31,15 @@ class DHIS2Option extends D2MetadataResource {
       required this.code,
       required this.sortOrder});
 
-  DHIS2Option.fromMap(Map json)
+  D2Option.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         code = json["code"],
-        sortOrder = json["sortOrder"];
+        sortOrder = json["sortOrder"] {
+    id = D2OptionRepository().getIdByUid(json["id"]) ?? 0;
+    optionSet.target =
+        D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+  }
 }

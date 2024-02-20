@@ -1,21 +1,17 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/singleBase.dart';
 
-class UserSyncService extends BaseSyncService<DHIS2MeUser> {
+class UserSyncService extends BaseSingleSyncService<D2User> {
   UserSyncService()
       : super(
             resource: "me",
-            fields: ["*", "userRoles[*],userGroups[*],organisationUnits[*]"],
+            fields: ["*", "userRoles[*],userGroups[*],organisationUnits[id]"],
             box: dhis2MeUserBox,
             label: "User");
 
   @override
-  Future<BaseSyncService<DHIS2MeUser>> get() async {
-    Map<String, dynamic>? data = await getData<Map<String, dynamic>>();
-    if (data == null) {
-      return this;
-    }
-    entity = DHIS2MeUser.fromMap(data);
-    return this;
+  D2User mapper(Map<String, dynamic> json) {
+    return D2User.fromMap(json);
   }
 }

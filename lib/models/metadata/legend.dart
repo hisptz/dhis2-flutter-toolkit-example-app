@@ -1,8 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Legend extends D2MetadataResource {
+class D2Legend extends D2MetadataResource {
   @override
   int id = 0;
   @override
@@ -15,12 +16,12 @@ class Legend extends D2MetadataResource {
   String uid;
 
   String name;
-  int startValue;
-  int endValue;
+  double startValue;
+  double endValue;
   String color;
   String displayName;
 
-  Legend(
+  D2Legend(
       {required this.created,
       required this.lastUpdated,
       required this.uid,
@@ -30,13 +31,15 @@ class Legend extends D2MetadataResource {
       required this.color,
       required this.displayName});
 
-  Legend.fromMap(Map json)
+  D2Legend.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
-        startValue = json["startValue"],
-        endValue = json["endValue"],
+        startValue = json["startValue"].toDouble(),
+        endValue = json["endValue"].toDouble(),
         color = json["color"],
-        displayName = json["displayName"];
+        displayName = json["displayName"] {
+    id = D2LegendRepository().getIdByUid(json["id"]) ?? 0;
+  }
 }

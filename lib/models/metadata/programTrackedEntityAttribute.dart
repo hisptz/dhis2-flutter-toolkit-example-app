@@ -1,11 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntityAttribute.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ProgramTrackedEntityAttribute extends D2MetadataResource {
+class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
   @override
   DateTime created;
 
@@ -17,40 +18,40 @@ class ProgramTrackedEntityAttribute extends D2MetadataResource {
 
   @override
   String uid;
-  String name;
   int sortOrder;
-  bool displayInList;
+  bool? displayInList;
   bool mandatory;
-  String valueType;
-  String displayName;
+  bool? searchable;
+  bool? renderOptionAsRadio;
 
   final program = ToOne<D2Program>();
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
-  ProgramTrackedEntityAttribute(
-      this.created,
-      this.id,
-      this.lastUpdated,
-      this.uid,
-      this.name,
-      this.sortOrder,
-      this.displayInList,
-      this.mandatory,
-      this.valueType,
-      this.displayName);
+  D2ProgramTrackedEntityAttribute(
+    this.created,
+    this.id,
+    this.lastUpdated,
+    this.uid,
+    this.sortOrder,
+    this.displayInList,
+    this.mandatory,
+    this.searchable,
+    this.renderOptionAsRadio,
+  );
 
-  ProgramTrackedEntityAttribute.fromMap(Map json)
+  D2ProgramTrackedEntityAttribute.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
-        name = json["name"],
         sortOrder = json["sortOrder"],
         displayInList = json["displayInList"],
         mandatory = json["mandatory"],
-        valueType = json["valueType"],
-        displayName = json["displayName"] {
-    TrackedEntityAttribute attribute =
-        TrackedEntityAttribute.fromMap(json["trackedEntityAttribute"]);
+        searchable = json["searchable"],
+        renderOptionAsRadio = json["renderOptionAsRadio"] {
+    id =
+        D2ProgramTrackedEntityAttributeRepository().getIdByUid(json["id"]) ?? 0;
+    D2TrackedEntityAttribute? attribute = D2TrackedEntityAttributeRepository()
+        .getByUid(json["trackedEntityAttribute"]["id"]);
     trackedEntityAttribute.target = attribute;
   }
 }
