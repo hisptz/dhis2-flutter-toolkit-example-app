@@ -1,9 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
-<<<<<<< HEAD
 import 'package:objectbox/objectbox.dart';
-=======
-import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
->>>>>>> feature/metadata-models
 
 abstract class BaseRepository<T extends DHIS2Resource> {
   Box<T> box;

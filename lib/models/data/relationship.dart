@@ -25,13 +25,8 @@ class Relationship extends D2DataResource {
   bool bidirectional;
   String relationshipType;
 
-<<<<<<< HEAD
   final from = ToOne<FromRelationship>();
   final to = ToOne<ToRelationship>();
-=======
-  // Map<String, dynamic> from; TODO: Setup actual relationship links
-  // Map<String, dynamic> to;
->>>>>>> feature/metadata-models
 
   Relationship({
     required this.created,

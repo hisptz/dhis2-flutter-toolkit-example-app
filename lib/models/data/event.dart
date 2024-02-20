@@ -3,14 +3,10 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-<<<<<<< HEAD
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
-=======
-import 'package:objectbox/objectbox.dart';
->>>>>>> feature/metadata-models
 
 final d2EventBox = db.store.box<D2Event>();
 
@@ -43,11 +39,7 @@ class D2Event extends D2DataResource {
   bool deleted;
   bool followup;
   String attributeOptionCombo;
-<<<<<<< HEAD
   String notes;
-=======
-  List<String> notes;
->>>>>>> feature/metadata-models
 
   final relationships = ToMany<Relationship>();
   final dataValues = ToMany<D2DataValue>();

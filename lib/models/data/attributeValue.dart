@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/attribute.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
@@ -10,9 +9,8 @@ final dhis2AttributeValueBox = db.store.box<DHIS2AttributeValue>();
 class DHIS2AttributeValue {
   int id = 0;
 
-  final attribute = ToOne<DHIS2Attribute>();
-  final dataElement = ToOne<DataElement>();
-  final trackedEntityAttribute = ToOne<TrackedEntityAttribute>();
+  final dataElement = ToOne<D2DataElement>();
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
   dynamic value;
 
   DHIS2AttributeValue({this.value});
