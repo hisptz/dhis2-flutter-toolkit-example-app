@@ -12,7 +12,7 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
     return query.find() as List<TrackedEntity>;
   }
 
-  TrackedEntity? get({id = String}) {
+  TrackedEntity? get(String id) {
     Query query = box.query(TrackedEntity_.uid.equals(id)).build();
     return query.findFirst();
   }
