@@ -4,12 +4,10 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
-
-final trackedEntityBox = db.store.box<TrackedEntity>();
 
 @Entity()
 class TrackedEntity extends D2DataResource {

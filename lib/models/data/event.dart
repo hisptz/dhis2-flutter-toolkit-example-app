@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
-
-final d2EventBox = db.store.box<D2Event>();
 
 @Entity()
 class D2Event extends D2DataResource {
