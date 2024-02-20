@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -57,11 +58,11 @@ class D2DataElement extends D2MetadataResource {
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
     id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
-    List<D2LegendSet> set = json["legendSets"]
-        .cast<Map>()
-        .map<D2LegendSet>(D2LegendSet.fromMap)
-        .toList();
-    legendSets.addAll(set);
+
+    if (json["optionSet"] != null) {
+      optionSet.target =
+          D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+    }
   }
 
   @override

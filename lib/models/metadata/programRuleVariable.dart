@@ -1,7 +1,11 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleVariable.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'program.dart';
@@ -50,5 +54,20 @@ class D2ProgramRuleVariable extends D2MetadataResource {
         valueType = json["valueType"],
         useCodeForOptionSet = json["useCodeForOptionSet"] {
     id = D2ProgramRuleVariableRepository().getIdByUid(json["id"]) ?? 0;
+
+    if (json["trackedEntityAttribute"] != null) {
+      trackedEntityAttribute.target = D2TrackedEntityAttributeRepository()
+          .getByUid(json["trackedEntityAttribute"]["id"]);
+    }
+
+    if (json["dataElement"] != null) {
+      dataElement.target =
+          D2DataElementRepository().getByUid(json["dataElement"]["id"]);
+    }
+    if (json["programStage"] != null) {
+      programStage.target =
+          D2ProgramStageRepository().getByUid(json["programStage"]["id"]);
+    }
+    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
   }
 }

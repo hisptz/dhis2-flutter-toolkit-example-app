@@ -17,7 +17,7 @@ class D2OptionSet extends D2MetadataResource {
   String uid;
 
   String name;
-  String code;
+  String? code;
 
   String valueType;
 
@@ -28,7 +28,7 @@ class D2OptionSet extends D2MetadataResource {
       required this.lastUpdated,
       required this.uid,
       required this.name,
-      required this.code,
+      this.code,
       required this.valueType});
 
   D2OptionSet.fromMap(Map json)
@@ -38,8 +38,6 @@ class D2OptionSet extends D2MetadataResource {
         name = json["name"],
         code = json["code"],
         valueType = json["valueType"] {
-    List<D2Option> option = json["options"].map(D2Option.fromMap);
-    options.addAll(option);
     id = D2OptionSetRepository().getIdByUid(json["id"]) ?? 0;
   }
 }

@@ -1,13 +1,17 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/option.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRule.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleAction.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleVariable.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStageDataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStageSection.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
@@ -58,8 +62,35 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
         return D2ProgramRepository().saveOffline(value);
       case "programRules":
         return D2ProgramRuleRepository().saveOffline(value);
+      case "legends":
+        return D2LegendRepository().saveOffline(value);
+      case "legendSets":
+        return D2LegendSetRepository().saveOffline(value);
+      case "programSections":
+        return D2ProgramSectionRepository().saveOffline(value);
+      case "programStageSections":
+        return D2ProgramStageSectionRepository().saveOffline(value);
     }
   }
+
+  List<String> sortOrder = [
+    "optionSets",
+    "options",
+    "legendSets",
+    "legends",
+    "dataElements",
+    "trackedEntityInstances",
+    "trackedEntityTypes",
+    "programs",
+    "programRuleVariables",
+    "programRules",
+    "programRuleActions",
+    "programTrackedEntityAttributes",
+    "programSections",
+    "programStages",
+    "programStageDataElements",
+    "programStageSections",
+  ];
 
   Future<void> syncProgram(String programId) async {
     Map<String, dynamic>? programMetadata = await dhis2client
@@ -69,7 +100,13 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
       throw "Error getting program $programId";
     }
 
-    await Future.forEach(programMetadata.entries,
+    List<MapEntry<String, dynamic>> metadataEntries = programMetadata.entries
+        .where((element) => sortOrder.contains(element.key))
+        .toList();
+    metadataEntries.sort(
+        (a, b) => sortOrder.indexOf(a.key).compareTo(sortOrder.indexOf(b.key)));
+
+    await Future.forEach(metadataEntries,
         (MapEntry<String, dynamic> element) async {
       if (element.key == "system") {
         return;
@@ -77,7 +114,6 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
 
       List<Map<String, dynamic>> value =
           element.value.cast<Map<String, dynamic>>();
-      print(value);
       await syncMeta(element.key, value);
     });
   }
@@ -90,7 +126,6 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
         status: Status.initialized,
         label: label);
     controller.add(status);
-
     for (final programId in programIds) {
       await syncProgram(programId);
       controller.add(status.increment());

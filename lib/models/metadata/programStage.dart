@@ -54,18 +54,5 @@ class D2ProgramStage extends D2MetadataResource {
         featureType = json["featureType"],
         description = json["description"] {
     id = D2ProgramStageRepository().getIdByUid(json["id"]) ?? 0;
-    List<D2ProgramStageDataElement> psde = json["programStageDataElements"]
-        .cast<Map>()
-        .map<D2ProgramStageDataElement>(D2ProgramStageDataElement.fromMap)
-        .toList();
-
-    programStageDataElements.addAll(psde);
-
-    List<D2ProgramStageSection> ps = json["programStageSections"]
-        .cast<Map>()
-        .map<D2ProgramStageSection>(D2ProgramStageSection.fromMap)
-        .toList();
-
-    programStageSections.addAll(ps);
   }
 }

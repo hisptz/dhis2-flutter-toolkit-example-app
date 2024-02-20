@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
@@ -49,5 +50,6 @@ class D2ProgramSection extends D2MetadataResource {
         .toList()
         .cast<D2TrackedEntityAttribute>();
     trackedEntityAttributes.addAll(actualTea);
+    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
   }
 }

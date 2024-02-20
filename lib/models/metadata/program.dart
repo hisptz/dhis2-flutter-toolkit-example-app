@@ -65,25 +65,5 @@ class D2Program extends D2MetadataResource {
         .toList()
         .cast<D2OrganisationUnit>();
     organisationUnits.addAll(orgUnits);
-
-    List<D2ProgramStage> ps = json["programStages"]
-        .cast<Map>()
-        .map<D2ProgramStage>(D2ProgramStage.fromMap)
-        .toList();
-    programStages.addAll(ps);
-
-    List<D2ProgramSection> programSection = json["programSections"]
-        .cast<Map>()
-        .map<D2ProgramSection>(D2ProgramSection.fromMap)
-        .toList();
-    programSections.addAll(programSection);
-
-    List<D2ProgramTrackedEntityAttribute> ptea =
-        json["programTrackedEntityAttributes"]
-            .cast<Map>()
-            .map<D2ProgramTrackedEntityAttribute>(
-                D2ProgramTrackedEntityAttribute.fromMap)
-            .toList();
-    programTrackedEntityAttributes.addAll(ptea);
   }
 }

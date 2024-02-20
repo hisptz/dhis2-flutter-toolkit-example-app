@@ -18,7 +18,7 @@ class D2TrackedEntityType extends D2MetadataResource {
   String uid;
 
   String name;
-  String description;
+  String? description;
 
   final trackedEntityTypeAttributes = ToMany<D2TrackedEntityTypeAttribute>();
 
@@ -36,10 +36,5 @@ class D2TrackedEntityType extends D2MetadataResource {
         name = json["name"],
         description = json["description"] {
     id = D2TrackedEntityTypeRepository().getIdByUid(json["id"]) ?? 0;
-    List<D2TrackedEntityTypeAttribute> attributes =
-        json["trackedEntityTypeAttributes"]
-            .map(D2TrackedEntityTypeAttribute.fromMap);
-
-    trackedEntityTypeAttributes.addAll(attributes);
   }
 }

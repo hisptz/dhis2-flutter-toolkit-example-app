@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStageSection.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -50,5 +51,7 @@ class D2ProgramStageSection extends D2MetadataResource {
         .toList()
         .cast<D2DataElement>();
     dataElements.addAll(des);
+    programStage.target =
+        D2ProgramStageRepository().getByUid(json["programStage"]["id"]);
   }
 }

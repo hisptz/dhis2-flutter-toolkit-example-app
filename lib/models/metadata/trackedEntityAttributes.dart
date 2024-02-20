@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -65,5 +66,9 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
         .toList();
 
     legendSets.addAll(legendSet);
+    if (json["optionSet"] != null) {
+      optionSet.target =
+          D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+    }
   }
 }

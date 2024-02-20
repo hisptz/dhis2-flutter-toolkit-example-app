@@ -1481,7 +1481,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(50, 7488301292242945618),
       name: 'D2ProgramTrackedEntityAttribute',
-      lastPropertyId: const IdUid(12, 5078269454161609100),
+      lastPropertyId: const IdUid(14, 5050214553309454966),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1505,11 +1505,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 5928888720857309373),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(6, 6377473226016166848),
             name: 'sortOrder',
             type: 6,
@@ -1525,16 +1520,6 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(9, 8027020932016416596),
-            name: 'valueType',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 6159954950023088729),
-            name: 'displayName',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(11, 7089343410886801258),
             name: 'programId',
             type: 11,
@@ -1547,7 +1532,17 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(86, 7519784462312449628),
-            relationTarget: 'D2TrackedEntityAttribute')
+            relationTarget: 'D2TrackedEntityAttribute'),
+        ModelProperty(
+            id: const IdUid(13, 74107217236395975),
+            name: 'searchable',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 5050214553309454966),
+            name: 'renderOptionAsRadio',
+            type: 1,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -2278,7 +2273,10 @@ ModelDefinition getObjectBoxModel() {
         1459705038374774744,
         4662855104117382634,
         4921227497008555022,
-        952386212930704923
+        952386212930704923,
+        5928888720857309373,
+        8027020932016416596,
+        6159954950023088729
       ],
       retiredRelationUids: const [
         5838287942449585018,
@@ -3307,7 +3305,8 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (D2OptionSet object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
           final nameOffset = fbb.writeString(object.name);
-          final codeOffset = fbb.writeString(object.code);
+          final codeOffset =
+              object.code == null ? null : fbb.writeString(object.code!);
           final valueTypeOffset = fbb.writeString(object.valueType);
           fbb.startTable(8);
           fbb.addInt64(0, object.id);
@@ -3332,7 +3331,7 @@ ModelDefinition getObjectBoxModel() {
           final nameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
           final codeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
+              .vTableGetNullable(buffer, rootOffset, 14);
           final valueTypeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
           final object = D2OptionSet(
@@ -3837,22 +3836,18 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (D2ProgramTrackedEntityAttribute object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          final nameOffset = fbb.writeString(object.name);
-          final valueTypeOffset = fbb.writeString(object.valueType);
-          final displayNameOffset = fbb.writeString(object.displayName);
-          fbb.startTable(13);
+          fbb.startTable(15);
           fbb.addInt64(0, object.created.millisecondsSinceEpoch);
           fbb.addInt64(1, object.id);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
-          fbb.addOffset(4, nameOffset);
           fbb.addInt64(5, object.sortOrder);
           fbb.addBool(6, object.displayInList);
           fbb.addBool(7, object.mandatory);
-          fbb.addOffset(8, valueTypeOffset);
-          fbb.addOffset(9, displayNameOffset);
           fbb.addInt64(10, object.program.targetId);
           fbb.addInt64(11, object.trackedEntityAttribute.targetId);
+          fbb.addBool(12, object.searchable);
+          fbb.addBool(13, object.renderOptionAsRadio);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3867,30 +3862,26 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final nameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
           final sortOrderParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           final displayInListParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16);
           final mandatoryParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
-          final valueTypeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
-          final displayNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
+          final searchableParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 28);
+          final renderOptionAsRadioParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 30);
           final object = D2ProgramTrackedEntityAttribute(
               createdParam,
               idParam,
               lastUpdatedParam,
               uidParam,
-              nameParam,
               sortOrderParam,
               displayInListParam,
               mandatoryParam,
-              valueTypeParam,
-              displayNameParam);
+              searchableParam,
+              renderOptionAsRadioParam);
           object.program.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.program.attach(store);
@@ -4186,7 +4177,9 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (D2TrackedEntityType object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
           final nameOffset = fbb.writeString(object.name);
-          final descriptionOffset = fbb.writeString(object.description);
+          final descriptionOffset = object.description == null
+              ? null
+              : fbb.writeString(object.description!);
           fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
@@ -4210,7 +4203,7 @@ ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 12, '');
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, '');
+                  .vTableGetNullable(buffer, rootOffset, 14);
           final object = D2TrackedEntityType(
               created: createdParam,
               lastUpdated: lastUpdatedParam,
@@ -5420,43 +5413,40 @@ class D2ProgramTrackedEntityAttribute_ {
   static final uid = QueryStringProperty<D2ProgramTrackedEntityAttribute>(
       _entities[23].properties[3]);
 
-  /// see [D2ProgramTrackedEntityAttribute.name]
-  static final name = QueryStringProperty<D2ProgramTrackedEntityAttribute>(
-      _entities[23].properties[4]);
-
   /// see [D2ProgramTrackedEntityAttribute.sortOrder]
   static final sortOrder =
       QueryIntegerProperty<D2ProgramTrackedEntityAttribute>(
-          _entities[23].properties[5]);
+          _entities[23].properties[4]);
 
   /// see [D2ProgramTrackedEntityAttribute.displayInList]
   static final displayInList =
       QueryBooleanProperty<D2ProgramTrackedEntityAttribute>(
-          _entities[23].properties[6]);
+          _entities[23].properties[5]);
 
   /// see [D2ProgramTrackedEntityAttribute.mandatory]
   static final mandatory =
       QueryBooleanProperty<D2ProgramTrackedEntityAttribute>(
-          _entities[23].properties[7]);
-
-  /// see [D2ProgramTrackedEntityAttribute.valueType]
-  static final valueType = QueryStringProperty<D2ProgramTrackedEntityAttribute>(
-      _entities[23].properties[8]);
-
-  /// see [D2ProgramTrackedEntityAttribute.displayName]
-  static final displayName =
-      QueryStringProperty<D2ProgramTrackedEntityAttribute>(
-          _entities[23].properties[9]);
+          _entities[23].properties[6]);
 
   /// see [D2ProgramTrackedEntityAttribute.program]
   static final program =
       QueryRelationToOne<D2ProgramTrackedEntityAttribute, D2Program>(
-          _entities[23].properties[10]);
+          _entities[23].properties[7]);
 
   /// see [D2ProgramTrackedEntityAttribute.trackedEntityAttribute]
   static final trackedEntityAttribute = QueryRelationToOne<
       D2ProgramTrackedEntityAttribute,
-      D2TrackedEntityAttribute>(_entities[23].properties[11]);
+      D2TrackedEntityAttribute>(_entities[23].properties[8]);
+
+  /// see [D2ProgramTrackedEntityAttribute.searchable]
+  static final searchable =
+      QueryBooleanProperty<D2ProgramTrackedEntityAttribute>(
+          _entities[23].properties[9]);
+
+  /// see [D2ProgramTrackedEntityAttribute.renderOptionAsRadio]
+  static final renderOptionAsRadio =
+      QueryBooleanProperty<D2ProgramTrackedEntityAttribute>(
+          _entities[23].properties[10]);
 }
 
 /// [D2RelationshipConstraint] entity fields to define ObjectBox queries.

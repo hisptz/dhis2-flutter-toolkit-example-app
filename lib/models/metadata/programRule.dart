@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programRuleAction.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRule.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -41,9 +42,7 @@ class D2ProgramRule extends D2MetadataResource {
         description = json["description"],
         condition = json["condition"] {
     id = D2ProgramRuleRepository().getIdByUid(json["id"]) ?? 0;
-    List<D2ProgramRuleAction> attributeValue =
-        json["programRuleActions"].map(D2ProgramRuleAction.fromMap);
 
-    programRuleActions.addAll(attributeValue);
+    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
   }
 }
