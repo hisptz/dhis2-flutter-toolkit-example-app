@@ -6,7 +6,7 @@ class D2OrgUnitSync extends BaseSyncService<D2OrganisationUnit> {
 
   D2OrgUnitSync(this.orgUnitIds)
       : super(
-          label: "Organisation Unit",
+          label: "Organisation Units",
           fields: [
             "*",
           ],

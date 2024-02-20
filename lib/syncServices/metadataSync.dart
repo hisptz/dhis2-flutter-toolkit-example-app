@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
@@ -35,9 +36,9 @@ class MetadataSync {
       controller.addError("Could not get user");
       return;
     }
-    // D2OrgUnitSync orgUnitSync = D2OrgUnitSync(user.organisationUnits);
-    // orgUnitSync.sync();
-    // await controller.addStream(orgUnitSync.stream);
+    D2OrgUnitSync orgUnitSync = D2OrgUnitSync(user.organisationUnits);
+    orgUnitSync.sync();
+    await controller.addStream(orgUnitSync.stream);
     List<String> programs = user.programs;
     D2ProgramSync programSync = D2ProgramSync(programs);
     programSync.sync();
@@ -47,7 +48,7 @@ class MetadataSync {
     controller.close();
   }
 
-  void sync() {
-    setupSync();
+  Future<void> sync() async {
+    await setupSync();
   }
 }

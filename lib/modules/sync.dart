@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SyncPage extends StatefulWidget {
   const SyncPage({super.key});
@@ -18,8 +19,8 @@ class _SyncPageState extends State<SyncPage> {
 
   @override
   void initState() {
-    setState(() {
-      metadataSyncService.sync();
+    metadataSyncService.sync().then((value) {
+      context.go("/home");
     });
     super.initState();
   }
