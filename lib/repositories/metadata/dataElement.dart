@@ -16,7 +16,7 @@ class D2DataElementRepository extends BaseRepository<D2DataElement> {
   }
 
   @override
-  int? getIdByUid(String uid) {
-    return getByUid(uid)?.id;
+  D2DataElement mapper(Map<String, dynamic> json) {
+    return D2DataElement.fromMap(json);
   }
 }

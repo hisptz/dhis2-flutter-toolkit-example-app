@@ -16,4 +16,9 @@ class D2OrgUnitGroupRepository extends BaseRepository<D2OrganisationUnitGroup> {
 
     return query.findFirst();
   }
+
+  @override
+  D2OrganisationUnitGroup mapper(Map<String, dynamic> json) {
+    return D2OrganisationUnitGroup.fromMap(json);
+  }
 }

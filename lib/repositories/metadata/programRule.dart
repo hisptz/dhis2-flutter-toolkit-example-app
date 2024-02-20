@@ -14,4 +14,9 @@ class D2ProgramRuleRepository extends BaseRepository<D2ProgramRule> {
         d2ProgramRuleBox.query(D2ProgramRule_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramRule mapper(Map<String, dynamic> json) {
+    return D2ProgramRule.fromMap(json);
+  }
 }

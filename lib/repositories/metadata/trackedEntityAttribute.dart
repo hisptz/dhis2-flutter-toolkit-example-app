@@ -22,4 +22,9 @@ class D2TrackedEntityAttributeRepository
   int? getIdByUid(String uid) {
     return getByUid(uid)?.id;
   }
+
+  @override
+  D2TrackedEntityAttribute mapper(Map<String, dynamic> json) {
+    return D2TrackedEntityAttribute.fromMap(json);
+  }
 }

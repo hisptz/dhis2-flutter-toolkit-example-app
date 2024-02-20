@@ -14,4 +14,9 @@ class D2ProgramRepository extends BaseRepository<D2Program> {
         d2ProgramBox.query(D2Program_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2Program mapper(Map<String, dynamic> json) {
+    return D2Program.fromMap(json);
+  }
 }

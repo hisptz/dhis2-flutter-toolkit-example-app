@@ -104,6 +104,7 @@ class DHIS2Client {
     try {
       return jsonDecode(response.body) as T;
     } catch (e) {
+      print(e);
       return null;
     }
   }

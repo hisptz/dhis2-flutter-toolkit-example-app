@@ -14,4 +14,9 @@ class D2OptionRepository extends BaseRepository<D2Option> {
         d2OptionBox.query(D2Option_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2Option mapper(Map<String, dynamic> json) {
+    return D2Option.fromMap(json);
+  }
 }

@@ -14,4 +14,9 @@ class D2ProgramStageRepository extends BaseRepository<D2ProgramStage> {
         d2ProgramStageBox.query(D2ProgramStage_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramStage mapper(Map<String, dynamic> json) {
+    return D2ProgramStage.fromMap(json);
+  }
 }

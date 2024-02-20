@@ -89,7 +89,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     return await dhis2client?.httpGet<D>(url, queryParameters: updatedParams);
   }
 
-  Future<List<int>> syncPage(int page) async {
+  Future syncPage(int page) async {
     Map<String, dynamic>? data = await getData<Map<String, dynamic>>(page);
     if (data == null) {
       throw "Error getting data for page $page";
@@ -97,7 +97,10 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
     List<T> entities = entityData.map(mapper).toList();
-    return await box.putManyAsync(entities);
+
+    for (final entity in entities) {
+      await box.putAsync(entity);
+    }
   }
 
   Future setupSync() async {
@@ -110,10 +113,8 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     controller.add(status);
 
     for (int page = 1; page <= pagination.pageCount; page++) {
-      await syncPage(page).then((value) {
-        controller.add(status.increment());
-        return value;
-      });
+      await syncPage(page);
+      controller.add(status.increment());
     }
     controller.add(status.complete());
     controller.close();

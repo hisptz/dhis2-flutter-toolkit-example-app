@@ -15,4 +15,9 @@ class D2RelationshipTypeRepository extends BaseRepository<D2RelationshipType> {
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2RelationshipType mapper(Map<String, dynamic> json) {
+    return D2RelationshipType.fromMap(json);
+  }
 }

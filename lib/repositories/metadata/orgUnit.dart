@@ -19,4 +19,9 @@ class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnit> {
         d2OrgUnitBox.query(D2OrganisationUnit_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2OrganisationUnit mapper(Map<String, dynamic> json) {
+    return D2OrganisationUnit.fromMap(json);
+  }
 }

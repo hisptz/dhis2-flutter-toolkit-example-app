@@ -19,4 +19,9 @@ class D2ProgramTrackedEntityAttributeRepository
             .build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramTrackedEntityAttribute mapper(Map<String, dynamic> json) {
+    return D2ProgramTrackedEntityAttribute.fromMap(json);
+  }
 }

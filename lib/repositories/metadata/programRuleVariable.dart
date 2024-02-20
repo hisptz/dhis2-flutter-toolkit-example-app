@@ -16,4 +16,9 @@ class D2ProgramRuleVariableRepository
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramRuleVariable mapper(Map<String, dynamic> json) {
+    return D2ProgramRuleVariable.fromMap(json);
+  }
 }

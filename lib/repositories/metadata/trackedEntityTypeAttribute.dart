@@ -18,4 +18,9 @@ class D2TrackedEntityTypeAttributeRepository
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2TrackedEntityTypeAttribute mapper(Map<String, dynamic> json) {
+    return D2TrackedEntityTypeAttribute.fromMap(json);
+  }
 }

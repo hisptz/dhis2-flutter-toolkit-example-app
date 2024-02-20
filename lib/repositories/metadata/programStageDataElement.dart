@@ -16,4 +16,9 @@ class D2ProgramStageDataElementRepository
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramStageDataElement mapper(Map<String, dynamic> json) {
+    return D2ProgramStageDataElement.fromMap(json);
+  }
 }

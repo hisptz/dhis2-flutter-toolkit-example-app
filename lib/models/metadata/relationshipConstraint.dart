@@ -22,7 +22,7 @@ class D2RelationshipConstraint extends DHIS2Resource {
   D2RelationshipConstraint(
       {required this.relationshipEntity, required this.name});
 
-  D2RelationshipConstraint.fromMao(Map json)
+  D2RelationshipConstraint.fromMap(Map json)
       : relationshipEntity = json["relationshipEntity"],
         name = json["name"];
 }

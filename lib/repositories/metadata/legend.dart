@@ -14,4 +14,9 @@ class D2LegendRepository extends BaseRepository<D2Legend> {
         d2LegendBox.query(D2Legend_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2Legend mapper(Map<String, dynamic> json) {
+    return D2Legend.fromMap(json);
+  }
 }

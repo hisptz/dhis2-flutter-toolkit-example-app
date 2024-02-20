@@ -16,4 +16,9 @@ class D2ProgramRuleActionRepository
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2ProgramRuleAction mapper(Map<String, dynamic> json) {
+    return D2ProgramRuleAction.fromMap(json);
+  }
 }

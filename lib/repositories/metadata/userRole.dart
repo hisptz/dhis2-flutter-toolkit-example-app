@@ -19,4 +19,9 @@ class D2UserRoleRepository extends BaseRepository<D2UserRole> {
         d2UserRoleBox.query(D2UserRole_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2UserRole mapper(Map<String, dynamic> json) {
+    return D2UserRole.fromMap(json);
+  }
 }

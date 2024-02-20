@@ -12,4 +12,9 @@ class D2RelationshipConstraintRepository
   D2RelationshipConstraint? getByUid(String uid) {
     return null;
   }
+
+  @override
+  D2RelationshipConstraint mapper(Map<String, dynamic> json) {
+    return D2RelationshipConstraint.fromMap(json);
+  }
 }

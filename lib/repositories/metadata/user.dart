@@ -24,4 +24,9 @@ class D2UserRepository extends BaseRepository<D2User> {
     Query<D2User> query = dhis2MeUserBox.query(D2User_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2User mapper(Map<String, dynamic> json) {
+    return D2User.fromMap(json);
+  }
 }

@@ -56,13 +56,12 @@ class D2DataElement extends D2MetadataResource {
         valueType = json["valueType"],
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
+    id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
     List<D2LegendSet> set = json["legendSets"]
         .cast<Map>()
         .map<D2LegendSet>(D2LegendSet.fromMap)
         .toList();
     legendSets.addAll(set);
-
-    id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
   }
 
   @override

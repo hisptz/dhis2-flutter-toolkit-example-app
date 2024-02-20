@@ -20,4 +20,9 @@ class D2UserGroupRepository extends BaseRepository<D2UserGroup> {
         d2UserGroupBox.query(D2UserGroup_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2UserGroup mapper(Map<String, dynamic> json) {
+    return D2UserGroup.fromMap(json);
+  }
 }

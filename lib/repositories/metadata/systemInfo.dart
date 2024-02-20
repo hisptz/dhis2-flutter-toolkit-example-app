@@ -25,4 +25,9 @@ class SystemInfoRepository extends BaseRepository<D2SystemInfo> {
         systemInfoBox.query(D2SystemInfo_.systemId.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2SystemInfo mapper(Map<String, dynamic> json) {
+    return D2SystemInfo.fromMap(json);
+  }
 }

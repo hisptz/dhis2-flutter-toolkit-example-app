@@ -15,4 +15,9 @@ class D2OrgUnitLevelRepository extends BaseRepository<D2OrganisationUnitLevel> {
         .build();
     return query.findFirst();
   }
+
+  @override
+  D2OrganisationUnitLevel mapper(Map<String, dynamic> json) {
+    return D2OrganisationUnitLevel.fromMap(json);
+  }
 }

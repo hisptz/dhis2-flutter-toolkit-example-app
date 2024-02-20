@@ -14,4 +14,9 @@ class D2OptionSetRepository extends BaseRepository<D2OptionSet> {
         d2OptionSetBox.query(D2OptionSet_.uid.equals(uid)).build();
     return query.findFirst();
   }
+
+  @override
+  D2OptionSet mapper(Map<String, dynamic> json) {
+    return D2OptionSet.fromMap(json);
+  }
 }
