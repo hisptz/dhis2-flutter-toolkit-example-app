@@ -154,7 +154,7 @@
     },
     {
       "id": "29:1680174850476511536",
-      "lastPropertyId": "7:1206613619187722001",
+      "lastPropertyId": "9:1662747129581564989",
       "name": "Relationship",
       "properties": [
         {
@@ -194,6 +194,22 @@
           "id": "7:1206613619187722001",
           "name": "relationshipType",
           "type": 9
+        },
+        {
+          "id": "8:1458100496374339689",
+          "name": "fromId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "107:2300134072056360557",
+          "relationTarget": "FromRelationship"
+        },
+        {
+          "id": "9:1662747129581564989",
+          "name": "toId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "108:5760169682101051857",
+          "relationTarget": "ToRelationship"
         }
       ],
       "relations": []
@@ -376,7 +392,7 @@
         {
           "id": "16:4264863304418819468",
           "name": "notes",
-          "type": 30
+          "type": 9
         }
       ],
       "relations": [
@@ -503,7 +519,7 @@
         {
           "id": "20:3489409064105281681",
           "name": "notes",
-          "type": 30
+          "type": 9
         }
       ],
       "relations": [
@@ -521,7 +537,7 @@
     },
     {
       "id": "34:5427219103956396213",
-      "lastPropertyId": "11:1105412760166889361",
+      "lastPropertyId": "12:8098900473405767756",
       "name": "TrackedEntity",
       "properties": [
         {
@@ -581,6 +597,11 @@
           "id": "11:1105412760166889361",
           "name": "inactive",
           "type": 1
+        },
+        {
+          "id": "12:8098900473405767756",
+          "name": "programOwners",
+          "type": 9
         }
       ],
       "relations": [
@@ -2034,10 +2055,84 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "59:2163453407018646650",
+      "lastPropertyId": "3:6951734133198807393",
+      "name": "DHIS2AttributeValue",
+      "properties": [
+        {
+          "id": "1:5743700550049470263",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:806382833441095872",
+          "name": "dataElementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "104:6956343490882769199",
+          "relationTarget": "D2DataElement"
+        },
+        {
+          "id": "3:6951734133198807393",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "105:7045304534995261794",
+          "relationTarget": "D2TrackedEntityAttribute"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "60:3609085657207395644",
+      "lastPropertyId": "2:7537028585246202004",
+      "name": "FromRelationship",
+      "properties": [
+        {
+          "id": "1:6419210637873997842",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7537028585246202004",
+          "name": "trackedEntityInstanceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "106:5690703646414087317",
+          "relationTarget": "TrackedEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "61:286441124839519674",
+      "lastPropertyId": "2:7037323737091556693",
+      "name": "ToRelationship",
+      "properties": [
+        {
+          "id": "1:2873373158049067327",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7037323737091556693",
+          "name": "trackedEntityInstanceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "109:1078046589600916985",
+          "relationTarget": "TrackedEntity"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "58:3164353829030159117",
-  "lastIndexId": "103:5327899992986285010",
+  "lastEntityId": "61:286441124839519674",
+  "lastIndexId": "109:1078046589600916985",
   "lastRelationId": "40:4422628250778246819",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
