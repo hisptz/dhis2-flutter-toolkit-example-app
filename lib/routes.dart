@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/modules/home.dart';
 import 'package:dhis2_flutter_toolkit/modules/login.dart';
 import 'package:dhis2_flutter_toolkit/modules/programs/list.dart';
+import 'package:dhis2_flutter_toolkit/modules/programs/program.dart';
 import 'package:dhis2_flutter_toolkit/modules/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
@@ -27,5 +28,10 @@ final router = GoRouter(
     GoRoute(path: "/login", builder: (context, state) => const Login()),
     GoRoute(
         path: "/programs", builder: (context, state) => const ProgramList()),
+    GoRoute(
+        path: "/programs/:uid",
+        builder: (context, state) => ProgramDetails(
+              id: state.pathParameters["uid"],
+            )),
   ],
 );

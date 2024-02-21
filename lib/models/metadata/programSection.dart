@@ -23,6 +23,7 @@ class D2ProgramSection extends D2MetadataResource {
   String name;
 
   final program = ToOne<D2Program>();
+
   final trackedEntityAttributes = ToMany<D2TrackedEntityAttribute>();
 
   D2ProgramSection(

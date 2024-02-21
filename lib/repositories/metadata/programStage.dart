@@ -19,4 +19,9 @@ class D2ProgramStageRepository extends BaseRepository<D2ProgramStage> {
   D2ProgramStage mapper(Map<String, dynamic> json) {
     return D2ProgramStage.fromMap(json);
   }
+
+  D2ProgramStageRepository byProgram(int programId) {
+    queryConditions = D2ProgramStage_.program.equals(programId);
+    return this;
+  }
 }

@@ -27,6 +27,10 @@ abstract class BaseRepository<T extends DHIS2Resource> {
     return query.find();
   }
 
+  T? getById(int id) {
+    return box.get(id);
+  }
+
   T? getByUid(String uid);
 
   Future<List<T>> saveOffline(List<Map<String, dynamic>> json) async {

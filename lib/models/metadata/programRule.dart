@@ -24,6 +24,8 @@ class D2ProgramRule extends D2MetadataResource {
   String condition;
 
   var program = ToOne<D2Program>();
+
+  @Backlink("programRule")
   final programRuleActions = ToMany<D2ProgramRuleAction>();
 
   D2ProgramRule(

@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
               const UserInfoWidget(),
               TextButton(
                   onPressed: () {
-                    context.go("/programs");
+                    context.push("/programs");
                   },
                   child: const Text("Programs"))
             ],

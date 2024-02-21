@@ -35,10 +35,12 @@ class D2Program extends D2MetadataResource {
 
   final organisationUnits = ToMany<D2OrganisationUnit>();
 
+  @Backlink()
   final programStages = ToMany<D2ProgramStage>();
-
+  @Backlink()
   final programSections = ToMany<D2ProgramSection>();
 
+  @Backlink()
   final programTrackedEntityAttributes =
       ToMany<D2ProgramTrackedEntityAttribute>();
 

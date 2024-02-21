@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -27,8 +28,10 @@ class D2ProgramStage extends D2MetadataResource {
 
   final program = ToOne<D2Program>();
 
+  @Backlink("programStage")
   final programStageDataElements = ToMany<D2ProgramStageDataElement>();
 
+  @Backlink("programStage")
   final programStageSections = ToMany<D2ProgramStageSection>();
 
   D2ProgramStage({
@@ -54,5 +57,7 @@ class D2ProgramStage extends D2MetadataResource {
         featureType = json["featureType"],
         description = json["description"] {
     id = D2ProgramStageRepository().getIdByUid(json["id"]) ?? 0;
+    program.target =
+        D2ProgramRepository().getByUid(json["program"]?["id"] ?? "");
   }
 }

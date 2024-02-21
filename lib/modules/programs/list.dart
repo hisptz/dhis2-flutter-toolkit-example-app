@@ -3,6 +3,7 @@ import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ProgramList extends StatefulWidget {
@@ -103,18 +104,23 @@ class _ProgramListState extends State<ProgramList> {
                         itemBuilder: (context, item, index) => Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.name,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(item.programType == "WITH_REGISTRATION"
-                                      ? "Tracker Program"
-                                      : "Event Program")
-                                ],
+                              child: InkWell(
+                                onTap: () {
+                                  context.push("/programs/${item.id}");
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.name,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(item.programType == "WITH_REGISTRATION"
+                                        ? "Tracker Program"
+                                        : "Event Program")
+                                  ],
+                                ),
                               ),
                             ))),
               ),
