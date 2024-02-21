@@ -53,7 +53,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 784061655903445017),
       name: 'D2Program',
-      lastPropertyId: const IdUid(7, 6651566694199139538),
+      lastPropertyId: const IdUid(10, 9113117786353082639),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -91,6 +91,21 @@ final _entities = <ModelEntity>[
             id: const IdUid(7, 6651566694199139538),
             name: 'accessLevel',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5168048995023814536),
+            name: 'programType',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 1039854537794564169),
+            name: 'onlyEnrollOnce',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 9113117786353082639),
+            name: 'selectEnrollmentDatesInFuture',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -2308,7 +2323,8 @@ ModelDefinition getObjectBoxModel() {
           final nameOffset = fbb.writeString(object.name);
           final shortNameOffset = fbb.writeString(object.shortName);
           final accessLevelOffset = fbb.writeString(object.accessLevel);
-          fbb.startTable(8);
+          final programTypeOffset = fbb.writeString(object.programType);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
@@ -2316,6 +2332,9 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, nameOffset);
           fbb.addOffset(5, shortNameOffset);
           fbb.addOffset(6, accessLevelOffset);
+          fbb.addOffset(7, programTypeOffset);
+          fbb.addBool(8, object.onlyEnrollOnce);
+          fbb.addBool(9, object.selectEnrollmentDatesInFuture);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2335,14 +2354,23 @@ ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 12, '');
           final shortNameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 14, '');
+          final programTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final onlyEnrollOnceParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 20);
           final object = D2Program(
-              created: createdParam,
-              lastUpdated: lastUpdatedParam,
-              uid: uidParam,
-              accessLevel: accessLevelParam,
-              name: nameParam,
-              shortName: shortNameParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              createdParam,
+              lastUpdatedParam,
+              uidParam,
+              accessLevelParam,
+              nameParam,
+              shortNameParam,
+              programTypeParam,
+              onlyEnrollOnceParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..selectEnrollmentDatesInFuture =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 22);
           InternalToManyAccess.setRelInfo<D2Program>(object.organisationUnits,
               store, RelInfo<D2Program>.toMany(2, object.id));
           InternalToManyAccess.setRelInfo<D2Program>(object.programStages,
@@ -4396,6 +4424,18 @@ class D2Program_ {
   /// see [D2Program.accessLevel]
   static final accessLevel =
       QueryStringProperty<D2Program>(_entities[0].properties[6]);
+
+  /// see [D2Program.programType]
+  static final programType =
+      QueryStringProperty<D2Program>(_entities[0].properties[7]);
+
+  /// see [D2Program.onlyEnrollOnce]
+  static final onlyEnrollOnce =
+      QueryBooleanProperty<D2Program>(_entities[0].properties[8]);
+
+  /// see [D2Program.selectEnrollmentDatesInFuture]
+  static final selectEnrollmentDatesInFuture =
+      QueryBooleanProperty<D2Program>(_entities[0].properties[9]);
 
   /// see [D2Program.organisationUnits]
   static final organisationUnits =

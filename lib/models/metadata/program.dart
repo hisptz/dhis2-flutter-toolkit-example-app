@@ -28,6 +28,11 @@ class D2Program extends D2MetadataResource {
   String shortName;
   String accessLevel;
 
+  String programType;
+  bool? onlyEnrollOnce;
+
+  bool? selectEnrollmentDatesInFuture;
+
   final organisationUnits = ToMany<D2OrganisationUnit>();
 
   final programStages = ToMany<D2ProgramStage>();
@@ -37,14 +42,8 @@ class D2Program extends D2MetadataResource {
   final programTrackedEntityAttributes =
       ToMany<D2ProgramTrackedEntityAttribute>();
 
-  D2Program({
-    required this.created,
-    required this.lastUpdated,
-    required this.uid,
-    required this.accessLevel,
-    required this.name,
-    required this.shortName,
-  });
+  D2Program(this.created, this.lastUpdated, this.uid, this.accessLevel,
+      this.name, this.shortName, this.programType, this.onlyEnrollOnce);
 
   D2Program.fromMap(Map json)
       : created = DateTime.parse(json["created"]),
@@ -52,7 +51,8 @@ class D2Program extends D2MetadataResource {
         uid = json["id"],
         accessLevel = json["accessLevel"],
         name = json["name"],
-        shortName = json["shortName"] {
+        shortName = json["shortName"],
+        programType = json["programType"] {
     id = D2ProgramRepository().getIdByUid(json["id"]) ?? 0;
     List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()

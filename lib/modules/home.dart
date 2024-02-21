@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/components/SystemInfo.dart';
 import 'package:dhis2_flutter_toolkit/components/UserInfoWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -16,14 +17,19 @@ class Home extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
-              SystemInfoWidget(),
-              Padding(
+              const SystemInfoWidget(),
+              const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
               ),
-              UserInfoWidget()
+              const UserInfoWidget(),
+              TextButton(
+                  onPressed: () {
+                    context.go("/programs");
+                  },
+                  child: const Text("Programs"))
             ],
           ),
         ),

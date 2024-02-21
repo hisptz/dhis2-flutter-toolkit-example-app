@@ -21,7 +21,7 @@ class MetadataSync {
   * Basically checks if the user info and system info is synced. To be used when the app starts. Maybe later it will check for all the metadata.
   *
   * */
-  isSynced() async {
+  isSynced() {
     return userSyncService.isSynced() && systemInfoSync.isSynced();
   }
 

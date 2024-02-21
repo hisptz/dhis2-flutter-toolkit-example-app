@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:784061655903445017",
-      "lastPropertyId": "7:6651566694199139538",
+      "lastPropertyId": "10:9113117786353082639",
       "name": "D2Program",
       "properties": [
         {
@@ -45,6 +45,21 @@
           "id": "7:6651566694199139538",
           "name": "accessLevel",
           "type": 9
+        },
+        {
+          "id": "8:5168048995023814536",
+          "name": "programType",
+          "type": 9
+        },
+        {
+          "id": "9:1039854537794564169",
+          "name": "onlyEnrollOnce",
+          "type": 1
+        },
+        {
+          "id": "10:9113117786353082639",
+          "name": "selectEnrollmentDatesInFuture",
+          "type": 1
         }
       ],
       "relations": [
