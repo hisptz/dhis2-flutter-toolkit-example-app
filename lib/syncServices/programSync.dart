@@ -79,7 +79,7 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
     "legendSets",
     "legends",
     "dataElements",
-    "trackedEntityInstances",
+    "trackedEntityAttributes",
     "trackedEntityTypes",
     "programs",
     "programRuleVariables",

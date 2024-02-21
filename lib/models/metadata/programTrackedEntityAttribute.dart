@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
@@ -53,5 +54,6 @@ class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
     D2TrackedEntityAttribute? attribute = D2TrackedEntityAttributeRepository()
         .getByUid(json["trackedEntityAttribute"]["id"]);
     trackedEntityAttribute.target = attribute;
+    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
   }
 }
