@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'credentials.dart';
 
 class DHIS2Client {
-  DHIS2Credentials credentials;
+  D2Credential credentials;
 
   DHIS2Client(this.credentials);
 
@@ -13,7 +13,8 @@ class DHIS2Client {
       {required String username,
       required String password,
       required String baseURL})
-      : credentials = DHIS2Credentials(username, password, baseURL);
+      : credentials = D2Credential(
+            username: username, password: password, baseURL: baseURL);
 
   get username {
     return credentials.username;
@@ -101,12 +102,14 @@ class DHIS2Client {
   }) async {
     Uri apiUrl = getApiUrl(url, queryParameters: queryParameters);
     http.Response response = await http.get(apiUrl, headers: headers);
-    try {
-      return jsonDecode(response.body) as T;
-    } catch (e) {
-      print(e);
-      return null;
-    }
+    if ([200, 304].contains(response.statusCode)) {
+      try {
+        return jsonDecode(response.body) as T;
+      } catch (e) {
+        print(e);
+        return null;
+      }
+    } else {}
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
@@ -134,6 +137,6 @@ class DHIS2Client {
 
 DHIS2Client? dhis2client;
 
-void initializeClient(DHIS2Credentials credentials) {
+void initializeClient(D2Credential credentials) {
   dhis2client = DHIS2Client(credentials);
 }

@@ -12,12 +12,12 @@ final router = GoRouter(
     GoRoute(
         path: "/",
         redirect: (context, state) {
-          final metadataSync = MetadataSync();
-          final DHIS2Credentials? credentials =
-              DHIS2Credentials.fromPreferences();
+          final D2Credential? credentials = D2Credential.fromPreferences();
           if (credentials == null) {
             return "/login";
           }
+
+          final metadataSync = MetadataSync();
           if (!metadataSync.isSynced()) {
             return "/sync";
           }

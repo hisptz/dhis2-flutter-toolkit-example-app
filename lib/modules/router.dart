@@ -9,7 +9,7 @@ class MainNavigation extends StatelessWidget {
   MainNavigation({super.key});
 
   final metadataSync = MetadataSync();
-  final DHIS2Credentials? credentials = DHIS2Credentials.fromPreferences();
+  final D2Credential? credentials = D2Credential.fromPreferences();
 
   @override
   Widget build(BuildContext context) {

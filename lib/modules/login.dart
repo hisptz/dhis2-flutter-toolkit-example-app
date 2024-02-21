@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:dhis2_flutter_toolkit/utils.dart';
+import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 class Login extends StatefulWidget {
@@ -24,16 +25,27 @@ class _LoginState extends State<Login> {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    DHIS2Credentials? credentials =
-        await login(baseURL: baseURL, username: username, password: password);
+    try {
+      D2Credential credentials = D2Credential(
+          username: username, password: password, baseURL: baseURL);
 
-    if (credentials != null) {
-      await credentials.saveToPreference();
+      if (await credentials.verify()) {
+        initializeClient(credentials);
+        context.go("/");
+      } else {
+        print("Why falling here");
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: const Color(0xFF656565),
+      );
+      setState(() {
+        loading = false;
+      });
     }
-    setState(() {
-      loading = false;
-    });
-    context.go("/sync");
   }
 
   @override
