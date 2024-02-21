@@ -24,7 +24,6 @@ class _ProgramListState extends State<ProgramList> {
     String keyword = searchController.text;
 
     if (keyword.isNotEmpty) {
-      print(keyword);
       repository.byIdentifiableToken(keyword);
     } else {
       repository.clearQuery();
@@ -68,25 +67,25 @@ class _ProgramListState extends State<ProgramList> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.url,
-                  controller: searchController,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      isDense: true,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      label: const Text("Search")),
-                ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                keyboardType: TextInputType.url,
+                controller: searchController,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    isDense: true,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    label: const Text("Search")),
               ),
-              Padding(
+            ),
+            Expanded(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: PagedListView.separated(
                     shrinkWrap: true,
@@ -118,9 +117,9 @@ class _ProgramListState extends State<ProgramList> {
                                 ],
                               ),
                             ))),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
