@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttrib
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:objectbox/objectbox.dart';
 
 final d2ProgramTrackedEntityAttributeBox =
     db.store.box<D2ProgramTrackedEntityAttribute>();
