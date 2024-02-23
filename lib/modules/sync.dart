@@ -2,8 +2,8 @@ import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class SyncPage extends StatefulWidget {
   const SyncPage({super.key});
@@ -40,7 +40,8 @@ class _SyncPageState extends State<SyncPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                AppLocalizations.of(context)!.syncingMetadata,
+                Intl.message("Syncing Metadata",
+                    name: "_SyncPageState_build", args: [context]),
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 24.0),
               ),

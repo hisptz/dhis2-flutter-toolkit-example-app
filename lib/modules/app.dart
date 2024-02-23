@@ -19,7 +19,7 @@ class App extends StatelessWidget {
         Locale("sw"),
       ],
       debugShowCheckedModeBanner: false,
-      title: 'DHIS2 ORM Example',
+      title: 'DHIS2 SDK Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
