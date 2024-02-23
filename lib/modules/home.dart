@@ -15,7 +15,8 @@ class Home extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             Intl.message("Home"),
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         body: SingleChildScrollView(
