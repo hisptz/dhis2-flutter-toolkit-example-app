@@ -14,6 +14,7 @@ class SyncPage extends StatefulWidget {
 class _SyncPageState extends State<SyncPage> {
   String currentSyncLabel = "";
   MetadataSync metadataSyncService = MetadataSync();
+
   int progress = 0;
   List<BaseSyncService> unSyncedMeta = [];
 

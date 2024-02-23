@@ -6,8 +6,8 @@ import '../../objectbox.g.dart';
 
 final d2EventBox = db.store.box<D2Event>();
 
-class EventRepository extends BaseRepository<D2Event> {
-  EventRepository() : super(d2EventBox);
+class D2EventRepository extends BaseRepository<D2Event> {
+  D2EventRepository() : super(d2EventBox);
 
   @override
   D2Event? getByUid(String uid) {

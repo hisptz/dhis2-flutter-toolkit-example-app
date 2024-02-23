@@ -4,6 +4,9 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -73,18 +76,44 @@ class D2Enrollment extends D2DataResource {
         incidentDate = DateTime.parse(json["incidentDate"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
-    List<D2Event> event = json["events"].map(D2Event.fromMap);
+    List<D2Event?> allEvents = json["events"]
+        .cast<Map>()
+        .map<D2Event?>(
+            (Map event) => D2EventRepository().getByUid(event["enrollment"]))
+        .toList();
+
+    List<D2Event> event = allEvents
+        .where((D2Event? element) => element != null)
+        .toList()
+        .cast<D2Event>();
 
     events.addAll(event);
 
-    List<Relationship> relationship =
-        json["relationships"].map(Relationship.fromMap);
+    List<Relationship?> relationship = json["relationships"]
+        .cast<Map>()
+        .map<Relationship?>((Map relation) =>
+            RelationshipRepository().getByUid(relation["relationship"]))
+        .toList();
 
-    relationships.addAll(relationship);
+    List<Relationship> relations = relationship
+        .where((Relationship? element) => element != null)
+        .toList()
+        .cast<Relationship>();
 
-    List<D2TrackedEntityAttributeValue> attributeValue =
-        json["attributes"].map(D2TrackedEntityAttributeValue.fromMap);
+    relationships.addAll(relations);
 
-    attributes.addAll(attributeValue);
+    List<D2TrackedEntityAttributeValue?> attributeValue = json["attributes"]
+        .cast<Map>()
+        .map<D2TrackedEntityAttributeValue?>((Map attribute) =>
+            TrackedEntityAttributeValueRepository()
+                .getByUid(attribute["attribute"]))
+        .toList();
+
+    List<D2TrackedEntityAttributeValue> attrs = attributeValue
+        .where((D2TrackedEntityAttributeValue? element) => element != null)
+        .toList()
+        .cast<D2TrackedEntityAttributeValue>();
+
+    attributes.addAll(attrs);
   }
 }

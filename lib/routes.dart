@@ -3,8 +3,11 @@ import 'package:dhis2_flutter_toolkit/modules/login.dart';
 import 'package:dhis2_flutter_toolkit/modules/programs/list.dart';
 import 'package:dhis2_flutter_toolkit/modules/programs/program.dart';
 import 'package:dhis2_flutter_toolkit/modules/sync.dart';
+import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/list.dart';
+import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/trackedEnityInstance.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
+
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -18,6 +21,7 @@ final router = GoRouter(
           }
 
           final metadataSync = MetadataSync();
+
           if (!metadataSync.isSynced()) {
             return "/sync";
           }
@@ -31,6 +35,12 @@ final router = GoRouter(
     GoRoute(
         path: "/programs/:uid",
         builder: (context, state) => ProgramDetails(
+              id: state.pathParameters["uid"],
+            )),
+    GoRoute(path: "/tei", builder: (context, state) => const TeiList()),
+    GoRoute(
+        path: "/tei/:uid",
+        builder: (context, state) => TeiDetails(
               id: state.pathParameters["uid"],
             )),
   ],

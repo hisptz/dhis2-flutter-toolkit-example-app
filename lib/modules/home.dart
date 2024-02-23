@@ -29,7 +29,12 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     context.push("/programs");
                   },
-                  child: const Text("Programs"))
+                  child: const Text("Programs")),
+              TextButton(
+                  onPressed: () {
+                    context.push("/tei");
+                  },
+                  child: const Text("Tracked Entity Instances"))
             ],
           ),
         ),

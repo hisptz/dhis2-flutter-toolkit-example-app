@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/trackedEntitySync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/userRepository.dart';
 
 class MetadataSync {
@@ -43,6 +45,18 @@ class MetadataSync {
     D2ProgramSync programSync = D2ProgramSync(programs);
     programSync.sync();
     await controller.addStream(programSync.stream);
+    for (final program in programs) {
+      D2EnrollmentSync enrollmentsSync =
+          D2EnrollmentSync(program, "ImspTQPwCqd");
+      enrollmentsSync.sync();
+      await controller.addStream(enrollmentsSync.stream);
+
+      TrackedEntitySync trackedEntitySync =
+          TrackedEntitySync(program, "ImspTQPwCqd");
+      trackedEntitySync.sync();
+      await controller.addStream(trackedEntitySync.stream);
+    }
+
     controller.add(
         SyncStatus(synced: 0, total: 0, status: Status.complete, label: "All"));
     controller.close();

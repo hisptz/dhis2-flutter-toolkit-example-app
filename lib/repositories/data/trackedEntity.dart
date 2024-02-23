@@ -20,4 +20,11 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
   TrackedEntity mapper(Map<String, dynamic> json) {
     return TrackedEntity.fromMap(json);
   }
+
+  TrackedEntityRepository byIdentifiableToken(String keyword) {
+    queryConditions = TrackedEntity_.uid
+        .equals(keyword)
+        .or(TrackedEntity_.featureType.contains(keyword, caseSensitive: false));
+    return this;
+  }
 }

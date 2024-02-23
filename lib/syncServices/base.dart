@@ -97,6 +97,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     }
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
+
     List<T> entities = entityData.map(mapper).toList();
 
     await box.putManyAsync(entities);
