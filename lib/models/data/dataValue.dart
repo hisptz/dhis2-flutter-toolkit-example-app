@@ -29,8 +29,8 @@ class D2DataValue extends D2DataResource {
       required this.providedElsewhere});
 
   D2DataValue.fromMap(Map json)
-      : lastUpdated = DateTime.parse(json["lastUpdated"]),
-        created = DateTime.parse(json["created"]),
+      : lastUpdated = DateTime.parse(json["updatedAt"]),
+        created = DateTime.parse(json["createdAt"]),
         uid = json["dataElement"],
         value = json["value"],
         providedElsewhere = json["providedElsewhere"];

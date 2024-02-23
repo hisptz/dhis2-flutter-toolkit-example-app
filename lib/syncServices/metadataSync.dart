@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnitGroup.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
@@ -49,14 +51,24 @@ class MetadataSync {
     programSync.sync();
     await controller.addStream(programSync.stream);
 
+    D2OrganisationUnit defaultOrg = D2OrgUnitRepository().getDefaultOrgUnit();
+
+    for (final program in programs) {
+      D2EventSync eventsSync = D2EventSync(program, defaultOrg.uid);
+      eventsSync.sync();
+      await controller.addStream(eventsSync.stream);
+    }
+
     for (final program in programs) {
       D2EnrollmentSync enrollmentsSync =
-          D2EnrollmentSync(program, "ImspTQPwCqd");
+          D2EnrollmentSync(program, defaultOrg.uid);
       enrollmentsSync.sync();
       await controller.addStream(enrollmentsSync.stream);
+    }
 
+    for (final program in programs) {
       TrackedEntitySync trackedEntitySync =
-          TrackedEntitySync(program, "ImspTQPwCqd");
+          TrackedEntitySync(program, defaultOrg.uid);
       trackedEntitySync.sync();
       await controller.addStream(trackedEntitySync.stream);
     }

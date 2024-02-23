@@ -63,17 +63,17 @@ class D2Enrollment extends D2DataResource {
   D2Enrollment.fromMap(Map json)
       : uid = json["enrollment"],
         program = json["program"],
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
-        created = DateTime.parse(json["created"]),
+        lastUpdated = DateTime.parse(json["updatedAt"]),
+        created = DateTime.parse(json["createdAt"]),
         createdAtClient = DateTime.parse(json["createdAtClient"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntityInstance"],
-        trackedEntityType = json["trackedEntityType"],
-        enrollmentDate = DateTime.parse(json["enrollmentDate"]),
-        followup = json["followup"],
+        trackedEntityInstance = json["trackedEntity"],
+        trackedEntityType = json["trackedEntity"],
+        enrollmentDate = DateTime.parse(json["enrolledAt"]),
+        followup = json["followUp"],
         deleted = json["deleted"],
-        incidentDate = DateTime.parse(json["incidentDate"]),
+        incidentDate = DateTime.parse(json["occurredAt"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
     List<D2Event?> allEvents = json["events"]
@@ -102,18 +102,13 @@ class D2Enrollment extends D2DataResource {
 
     relationships.addAll(relations);
 
-    List<D2TrackedEntityAttributeValue?> attributeValue = json["attributes"]
+    List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
         .cast<Map>()
-        .map<D2TrackedEntityAttributeValue?>((Map attribute) =>
-            TrackedEntityAttributeValueRepository()
-                .getByUid(attribute["attribute"]))
-        .toList();
-
-    List<D2TrackedEntityAttributeValue> attrs = attributeValue
-        .where((D2TrackedEntityAttributeValue? element) => element != null)
+        .map<D2TrackedEntityAttributeValue>(
+            D2TrackedEntityAttributeValue.fromMap)
         .toList()
         .cast<D2TrackedEntityAttributeValue>();
 
-    attributes.addAll(attrs);
+    attributes.addAll(attribute);
   }
 }

@@ -54,18 +54,18 @@ class TrackedEntity extends D2DataResource {
       required this.programOwners});
 
   TrackedEntity.fromMap(Map json)
-      : uid = json["trackedEntityInstance"],
+      : uid = json["trackedEntity"],
         trackedEntityType = json["trackedEntityType"],
         orgUnit = json["orgUnit"],
         createdAtClient = DateTime.parse(json["createdAtClient"]),
-        created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
+        created = DateTime.parse(json["createdAt"]),
+        lastUpdated = DateTime.parse(json["updatedAt"]),
         deleted = json["deleted"],
         potentialDuplicate = json["potentialDuplicate"],
-        featureType = json["featureType"],
+        featureType = "_",
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
-    //id = TrackedEntityRepository().getIdByUid(json["id"]) ?? 0;
+    // id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
     List<D2Enrollment?> enrolls = json["enrollments"]
         .cast<Map>()
         .map<D2Enrollment?>((Map enrollment) =>
@@ -79,19 +79,14 @@ class TrackedEntity extends D2DataResource {
 
     enrollments.addAll(enrollment);
 
-    List<D2TrackedEntityAttributeValue?> attributeValue = json["attributes"]
-        .cast<Map>()
-        .map<D2TrackedEntityAttributeValue?>((Map attribute) =>
-            TrackedEntityAttributeValueRepository()
-                .getByUid(attribute["attribute"]))
-        .toList();
+    // List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
+    //     .cast<Map>()
+    //     .map<D2TrackedEntityAttributeValue>(
+    //         D2TrackedEntityAttributeValue.fromMap)
+    //     .toList()
+    //     .cast<D2TrackedEntityAttributeValue>();
 
-    List<D2TrackedEntityAttributeValue> attrs = attributeValue
-        .where((D2TrackedEntityAttributeValue? element) => element != null)
-        .toList()
-        .cast<D2TrackedEntityAttributeValue>();
-
-    attributes.addAll(attrs);
+    // attributes.addAll(attribute);
 
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()

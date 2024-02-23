@@ -32,11 +32,11 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   });
 
   D2TrackedEntityAttributeValue.fromMap(Map json)
-      : created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
+      : created = DateTime.parse(json["createdAt"]),
+        lastUpdated = DateTime.parse(json["updatedAt"]),
         uid = json["attribute"],
         displayName = json["displayName"],
-        code = json["code"],
+        code = json["code"] ?? "",
         value = json["value"],
         valueType = json["valueType"];
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -68,28 +69,40 @@ class D2Event extends D2DataResource {
         attributeOptionCombo = json["attributeOptionCombo"],
         enrollment = json["enrollment"],
         program = json["program"],
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
-        created = DateTime.parse(json["created"]),
-        createdAtClient = DateTime.parse(json["createdAtClient"]),
+        lastUpdated = DateTime.parse(json["updatedAt"]),
+        created = DateTime.parse(json["createdAt"]),
+        createdAtClient = DateTime.parse(json["createdAt"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntityInstance"],
+        trackedEntityInstance = json["trackedEntity"] ?? "",
         followup = json["followup"],
         deleted = json["deleted"],
         status = json["status"],
         notes = jsonEncode(json["notes"]),
-        dueDate = DateTime.parse(json["dueDate"]),
-        enrollmentStatus = json["enrollmentStatus"],
+        dueDate = DateTime.parse(json["scheduledAt"]),
+        enrollmentStatus = json["status"],
         uid = json["event"],
         programStage = json["programStage"],
-        eventDate = DateTime.parse(json["eventDate"]) {
-    List<Relationship> relationship =
-        json["relationships"].map(Relationship.fromMap);
+        eventDate = DateTime.parse(json["occurredAt"] ?? "2000-01-01T00:00") {
+    List<Relationship?> relationship = json["relationships"]
+        .cast<Map>()
+        .map<Relationship?>((Map relation) =>
+            RelationshipRepository().getByUid(relation["relationship"]))
+        .toList();
 
-    relationships.addAll(relationship);
+    List<Relationship> relations = relationship
+        .where((Relationship? element) => element != null)
+        .toList()
+        .cast<Relationship>();
 
-    List<D2DataValue> dataValue = json["dataValues"].map(D2DataValue.fromMap);
+    relationships.addAll(relations);
 
-    dataValues.addAll(dataValue);
+    // List<D2DataValue> dataValue = json["dataValues"]
+    //     .cast<Map>()
+    //     .map<D2DataValue>(D2DataValue.fromMap)
+    //     .toList()
+    //     .cast<D2DataValue>();
+
+    // dataValues.addAll(dataValue);
   }
 }

@@ -1,7 +1,9 @@
 import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:flutter/material.dart';
 
@@ -48,6 +50,9 @@ class TeiDetails extends StatelessWidget {
     List<D2Enrollment> enrollments =
         D2EnrollmentRepository().byTrackedEntity(teiInstance.uid).find();
 
+    List<D2Event> events =
+        D2EventRepository().byTrackedEntity(teiInstance.uid).find();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -63,13 +68,16 @@ class TeiDetails extends StatelessWidget {
           child: ListView(
             shrinkWrap: true,
             children: [
-              DetailsRow(label: "UID", value: teiInstance.uid),
               DetailsRow(
                 label: "Enrollments",
                 value: enrollments
                     .map((enrollment) => enrollment.uid)
                     .toList()
                     .join(", "),
+              ),
+              DetailsRow(
+                label: "Events",
+                value: events.map((event) => event.uid).toList().join(", "),
               ),
             ],
           ),

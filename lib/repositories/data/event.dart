@@ -19,4 +19,9 @@ class D2EventRepository extends BaseRepository<D2Event> {
   D2Event mapper(Map<String, dynamic> json) {
     return D2Event.fromMap(json);
   }
+
+  D2EventRepository byTrackedEntity(String teiId) {
+    queryConditions = D2Event_.trackedEntityInstance.equals(teiId);
+    return this;
+  }
 }

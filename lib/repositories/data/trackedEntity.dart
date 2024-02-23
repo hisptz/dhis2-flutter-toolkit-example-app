@@ -24,7 +24,7 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
   TrackedEntityRepository byIdentifiableToken(String keyword) {
     queryConditions = TrackedEntity_.uid
         .equals(keyword)
-        .or(TrackedEntity_.featureType.contains(keyword, caseSensitive: false));
+        .or(TrackedEntity_.uid.contains(keyword, caseSensitive: false));
     return this;
   }
 }

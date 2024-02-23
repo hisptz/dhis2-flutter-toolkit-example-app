@@ -1,6 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -112,14 +114,19 @@ class _TeiListState extends State<TeiList> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      item.trackedEntityType,
+                                      item.uid,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
+                                      "No. Of Attributes: ${item.attributes.length}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(
                                       "No. Of Enrollments: ${item.enrollments.length}",
                                       style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ],
                                 ),
