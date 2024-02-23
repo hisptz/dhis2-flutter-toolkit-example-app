@@ -2,16 +2,18 @@ import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 
-import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/baseTrackerData.dart';
 
-class D2EnrollmentSync extends BaseSyncService<D2Enrollment> {
+class D2EnrollmentSync extends BaseTrackerSyncService<D2Enrollment> {
   String program;
   String defaultOrgUnit;
 
   D2EnrollmentSync(this.program, this.defaultOrgUnit)
       : super(
           label: "Enrollments",
-          fields: ["*", "events[*]"],
+          fields: [
+            "*",
+          ],
           box: d2EnrollmentBox,
           resource: "tracker/enrollments",
           extraParams: {
