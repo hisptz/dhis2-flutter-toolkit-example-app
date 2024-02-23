@@ -31,6 +31,9 @@ class _LoginState extends State<Login> {
 
       if (await credentials.verify()) {
         initializeClient(credentials);
+        setState(() {
+          loading = false;
+        });
         context.go("/");
       } else {
         print("Why falling here");
