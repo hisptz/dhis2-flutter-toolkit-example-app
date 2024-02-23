@@ -75,7 +75,6 @@ class MetadataSync {
       D2EventSync eventsSync = D2EventSync(program, defaultOrg.uid);
       eventsSync.sync();
       await controller.addStream(eventsSync.stream);
-      break;
     }
 
     for (final program in programs) {
@@ -83,7 +82,6 @@ class MetadataSync {
           D2EnrollmentSync(program, defaultOrg.uid);
       enrollmentsSync.sync();
       await controller.addStream(enrollmentsSync.stream);
-      break;
     }
 
     for (final program in programs) {
@@ -91,7 +89,6 @@ class MetadataSync {
           TrackedEntitySync(program, defaultOrg.uid);
       trackedEntitySync.sync();
       await controller.addStream(trackedEntitySync.stream);
-      break;
     }
 
     controller.add(
