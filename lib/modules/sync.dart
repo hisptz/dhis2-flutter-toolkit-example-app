@@ -34,20 +34,30 @@ class _SyncPageState extends State<SyncPage> {
         SyncStatus? status = data.data;
         var error = data.error;
 
+        String dataType = "Metadata";
+
+        if ((status?.label != "User") &&
+            (status?.label != "System Information") &&
+            (status?.label != "Organisation Units") &&
+            (status?.label != "Programs")) {
+          dataType = "Tracker data";
+        }
+
         return Scaffold(
             body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Syncing Metadata",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              Text(
+                "Syncing $dataType",
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 24.0),
               ),
               status != null
                   ? Text(
                       "Syncing ${status.label} ${status.synced}/${status.total}")
                   : const Text("Please wait..."),
-              error != null ? Text(error.toString()) : Text(""),
+              error != null ? Text(error.toString()) : const Text(""),
             ],
           ),
         ));
