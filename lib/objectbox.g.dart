@@ -297,8 +297,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(5, 7744788388990533124),
             name: 'uid',
             type: 9,
-            flags: 2080,
-            indexId: const IdUid(5, 7425502513311282148)),
+            flags: 0),
         ModelProperty(
             id: const IdUid(7, 4154023990484895259),
             name: 'program',
@@ -2112,7 +2111,11 @@ ModelDefinition getObjectBoxModel() {
       lastRelationId: const IdUid(25, 4799506001717016233),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [4342976014228701150, 6954985060894839179],
+      retiredIndexUids: const [
+        4342976014228701150,
+        6954985060894839179,
+        7425502513311282148
+      ],
       retiredPropertyUids: const [
         640663780519544382,
         8240349012653603499,

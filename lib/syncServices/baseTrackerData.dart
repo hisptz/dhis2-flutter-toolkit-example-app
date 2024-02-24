@@ -96,6 +96,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
     if (data == null) {
       throw "Error getting data for page $page";
     }
+
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 

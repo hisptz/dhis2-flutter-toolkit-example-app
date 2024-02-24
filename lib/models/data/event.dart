@@ -22,7 +22,6 @@ class D2Event extends D2DataResource {
   DateTime createdAtClient;
 
   @override
-  @Unique()
   String uid;
   DateTime scheduledAt;
   String program;
@@ -66,7 +65,7 @@ class D2Event extends D2DataResource {
   D2Event.fromMap(Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],
         attributeOptionCombo = json["attributeOptionCombo"],
-        enrollment = json["enrollment"],
+        enrollment = json["enrollment"] ?? "",
         program = json["program"],
         updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
@@ -78,10 +77,10 @@ class D2Event extends D2DataResource {
         deleted = json["deleted"],
         status = json["status"],
         notes = jsonEncode(json["notes"]),
-        scheduledAt = DateTime.parse(json["scheduledAt"]),
+        scheduledAt = DateTime.parse(json["scheduledAt"] ?? "1999-01-01T00:00"),
         uid = json["event"],
         programStage = json["programStage"],
-        occurredAt = DateTime.parse(json["occurredAt"] ?? "2000-01-01T00:00") {
+        occurredAt = DateTime.parse(json["occurredAt"] ?? "1999-01-01T00:00") {
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()
         .map<Relationship?>((Map relation) =>

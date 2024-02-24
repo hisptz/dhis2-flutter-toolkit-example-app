@@ -31,6 +31,6 @@ class D2DataValue extends D2DataResource {
       : updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
         uid = json["dataElement"],
-        value = json["value"],
+        value = json["value"] ?? "",
         providedElsewhere = json["providedElsewhere"];
 }
