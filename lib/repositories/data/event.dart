@@ -21,7 +21,7 @@ class D2EventRepository extends BaseRepository<D2Event> {
   }
 
   D2EventRepository byTrackedEntity(String teiId) {
-    queryConditions = D2Event_.trackedEntityInstance.equals(teiId);
+    queryConditions = D2Event_.trackedEntity.equals(teiId);
     return this;
   }
 }

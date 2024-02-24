@@ -11,10 +11,10 @@ class Relationship extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   @override
   @Unique()
@@ -27,8 +27,8 @@ class Relationship extends D2DataResource {
   final to = ToOne<ToRelationship>();
 
   Relationship({
-    required this.created,
-    required this.lastUpdated,
+    required this.createdAt,
+    required this.updatedAt,
     required this.uid,
     required this.relationshipName,
     required this.relationshipType,
@@ -36,8 +36,8 @@ class Relationship extends D2DataResource {
   });
 
   Relationship.fromMap(Map json)
-      : created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
+      : createdAt = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
         uid = json["relationship"],
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],

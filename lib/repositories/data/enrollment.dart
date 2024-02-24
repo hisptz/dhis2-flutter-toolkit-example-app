@@ -22,7 +22,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment> {
   }
 
   D2EnrollmentRepository byTrackedEntity(String teiId) {
-    queryConditions = D2Enrollment_.trackedEntityInstance.equals(teiId);
+    queryConditions = D2Enrollment_.trackedEntity.equals(teiId);
     return this;
   }
 }

@@ -14,76 +14,74 @@ class D2Event extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   DateTime createdAtClient;
 
   @override
   @Unique()
   String uid;
-  DateTime dueDate;
+  DateTime scheduledAt;
   String program;
   String programStage;
   String orgUnit;
   String enrollment;
-  String trackedEntityInstance;
-  String enrollmentStatus;
-  DateTime eventDate;
+  String? trackedEntity;
+  DateTime? occurredAt;
   String orgUnitName;
   String status;
   String attributeCategoryOptions;
   bool deleted;
   bool followup;
   String attributeOptionCombo;
-  String notes;
+  String? notes;
 
   final relationships = ToMany<Relationship>();
   final dataValues = ToMany<D2DataValue>();
 
-  D2Event(
-      {required this.attributeCategoryOptions,
-      required this.attributeOptionCombo,
-      required this.enrollment,
-      required this.program,
-      required this.lastUpdated,
-      required this.created,
-      required this.createdAtClient,
-      required this.orgUnit,
-      required this.orgUnitName,
-      required this.trackedEntityInstance,
-      required this.followup,
-      required this.deleted,
-      required this.status,
-      required this.notes,
-      required this.dueDate,
-      required this.enrollmentStatus,
-      required this.uid,
-      required this.programStage,
-      required this.eventDate});
+  D2Event({
+    required this.attributeCategoryOptions,
+    required this.attributeOptionCombo,
+    required this.enrollment,
+    required this.program,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.createdAtClient,
+    required this.orgUnit,
+    required this.orgUnitName,
+    required this.trackedEntity,
+    required this.followup,
+    required this.deleted,
+    required this.status,
+    required this.notes,
+    required this.scheduledAt,
+    required this.uid,
+    required this.programStage,
+    required this.occurredAt,
+  });
 
   D2Event.fromMap(Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],
         attributeOptionCombo = json["attributeOptionCombo"],
         enrollment = json["enrollment"],
         program = json["program"],
-        lastUpdated = DateTime.parse(json["updatedAt"]),
-        created = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
         createdAtClient = DateTime.parse(json["createdAt"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntity"] ?? "",
+        trackedEntity = json["trackedEntity"],
         followup = json["followup"],
         deleted = json["deleted"],
         status = json["status"],
         notes = jsonEncode(json["notes"]),
-        dueDate = DateTime.parse(json["scheduledAt"]),
-        enrollmentStatus = json["status"],
+        scheduledAt = DateTime.parse(json["scheduledAt"]),
         uid = json["event"],
         programStage = json["programStage"],
-        eventDate = DateTime.parse(json["occurredAt"] ?? "2000-01-01T00:00") {
+        occurredAt = DateTime.parse(json["occurredAt"] ?? "2000-01-01T00:00") {
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()
         .map<Relationship?>((Map relation) =>
@@ -97,12 +95,12 @@ class D2Event extends D2DataResource {
 
     relationships.addAll(relations);
 
-    // List<D2DataValue> dataValue = json["dataValues"]
-    //     .cast<Map>()
-    //     .map<D2DataValue>(D2DataValue.fromMap)
-    //     .toList()
-    //     .cast<D2DataValue>();
+    List<D2DataValue> dataValue = json["dataValues"]
+        .cast<Map>()
+        .map<D2DataValue>(D2DataValue.fromMap)
+        .toList()
+        .cast<D2DataValue>();
 
-    // dataValues.addAll(dataValue);
+    dataValues.addAll(dataValue);
   }
 }

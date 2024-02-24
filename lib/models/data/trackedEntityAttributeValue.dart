@@ -8,13 +8,12 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   @override
-  @Unique()
   String uid;
   String displayName;
   String code;
@@ -22,8 +21,8 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   String valueType;
 
   D2TrackedEntityAttributeValue({
-    required this.created,
-    required this.lastUpdated,
+    required this.createdAt,
+    required this.updatedAt,
     required this.uid,
     required this.displayName,
     required this.code,
@@ -32,8 +31,8 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   });
 
   D2TrackedEntityAttributeValue.fromMap(Map json)
-      : created = DateTime.parse(json["createdAt"]),
-        lastUpdated = DateTime.parse(json["updatedAt"]),
+      : createdAt = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
         uid = json["attribute"],
         displayName = json["displayName"],
         code = json["code"] ?? "",

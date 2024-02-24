@@ -1,8 +1,7 @@
+import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -103,35 +102,39 @@ class _TeiListState extends State<TeiList> {
                         ),
                     pagingController: _pagingController,
                     builderDelegate: PagedChildBuilderDelegate<TrackedEntity>(
-                        itemBuilder: (context, item, index) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: InkWell(
-                                onTap: () {
-                                  context.push("/tei/${item.id}");
-                                },
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item.uid,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "No. Of Attributes: ${item.attributes.length}",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(
-                                      "No. Of Enrollments: ${item.enrollments.length}",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ],
-                                ),
+                        itemBuilder: (context, item, index) {
+                      final attribute = item.attributes.where((value) =>
+                          value.displayName == "First name" ||
+                          value.displayName == "Last name");
+                      String fullName = attribute
+                          .map((value) => value.value.toString())
+                          .join(" ");
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: InkWell(
+                          onTap: () {
+                            context.push("/tei/${item.id}");
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DetailsRow(label: "Full name", value: fullName),
+                              DetailsRow(
+                                label: "Attributes",
+                                value: item.attributes
+                                    .map((value) => value.value)
+                                    .toList()
+                                    .join(", "),
                               ),
-                            ))),
+                              DetailsRow(
+                                  label: "Enrollments",
+                                  value: item.enrollments.length.toString()),
+                            ],
+                          ),
+                        ),
+                      );
+                    })),
               ),
             )
           ],

@@ -6,8 +6,6 @@ import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -18,17 +16,16 @@ class TrackedEntity extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   @override
   @Unique()
   String uid;
   String trackedEntityType;
 
-  String featureType;
   String programOwners;
   String orgUnit;
   DateTime createdAtClient;
@@ -45,11 +42,10 @@ class TrackedEntity extends D2DataResource {
       required this.trackedEntityType,
       required this.orgUnit,
       required this.createdAtClient,
-      required this.created,
-      required this.lastUpdated,
+      required this.createdAt,
+      required this.updatedAt,
       required this.deleted,
       required this.potentialDuplicate,
-      required this.featureType,
       required this.inactive,
       required this.programOwners});
 
@@ -58,11 +54,10 @@ class TrackedEntity extends D2DataResource {
         trackedEntityType = json["trackedEntityType"],
         orgUnit = json["orgUnit"],
         createdAtClient = DateTime.parse(json["createdAtClient"]),
-        created = DateTime.parse(json["createdAt"]),
-        lastUpdated = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
         deleted = json["deleted"],
         potentialDuplicate = json["potentialDuplicate"],
-        featureType = "_",
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
     // id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
@@ -79,14 +74,14 @@ class TrackedEntity extends D2DataResource {
 
     enrollments.addAll(enrollment);
 
-    // List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
-    //     .cast<Map>()
-    //     .map<D2TrackedEntityAttributeValue>(
-    //         D2TrackedEntityAttributeValue.fromMap)
-    //     .toList()
-    //     .cast<D2TrackedEntityAttributeValue>();
+    List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
+        .cast<Map>()
+        .map<D2TrackedEntityAttributeValue>(
+            D2TrackedEntityAttributeValue.fromMap)
+        .toList()
+        .cast<D2TrackedEntityAttributeValue>();
 
-    // attributes.addAll(attribute);
+    attributes.addAll(attribute);
 
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()

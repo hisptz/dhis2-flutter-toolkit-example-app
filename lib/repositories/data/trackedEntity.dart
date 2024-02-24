@@ -22,9 +22,22 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
   }
 
   TrackedEntityRepository byIdentifiableToken(String keyword) {
+    final trackedEntities = trackedEntityBox.getAll();
+
+    final matchingEntities = trackedEntities.where((trackedEntity) {
+      final attributeEntities = trackedEntity.attributes.toList();
+
+      final firstNameAttributes = attributeEntities
+          .where((attribute) => attribute.displayName == "First name");
+
+      return firstNameAttributes.any((attribute) =>
+          attribute.value.toLowerCase().contains(keyword.toLowerCase()));
+    });
+    final uidList = matchingEntities.map((entity) => entity.uid).toList();
+
     queryConditions = TrackedEntity_.uid
-        .equals(keyword)
-        .or(TrackedEntity_.uid.contains(keyword, caseSensitive: false));
+        .oneOf(uidList.isNotEmpty ? uidList : ["null"], caseSensitive: false);
+
     return this;
   }
 }

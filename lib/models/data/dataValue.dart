@@ -9,28 +9,27 @@ class D2DataValue extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   @override
-  @Unique()
   String uid;
 
   String value;
   bool providedElsewhere;
 
   D2DataValue(
-      {required this.lastUpdated,
-      required this.created,
+      {required this.updatedAt,
+      required this.createdAt,
       required this.uid,
       required this.value,
       required this.providedElsewhere});
 
   D2DataValue.fromMap(Map json)
-      : lastUpdated = DateTime.parse(json["updatedAt"]),
-        created = DateTime.parse(json["createdAt"]),
+      : updatedAt = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
         uid = json["dataElement"],
         value = json["value"],
         providedElsewhere = json["providedElsewhere"];

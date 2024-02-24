@@ -6,7 +6,6 @@ import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -16,10 +15,10 @@ class D2Enrollment extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   DateTime createdAtClient;
 
@@ -27,14 +26,14 @@ class D2Enrollment extends D2DataResource {
   @Unique()
   String uid;
   String program;
-  String trackedEntityInstance;
-  String trackedEntityType;
+  String trackedEntity;
+
   String orgUnit;
   String orgUnitName;
-  DateTime enrollmentDate;
+  DateTime enrolledAt;
   bool deleted;
   bool followup;
-  DateTime incidentDate;
+  DateTime occurredAt;
   String status;
   String? notes;
 
@@ -45,17 +44,16 @@ class D2Enrollment extends D2DataResource {
   D2Enrollment({
     required this.uid,
     required this.program,
-    required this.lastUpdated,
-    required this.created,
+    required this.updatedAt,
+    required this.createdAt,
     required this.createdAtClient,
     required this.orgUnit,
     required this.orgUnitName,
-    required this.trackedEntityInstance,
-    required this.trackedEntityType,
-    required this.enrollmentDate,
+    required this.trackedEntity,
+    required this.enrolledAt,
     required this.followup,
     required this.deleted,
-    required this.incidentDate,
+    required this.occurredAt,
     required this.status,
     required this.notes,
   });
@@ -63,17 +61,16 @@ class D2Enrollment extends D2DataResource {
   D2Enrollment.fromMap(Map json)
       : uid = json["enrollment"],
         program = json["program"],
-        lastUpdated = DateTime.parse(json["updatedAt"]),
-        created = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
         createdAtClient = DateTime.parse(json["createdAtClient"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntity"],
-        trackedEntityType = json["trackedEntity"],
-        enrollmentDate = DateTime.parse(json["enrolledAt"]),
+        trackedEntity = json["trackedEntity"],
+        enrolledAt = DateTime.parse(json["enrolledAt"]),
         followup = json["followUp"],
         deleted = json["deleted"],
-        incidentDate = DateTime.parse(json["occurredAt"]),
+        occurredAt = DateTime.parse(json["occurredAt"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
     List<D2Event?> allEvents = json["events"]
