@@ -24,4 +24,9 @@ class D2EventRepository extends BaseRepository<D2Event> {
     queryConditions = D2Event_.trackedEntity.equals(teiId);
     return this;
   }
+
+  D2EventRepository byEnrollment(List<String> teiId) {
+    queryConditions = D2Event_.enrollment.oneOf(teiId);
+    return this;
+  }
 }
