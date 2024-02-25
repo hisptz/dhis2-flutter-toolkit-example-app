@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/modules/router.dart';
 import 'package:dhis2_flutter_toolkit/routes.dart';
 import 'package:flutter/material.dart';
 

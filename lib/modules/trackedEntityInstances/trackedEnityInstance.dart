@@ -55,16 +55,19 @@ class TeiDetails extends StatelessWidget {
     List<D2Event> events =
         D2EventRepository().byEnrollment(enrollmentIds).find();
 
-    final eventValues = events.map((e) => {
-          e.uid,
-          e.dataValues
-              .map(
-                (element) => element.value,
-              )
-              .toList()
-              .where((element) => element.isNotEmpty)
-              .join(", ")
-        });
+    final eventValues = events
+        .map((e) => {
+              e.uid,
+              e.dataValues
+                  .map(
+                    (element) => element.value,
+                  )
+                  .toList()
+                  .where((element) => element.isNotEmpty)
+                  .join(" ")
+            })
+        .toList()
+        .join(", ");
 
     final attribute = teiInstance.attributes.where((value) =>
         value.displayName == "First name" || value.displayName == "Last name");
@@ -113,13 +116,7 @@ class TeiDetails extends StatelessWidget {
                               .toList()
                               .join(", "),
                         ),
-                        DetailsRow(
-                          label: "Events",
-                          value: eventValues
-                              .map((event) => event)
-                              .toList()
-                              .join(", "),
-                        ),
+                        DetailsRow(label: "Events", value: eventValues),
                       ],
                     ),
                   ),

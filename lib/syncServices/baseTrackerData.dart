@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:http/http.dart';
 import 'package:objectbox/objectbox.dart';
 import '../models/base.dart';
 import '../objectbox.g.dart';
@@ -43,7 +42,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
     Map<String, String> params = {
       ...(extraParams ?? {}),
       "page": "1",
-      "pageSize": "50",
+      "pageSize": "200",
       "totalPages": "true"
     };
     if (fields != null) {

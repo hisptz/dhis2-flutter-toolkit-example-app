@@ -2,14 +2,11 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnitGroup.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
