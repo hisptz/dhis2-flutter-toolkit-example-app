@@ -66,8 +66,7 @@ class TeiDetails extends StatelessWidget {
                   .where((element) => element.isNotEmpty)
                   .join(" ")
             })
-        .toList()
-        .join(", ");
+        .toList();
 
     final attribute = teiInstance.attributes.where((value) =>
         value.displayName == "First name" || value.displayName == "Last name");
@@ -116,7 +115,11 @@ class TeiDetails extends StatelessWidget {
                               .toList()
                               .join(", "),
                         ),
-                        DetailsRow(label: "Events", value: eventValues),
+                        DetailsRow(
+                            label: "Events",
+                            value: eventValues.isNotEmpty
+                                ? eventValues.join(", ")
+                                : "None"),
                       ],
                     ),
                   ),
