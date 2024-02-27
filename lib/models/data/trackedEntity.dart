@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -21,7 +23,6 @@ class TrackedEntity extends D2DataResource {
   @override
   DateTime updatedAt;
 
-  @override
   @Unique()
   String uid;
   String trackedEntityType;
@@ -33,9 +34,15 @@ class TrackedEntity extends D2DataResource {
   bool deleted;
   bool inactive;
 
+  @Backlink()
   final enrollments = ToMany<D2Enrollment>();
+
   final relationships = ToMany<Relationship>();
+
   final attributes = ToMany<D2TrackedEntityAttributeValue>();
+
+  @Backlink()
+  final events = ToMany<D2Event>();
 
   TrackedEntity(
       {required this.uid,
@@ -60,28 +67,7 @@ class TrackedEntity extends D2DataResource {
         potentialDuplicate = json["potentialDuplicate"],
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
-    // id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
-    List<D2Enrollment?> enrolls = json["enrollments"]
-        .cast<Map>()
-        .map<D2Enrollment?>((Map enrollment) =>
-            D2EnrollmentRepository().getByUid(enrollment["enrollment"]))
-        .toList();
-
-    List<D2Enrollment> enrollment = enrolls
-        .where((D2Enrollment? element) => element != null)
-        .toList()
-        .cast<D2Enrollment>();
-
-    enrollments.addAll(enrollment);
-
-    List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
-        .cast<Map>()
-        .map<D2TrackedEntityAttributeValue>(
-            D2TrackedEntityAttributeValue.fromMap)
-        .toList()
-        .cast<D2TrackedEntityAttributeValue>();
-
-    attributes.addAll(attribute);
+    id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
 
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()
