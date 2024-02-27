@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -22,11 +23,9 @@ class D2Enrollment extends D2DataResource {
 
   DateTime createdAtClient;
 
-  @override
   @Unique()
   String uid;
   String program;
-  String trackedEntity;
 
   String orgUnit;
   String orgUnitName;
@@ -37,9 +36,12 @@ class D2Enrollment extends D2DataResource {
   String status;
   String? notes;
 
+  @Backlink()
   final events = ToMany<D2Event>();
+
   final relationships = ToMany<Relationship>();
-  final attributes = ToMany<D2TrackedEntityAttributeValue>();
+
+  final trackedEntity = ToOne<TrackedEntity>();
 
   D2Enrollment({
     required this.uid,
@@ -49,7 +51,6 @@ class D2Enrollment extends D2DataResource {
     required this.createdAtClient,
     required this.orgUnit,
     required this.orgUnitName,
-    required this.trackedEntity,
     required this.enrolledAt,
     required this.followup,
     required this.deleted,
@@ -66,25 +67,16 @@ class D2Enrollment extends D2DataResource {
         createdAtClient = DateTime.parse(json["createdAtClient"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntity = json["trackedEntity"],
         enrolledAt = DateTime.parse(json["enrolledAt"]),
         followup = json["followUp"],
         deleted = json["deleted"],
         occurredAt = DateTime.parse(json["occurredAt"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
-    List<D2Event?> allEvents = json["events"]
-        .cast<Map>()
-        .map<D2Event?>(
-            (Map event) => D2EventRepository().getByUid(event["enrollment"]))
-        .toList();
+    id = D2EnrollmentRepository().getIdByUid(json["enrollment"]) ?? 0;
 
-    List<D2Event> event = allEvents
-        .where((D2Event? element) => element != null)
-        .toList()
-        .cast<D2Event>();
-
-    events.addAll(event);
+    trackedEntity.target =
+        TrackedEntityRepository().getByUid(json["trackedEntity"]);
 
     List<Relationship?> relationship = json["relationships"]
         .cast<Map>()
@@ -98,14 +90,5 @@ class D2Enrollment extends D2DataResource {
         .cast<Relationship>();
 
     relationships.addAll(relations);
-
-    List<D2TrackedEntityAttributeValue> attribute = json["attributes"]
-        .cast<Map>()
-        .map<D2TrackedEntityAttributeValue>(
-            D2TrackedEntityAttributeValue.fromMap)
-        .toList()
-        .cast<D2TrackedEntityAttributeValue>();
-
-    attributes.addAll(attribute);
   }
 }
