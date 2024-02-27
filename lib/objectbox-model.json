@@ -90,12 +90,17 @@
           "id": "1:1762720854348797057",
           "name": "legendSets",
           "targetId": "6:2955999403549660979"
+        },
+        {
+          "id": "26:6214499177878275374",
+          "name": "dataValues",
+          "targetId": "2:3504265121944180400"
         }
       ]
     },
     {
       "id": "2:3504265121944180400",
-      "lastPropertyId": "8:6971087132134275671",
+      "lastPropertyId": "10:7461732206814233176",
       "name": "D2DataValue",
       "properties": [
         {
@@ -103,11 +108,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "4:4785675219869915866",
-          "name": "uid",
-          "type": 9
         },
         {
           "id": "5:7987492290956622251",
@@ -128,13 +128,29 @@
           "id": "8:6971087132134275671",
           "name": "updatedAt",
           "type": 10
+        },
+        {
+          "id": "9:6487529269312034587",
+          "name": "eventId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "60:7328732501564717582",
+          "relationTarget": "D2Event"
+        },
+        {
+          "id": "10:7461732206814233176",
+          "name": "dataElementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "61:6638229285257689023",
+          "relationTarget": "D2DataElement"
         }
       ],
       "relations": []
     },
     {
       "id": "3:1663155969181960685",
-      "lastPropertyId": "21:4452062834423069906",
+      "lastPropertyId": "22:305389044243354768",
       "name": "D2Enrollment",
       "properties": [
         {
@@ -201,11 +217,6 @@
           "type": 10
         },
         {
-          "id": "19:6482304931493871068",
-          "name": "trackedEntity",
-          "type": 9
-        },
-        {
           "id": "20:3734544599732808140",
           "name": "enrolledAt",
           "type": 10
@@ -214,29 +225,27 @@
           "id": "21:4452062834423069906",
           "name": "occurredAt",
           "type": 10
+        },
+        {
+          "id": "22:305389044243354768",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "62:8899505281667102012",
+          "relationTarget": "TrackedEntity"
         }
       ],
       "relations": [
         {
-          "id": "2:6703153274877028882",
-          "name": "events",
-          "targetId": "4:6304522207734519244"
-        },
-        {
           "id": "3:4748488664597894263",
           "name": "relationships",
           "targetId": "33:2389714016099780980"
-        },
-        {
-          "id": "4:276019404732129211",
-          "name": "attributes",
-          "targetId": "25:3195768304427450112"
         }
       ]
     },
     {
       "id": "4:6304522207734519244",
-      "lastPropertyId": "25:2181809668711792958",
+      "lastPropertyId": "29:1632560480152006133",
       "name": "D2Event",
       "properties": [
         {
@@ -256,23 +265,8 @@
           "type": 9
         },
         {
-          "id": "7:4154023990484895259",
-          "name": "program",
-          "type": 9
-        },
-        {
-          "id": "8:5128498759260619520",
-          "name": "programStage",
-          "type": 9
-        },
-        {
           "id": "9:7821959015073596816",
           "name": "orgUnit",
-          "type": 9
-        },
-        {
-          "id": "10:3095759703109361183",
-          "name": "enrollment",
           "type": 9
         },
         {
@@ -326,14 +320,41 @@
           "type": 10
         },
         {
-          "id": "24:1631143691260079959",
-          "name": "trackedEntity",
-          "type": 9
-        },
-        {
           "id": "25:2181809668711792958",
           "name": "occurredAt",
           "type": 10
+        },
+        {
+          "id": "26:5818177495342814815",
+          "name": "enrollmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "63:4526079622760701607",
+          "relationTarget": "D2Enrollment"
+        },
+        {
+          "id": "27:2727133570442573470",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "64:5245700874655458143",
+          "relationTarget": "TrackedEntity"
+        },
+        {
+          "id": "28:8385328007045080925",
+          "name": "programId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "65:3483869521855658132",
+          "relationTarget": "D2Program"
+        },
+        {
+          "id": "29:1632560480152006133",
+          "name": "programStageId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "66:7060712807550520167",
+          "relationTarget": "D2ProgramStage"
         }
       ],
       "relations": [
@@ -1554,7 +1575,7 @@
     },
     {
       "id": "25:3195768304427450112",
-      "lastPropertyId": "10:5087401904435646722",
+      "lastPropertyId": "12:7565238440618531892",
       "name": "D2TrackedEntityAttributeValue",
       "properties": [
         {
@@ -1564,28 +1585,8 @@
           "flags": 1
         },
         {
-          "id": "4:2136624110965097486",
-          "name": "uid",
-          "type": 9
-        },
-        {
-          "id": "5:3201082011873749560",
-          "name": "displayName",
-          "type": 9
-        },
-        {
-          "id": "6:8650283323339541865",
-          "name": "code",
-          "type": 9
-        },
-        {
           "id": "7:151020069063884121",
           "name": "value",
-          "type": 9
-        },
-        {
-          "id": "8:2729469548044609812",
-          "name": "valueType",
           "type": 9
         },
         {
@@ -1597,6 +1598,22 @@
           "id": "10:5087401904435646722",
           "name": "updatedAt",
           "type": 10
+        },
+        {
+          "id": "11:4118654015134521588",
+          "name": "trackedEntityAttributeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "67:4694609698882090412",
+          "relationTarget": "D2TrackedEntityAttribute"
+        },
+        {
+          "id": "12:7565238440618531892",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "68:4564061379773709081",
+          "relationTarget": "TrackedEntity"
         }
       ],
       "relations": []
@@ -1891,7 +1908,7 @@
     },
     {
       "id": "32:7762875921749888060",
-      "lastPropertyId": "2:535862573152675789",
+      "lastPropertyId": "4:7841891143317287399",
       "name": "FromRelationship",
       "properties": [
         {
@@ -1907,6 +1924,22 @@
           "flags": 520,
           "indexId": "54:415363511025461184",
           "relationTarget": "TrackedEntity"
+        },
+        {
+          "id": "3:6263109348462774413",
+          "name": "enrollmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "69:7466661408195666103",
+          "relationTarget": "D2Enrollment"
+        },
+        {
+          "id": "4:7841891143317287399",
+          "name": "eventId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "70:787100066959735052",
+          "relationTarget": "D2Event"
         }
       ],
       "relations": []
@@ -1975,7 +2008,7 @@
     },
     {
       "id": "34:6642671730047329437",
-      "lastPropertyId": "2:3820175658032604606",
+      "lastPropertyId": "4:2503959074594191253",
       "name": "ToRelationship",
       "properties": [
         {
@@ -1991,6 +2024,22 @@
           "flags": 520,
           "indexId": "58:3901348611241202563",
           "relationTarget": "TrackedEntity"
+        },
+        {
+          "id": "3:713225359819263091",
+          "name": "enrollmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "71:5718788133248256277",
+          "relationTarget": "D2Enrollment"
+        },
+        {
+          "id": "4:2503959074594191253",
+          "name": "eventId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "72:748066310239095020",
+          "relationTarget": "D2Event"
         }
       ],
       "relations": []
@@ -2061,11 +2110,6 @@
       ],
       "relations": [
         {
-          "id": "23:4290133851120675811",
-          "name": "enrollments",
-          "targetId": "3:1663155969181960685"
-        },
-        {
           "id": "24:1718385365341852697",
           "name": "relationships",
           "targetId": "33:2389714016099780980"
@@ -2079,8 +2123,8 @@
     }
   ],
   "lastEntityId": "35:5685057996273379050",
-  "lastIndexId": "59:433416381410644288",
-  "lastRelationId": "25:4799506001717016233",
+  "lastIndexId": "72:748066310239095020",
+  "lastRelationId": "26:6214499177878275374",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -2111,7 +2155,17 @@
     6475544678198117302,
     291005896213248420,
     4452888213431156868,
-    6034823280496118074
+    6034823280496118074,
+    4785675219869915866,
+    6482304931493871068,
+    4154023990484895259,
+    5128498759260619520,
+    3095759703109361183,
+    1631143691260079959,
+    2136624110965097486,
+    3201082011873749560,
+    8650283323339541865,
+    2729469548044609812
   ],
   "retiredRelationUids": [
     1443067466517591468,
@@ -2119,7 +2173,10 @@
     4913428903465204334,
     24484946896862319,
     5783147081460964782,
-    7053966055083793025
+    7053966055083793025,
+    6703153274877028882,
+    276019404732129211,
+    4290133851120675811
   ],
   "version": 1
 }
