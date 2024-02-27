@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';
 
@@ -30,7 +31,9 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
     final trackedEntities = trackedEntityBox.getAll();
 
     final matchingEntities = trackedEntities.where((trackedEntity) {
-      final attributeEntities = trackedEntity.attributes.toList();
+      final attributeEntities = D2TrackedEntityAttributeValueRepository()
+          .byTrackedEntity(trackedEntity.id)
+          .find();
 
       final nameAttributes = attributeEntities.where((attribute) =>
           (attribute.trackedEntityAttribute.target?.name == "First name") ||
@@ -39,6 +42,7 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
       return nameAttributes.any((attribute) =>
           attribute.value.toLowerCase().contains(keyword.toLowerCase()));
     });
+
     final uidList = matchingEntities.map((entity) => entity.uid).toList();
 
     queryConditions = TrackedEntity_.uid
