@@ -1,10 +1,15 @@
 import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
+import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:flutter/material.dart';
 
 class TeiDetails extends StatelessWidget {
@@ -50,38 +55,25 @@ class TeiDetails extends StatelessWidget {
     List<D2Enrollment> enrollments =
         D2EnrollmentRepository().byTrackedEntity(int.parse(id!)).find();
 
-    final enrollmentIds = enrollments.map((e) => e.id).toList();
+    List<D2Event> events =
+        D2EventRepository().byTrackedEntity(int.parse(id!)).find();
 
-    List<D2Event> events = [];
+    List<D2TrackedEntityAttributeValue> attributeValues =
+        D2TrackedEntityAttributeValueRepository()
+            .byTrackedEntity(int.parse(id!))
+            .find();
 
-    for (final id in enrollmentIds) {
-      events.addAll(D2EventRepository().byEnrollment(id).find());
-    }
-
-    final eventValues = events
-        .map((e) => {
-              e.dataValues
-                  .map(
-                    (element) =>
-                        "${element.dataElement.target?.name} : ${element.value}",
-                  )
-                  .toList()
-                  .join("  ")
-            })
-        .toList();
-
-    // final attribute = teiInstance.attributes.where((value) =>
-    //     value.trackedEntityAttribute.target?.name == "First name" ||
-    //     value.trackedEntityAttribute.target?.name == "Last name");
-    // String fullName =
-    //     attribute.map((value) => value.value.toString()).join(" ");
+    final attribute = attributeValues.where((value) =>
+        value.trackedEntityAttribute.target?.name == "First name" ||
+        value.trackedEntityAttribute.target?.name == "Last name");
+    String fullName =
+        attribute.map((value) => value.value.toString()).join(" ");
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          //fullName,
-          enrollments.length.toString(),
+          fullName,
           style:
               const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -121,8 +113,30 @@ class TeiDetails extends StatelessWidget {
                         ),
                         DetailsRow(
                             label: "Events",
-                            value: eventValues.isNotEmpty
-                                ? eventValues.join(", ")
+                            value: events.isNotEmpty
+                                ? events
+                                    .map((event) {
+                                      final programStageName =
+                                          event.programStage.target?.name ??
+                                              "Unknown Program Stage";
+                                      List<D2DataValue> dataValues =
+                                          D2DataValueRepository()
+                                              .byEvent(event.id)
+                                              .find();
+
+                                      final dataValueList =
+                                          dataValues.isNotEmpty
+                                              ? dataValues
+                                                  .map((data) {
+                                                    return "${data.dataElement.target?.name} :  ${data.value}";
+                                                  })
+                                                  .toList()
+                                                  .join("\n ")
+                                              : "No Data Values";
+                                      return "Program Stage : $programStageName \n$dataValueList";
+                                    })
+                                    .toList()
+                                    .join("\n\n")
                                 : "None"),
                       ],
                     ),

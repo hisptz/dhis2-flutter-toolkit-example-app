@@ -32,7 +32,6 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
       : createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         value = json["value"] {
-    print(trackedEntityId);
     trackedEntityAttribute.target =
         D2TrackedEntityAttributeRepository().getByUid(json["attribute"]);
 

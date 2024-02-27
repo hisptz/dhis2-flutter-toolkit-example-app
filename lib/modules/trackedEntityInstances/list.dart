@@ -1,6 +1,9 @@
 import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
+import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
@@ -104,19 +107,23 @@ class _TeiListState extends State<TeiList> {
                     pagingController: _pagingController,
                     builderDelegate: PagedChildBuilderDelegate<TrackedEntity>(
                         itemBuilder: (context, item, index) {
-                      final attributeValues =
+                      List<D2TrackedEntityAttributeValue> attributeValues =
                           D2TrackedEntityAttributeValueRepository()
                               .byTrackedEntity(item.id)
                               .find();
 
-                      // final attribute = item.attributes.where((value) =>
-                      //     value.trackedEntityAttribute.target?.name ==
-                      //         "First name" ||
-                      //     value.trackedEntityAttribute.target?.name ==
-                      //         "Last name");
-                      // String fullName = attribute
-                      //     .map((value) => value.value.toString())
-                      //     .join(" ");
+                      List<D2Enrollment> enrollments = D2EnrollmentRepository()
+                          .byTrackedEntity(item.id)
+                          .find();
+
+                      final attribute = attributeValues.where((value) =>
+                          value.trackedEntityAttribute.target?.name ==
+                              "First name" ||
+                          value.trackedEntityAttribute.target?.name ==
+                              "Last name");
+                      String fullName = attribute
+                          .map((value) => value.value.toString())
+                          .join(" ");
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -127,17 +134,19 @@ class _TeiListState extends State<TeiList> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              DetailsRow(label: "Full name", value: ""),
+                              DetailsRow(label: "Full name", value: fullName),
                               DetailsRow(
                                 label: "Attributes",
-                                value: item.attributes
-                                    .map((value) => value.value)
+                                value: attributeValues
+                                    .map((value) {
+                                      return "${value.trackedEntityAttribute.target!.name}: ${value.value}";
+                                    })
                                     .toList()
                                     .join(", "),
                               ),
                               DetailsRow(
                                   label: "Enrollments",
-                                  value: item.enrollments.length.toString()),
+                                  value: enrollments.length.toString()),
                             ],
                           ),
                         ),
