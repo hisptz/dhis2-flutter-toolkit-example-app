@@ -36,10 +36,14 @@ class _SyncPageState extends State<SyncPage> {
 
         String dataType = "Metadata";
 
-        if ((status?.label != "User") &&
-            (status?.label != "System Information") &&
-            (status?.label != "Organisation Units") &&
-            (status?.label != "Programs")) {
+        final excludedLabels = {
+          "User",
+          "System Information",
+          "Organisation Units",
+          "Programs"
+        };
+
+        if (!excludedLabels.contains(status?.label)) {
           dataType = "Tracker data";
         }
 
