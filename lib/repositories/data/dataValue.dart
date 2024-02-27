@@ -11,13 +11,11 @@ class DataValueRepository extends BaseRepository<D2DataValue> {
 
   @override
   D2DataValue? getByUid(String uid) {
-    Query<D2DataValue> query =
-        d2DataValueBox.query(D2DataValue_.uid.equals(uid)).build();
-    return query.findFirst();
+    return null;
   }
 
   @override
   D2DataValue mapper(Map<String, dynamic> json) {
-    return D2DataValue.fromMap(json);
+    return D2DataValue.fromMap(json, "");
   }
 }
