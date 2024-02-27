@@ -15,18 +15,23 @@ class D2EventRepository extends BaseRepository<D2Event> {
     return query.findFirst();
   }
 
+  List<D2Event>? getAll() {
+    Query query = box.query().build();
+    return query.find() as List<D2Event>;
+  }
+
   @override
   D2Event mapper(Map<String, dynamic> json) {
     return D2Event.fromMap(json);
   }
 
-  D2EventRepository byTrackedEntity(String teiId) {
-    queryConditions = D2Event_.trackedEntity.equals(teiId);
+  D2EventRepository byTrackedEntity(int id) {
+    queryConditions = D2Event_.trackedEntity.equals(id);
     return this;
   }
 
-  D2EventRepository byEnrollment(List<String> teiId) {
-    queryConditions = D2Event_.enrollment.oneOf(teiId);
+  D2EventRepository byEnrollment(int id) {
+    queryConditions = D2Event_.enrollment.equals(id);
     return this;
   }
 }
