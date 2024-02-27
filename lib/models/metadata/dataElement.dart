@@ -1,3 +1,4 @@
+import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
@@ -29,6 +30,8 @@ class D2DataElement extends D2MetadataResource {
   bool? zeroIsSignificant;
   final legendSets = ToMany<D2LegendSet>();
   final optionSet = ToOne<D2OptionSet>();
+
+  final dataValues = ToMany<D2DataValue>();
 
   D2DataElement(
       {required this.created,
