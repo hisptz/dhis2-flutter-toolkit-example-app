@@ -8,7 +8,7 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:flutter/material.dart';
 
 class TeiDetails extends StatelessWidget {
-  const TeiDetails({super.key, this.id});
+  const TeiDetails({super.key, required this.id});
 
   final String? id;
 
@@ -48,36 +48,40 @@ class TeiDetails extends StatelessWidget {
     }
 
     List<D2Enrollment> enrollments =
-        D2EnrollmentRepository().byTrackedEntity(teiInstance.uid).find();
+        D2EnrollmentRepository().byTrackedEntity(int.parse(id!)).find();
 
-    final enrollmentIds = enrollments.map((e) => e.uid).toList();
+    final enrollmentIds = enrollments.map((e) => e.id).toList();
 
-    List<D2Event> events =
-        D2EventRepository().byEnrollment(enrollmentIds).find();
+    List<D2Event> events = [];
+
+    for (final id in enrollmentIds) {
+      events.addAll(D2EventRepository().byEnrollment(id).find());
+    }
 
     final eventValues = events
         .map((e) => {
-              e.uid,
               e.dataValues
                   .map(
-                    (element) => element.value,
+                    (element) =>
+                        "${element.dataElement.target?.name} : ${element.value}",
                   )
                   .toList()
-                  .where((element) => element.isNotEmpty)
-                  .join(" ")
+                  .join("  ")
             })
         .toList();
 
-    final attribute = teiInstance.attributes.where((value) =>
-        value.displayName == "First name" || value.displayName == "Last name");
-    String fullName =
-        attribute.map((value) => value.value.toString()).join(" ");
+    // final attribute = teiInstance.attributes.where((value) =>
+    //     value.trackedEntityAttribute.target?.name == "First name" ||
+    //     value.trackedEntityAttribute.target?.name == "Last name");
+    // String fullName =
+    //     attribute.map((value) => value.value.toString()).join(" ");
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          fullName,
+          //fullName,
+          enrollments.length.toString(),
           style:
               const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),

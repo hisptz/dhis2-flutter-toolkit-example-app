@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -103,12 +104,19 @@ class _TeiListState extends State<TeiList> {
                     pagingController: _pagingController,
                     builderDelegate: PagedChildBuilderDelegate<TrackedEntity>(
                         itemBuilder: (context, item, index) {
-                      final attribute = item.attributes.where((value) =>
-                          value.displayName == "First name" ||
-                          value.displayName == "Last name");
-                      String fullName = attribute
-                          .map((value) => value.value.toString())
-                          .join(" ");
+                      final attributeValues =
+                          D2TrackedEntityAttributeValueRepository()
+                              .byTrackedEntity(item.id)
+                              .find();
+
+                      // final attribute = item.attributes.where((value) =>
+                      //     value.trackedEntityAttribute.target?.name ==
+                      //         "First name" ||
+                      //     value.trackedEntityAttribute.target?.name ==
+                      //         "Last name");
+                      // String fullName = attribute
+                      //     .map((value) => value.value.toString())
+                      //     .join(" ");
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -119,7 +127,7 @@ class _TeiListState extends State<TeiList> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              DetailsRow(label: "Full name", value: fullName),
+                              DetailsRow(label: "Full name", value: ""),
                               DetailsRow(
                                 label: "Attributes",
                                 value: item.attributes
