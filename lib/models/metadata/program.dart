@@ -1,3 +1,4 @@
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
@@ -43,6 +44,9 @@ class D2Program extends D2MetadataResource {
   @Backlink()
   final programTrackedEntityAttributes =
       ToMany<D2ProgramTrackedEntityAttribute>();
+
+  @Backlink()
+  final events = ToMany<D2Event>();
 
   D2Program(this.created, this.lastUpdated, this.uid, this.accessLevel,
       this.name, this.shortName, this.programType, this.onlyEnrollOnce);
