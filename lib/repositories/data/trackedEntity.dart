@@ -16,6 +16,11 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
     return query.findFirst();
   }
 
+  List<TrackedEntity>? getAll() {
+    Query query = box.query().build();
+    return query.find() as List<TrackedEntity>;
+  }
+
   @override
   TrackedEntity mapper(Map<String, dynamic> json) {
     return TrackedEntity.fromMap(json);
@@ -27,10 +32,11 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
     final matchingEntities = trackedEntities.where((trackedEntity) {
       final attributeEntities = trackedEntity.attributes.toList();
 
-      final firstNameAttributes = attributeEntities
-          .where((attribute) => attribute.displayName == "First name");
+      final nameAttributes = attributeEntities.where((attribute) =>
+          (attribute.trackedEntityAttribute.target?.name == "First name") ||
+          (attribute.trackedEntityAttribute.target?.name == "Last name"));
 
-      return firstNameAttributes.any((attribute) =>
+      return nameAttributes.any((attribute) =>
           attribute.value.toLowerCase().contains(keyword.toLowerCase()));
     });
     final uidList = matchingEntities.map((entity) => entity.uid).toList();
