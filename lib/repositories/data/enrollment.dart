@@ -16,13 +16,18 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment> {
     return query.findFirst();
   }
 
+  List<D2Enrollment>? getAll() {
+    Query query = box.query().build();
+    return query.find() as List<D2Enrollment>;
+  }
+
   @override
   D2Enrollment mapper(Map<String, dynamic> json) {
     return D2Enrollment.fromMap(json);
   }
 
-  D2EnrollmentRepository byTrackedEntity(String teiId) {
-    queryConditions = D2Enrollment_.trackedEntity.equals(teiId);
+  D2EnrollmentRepository byTrackedEntity(int id) {
+    queryConditions = D2Enrollment_.trackedEntity.equals(id);
     return this;
   }
 }
