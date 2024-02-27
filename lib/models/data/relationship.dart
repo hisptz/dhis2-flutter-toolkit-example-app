@@ -16,7 +16,6 @@ class Relationship extends D2DataResource {
   @override
   DateTime updatedAt;
 
-  @override
   @Unique()
   String uid;
   String relationshipName;
@@ -41,5 +40,12 @@ class Relationship extends D2DataResource {
         uid = json["relationship"],
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
-        bidirectional = json["bidirectional"];
+        bidirectional = json["bidirectional"] {
+    FromRelationship from = FromRelationship.fromMap(json["from"]);
+    ToRelationship to = ToRelationship.fromMap(json["to"]);
+    fromRelationshipBox.putAndGetAsync(from);
+    toRelationshipBox.putAndGetAsync(to);
+
+    // from.target = FromRelationshipRepository().getByUid(json["from"]);
+  }
 }

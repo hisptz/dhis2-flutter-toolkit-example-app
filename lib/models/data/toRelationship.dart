@@ -1,3 +1,5 @@
+import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:objectbox/objectbox.dart';
@@ -11,8 +13,10 @@ class ToRelationship {
   int id = 0;
 
   final trackedEntityInstance = ToOne<TrackedEntity>();
+  final enrollment = ToOne<D2Enrollment>();
+  final event = ToOne<D2Event>();
 
   ToRelationship();
 
-  ToRelationship.toMap(Map json);
+  ToRelationship.fromMap(Map json);
 }
