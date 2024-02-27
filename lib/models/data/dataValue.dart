@@ -1,4 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -14,23 +18,27 @@ class D2DataValue extends D2DataResource {
   @override
   DateTime updatedAt;
 
-  @override
-  String uid;
-
-  String value;
+  String? value;
   bool providedElsewhere;
+
+  final event = ToOne<D2Event>();
+
+  final dataElement = ToOne<D2DataElement>();
 
   D2DataValue(
       {required this.updatedAt,
       required this.createdAt,
-      required this.uid,
       required this.value,
       required this.providedElsewhere});
 
-  D2DataValue.fromMap(Map json)
+  D2DataValue.fromMap(Map json, String eventId)
       : updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
-        uid = json["dataElement"],
-        value = json["value"] ?? "",
-        providedElsewhere = json["providedElsewhere"];
+        value = json["value"],
+        providedElsewhere = json["providedElsewhere"] {
+    event.target = D2EventRepository().getByUid(eventId);
+
+    dataElement.target =
+        D2DataElementRepository().getByUid(json["dataElement"]);
+  }
 }
