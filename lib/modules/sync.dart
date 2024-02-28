@@ -54,9 +54,8 @@ class _SyncPageState extends State<SyncPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-             Intl.message("Syncing $dataType",
+                Intl.message("Syncing $dataType",
                     name: "_SyncPageState_build", args: [context]),
-
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 24.0),
               ),

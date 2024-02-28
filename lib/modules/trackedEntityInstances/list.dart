@@ -1,9 +1,11 @@
 import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
@@ -116,6 +118,11 @@ class _TeiListState extends State<TeiList> {
                           .byTrackedEntity(item.id)
                           .find();
 
+                      List<Relationship> relationships =
+                          RelationshipRepository()
+                              .byTrackedEntity(item.id)
+                              .find();
+
                       final attribute = attributeValues.where((value) =>
                           value.trackedEntityAttribute.target?.name ==
                               "First name" ||
@@ -147,6 +154,17 @@ class _TeiListState extends State<TeiList> {
                               DetailsRow(
                                   label: "Enrollments",
                                   value: enrollments.length.toString()),
+                              DetailsRow(
+                                label: "Relationships",
+                                value: relationships.isNotEmpty
+                                    ? relationships
+                                        .map((value) {
+                                          return "From : ${value.from.target?.trackedEntity.target?.uid ?? "Not Available"} \n To : ${value.to.target?.trackedEntity.target?.orgUnit ?? "Not Available"}";
+                                        })
+                                        .toList()
+                                        .join("\n")
+                                    : "None ",
+                              ),
                             ],
                           ),
                         ),
