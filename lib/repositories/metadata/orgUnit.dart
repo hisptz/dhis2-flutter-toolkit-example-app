@@ -17,6 +17,15 @@ class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnit> {
     return query.findFirst();
   }
 
+  D2OrganisationUnit getDefaultOrgUnit() {
+    Query<D2OrganisationUnit> query =
+        d2OrgUnitBox.query(D2OrganisationUnit_.level.equals(1)).build();
+
+    Query query2 = box.query().build();
+
+    return query.findFirst() ?? query2.findFirst();
+  }
+
   @override
   D2OrganisationUnit mapper(Map<String, dynamic> json) {
     return D2OrganisationUnit.fromMap(db, json);

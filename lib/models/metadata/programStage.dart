@@ -1,3 +1,4 @@
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
@@ -34,6 +35,9 @@ class D2ProgramStage extends D2MetadataResource {
 
   @Backlink("programStage")
   final programStageSections = ToMany<D2ProgramStageSection>();
+
+  @Backlink()
+  final events = ToMany<D2Event>();
 
   D2ProgramStage({
     required this.created,

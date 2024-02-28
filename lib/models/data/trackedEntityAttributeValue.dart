@@ -1,4 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -8,35 +12,29 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
-  @override
-  @Unique()
-  String uid;
-  String displayName;
-  String code;
   String value;
-  String valueType;
+
+  final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
+  final trackedEntity = ToOne<TrackedEntity>();
 
   D2TrackedEntityAttributeValue({
-    required this.created,
-    required this.lastUpdated,
-    required this.uid,
-    required this.displayName,
-    required this.code,
+    required this.createdAt,
+    required this.updatedAt,
     required this.value,
-    required this.valueType,
   });
 
-  D2TrackedEntityAttributeValue.fromMap(Map json)
-      : created = DateTime.parse(json["created"]),
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
-        uid = json["attribute"],
-        displayName = json["displayName"],
-        code = json["code"],
-        value = json["value"],
-        valueType = json["valueType"];
+  D2TrackedEntityAttributeValue.fromMap(Map json, String trackedEntityId)
+      : createdAt = DateTime.parse(json["createdAt"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
+        value = json["value"] {
+    trackedEntityAttribute.target =
+        D2TrackedEntityAttributeRepository().getByUid(json["attribute"]);
+
+    trackedEntity.target = TrackedEntityRepository().getByUid(trackedEntityId);
+  }
 }

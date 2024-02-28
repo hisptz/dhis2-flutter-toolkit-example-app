@@ -2,7 +2,17 @@ import 'dart:convert';
 
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
+import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -13,83 +23,91 @@ class D2Event extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   DateTime createdAtClient;
 
-  @override
-  @Unique()
   String uid;
-  DateTime dueDate;
-  String program;
-  String programStage;
+  DateTime? scheduledAt;
+
   String orgUnit;
-  String enrollment;
-  String trackedEntityInstance;
-  String enrollmentStatus;
-  DateTime eventDate;
+
+  DateTime? occurredAt;
   String orgUnitName;
   String status;
   String attributeCategoryOptions;
   bool deleted;
   bool followup;
   String attributeOptionCombo;
-  String notes;
+  String? notes;
 
   final relationships = ToMany<Relationship>();
   final dataValues = ToMany<D2DataValue>();
+  final enrollment = ToOne<D2Enrollment>();
+  final trackedEntity = ToOne<TrackedEntity>();
+  final program = ToOne<D2Program>();
+  final programStage = ToOne<D2ProgramStage>();
 
-  D2Event(
-      {required this.attributeCategoryOptions,
-      required this.attributeOptionCombo,
-      required this.enrollment,
-      required this.program,
-      required this.lastUpdated,
-      required this.created,
-      required this.createdAtClient,
-      required this.orgUnit,
-      required this.orgUnitName,
-      required this.trackedEntityInstance,
-      required this.followup,
-      required this.deleted,
-      required this.status,
-      required this.notes,
-      required this.dueDate,
-      required this.enrollmentStatus,
-      required this.uid,
-      required this.programStage,
-      required this.eventDate});
+  D2Event({
+    required this.attributeCategoryOptions,
+    required this.attributeOptionCombo,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.createdAtClient,
+    required this.orgUnit,
+    required this.orgUnitName,
+    required this.followup,
+    required this.deleted,
+    required this.status,
+    required this.notes,
+    required this.scheduledAt,
+    required this.uid,
+    required this.occurredAt,
+  });
 
   D2Event.fromMap(Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],
         attributeOptionCombo = json["attributeOptionCombo"],
-        enrollment = json["enrollment"],
-        program = json["program"],
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
-        created = DateTime.parse(json["created"]),
-        createdAtClient = DateTime.parse(json["createdAtClient"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
+        createdAtClient = DateTime.parse(json["createdAt"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntityInstance"],
         followup = json["followup"],
         deleted = json["deleted"],
         status = json["status"],
         notes = jsonEncode(json["notes"]),
-        dueDate = DateTime.parse(json["dueDate"]),
-        enrollmentStatus = json["enrollmentStatus"],
+        scheduledAt = DateTime.parse(json["scheduledAt"] ?? "1999-01-01T00:00"),
         uid = json["event"],
-        programStage = json["programStage"],
-        eventDate = DateTime.parse(json["eventDate"]) {
-    List<Relationship> relationship =
-        json["relationships"].map(Relationship.fromMap);
+        occurredAt = DateTime.parse(json["occurredAt"] ?? "1999-01-01T00:00") {
+    id = D2EventRepository().getIdByUid(json["event"]) ?? 0;
+    enrollment.target =
+        D2EnrollmentRepository().getByUid(json["enrollment"] ?? "");
 
-    relationships.addAll(relationship);
+    if (json["trackedEntity"] != null) {
+      trackedEntity.target =
+          TrackedEntityRepository().getByUid(json["trackedEntity"]);
+    }
 
-    List<D2DataValue> dataValue = json["dataValues"].map(D2DataValue.fromMap);
+    program.target = D2ProgramRepository().getByUid(json["program"]);
 
-    dataValues.addAll(dataValue);
+    programStage.target =
+        D2ProgramStageRepository().getByUid(json["programStage"]);
+
+    List<Relationship?> relationship = json["relationships"]
+        .cast<Map>()
+        .map<Relationship?>((Map relation) =>
+            RelationshipRepository().getByUid(relation["relationship"]))
+        .toList();
+
+    List<Relationship> relations = relationship
+        .where((Relationship? element) => element != null)
+        .toList()
+        .cast<Relationship>();
+
+    relationships.addAll(relations);
   }
 }

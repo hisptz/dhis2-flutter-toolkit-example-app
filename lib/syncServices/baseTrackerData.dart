@@ -1,57 +1,48 @@
 import 'dart:async';
-
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-
+import 'package:objectbox/objectbox.dart';
 import '../models/base.dart';
+import '../objectbox.g.dart';
 
 class Pagination {
   int total;
   int pageSize;
   int pageCount;
 
-  Pagination(this.total, this.pageSize, this.pageCount);
-
-  Pagination.fromMap(Map json)
-      : total = json["total"],
-        pageSize = json["pageSize"],
-        pageCount = json["pageCount"];
+  Pagination(
+      {required this.total, required this.pageSize, required this.pageCount});
 }
 
-abstract class BaseSyncService<T extends DHIS2Resource> {
-  ObjectBox db;
+abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
   StreamController<SyncStatus> controller = StreamController();
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
   Map<String, dynamic>? extraParams;
+  Box<T> box;
   String label;
   String?
       dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
 
-  BaseSyncService(
+  BaseTrackerSyncService(
       {required this.resource,
       this.fields,
       this.filters,
       this.dataKey,
       this.extraParams,
-      required this.db,
+      required this.box,
       required this.label});
 
   get url {
     return resource;
   }
 
-  get box {
-    return db.store.box<T>();
-  }
-
   get queryParams {
     Map<String, String> params = {
       ...(extraParams ?? {}),
       "page": "1",
-      "pageSize": "50",
+      "pageSize": "200",
       "totalPages": "true"
     };
     if (fields != null) {
@@ -82,7 +73,13 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     if (response == null) {
       throw "Error getting pagination for data sync";
     }
-    return Pagination.fromMap(response["pager"]);
+
+    final pagination = Pagination(
+        total: response["total"],
+        pageSize: response["pageSize"],
+        pageCount: response["pageCount"]);
+
+    return pagination;
   }
 
   Future<D?> getData<D>(int page) async {
@@ -98,6 +95,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     if (data == null) {
       throw "Error getting data for page $page";
     }
+
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
