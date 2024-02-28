@@ -14,6 +14,10 @@ class ToRelationshipRepository {
     return query.findFirst();
   }
 
+  int? getIdByUid(String uid) {
+    return getByUid(uid)?.id;
+  }
+
   ToRelationship mapper(Map<String, dynamic> json) {
     return ToRelationship.fromMap(json, "", "");
   }
