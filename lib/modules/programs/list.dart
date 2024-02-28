@@ -33,9 +33,9 @@ class _ProgramListState extends State<ProgramList> {
     Query<D2Program> query = queryBuilder.build();
     query
       ..limit = 50
-      ..offset = page;
+      ..offset = page * 50;
     List<D2Program> entities = await query.findAsync();
-    final isLastPage = entities.length < 100;
+    final isLastPage = entities.length < 50;
     if (isLastPage) {
       _pagingController.appendLastPage(entities);
     } else {

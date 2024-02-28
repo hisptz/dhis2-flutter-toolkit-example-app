@@ -3,6 +3,7 @@ import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class SyncPage extends StatefulWidget {
   const SyncPage({super.key});
@@ -21,7 +22,7 @@ class _SyncPageState extends State<SyncPage> {
   @override
   void initState() {
     metadataSyncService.sync().then((value) {
-      context.go("/home");
+      context.go("/");
     });
     super.initState();
   }
@@ -53,7 +54,9 @@ class _SyncPageState extends State<SyncPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Syncing $dataType",
+             Intl.message("Syncing $dataType",
+                    name: "_SyncPageState_build", args: [context]),
+
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 24.0),
               ),
