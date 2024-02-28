@@ -77,18 +77,5 @@ class D2Enrollment extends D2DataResource {
 
     trackedEntity.target =
         TrackedEntityRepository().getByUid(json["trackedEntity"]);
-
-    List<Relationship?> relationship = json["relationships"]
-        .cast<Map>()
-        .map<Relationship?>((Map relation) =>
-            RelationshipRepository().getByUid(relation["relationship"]))
-        .toList();
-
-    List<Relationship> relations = relationship
-        .where((Relationship? element) => element != null)
-        .toList()
-        .cast<Relationship>();
-
-    relationships.addAll(relations);
   }
 }
