@@ -1908,7 +1908,7 @@
     },
     {
       "id": "32:7762875921749888060",
-      "lastPropertyId": "4:7841891143317287399",
+      "lastPropertyId": "7:1959954803864509963",
       "name": "FromRelationship",
       "properties": [
         {
@@ -1916,14 +1916,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "2:535862573152675789",
-          "name": "trackedEntityInstanceId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "54:415363511025461184",
-          "relationTarget": "TrackedEntity"
         },
         {
           "id": "3:6263109348462774413",
@@ -1940,13 +1932,26 @@
           "flags": 520,
           "indexId": "70:787100066959735052",
           "relationTarget": "D2Event"
+        },
+        {
+          "id": "6:2677848091201363147",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "7:1959954803864509963",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "83:1822857832282146272",
+          "relationTarget": "TrackedEntity"
         }
       ],
       "relations": []
     },
     {
       "id": "33:2389714016099780980",
-      "lastPropertyId": "11:6671946046750356365",
+      "lastPropertyId": "19:5688641459870621206",
       "name": "Relationship",
       "properties": [
         {
@@ -1978,22 +1983,6 @@
           "type": 9
         },
         {
-          "id": "8:3609570913173358015",
-          "name": "fromId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "56:5693855032075461858",
-          "relationTarget": "FromRelationship"
-        },
-        {
-          "id": "9:933880678327404570",
-          "name": "toId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "57:2776772408156024632",
-          "relationTarget": "ToRelationship"
-        },
-        {
           "id": "10:4354329426403309722",
           "name": "createdAt",
           "type": 10
@@ -2002,13 +1991,53 @@
           "id": "11:6671946046750356365",
           "name": "updatedAt",
           "type": 10
+        },
+        {
+          "id": "15:6060292385701169610",
+          "name": "toId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "78:4413628903678143178",
+          "relationTarget": "ToRelationship"
+        },
+        {
+          "id": "16:4130759143681541526",
+          "name": "fromId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "79:5608235184790383898",
+          "relationTarget": "FromRelationship"
+        },
+        {
+          "id": "17:4452387469782644429",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "80:5172954086412795156",
+          "relationTarget": "TrackedEntity"
+        },
+        {
+          "id": "18:3662083485185160906",
+          "name": "enrollmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "81:6194277782992654402",
+          "relationTarget": "D2Enrollment"
+        },
+        {
+          "id": "19:5688641459870621206",
+          "name": "eventId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "82:3590571779487741156",
+          "relationTarget": "D2Event"
         }
       ],
       "relations": []
     },
     {
       "id": "34:6642671730047329437",
-      "lastPropertyId": "4:2503959074594191253",
+      "lastPropertyId": "7:8796114370569263164",
       "name": "ToRelationship",
       "properties": [
         {
@@ -2016,14 +2045,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "2:3820175658032604606",
-          "name": "trackedEntityInstanceId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "58:3901348611241202563",
-          "relationTarget": "TrackedEntity"
         },
         {
           "id": "3:713225359819263091",
@@ -2040,6 +2061,19 @@
           "flags": 520,
           "indexId": "72:748066310239095020",
           "relationTarget": "D2Event"
+        },
+        {
+          "id": "6:8488264359237383272",
+          "name": "uid",
+          "type": 9
+        },
+        {
+          "id": "7:8796114370569263164",
+          "name": "trackedEntityId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "84:6203050864459076139",
+          "relationTarget": "TrackedEntity"
         }
       ],
       "relations": []
@@ -2123,7 +2157,7 @@
     }
   ],
   "lastEntityId": "35:5685057996273379050",
-  "lastIndexId": "72:748066310239095020",
+  "lastIndexId": "84:6203050864459076139",
   "lastRelationId": "26:6214499177878275374",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -2132,7 +2166,16 @@
   "retiredIndexUids": [
     4342976014228701150,
     6954985060894839179,
-    7425502513311282148
+    7425502513311282148,
+    5693855032075461858,
+    2776772408156024632,
+    1415120183143656452,
+    5425911845188328464,
+    5761334449350551316,
+    2000181402574178394,
+    3484978538090580841,
+    415363511025461184,
+    3901348611241202563
   ],
   "retiredPropertyUids": [
     640663780519544382,
@@ -2165,7 +2208,16 @@
     2136624110965097486,
     3201082011873749560,
     8650283323339541865,
-    2729469548044609812
+    2729469548044609812,
+    3609570913173358015,
+    933880678327404570,
+    796968129092296748,
+    1879163670997772369,
+    7798497278143472099,
+    333911854445555521,
+    5555639661162417481,
+    535862573152675789,
+    3820175658032604606
   ],
   "retiredRelationUids": [
     1443067466517591468,

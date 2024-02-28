@@ -1914,7 +1914,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(32, 7762875921749888060),
       name: 'FromRelationship',
-      lastPropertyId: const IdUid(4, 7841891143317287399),
+      lastPropertyId: const IdUid(7, 1959954803864509963),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1922,13 +1922,6 @@ final _entities = <ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 535862573152675789),
-            name: 'trackedEntityInstanceId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(54, 415363511025461184),
-            relationTarget: 'TrackedEntity'),
         ModelProperty(
             id: const IdUid(3, 6263109348462774413),
             name: 'enrollmentId',
@@ -1942,14 +1935,26 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(70, 787100066959735052),
-            relationTarget: 'D2Event')
+            relationTarget: 'D2Event'),
+        ModelProperty(
+            id: const IdUid(6, 2677848091201363147),
+            name: 'uid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 1959954803864509963),
+            name: 'trackedEntityId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(83, 1822857832282146272),
+            relationTarget: 'TrackedEntity')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(33, 2389714016099780980),
       name: 'Relationship',
-      lastPropertyId: const IdUid(11, 6671946046750356365),
+      lastPropertyId: const IdUid(19, 5688641459870621206),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1979,20 +1984,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 3609570913173358015),
-            name: 'fromId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(56, 5693855032075461858),
-            relationTarget: 'FromRelationship'),
-        ModelProperty(
-            id: const IdUid(9, 933880678327404570),
-            name: 'toId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(57, 2776772408156024632),
-            relationTarget: 'ToRelationship'),
-        ModelProperty(
             id: const IdUid(10, 4354329426403309722),
             name: 'createdAt',
             type: 10,
@@ -2001,14 +1992,49 @@ final _entities = <ModelEntity>[
             id: const IdUid(11, 6671946046750356365),
             name: 'updatedAt',
             type: 10,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 6060292385701169610),
+            name: 'toId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(78, 4413628903678143178),
+            relationTarget: 'ToRelationship'),
+        ModelProperty(
+            id: const IdUid(16, 4130759143681541526),
+            name: 'fromId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(79, 5608235184790383898),
+            relationTarget: 'FromRelationship'),
+        ModelProperty(
+            id: const IdUid(17, 4452387469782644429),
+            name: 'trackedEntityId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(80, 5172954086412795156),
+            relationTarget: 'TrackedEntity'),
+        ModelProperty(
+            id: const IdUid(18, 3662083485185160906),
+            name: 'enrollmentId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(81, 6194277782992654402),
+            relationTarget: 'D2Enrollment'),
+        ModelProperty(
+            id: const IdUid(19, 5688641459870621206),
+            name: 'eventId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(82, 3590571779487741156),
+            relationTarget: 'D2Event')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(34, 6642671730047329437),
       name: 'ToRelationship',
-      lastPropertyId: const IdUid(4, 2503959074594191253),
+      lastPropertyId: const IdUid(7, 8796114370569263164),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2016,13 +2042,6 @@ final _entities = <ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 3820175658032604606),
-            name: 'trackedEntityInstanceId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(58, 3901348611241202563),
-            relationTarget: 'TrackedEntity'),
         ModelProperty(
             id: const IdUid(3, 713225359819263091),
             name: 'enrollmentId',
@@ -2036,7 +2055,19 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(72, 748066310239095020),
-            relationTarget: 'D2Event')
+            relationTarget: 'D2Event'),
+        ModelProperty(
+            id: const IdUid(6, 8488264359237383272),
+            name: 'uid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8796114370569263164),
+            name: 'trackedEntityId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(84, 6203050864459076139),
+            relationTarget: 'TrackedEntity')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -2148,14 +2179,23 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(35, 5685057996273379050),
-      lastIndexId: const IdUid(72, 748066310239095020),
+      lastIndexId: const IdUid(84, 6203050864459076139),
       lastRelationId: const IdUid(26, 6214499177878275374),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [
         4342976014228701150,
         6954985060894839179,
-        7425502513311282148
+        7425502513311282148,
+        5693855032075461858,
+        2776772408156024632,
+        1415120183143656452,
+        5425911845188328464,
+        5761334449350551316,
+        2000181402574178394,
+        3484978538090580841,
+        415363511025461184,
+        3901348611241202563
       ],
       retiredPropertyUids: const [
         640663780519544382,
@@ -2188,7 +2228,16 @@ ModelDefinition getObjectBoxModel() {
         2136624110965097486,
         3201082011873749560,
         8650283323339541865,
-        2729469548044609812
+        2729469548044609812,
+        3609570913173358015,
+        933880678327404570,
+        796968129092296748,
+        1879163670997772369,
+        7798497278143472099,
+        333911854445555521,
+        5555639661162417481,
+        535862573152675789,
+        3820175658032604606
       ],
       retiredRelationUids: const [
         1443067466517591468,
@@ -4220,41 +4269,50 @@ ModelDefinition getObjectBoxModel() {
     FromRelationship: EntityDefinition<FromRelationship>(
         model: _entities[31],
         toOneRelations: (FromRelationship object) =>
-            [object.trackedEntityInstance, object.enrollment, object.event],
+            [object.enrollment, object.event, object.trackedEntity],
         toManyRelations: (FromRelationship object) => {},
         getId: (FromRelationship object) => object.id,
         setId: (FromRelationship object, int id) {
           object.id = id;
         },
         objectToFB: (FromRelationship object, fb.Builder fbb) {
-          fbb.startTable(5);
+          final uidOffset = fbb.writeString(object.uid);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.trackedEntityInstance.targetId);
           fbb.addInt64(2, object.enrollment.targetId);
           fbb.addInt64(3, object.event.targetId);
+          fbb.addOffset(5, uidOffset);
+          fbb.addInt64(6, object.trackedEntity.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = FromRelationship()
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = FromRelationship(uid: uidParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.trackedEntityInstance.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
-          object.trackedEntityInstance.attach(store);
           object.enrollment.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.enrollment.attach(store);
           object.event.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.event.attach(store);
+          object.trackedEntity.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.trackedEntity.attach(store);
           return object;
         }),
     Relationship: EntityDefinition<Relationship>(
         model: _entities[32],
-        toOneRelations: (Relationship object) => [object.from, object.to],
+        toOneRelations: (Relationship object) => [
+              object.to,
+              object.from,
+              object.trackedEntity,
+              object.enrollment,
+              object.event
+            ],
         toManyRelations: (Relationship object) => {},
         getId: (Relationship object) => object.id,
         setId: (Relationship object, int id) {
@@ -4266,16 +4324,19 @@ ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.relationshipName);
           final relationshipTypeOffset =
               fbb.writeString(object.relationshipType);
-          fbb.startTable(12);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addOffset(3, uidOffset);
           fbb.addOffset(4, relationshipNameOffset);
           fbb.addBool(5, object.bidirectional);
           fbb.addOffset(6, relationshipTypeOffset);
-          fbb.addInt64(7, object.from.targetId);
-          fbb.addInt64(8, object.to.targetId);
           fbb.addInt64(9, object.createdAt.millisecondsSinceEpoch);
           fbb.addInt64(10, object.updatedAt.millisecondsSinceEpoch);
+          fbb.addInt64(14, object.to.targetId);
+          fbb.addInt64(15, object.from.targetId);
+          fbb.addInt64(16, object.trackedEntity.targetId);
+          fbb.addInt64(17, object.enrollment.targetId);
+          fbb.addInt64(18, object.event.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4304,47 +4365,59 @@ ModelDefinition getObjectBoxModel() {
               relationshipType: relationshipTypeParam,
               bidirectional: bidirectionalParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.from.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          object.from.attach(store);
           object.to.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
           object.to.attach(store);
+          object.from.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.from.attach(store);
+          object.trackedEntity.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
+          object.trackedEntity.attach(store);
+          object.enrollment.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
+          object.enrollment.attach(store);
+          object.event.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0);
+          object.event.attach(store);
           return object;
         }),
     ToRelationship: EntityDefinition<ToRelationship>(
         model: _entities[33],
         toOneRelations: (ToRelationship object) =>
-            [object.trackedEntityInstance, object.enrollment, object.event],
+            [object.enrollment, object.event, object.trackedEntity],
         toManyRelations: (ToRelationship object) => {},
         getId: (ToRelationship object) => object.id,
         setId: (ToRelationship object, int id) {
           object.id = id;
         },
         objectToFB: (ToRelationship object, fb.Builder fbb) {
-          fbb.startTable(5);
+          final uidOffset = fbb.writeString(object.uid);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.trackedEntityInstance.targetId);
           fbb.addInt64(2, object.enrollment.targetId);
           fbb.addInt64(3, object.event.targetId);
+          fbb.addOffset(5, uidOffset);
+          fbb.addInt64(6, object.trackedEntity.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = ToRelationship()
+          final uidParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = ToRelationship(uid: uidParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.trackedEntityInstance.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
-          object.trackedEntityInstance.attach(store);
           object.enrollment.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.enrollment.attach(store);
           object.event.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.event.attach(store);
+          object.trackedEntity.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.trackedEntity.attach(store);
           return object;
         }),
     TrackedEntity: EntityDefinition<TrackedEntity>(
@@ -5735,18 +5808,22 @@ class FromRelationship_ {
   static final id =
       QueryIntegerProperty<FromRelationship>(_entities[31].properties[0]);
 
-  /// see [FromRelationship.trackedEntityInstance]
-  static final trackedEntityInstance =
-      QueryRelationToOne<FromRelationship, TrackedEntity>(
-          _entities[31].properties[1]);
-
   /// see [FromRelationship.enrollment]
   static final enrollment = QueryRelationToOne<FromRelationship, D2Enrollment>(
-      _entities[31].properties[2]);
+      _entities[31].properties[1]);
 
   /// see [FromRelationship.event]
   static final event = QueryRelationToOne<FromRelationship, D2Event>(
-      _entities[31].properties[3]);
+      _entities[31].properties[2]);
+
+  /// see [FromRelationship.uid]
+  static final uid =
+      QueryStringProperty<FromRelationship>(_entities[31].properties[3]);
+
+  /// see [FromRelationship.trackedEntity]
+  static final trackedEntity =
+      QueryRelationToOne<FromRelationship, TrackedEntity>(
+          _entities[31].properties[4]);
 }
 
 /// [Relationship] entity fields to define ObjectBox queries.
@@ -5771,21 +5848,33 @@ class Relationship_ {
   static final relationshipType =
       QueryStringProperty<Relationship>(_entities[32].properties[4]);
 
-  /// see [Relationship.from]
-  static final from = QueryRelationToOne<Relationship, FromRelationship>(
-      _entities[32].properties[5]);
-
-  /// see [Relationship.to]
-  static final to = QueryRelationToOne<Relationship, ToRelationship>(
-      _entities[32].properties[6]);
-
   /// see [Relationship.createdAt]
   static final createdAt =
-      QueryIntegerProperty<Relationship>(_entities[32].properties[7]);
+      QueryIntegerProperty<Relationship>(_entities[32].properties[5]);
 
   /// see [Relationship.updatedAt]
   static final updatedAt =
-      QueryIntegerProperty<Relationship>(_entities[32].properties[8]);
+      QueryIntegerProperty<Relationship>(_entities[32].properties[6]);
+
+  /// see [Relationship.to]
+  static final to = QueryRelationToOne<Relationship, ToRelationship>(
+      _entities[32].properties[7]);
+
+  /// see [Relationship.from]
+  static final from = QueryRelationToOne<Relationship, FromRelationship>(
+      _entities[32].properties[8]);
+
+  /// see [Relationship.trackedEntity]
+  static final trackedEntity = QueryRelationToOne<Relationship, TrackedEntity>(
+      _entities[32].properties[9]);
+
+  /// see [Relationship.enrollment]
+  static final enrollment = QueryRelationToOne<Relationship, D2Enrollment>(
+      _entities[32].properties[10]);
+
+  /// see [Relationship.event]
+  static final event =
+      QueryRelationToOne<Relationship, D2Event>(_entities[32].properties[11]);
 }
 
 /// [ToRelationship] entity fields to define ObjectBox queries.
@@ -5794,18 +5883,22 @@ class ToRelationship_ {
   static final id =
       QueryIntegerProperty<ToRelationship>(_entities[33].properties[0]);
 
-  /// see [ToRelationship.trackedEntityInstance]
-  static final trackedEntityInstance =
-      QueryRelationToOne<ToRelationship, TrackedEntity>(
-          _entities[33].properties[1]);
-
   /// see [ToRelationship.enrollment]
   static final enrollment = QueryRelationToOne<ToRelationship, D2Enrollment>(
-      _entities[33].properties[2]);
+      _entities[33].properties[1]);
 
   /// see [ToRelationship.event]
   static final event =
-      QueryRelationToOne<ToRelationship, D2Event>(_entities[33].properties[3]);
+      QueryRelationToOne<ToRelationship, D2Event>(_entities[33].properties[2]);
+
+  /// see [ToRelationship.uid]
+  static final uid =
+      QueryStringProperty<ToRelationship>(_entities[33].properties[3]);
+
+  /// see [ToRelationship.trackedEntity]
+  static final trackedEntity =
+      QueryRelationToOne<ToRelationship, TrackedEntity>(
+          _entities[33].properties[4]);
 }
 
 /// [TrackedEntity] entity fields to define ObjectBox queries.
