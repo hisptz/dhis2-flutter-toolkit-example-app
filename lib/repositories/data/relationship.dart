@@ -16,6 +16,11 @@ class RelationshipRepository extends BaseRepository<Relationship> {
     return query.findFirst();
   }
 
+  RelationshipRepository byTrackedEntity(int id) {
+    queryConditions = Relationship_.trackedEntity.equals(id);
+    return this;
+  }
+
   @override
   Relationship mapper(Map<String, dynamic> json) {
     return Relationship.fromMap(json, "");
