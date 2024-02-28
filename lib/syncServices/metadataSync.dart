@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
@@ -50,7 +49,8 @@ class MetadataSync {
         programs.isNotEmpty &&
         events.isNotEmpty &&
         enrollments.isNotEmpty &&
-        teis.isNotEmpty;
+        teis.isNotEmpty &&
+        relationships.isNotEmpty;
   }
 
   Future setupSync() async {
@@ -94,35 +94,35 @@ class MetadataSync {
       await controller.addStream(eventsSync.stream);
     }
 
-    // List<D2Event>? events = D2EventRepository().getAll();
-    // List<D2Enrollment>? enrollments = D2EnrollmentRepository().getAll();
-    // List<TrackedEntity>? teis = TrackedEntityRepository().getAll();
+    List<D2Event>? events = D2EventRepository().getAll();
+    List<D2Enrollment>? enrollments = D2EnrollmentRepository().getAll();
+    List<TrackedEntity>? teis = TrackedEntityRepository().getAll();
 
-    // List<String> eventUid = events?.map((e) => e.uid).toList() ?? [];
+    List<String> eventUid = events?.map((e) => e.uid).toList() ?? [];
 
-    // List<String> teiUid = teis?.map((e) => e.uid).toList() ?? [];
+    List<String> teiUid = teis?.map((e) => e.uid).toList() ?? [];
 
-    // List<String> enrollmentUid = enrollments?.map((e) => e.uid).toList() ?? [];
+    List<String> enrollmentUid = enrollments?.map((e) => e.uid).toList() ?? [];
 
-    // for (final event in eventUid) {
-    //   RelationshipSync relationshipSync = RelationshipSync("event", event);
-    //   relationshipSync.sync();
-    //   await controller.addStream(relationshipSync.stream);
-    // }
+    for (final tei in teiUid) {
+      RelationshipSync relationshipSync =
+          RelationshipSync("trackedEntity", tei);
+      relationshipSync.sync();
+      await controller.addStream(relationshipSync.stream);
+    }
 
-    // for (final enrollment in enrollmentUid) {
-    //   RelationshipSync relationshipSync =
-    //       RelationshipSync("enrollment", enrollment);
-    //   relationshipSync.sync();
-    //   await controller.addStream(relationshipSync.stream);
-    // }
+    for (final enrollment in enrollmentUid) {
+      RelationshipSync relationshipSync =
+          RelationshipSync("enrollment", enrollment);
+      relationshipSync.sync();
+      await controller.addStream(relationshipSync.stream);
+    }
 
-    // for (final tei in teiUid) {
-    //   RelationshipSync relationshipSync =
-    //       RelationshipSync("trackedEntity", tei);
-    //   relationshipSync.sync();
-    //   await controller.addStream(relationshipSync.stream);
-    // }
+    for (final event in eventUid) {
+      RelationshipSync relationshipSync = RelationshipSync("event", event);
+      relationshipSync.sync();
+      await controller.addStream(relationshipSync.stream);
+    }
 
     controller.add(
         SyncStatus(synced: 0, total: 0, status: Status.complete, label: "All"));
