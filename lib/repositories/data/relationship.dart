@@ -18,6 +18,6 @@ class RelationshipRepository extends BaseRepository<Relationship> {
 
   @override
   Relationship mapper(Map<String, dynamic> json) {
-    return Relationship.fromMap(json);
+    return Relationship.fromMap(json, "");
   }
 }
