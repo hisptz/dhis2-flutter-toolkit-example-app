@@ -5,9 +5,7 @@ import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 
 import 'package:objectbox/objectbox.dart';
 
@@ -68,18 +66,5 @@ class TrackedEntity extends D2DataResource {
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
     id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
-
-    List<Relationship?> relationship = json["relationships"]
-        .cast<Map>()
-        .map<Relationship?>((Map relation) =>
-            RelationshipRepository().getByUid(relation["relationship"]))
-        .toList();
-
-    List<Relationship> relations = relationship
-        .where((Relationship? element) => element != null)
-        .toList()
-        .cast<Relationship>();
-
-    relationships.addAll(relations);
   }
 }
