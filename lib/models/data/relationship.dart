@@ -7,6 +7,7 @@ import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/fromRelationship.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/toRelationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:objectbox/objectbox.dart';
@@ -51,6 +52,8 @@ class Relationship extends D2DataResource {
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
         bidirectional = json["bidirectional"] {
+    id = RelationshipRepository().getIdByUid(json["relationship"]) ?? 0;
+
     if (type == "trackedEntity") {
       trackedEntity.target =
           TrackedEntityRepository().getByUid(json["from"][type][type]);
