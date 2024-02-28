@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:objectbox/objectbox.dart';
 
 import '../models/base.dart';
-import '../objectbox.g.dart';
 
 class Pagination {
   int total;
@@ -21,12 +20,12 @@ class Pagination {
 }
 
 abstract class BaseSyncService<T extends DHIS2Resource> {
+  ObjectBox db;
   StreamController<SyncStatus> controller = StreamController();
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
   Map<String, dynamic>? extraParams;
-  Box<T> box;
   String label;
   String?
       dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
@@ -37,11 +36,15 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       this.filters,
       this.dataKey,
       this.extraParams,
-      required this.box,
+      required this.db,
       required this.label});
 
   get url {
     return resource;
+  }
+
+  get box {
+    return db.store.box<T>();
   }
 
   get queryParams {

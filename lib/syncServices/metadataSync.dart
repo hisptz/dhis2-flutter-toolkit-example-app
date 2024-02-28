@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
@@ -9,9 +10,16 @@ import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/userSync.dart';
 
 class MetadataSync {
-  UserSyncService userSyncService = UserSyncService();
-  SystemInfoSync systemInfoSync = SystemInfoSync();
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  ObjectBox db;
+  late UserSyncService userSyncService;
+  late SystemInfoSync systemInfoSync;
+  late StreamController<SyncStatus> controller;
+
+  MetadataSync(this.db) {
+    userSyncService = UserSyncService(db);
+    systemInfoSync = SystemInfoSync(db);
+    controller = StreamController<SyncStatus>();
+  }
 
   get stream {
     return controller.stream;
@@ -30,17 +38,17 @@ class MetadataSync {
     await controller.addStream(userSyncService.stream);
     systemInfoSync.sync();
     await controller.addStream(systemInfoSync.stream);
-    D2User? user = D2UserRepository().get();
+    D2User? user = D2UserRepository(db).get();
 
     if (user == null) {
       controller.addError("Could not get user");
       return;
     }
-    D2OrgUnitSync orgUnitSync = D2OrgUnitSync(user.organisationUnits);
+    D2OrgUnitSync orgUnitSync = D2OrgUnitSync(db, user.organisationUnits);
     orgUnitSync.sync();
     await controller.addStream(orgUnitSync.stream);
     List<String> programs = user.programs;
-    D2ProgramSync programSync = D2ProgramSync(programs);
+    D2ProgramSync programSync = D2ProgramSync(db, programs);
     programSync.sync();
     await controller.addStream(programSync.stream);
     controller.add(

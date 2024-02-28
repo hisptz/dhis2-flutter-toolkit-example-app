@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/relationshipConstraint.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/relationshipType.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -37,7 +38,7 @@ class D2RelationshipType extends D2MetadataResource {
       required this.fromToName,
       required this.toFromName});
 
-  D2RelationshipType.fromMap(Map json)
+  D2RelationshipType.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -47,6 +48,6 @@ class D2RelationshipType extends D2MetadataResource {
         referral = json["referral"],
         fromToName = json["fromToName"],
         toFromName = json["toFromName"] {
-    id = D2RelationshipTypeRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2RelationshipTypeRepository(db).getIdByUid(json["id"]) ?? 0;
   }
 }

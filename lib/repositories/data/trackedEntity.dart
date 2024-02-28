@@ -1,18 +1,15 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
 import '../../objectbox.g.dart';
 
-final trackedEntityBox = db.store.box<TrackedEntity>();
-
 class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
-  TrackedEntityRepository() : super(trackedEntityBox);
+  TrackedEntityRepository(super.db);
 
   @override
   TrackedEntity? getByUid(String uid) {
     Query<TrackedEntity> query =
-        trackedEntityBox.query(TrackedEntity_.uid.equals(uid)).build();
+        box.query(TrackedEntity_.uid.equals(uid)).build();
     return query.findFirst();
   }
 

@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/option.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
@@ -31,15 +32,15 @@ class D2Option extends D2MetadataResource {
       required this.code,
       required this.sortOrder});
 
-  D2Option.fromMap(Map json)
+  D2Option.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         code = json["code"],
         sortOrder = json["sortOrder"] {
-    id = D2OptionRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2OptionRepository(db).getIdByUid(json["id"]) ?? 0;
     optionSet.target =
-        D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+        D2OptionSetRepository(db).getByUid(json["optionSet"]["id"]);
   }
 }

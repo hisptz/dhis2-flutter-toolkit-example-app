@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -31,7 +32,7 @@ class D2User extends DHIS2Resource {
       required this.programs,
       required this.organisationUnits});
 
-  D2User.fromMap(Map<String, dynamic> json)
+  D2User.fromMap(ObjectBox db, Map<String, dynamic> json)
       : uid = json["id"],
         username = json["username"],
         firstName = json["firstName"],
@@ -43,7 +44,7 @@ class D2User extends DHIS2Resource {
             .map((orgUnit) => orgUnit["id"])
             .toList()
             .cast<String>() {
-    id = D2UserRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2UserRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2UserRole> roles = json["userRoles"]
         .cast<Map>()
         .map(D2UserRole.fromMap)

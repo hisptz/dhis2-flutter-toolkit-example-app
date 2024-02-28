@@ -136,7 +136,3 @@ class DHIS2Client {
 }
 
 DHIS2Client? dhis2client;
-
-void initializeClient(D2Credential credentials) {
-  dhis2client = DHIS2Client(credentials);
-}

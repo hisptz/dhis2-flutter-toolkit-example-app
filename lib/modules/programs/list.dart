@@ -1,10 +1,12 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class ProgramList extends StatefulWidget {
   const ProgramList({super.key});
@@ -17,7 +19,7 @@ final debouncer = Debouncer(milliseconds: 1000);
 
 class _ProgramListState extends State<ProgramList> {
   TextEditingController searchController = TextEditingController();
-  final D2ProgramRepository repository = D2ProgramRepository();
+  late D2ProgramRepository repository;
   final PagingController<int, D2Program> _pagingController =
       PagingController(firstPageKey: 0);
 
@@ -46,6 +48,10 @@ class _ProgramListState extends State<ProgramList> {
 
   @override
   void initState() {
+    setState(() {
+      final db = Provider.of<DbProvider>(context, listen: false).db;
+      repository = D2ProgramRepository(db);
+    });
     _pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);
     });

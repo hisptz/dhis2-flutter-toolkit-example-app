@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/legendSet.dart';
@@ -23,53 +24,53 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
   List<String> programIds;
   late List<D2Program> programs;
 
-  D2ProgramSync(this.programIds)
+  D2ProgramSync(ObjectBox db, this.programIds)
       : super(
           label: "Programs",
           filters: ["id:in:[${programIds.join(",")}]"],
-          box: programBox,
+          db: db,
           resource: "programs",
         );
 
   @override
   D2Program mapper(Map<String, dynamic> json) {
-    return D2Program.fromMap(json);
+    return D2Program.fromMap(db, json);
   }
 
   syncMeta(key, value) {
     switch (key) {
       case "dataElements":
-        return D2DataElementRepository().saveOffline(value);
+        return D2DataElementRepository(db).saveOffline(value);
       case "options":
-        return D2OptionRepository().saveOffline(value);
+        return D2OptionRepository(db).saveOffline(value);
       case "optionSets":
-        return D2OptionSetRepository().saveOffline(value);
+        return D2OptionSetRepository(db).saveOffline(value);
       case "programRuleVariables":
-        return D2ProgramRuleVariableRepository().saveOffline(value);
+        return D2ProgramRuleVariableRepository(db).saveOffline(value);
       case "programTrackedEntityAttributes":
-        return D2ProgramTrackedEntityAttributeRepository().saveOffline(value);
+        return D2ProgramTrackedEntityAttributeRepository(db).saveOffline(value);
       case "programStageDataElements":
-        return D2ProgramStageDataElementRepository().saveOffline(value);
+        return D2ProgramStageDataElementRepository(db).saveOffline(value);
       case "programStages":
-        return D2ProgramStageRepository().saveOffline(value);
+        return D2ProgramStageRepository(db).saveOffline(value);
       case "programRuleActions":
-        return D2ProgramRuleActionRepository().saveOffline(value);
+        return D2ProgramRuleActionRepository(db).saveOffline(value);
       case "trackedEntityAttributes":
-        return D2TrackedEntityAttributeRepository().saveOffline(value);
+        return D2TrackedEntityAttributeRepository(db).saveOffline(value);
       case "trackedEntityTypes":
-        return D2TrackedEntityTypeRepository().saveOffline(value);
+        return D2TrackedEntityTypeRepository(db).saveOffline(value);
       case "programs":
-        return D2ProgramRepository().saveOffline(value);
+        return D2ProgramRepository(db).saveOffline(value);
       case "programRules":
-        return D2ProgramRuleRepository().saveOffline(value);
+        return D2ProgramRuleRepository(db).saveOffline(value);
       case "legends":
-        return D2LegendRepository().saveOffline(value);
+        return D2LegendRepository(db).saveOffline(value);
       case "legendSets":
-        return D2LegendSetRepository().saveOffline(value);
+        return D2LegendSetRepository(db).saveOffline(value);
       case "programSections":
-        return D2ProgramSectionRepository().saveOffline(value);
+        return D2ProgramSectionRepository(db).saveOffline(value);
       case "programStageSections":
-        return D2ProgramStageSectionRepository().saveOffline(value);
+        return D2ProgramStageSectionRepository(db).saveOffline(value);
     }
   }
 

@@ -1,12 +1,21 @@
-import 'package:dhis2_flutter_toolkit/utils/init.dart';
+import 'package:dhis2_flutter_toolkit/services/preferences.dart';
+import 'package:dhis2_flutter_toolkit/state/client.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'modules/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await D2Utils.initialize();
+  await initializePreference();
   Intl.defaultLocale = "en";
-  runApp(const App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => DbProvider()),
+      ChangeNotifierProvider(create: (_) => D2HttpClientProvider()),
+    ],
+    child: const App(),
+  ));
 }

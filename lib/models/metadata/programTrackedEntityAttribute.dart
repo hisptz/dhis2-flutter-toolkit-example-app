@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
@@ -40,7 +41,7 @@ class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
     this.renderOptionAsRadio,
   );
 
-  D2ProgramTrackedEntityAttribute.fromMap(Map json)
+  D2ProgramTrackedEntityAttribute.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -49,11 +50,11 @@ class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
         mandatory = json["mandatory"],
         searchable = json["searchable"],
         renderOptionAsRadio = json["renderOptionAsRadio"] {
-    id =
-        D2ProgramTrackedEntityAttributeRepository().getIdByUid(json["id"]) ?? 0;
-    D2TrackedEntityAttribute? attribute = D2TrackedEntityAttributeRepository()
+    id = D2ProgramTrackedEntityAttributeRepository(db).getIdByUid(json["id"]) ??
+        0;
+    D2TrackedEntityAttribute? attribute = D2TrackedEntityAttributeRepository(db)
         .getByUid(json["trackedEntityAttribute"]["id"]);
     trackedEntityAttribute.target = attribute;
-    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
+    program.target = D2ProgramRepository(db).getByUid(json["program"]["id"]);
   }
 }

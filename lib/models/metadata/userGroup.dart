@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/userGroup.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -20,11 +21,11 @@ class D2UserGroup extends D2MetadataResource {
 
   D2UserGroup(this.uid, this.name, this.created, this.lastUpdated);
 
-  D2UserGroup.fromMap(Map json)
+  D2UserGroup.fromMap(ObjectBox db, Map json)
       : uid = json["id"],
         name = json["name"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
-    id = D2UserGroupRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2UserGroupRepository(db).getIdByUid(json["id"]) ?? 0;
   }
 }

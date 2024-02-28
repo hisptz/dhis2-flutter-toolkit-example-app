@@ -8,8 +8,6 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
 
-final programBox = db.store.box<D2Program>();
-
 @Entity()
 class D2Program extends D2MetadataResource {
   @override
@@ -47,7 +45,7 @@ class D2Program extends D2MetadataResource {
   D2Program(this.created, this.lastUpdated, this.uid, this.accessLevel,
       this.name, this.shortName, this.programType, this.onlyEnrollOnce);
 
-  D2Program.fromMap(Map json)
+  D2Program.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -55,11 +53,11 @@ class D2Program extends D2MetadataResource {
         name = json["name"],
         shortName = json["shortName"],
         programType = json["programType"] {
-    id = D2ProgramRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2ProgramRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
         .map<D2OrganisationUnit?>(
-            (Map orgUnit) => D2OrgUnitRepository().getByUid(orgUnit["id"]))
+            (Map orgUnit) => D2OrgUnitRepository(db).getByUid(orgUnit["id"]))
         .toList();
 
     List<D2OrganisationUnit> orgUnits = programOrgUnits

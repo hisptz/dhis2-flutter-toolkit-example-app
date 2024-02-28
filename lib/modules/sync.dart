@@ -1,9 +1,11 @@
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SyncPage extends StatefulWidget {
   const SyncPage({super.key});
@@ -14,12 +16,15 @@ class SyncPage extends StatefulWidget {
 
 class _SyncPageState extends State<SyncPage> {
   String currentSyncLabel = "";
-  MetadataSync metadataSyncService = MetadataSync();
+  late MetadataSync metadataSyncService;
   int progress = 0;
   List<BaseSyncService> unSyncedMeta = [];
 
   @override
   void initState() {
+    final db = Provider.of<DbProvider>(context, listen: false).db;
+    metadataSyncService = MetadataSync(db);
+
     metadataSyncService.sync().then((value) {
       context.go("/");
     });

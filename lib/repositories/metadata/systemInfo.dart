@@ -1,13 +1,10 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
 import '../../objectbox.g.dart';
 
-final systemInfoBox = db.store.box<D2SystemInfo>();
-
 class SystemInfoRepository extends BaseRepository<D2SystemInfo> {
-  SystemInfoRepository() : super(systemInfoBox);
+  SystemInfoRepository(super.db);
 
   @override
   int? getIdByUid(String uid) {
@@ -22,12 +19,12 @@ class SystemInfoRepository extends BaseRepository<D2SystemInfo> {
   @override
   D2SystemInfo? getByUid(String uid) {
     Query<D2SystemInfo> query =
-        systemInfoBox.query(D2SystemInfo_.systemId.equals(uid)).build();
+        box.query(D2SystemInfo_.systemId.equals(uid)).build();
     return query.findFirst();
   }
 
   @override
   D2SystemInfo mapper(Map<String, dynamic> json) {
-    return D2SystemInfo.fromMap(json);
+    return D2SystemInfo.fromMap(db, json);
   }
 }
