@@ -17,7 +17,7 @@ class D2Utils {
   }
 
   static initializeDb(BuildContext context, D2Credential credentials) async {
-    await Provider.of<DbProvider>(context, listen: false).init(credentials);
+    await Provider.of<DBProvider>(context, listen: false).init(credentials);
   }
 
   static void initializeClient(BuildContext context, D2Credential credentials) {

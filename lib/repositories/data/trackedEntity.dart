@@ -21,14 +21,14 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
 
   @override
   TrackedEntity mapper(Map<String, dynamic> json) {
-    return TrackedEntity.fromMap(json);
+    return TrackedEntity.fromMap(db, json);
   }
 
   TrackedEntityRepository byIdentifiableToken(String keyword) {
-    final trackedEntities = trackedEntityBox.getAll();
+    final trackedEntities = box.getAll();
 
     final matchingEntities = trackedEntities.where((trackedEntity) {
-      final attributeEntities = D2TrackedEntityAttributeValueRepository()
+      final attributeEntities = D2TrackedEntityAttributeValueRepository(db)
           .byTrackedEntity(trackedEntity.id)
           .find();
 

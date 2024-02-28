@@ -13,7 +13,7 @@ void main() async {
   Intl.defaultLocale = "en";
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => DbProvider()),
+      ChangeNotifierProvider(create: (_) => DBProvider()),
       ChangeNotifierProvider(create: (_) => D2HttpClientProvider()),
     ],
     child: const App(),

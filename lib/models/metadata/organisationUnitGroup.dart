@@ -32,8 +32,8 @@ class D2OrganisationUnitGroup implements D2MetadataResource {
         uid = json["id"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
-    List<D2OrganisationUnit> orgUnits =
-        json["organisationUnits"].map(D2OrganisationUnit.fromMap);
+    List<D2OrganisationUnit> orgUnits = json["organisationUnits"]
+        .map((Map json) => D2OrganisationUnit.fromMap(db, json));
     organisationUnits.addAll(orgUnits);
     id = D2OrgUnitGroupRepository(db).getIdByUid(json["id"]) ?? 0;
   }

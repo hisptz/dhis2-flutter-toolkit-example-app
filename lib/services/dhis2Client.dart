@@ -110,6 +110,7 @@ class DHIS2Client {
         return null;
       }
     } else {}
+    return null;
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
@@ -134,5 +135,3 @@ class DHIS2Client {
     return '$baseURL => $username : $password';
   }
 }
-
-DHIS2Client? dhis2client;

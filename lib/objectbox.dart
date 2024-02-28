@@ -9,8 +9,9 @@ import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
 class ObjectBox {
   /// The Store of this app.
   final Store store;
+  final String storeId;
 
-  ObjectBox._create(this.store) {
+  ObjectBox._create(this.store, this.storeId) {
     // Add any additional setup code, e.g. build queries.
   }
 
@@ -22,6 +23,6 @@ class ObjectBox {
     final store = await openStore(
       directory: p.join(docsDir.path, storeId),
     );
-    return ObjectBox._create(store);
+    return ObjectBox._create(store, storeId);
   }
 }

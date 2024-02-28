@@ -60,7 +60,7 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
     id = D2TrackedEntityAttributeRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2LegendSet> legendSet = json["attributeValues"]
         .cast<Map>()
-        .map<D2LegendSet>(D2LegendSet.fromMap)
+        .map<D2LegendSet>((Map json) => D2LegendSet.fromMap(db, json))
         .toList();
 
     legendSets.addAll(legendSet);

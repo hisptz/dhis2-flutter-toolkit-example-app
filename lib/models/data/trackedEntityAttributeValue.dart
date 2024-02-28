@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
@@ -28,13 +29,14 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
     required this.value,
   });
 
-  D2TrackedEntityAttributeValue.fromMap(Map json, String trackedEntityId)
+  D2TrackedEntityAttributeValue.fromMap(
+      ObjectBox db, Map json, String trackedEntityId)
       : createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         value = json["value"] {
     trackedEntityAttribute.target =
-        D2TrackedEntityAttributeRepository().getByUid(json["attribute"]);
-
-    trackedEntity.target = TrackedEntityRepository().getByUid(trackedEntityId);
+        D2TrackedEntityAttributeRepository(db).getByUid(json["attribute"]);
+    trackedEntity.target =
+        TrackedEntityRepository(db).getByUid(trackedEntityId);
   }
 }

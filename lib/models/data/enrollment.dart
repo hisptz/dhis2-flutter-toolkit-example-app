@@ -4,8 +4,8 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -59,7 +59,7 @@ class D2Enrollment extends D2DataResource {
     required this.notes,
   });
 
-  D2Enrollment.fromMap(Map json)
+  D2Enrollment.fromMap(ObjectBox db, Map json)
       : uid = json["enrollment"],
         program = json["program"],
         updatedAt = DateTime.parse(json["updatedAt"]),
@@ -73,22 +73,9 @@ class D2Enrollment extends D2DataResource {
         occurredAt = DateTime.parse(json["occurredAt"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
-    id = D2EnrollmentRepository().getIdByUid(json["enrollment"]) ?? 0;
+    id = D2EnrollmentRepository(db).getIdByUid(json["enrollment"]) ?? 0;
 
     trackedEntity.target =
-        TrackedEntityRepository().getByUid(json["trackedEntity"]);
-
-    List<Relationship?> relationship = json["relationships"]
-        .cast<Map>()
-        .map<Relationship?>((Map relation) =>
-            RelationshipRepository().getByUid(relation["relationship"]))
-        .toList();
-
-    List<Relationship> relations = relationship
-        .where((Relationship? element) => element != null)
-        .toList()
-        .cast<Relationship>();
-
-    relationships.addAll(relations);
+        TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
   }
 }

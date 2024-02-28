@@ -1,37 +1,34 @@
 import 'dart:async';
-import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
+
+import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/relationshipSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
-
 import 'package:dhis2_flutter_toolkit/syncServices/trackedEntitySync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/userRepository.dart';
-
 import 'package:dhis2_flutter_toolkit/syncServices/userSync.dart';
 
-
 class MetadataSync {
-  UserSyncService userSyncService = UserSyncService();
-  SystemInfoSync systemInfoSync = SystemInfoSync();
+  ObjectBox db;
+  DHIS2Client client;
+  late UserSyncService userSyncService;
+  late SystemInfoSync systemInfoSync;
   StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
   get stream {
     return controller.stream;
+  }
+
+  MetadataSync(this.db, this.client) {
+    systemInfoSync = SystemInfoSync(db, client);
+    userSyncService = UserSyncService(db, client);
   }
 
   /*
@@ -40,94 +37,65 @@ class MetadataSync {
   * */
 
   isSynced() {
-    //Currently just checks if there is any data on the specific data model
-    List orgUnits = d2OrgUnitBox.getAll();
-    List programs = d2ProgramBox.getAll();
-    List events = d2EventBox.getAll();
-    List enrollments = d2EnrollmentBox.getAll();
-    List teis = trackedEntityBox.getAll();
-    List relationships = relationshipBox.getAll();
-    return userSyncService.isSynced() &&
-        systemInfoSync.isSynced() &&
-        orgUnits.isNotEmpty &&
-        programs.isNotEmpty &&
-        events.isNotEmpty &&
-        enrollments.isNotEmpty &&
-        teis.isNotEmpty &&
-        relationships.isNotEmpty;
+    return userSyncService.isSynced() && systemInfoSync.isSynced();
   }
 
-  Future setupSync() async {
+  Future setupMetadataSync() async {
     userSyncService.sync();
     await controller.addStream(userSyncService.stream);
     systemInfoSync.sync();
     await controller.addStream(systemInfoSync.stream);
-    D2User? user = D2UserRepository().get();
-
+    D2User? user = D2UserRepository(db).get();
     if (user == null) {
       controller.addError("Could not get user");
       return;
     }
-    D2OrgUnitSync orgUnitSync = D2OrgUnitSync(user.organisationUnits);
+    D2OrgUnitSync orgUnitSync =
+        D2OrgUnitSync(db, client, orgUnitIds: user.organisationUnits);
     orgUnitSync.sync();
     await controller.addStream(orgUnitSync.stream);
     List<String> programs = user.programs;
-    D2ProgramSync programSync = D2ProgramSync(programs);
+    D2ProgramSync programSync = D2ProgramSync(db, client, programIds: programs);
     programSync.sync();
     await controller.addStream(programSync.stream);
+  }
 
-    D2OrganisationUnit defaultOrg = D2OrgUnitRepository().getDefaultOrgUnit();
-
-    for (final program in programs) {
-      TrackedEntitySync trackedEntitySync =
-          TrackedEntitySync(program, defaultOrg.uid);
-      trackedEntitySync.sync();
-      await controller.addStream(trackedEntitySync.stream);
+  Future setupDataSync() async {
+    D2User? user = D2UserRepository(db).get();
+    if (user == null) {
+      controller.addError("Could not get user");
+      return;
     }
+    List<String> programs = user.programs;
 
-    for (final program in programs) {
-      D2EnrollmentSync enrollmentsSync =
-          D2EnrollmentSync(program, defaultOrg.uid);
-      enrollmentsSync.sync();
-      await controller.addStream(enrollmentsSync.stream);
-    }
+    for (final programId in programs) {
+      D2Program? program = D2ProgramRepository(db).getByUid(programId);
 
-    for (final program in programs) {
-      D2EventSync eventsSync = D2EventSync(program, defaultOrg.uid);
+      if (program == null) {
+        continue;
+      }
+
+      if (program.programType == "WITH_REGISTRATION") {
+        TrackedEntitySync trackedEntitySync =
+            TrackedEntitySync(db, client, program: program);
+        trackedEntitySync.sync();
+        await controller.addStream(trackedEntitySync.stream);
+
+        D2EnrollmentSync enrollmentsSync =
+            D2EnrollmentSync(db, client, program: program);
+        enrollmentsSync.sync();
+        await controller.addStream(enrollmentsSync.stream);
+      }
+
+      D2EventSync eventsSync = D2EventSync(db, client, program: program);
       eventsSync.sync();
       await controller.addStream(eventsSync.stream);
     }
+  }
 
-    List<D2Event>? events = D2EventRepository().getAll();
-    List<D2Enrollment>? enrollments = D2EnrollmentRepository().getAll();
-    List<TrackedEntity>? teis = TrackedEntityRepository().getAll();
-
-    List<String> eventUid = events?.map((e) => e.uid).toList() ?? [];
-
-    List<String> teiUid = teis?.map((e) => e.uid).toList() ?? [];
-
-    List<String> enrollmentUid = enrollments?.map((e) => e.uid).toList() ?? [];
-
-    for (final tei in teiUid) {
-      RelationshipSync relationshipSync =
-          RelationshipSync("trackedEntity", tei);
-      relationshipSync.sync();
-      await controller.addStream(relationshipSync.stream);
-    }
-
-    for (final enrollment in enrollmentUid) {
-      RelationshipSync relationshipSync =
-          RelationshipSync("enrollment", enrollment);
-      relationshipSync.sync();
-      await controller.addStream(relationshipSync.stream);
-    }
-
-    for (final event in eventUid) {
-      RelationshipSync relationshipSync = RelationshipSync("event", event);
-      relationshipSync.sync();
-      await controller.addStream(relationshipSync.stream);
-    }
-
+  Future setupSync() async {
+    await setupMetadataSync();
+    await setupDataSync();
     controller.add(
         SyncStatus(synced: 0, total: 0, status: Status.complete, label: "All"));
     controller.close();

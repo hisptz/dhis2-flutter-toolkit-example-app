@@ -5,8 +5,8 @@ import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -54,7 +54,7 @@ class TrackedEntity extends D2DataResource {
       required this.inactive,
       required this.programOwners});
 
-  TrackedEntity.fromMap(Map json)
+  TrackedEntity.fromMap(ObjectBox db, Map json)
       : uid = json["trackedEntity"],
         trackedEntityType = json["trackedEntityType"],
         orgUnit = json["orgUnit"],
@@ -65,6 +65,6 @@ class TrackedEntity extends D2DataResource {
         potentialDuplicate = json["potentialDuplicate"],
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
-    id = TrackedEntityRepository().getIdByUid(json["trackedEntity"]) ?? 0;
+    id = TrackedEntityRepository(db).getIdByUid(json["trackedEntity"]) ?? 0;
   }
 }

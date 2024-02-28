@@ -6,7 +6,7 @@ import 'package:objectbox/objectbox.dart';
 abstract class BaseRepository<T extends DHIS2Resource> {
   ObjectBox db;
 
-  get box {
+  Box<T> get box {
     return db.store.box<T>();
   }
 
@@ -26,6 +26,10 @@ abstract class BaseRepository<T extends DHIS2Resource> {
 
   Query<T> get query {
     return queryBuilder.build();
+  }
+
+  Future saveEntities(List<T> entities) {
+    return box.putManyAsync(entities);
   }
 
   List<T> find() {

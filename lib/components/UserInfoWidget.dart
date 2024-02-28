@@ -20,7 +20,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   @override
   void initState() {
     setState(() {
-      final db = Provider.of<DbProvider>(context, listen: false).db;
+      final db = Provider.of<DBProvider>(context, listen: false).db;
       repository = D2UserRepository(db);
       info = repository.get();
     });

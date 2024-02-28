@@ -38,8 +38,10 @@ class D2LegendSet extends D2MetadataResource {
         uid = json["id"],
         name = json["name"],
         code = json["code"] {
-    List<D2Legend> allLegends =
-        json["legends"].cast<Map>().map<D2Legend>(D2Legend.fromMap).toList();
+    List<D2Legend> allLegends = json["legends"]
+        .cast<Map>()
+        .map<D2Legend>((Map json) => D2Legend.fromMap(db, json))
+        .toList();
     legends.addAll(allLegends);
 
     id = D2LegendSetRepository(db).getIdByUid(json["id"]) ?? 0;

@@ -1,32 +1,29 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
-
+import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/baseTrackerData.dart';
 
 class TrackedEntitySync extends BaseTrackerSyncService<TrackedEntity> {
-  String program;
-  String defaultOrgUnit;
-
-  TrackedEntitySync(this.program, this.defaultOrgUnit)
+  TrackedEntitySync(ObjectBox db, DHIS2Client client, {required super.program})
       : super(
-            label: "Tracked Entity Instances",
+            label: "Tracked Entities",
             fields: [
               "*",
             ],
-            box: trackedEntityBox,
+            db: db,
             resource: "tracker/trackedEntities",
             extraParams: {
-              "program": program,
-              "ouMode": "DESCENDANTS",
-              "orgUnit": defaultOrgUnit
+              "program": program.uid,
+              "ouMode": "ACCESSIBLE",
             },
+            client: client,
             dataKey: "instances");
 
   @override
   TrackedEntity mapper(Map<String, dynamic> json) {
-    return TrackedEntity.fromMap(json);
+    return TrackedEntity.fromMap(db, json);
   }
 
   @override
@@ -39,28 +36,29 @@ class TrackedEntitySync extends BaseTrackerSyncService<TrackedEntity> {
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
-    List<Map<String, dynamic>> attributeData = entityData
-        .map((data) =>
-            {"teiId": data["trackedEntity"], "attributes": data["attributes"]})
-        .toList();
-
     List<TrackedEntity> entities = entityData.map(mapper).toList();
 
     await box.putManyAsync(entities);
 
-    final attributes = attributeData
-        .cast<Map>()
-        .map((data) => data["attributes"]
-            .cast<Map>()
-            .map<D2TrackedEntityAttributeValue>((attributeMap) =>
-                D2TrackedEntityAttributeValue.fromMap(
-                    attributeMap, data["teiId"]))
-            .toList()
-            .cast<D2TrackedEntityAttributeValue>())
-        .toList();
+    List<D2TrackedEntityAttributeValue> attributeValues = [];
+    for (var element in entityData) {
+      List<D2TrackedEntityAttributeValue> attributeValue = element["attributes"]
+          ?.map<D2TrackedEntityAttributeValue>((attributeValue) =>
+              D2TrackedEntityAttributeValue.fromMap(
+                  db, attributeValue, element["trackedEntity"]))
+          .toList();
+      attributeValues.addAll(attributeValue);
+    }
+    await D2TrackedEntityAttributeValueRepository(db)
+        .saveEntities(attributeValues);
+    await syncRelationships(entityData);
+  }
 
-    await Future.wait(attributes.map((data) async {
-      await d2TrackedEntityAttributeValueBox.putAndGetManyAsync(data);
-    }));
+  @override
+  void sync() {
+    if (program.programType != "WITH_REGISTRATION") {
+      return;
+    }
+    super.sync();
   }
 }

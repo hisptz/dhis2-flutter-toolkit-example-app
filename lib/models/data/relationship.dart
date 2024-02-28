@@ -1,17 +1,24 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
-import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/fromRelationship.dart';
-import 'package:dhis2_flutter_toolkit/models/data/toRelationship.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/fromRelationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/toRelationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
+
+Map getRelationshipConstraints(Map json) {
+  if (json["trackedEntity"] != null) {
+    return {
+      "type": "trackedEntity",
+      "id": json["trackedEntity"]["trackedEntity"]
+    };
+  } else if (json["enrollment"] != null) {
+    return {"type": "enrollment", "id": json["enrollment"]["enrollment"]};
+  } else if (json["event"] != null) {
+    return {"type": "event", "id": json["event"]["event"]};
+  } else {
+    return {};
+  }
+}
 
 @Entity()
 class Relationship extends D2DataResource {
@@ -29,11 +36,12 @@ class Relationship extends D2DataResource {
   bool bidirectional;
   String relationshipType;
 
-  final to = ToOne<ToRelationship>();
-  final from = ToOne<FromRelationship>();
-  final trackedEntity = ToOne<TrackedEntity>();
-  final enrollment = ToOne<D2Enrollment>();
-  final event = ToOne<D2Event>();
+  late String fromType;
+
+  late String fromId;
+
+  late String toType;
+  late String toId;
 
   Relationship({
     required this.createdAt,
@@ -42,31 +50,30 @@ class Relationship extends D2DataResource {
     required this.relationshipName,
     required this.relationshipType,
     required this.bidirectional,
+    required this.fromId,
+    required this.fromType,
+    required this.toType,
+    required this.toId,
   });
 
-  Relationship.fromMap(Map json, String type)
+  Relationship.fromMap(ObjectBox db, Map json)
       : createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         uid = json["relationship"],
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
         bidirectional = json["bidirectional"] {
-    if (type == "trackedEntity") {
-      trackedEntity.target =
-          TrackedEntityRepository().getByUid(json["from"][type][type]);
-    }
+    id = RelationshipRepository(db).getIdByUid(json["relationship"]) ?? 0;
 
-    if (type == "enrollment") {
-      enrollment.target =
-          D2EnrollmentRepository().getByUid(json["from"][type][type]);
-    }
+    Map from = json["from"];
+    Map to = json["to"];
 
-    if (type == "event") {
-      event.target = D2EventRepository().getByUid(json["from"][type][type]);
-    }
+    Map fromData = getRelationshipConstraints(from);
+    fromType = fromData["type"];
+    fromId = fromData["id"];
 
-    from.target =
-        FromRelationshipRepository().getByUid(json["from"][type][type]);
-    to.target = ToRelationshipRepository().getByUid(json["to"][type][type]);
+    Map toData = getRelationshipConstraints(to);
+    toType = toData["type"];
+    toId = toData["id"];
   }
 }

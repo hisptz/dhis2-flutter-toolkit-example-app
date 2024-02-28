@@ -1,9 +1,14 @@
 import 'dart:async';
+
+import 'package:collection/collection.dart';
+import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:objectbox/objectbox.dart';
+
 import '../models/base.dart';
-import '../objectbox.g.dart';
 
 class Pagination {
   int total;
@@ -15,12 +20,14 @@ class Pagination {
 }
 
 abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
-  StreamController<SyncStatus> controller = StreamController();
+  ObjectBox db;
+  D2Program program;
+  DHIS2Client client;
+  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
   Map<String, dynamic>? extraParams;
-  Box<T> box;
   String label;
   String?
       dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
@@ -31,11 +38,17 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
       this.filters,
       this.dataKey,
       this.extraParams,
-      required this.box,
-      required this.label});
+      required this.program,
+      required this.db,
+      required this.label,
+      required this.client});
 
   get url {
     return resource;
+  }
+
+  get box {
+    return db.store.box<T>();
   }
 
   get queryParams {
@@ -43,7 +56,9 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
       ...(extraParams ?? {}),
       "page": "1",
       "pageSize": "200",
-      "totalPages": "true"
+      "totalPages": "true",
+      "program": program.uid,
+      "ouMode": "ACCESSIBLE",
     };
     if (fields != null) {
       params["fields"] = fields!.isNotEmpty ? fields!.join(",") : "";
@@ -68,7 +83,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
 
   Future<Pagination> getPagination() async {
     Map<String, dynamic>? response =
-        await dhis2client?.httpGetPagination<Map<String, dynamic>>(url,
+        await client.httpGetPagination<Map<String, dynamic>>(url,
             queryParameters: queryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
@@ -87,7 +102,24 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
       ...queryParams,
       "page": page.toString()
     };
-    return await dhis2client?.httpGet<D>(url, queryParameters: updatedParams);
+    return await client.httpGet<D>(url, queryParameters: updatedParams);
+  }
+
+  Future syncRelationships(List<Map<String, dynamic>> entityData) async {
+    List<Relationship> relationships = [];
+    for (final entity in entityData) {
+      List<Relationship> relations = entity["relationships"]
+          .map<Relationship>((rel) => Relationship.fromMap(db, rel))
+          .toList()
+          .where((rel) =>
+              relationships
+                  .firstWhereOrNull((element) => element.uid == rel.uid) ==
+              null)
+          .toList();
+      relationships.addAll(relations);
+    }
+
+    await RelationshipRepository(db).saveEntities(relationships);
   }
 
   Future syncPage(int page) async {
@@ -100,8 +132,8 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
     List<T> entities = entityData.map(mapper).toList();
-
     await box.putManyAsync(entities);
+    await syncRelationships(entityData);
   }
 
   Future setupSync() async {
@@ -110,7 +142,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
         synced: 0,
         total: pagination.pageCount,
         status: Status.initialized,
-        label: label);
+        label: "$label for ${program.name} program");
     controller.add(status);
 
     for (int page = 1; page <= pagination.pageCount; page++) {

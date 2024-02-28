@@ -14,6 +14,5 @@ class D2HttpClientProvider extends ChangeNotifier {
 
   init(D2Credential credentials) {
     _client = DHIS2Client(credentials);
-    notifyListeners();
   }
 }

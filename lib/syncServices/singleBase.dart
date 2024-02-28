@@ -8,6 +8,7 @@ import '../models/base.dart';
 
 abstract class BaseSingleSyncService<T extends DHIS2Resource> {
   ObjectBox db;
+  DHIS2Client client;
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
@@ -20,7 +21,8 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
       this.fields,
       this.filters,
       required this.db,
-      required this.label});
+      required this.label,
+      required this.client});
 
   get url {
     return resource;
@@ -53,7 +55,7 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
   }
 
   Future<D?> getData<D>() async {
-    return await dhis2client?.httpGet<D>(url, queryParameters: queryParams);
+    return await client.httpGet<D>(url, queryParameters: queryParams);
   }
 
   T mapper(Map<String, dynamic> json);

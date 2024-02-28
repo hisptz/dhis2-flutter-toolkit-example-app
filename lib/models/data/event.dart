@@ -7,13 +7,12 @@ import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
-
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -68,7 +67,7 @@ class D2Event extends D2DataResource {
     required this.occurredAt,
   });
 
-  D2Event.fromMap(Map json)
+  D2Event.fromMap(ObjectBox db, Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],
         attributeOptionCombo = json["attributeOptionCombo"],
         updatedAt = DateTime.parse(json["updatedAt"]),
@@ -83,31 +82,18 @@ class D2Event extends D2DataResource {
         scheduledAt = DateTime.parse(json["scheduledAt"] ?? "1999-01-01T00:00"),
         uid = json["event"],
         occurredAt = DateTime.parse(json["occurredAt"] ?? "1999-01-01T00:00") {
-    id = D2EventRepository().getIdByUid(json["event"]) ?? 0;
+    id = D2EventRepository(db).getIdByUid(json["event"]) ?? 0;
     enrollment.target =
-        D2EnrollmentRepository().getByUid(json["enrollment"] ?? "");
+        D2EnrollmentRepository(db).getByUid(json["enrollment"] ?? "");
 
     if (json["trackedEntity"] != null) {
       trackedEntity.target =
-          TrackedEntityRepository().getByUid(json["trackedEntity"]);
+          TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
     }
 
-    program.target = D2ProgramRepository().getByUid(json["program"]);
+    program.target = D2ProgramRepository(db).getByUid(json["program"]);
 
     programStage.target =
-        D2ProgramStageRepository().getByUid(json["programStage"]);
-
-    List<Relationship?> relationship = json["relationships"]
-        .cast<Map>()
-        .map<Relationship?>((Map relation) =>
-            RelationshipRepository().getByUid(relation["relationship"]))
-        .toList();
-
-    List<Relationship> relations = relationship
-        .where((Relationship? element) => element != null)
-        .toList()
-        .cast<Relationship>();
-
-    relationships.addAll(relations);
+        D2ProgramStageRepository(db).getByUid(json["programStage"]);
   }
 }

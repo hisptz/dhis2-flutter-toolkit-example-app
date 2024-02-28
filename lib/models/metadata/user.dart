@@ -47,13 +47,13 @@ class D2User extends DHIS2Resource {
     id = D2UserRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2UserRole> roles = json["userRoles"]
         .cast<Map>()
-        .map(D2UserRole.fromMap)
+        .map<D2UserRole>((Map json) => D2UserRole.fromMap(db, json))
         .toList()
         .cast<D2UserRole>();
     userRoles.addAll(roles);
     List<D2UserGroup> groups = json["userGroups"]
         .cast<Map>()
-        .map(D2UserGroup.fromMap)
+        .map<D2UserGroup>((Map json) => D2UserGroup.fromMap(db, json))
         .toList()
         .cast<D2UserGroup>();
     userGroups.addAll(groups);

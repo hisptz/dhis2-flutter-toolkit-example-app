@@ -21,6 +21,7 @@ class Pagination {
 
 abstract class BaseSyncService<T extends DHIS2Resource> {
   ObjectBox db;
+  DHIS2Client client;
   StreamController<SyncStatus> controller = StreamController();
   String resource;
   List<String>? fields = [];
@@ -37,7 +38,8 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       this.dataKey,
       this.extraParams,
       required this.db,
-      required this.label});
+      required this.label,
+      required this.client});
 
   get url {
     return resource;
@@ -77,7 +79,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
 
   Future<Pagination> getPagination() async {
     Map<String, dynamic>? response =
-        await dhis2client?.httpGetPagination<Map<String, dynamic>>(url,
+        await client.httpGetPagination<Map<String, dynamic>>(url,
             queryParameters: queryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
@@ -90,7 +92,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       ...queryParams,
       "page": page.toString()
     };
-    return await dhis2client?.httpGet<D>(url, queryParameters: updatedParams);
+    return await client.httpGet<D>(url, queryParameters: updatedParams);
   }
 
   Future syncPage(int page) async {

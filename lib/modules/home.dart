@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   D2Credential credentials = D2Credential.fromPreferences();
-                  Provider.of<DbProvider>(context, listen: false).close();
+                  Provider.of<DBProvider>(context, listen: false).close();
                   credentials.logout().then((_) => context.replace("/"));
                 },
                 icon: const Icon(

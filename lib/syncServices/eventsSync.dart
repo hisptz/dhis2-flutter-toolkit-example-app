@@ -1,34 +1,26 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
-
-import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
-
+import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/baseTrackerData.dart';
 
 class D2EventSync extends BaseTrackerSyncService<D2Event> {
-  String program;
-  String defaultOrgUnit;
-
-  D2EventSync(this.program, this.defaultOrgUnit)
+  D2EventSync(ObjectBox db, DHIS2Client client, {required super.program})
       : super(
           label: "Events",
           fields: [
             "*",
           ],
-          box: d2EventBox,
+          db: db,
+          client: client,
           resource: "tracker/events",
-          extraParams: {
-            "ouMode": "DESCENDANTS",
-            "orgUnit": defaultOrgUnit,
-            "program": program,
-          },
           dataKey: "instances",
         );
 
   @override
   D2Event mapper(Map<String, dynamic> json) {
-    return D2Event.fromMap(json);
+    return D2Event.fromMap(db, json);
   }
 
   @override
@@ -41,27 +33,20 @@ class D2EventSync extends BaseTrackerSyncService<D2Event> {
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
-    List<Map<String, dynamic>> dataValues = entityData
-        .map((data) =>
-            {"event": data["event"], "dataValues": data["dataValues"]})
-        .toList();
-
     List<D2Event> entities = entityData.map(mapper).toList();
 
     await box.putManyAsync(entities);
 
-    final values = dataValues
-        .cast<Map>()
-        .map((data) => data["dataValues"]
-            .cast<Map>()
-            .map<D2DataValue>((attributeMap) =>
-                D2DataValue.fromMap(attributeMap, data["event"]))
-            .toList()
-            .cast<D2DataValue>())
-        .toList();
+    List<D2DataValue> dValues = [];
+    for (Map element in entityData) {
+      List<D2DataValue> dataValues = element["dataValues"]
+          .map<D2DataValue>((dataValue) =>
+              D2DataValue.fromMap(db, dataValue, element["event"]))
+          .toList();
+      dValues.addAll(dataValues);
+    }
 
-    await Future.wait(values.map((data) async {
-      await d2DataValueBox.putAndGetManyAsync(data);
-    }));
+    await D2DataValueRepository(db).saveEntities(dValues);
+    await syncRelationships(entityData);
   }
 }

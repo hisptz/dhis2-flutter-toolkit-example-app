@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
-
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -31,14 +31,14 @@ class D2DataValue extends D2DataResource {
       required this.value,
       required this.providedElsewhere});
 
-  D2DataValue.fromMap(Map json, String eventId)
+  D2DataValue.fromMap(ObjectBox db, Map json, String eventId)
       : updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
         value = json["value"],
         providedElsewhere = json["providedElsewhere"] {
-    event.target = D2EventRepository().getByUid(eventId);
+    event.target = D2EventRepository(db).getByUid(eventId);
 
     dataElement.target =
-        D2DataElementRepository().getByUid(json["dataElement"]);
+        D2DataElementRepository(db).getByUid(json["dataElement"]);
   }
 }

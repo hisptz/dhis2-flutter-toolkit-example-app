@@ -2,14 +2,17 @@ import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class TeiList extends StatefulWidget {
   const TeiList({super.key});
@@ -22,7 +25,8 @@ final debouncer = Debouncer(milliseconds: 1000);
 
 class _TeiListState extends State<TeiList> {
   TextEditingController searchController = TextEditingController();
-  final TrackedEntityRepository repository = TrackedEntityRepository();
+  late TrackedEntityRepository repository;
+  late ObjectBox db;
   final PagingController<int, TrackedEntity> _pagingController =
       PagingController(firstPageKey: 0);
 
@@ -51,6 +55,11 @@ class _TeiListState extends State<TeiList> {
 
   @override
   void initState() {
+    setState(() {
+      db = Provider.of<DBProvider>(context, listen: false).db;
+      repository = TrackedEntityRepository(db);
+    });
+
     _pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);
     });
@@ -108,13 +117,14 @@ class _TeiListState extends State<TeiList> {
                     builderDelegate: PagedChildBuilderDelegate<TrackedEntity>(
                         itemBuilder: (context, item, index) {
                       List<D2TrackedEntityAttributeValue> attributeValues =
-                          D2TrackedEntityAttributeValueRepository()
+                          D2TrackedEntityAttributeValueRepository(db)
                               .byTrackedEntity(item.id)
                               .find();
 
-                      List<D2Enrollment> enrollments = D2EnrollmentRepository()
-                          .byTrackedEntity(item.id)
-                          .find();
+                      List<D2Enrollment> enrollments =
+                          D2EnrollmentRepository(db)
+                              .byTrackedEntity(item.id)
+                              .find();
 
                       final attribute = attributeValues.where((value) =>
                           value.trackedEntityAttribute.target?.name ==

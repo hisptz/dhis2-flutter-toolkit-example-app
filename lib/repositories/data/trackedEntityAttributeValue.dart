@@ -1,24 +1,17 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
 import '../../objectbox.g.dart';
 
-final d2TrackedEntityAttributeValueBox =
-    db.store.box<D2TrackedEntityAttributeValue>();
-
 class D2TrackedEntityAttributeValueRepository
     extends BaseRepository<D2TrackedEntityAttributeValue> {
-  D2TrackedEntityAttributeValueRepository()
-      : super(d2TrackedEntityAttributeValueBox);
+  D2TrackedEntityAttributeValueRepository(super.db);
 
   @override
   D2TrackedEntityAttributeValue? getById(int id) {
-    Query<D2TrackedEntityAttributeValue> query =
-        d2TrackedEntityAttributeValueBox
-            .query(D2TrackedEntityAttributeValue_.trackedEntityAttribute
-                .equals(id))
-            .build();
+    Query<D2TrackedEntityAttributeValue> query = box
+        .query(D2TrackedEntityAttributeValue_.trackedEntityAttribute.equals(id))
+        .build();
     return query.findFirst();
   }
 
@@ -34,6 +27,10 @@ class D2TrackedEntityAttributeValueRepository
 
   @override
   D2TrackedEntityAttributeValue mapper(Map<String, dynamic> json) {
-    return D2TrackedEntityAttributeValue.fromMap(json, "");
+    return D2TrackedEntityAttributeValue.fromMap(db, json, "");
+  }
+
+  Future saveEntities(List<D2TrackedEntityAttributeValue> entities) async {
+    return box.putManyAsync(entities);
   }
 }

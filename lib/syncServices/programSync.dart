@@ -24,11 +24,12 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
   List<String> programIds;
   late List<D2Program> programs;
 
-  D2ProgramSync(ObjectBox db, this.programIds)
+  D2ProgramSync(ObjectBox db, DHIS2Client client, {required this.programIds})
       : super(
           label: "Programs",
           filters: ["id:in:[${programIds.join(",")}]"],
           db: db,
+          client: client,
           resource: "programs",
         );
 
@@ -94,8 +95,8 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
   ];
 
   Future<void> syncProgram(String programId) async {
-    Map<String, dynamic>? programMetadata = await dhis2client
-        ?.httpGet<Map<String, dynamic>>("programs/$programId/metadata");
+    Map<String, dynamic>? programMetadata = await client
+        .httpGet<Map<String, dynamic>>("programs/$programId/metadata");
 
     if (programMetadata == null) {
       throw "Error getting program $programId";

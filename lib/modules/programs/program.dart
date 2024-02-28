@@ -16,7 +16,7 @@ class ProgramDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final db = Provider.of<DbProvider>(context, listen: false).db;
+    final db = Provider.of<DBProvider>(context, listen: false).db;
     if (id == null) {
       return Scaffold(
         appBar: AppBar(

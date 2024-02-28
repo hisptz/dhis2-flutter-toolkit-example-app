@@ -9,7 +9,9 @@ import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TeiDetails extends StatelessWidget {
   const TeiDetails({super.key, required this.id});
@@ -18,6 +20,7 @@ class TeiDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final db = Provider.of<DBProvider>(context, listen: false).db;
     if (id == null) {
       return Scaffold(
         appBar: AppBar(
@@ -33,7 +36,7 @@ class TeiDetails extends StatelessWidget {
       );
     }
 
-    TrackedEntityRepository repository = TrackedEntityRepository();
+    TrackedEntityRepository repository = TrackedEntityRepository(db);
     TrackedEntity? teiInstance = repository.getById(int.parse(id!));
 
     if (teiInstance == null) {
@@ -52,13 +55,13 @@ class TeiDetails extends StatelessWidget {
     }
 
     List<D2Enrollment> enrollments =
-        D2EnrollmentRepository().byTrackedEntity(int.parse(id!)).find();
+        D2EnrollmentRepository(db).byTrackedEntity(int.parse(id!)).find();
 
     List<D2Event> events =
-        D2EventRepository().byTrackedEntity(int.parse(id!)).find();
+        D2EventRepository(db).byTrackedEntity(int.parse(id!)).find();
 
     List<D2TrackedEntityAttributeValue> attributeValues =
-        D2TrackedEntityAttributeValueRepository()
+        D2TrackedEntityAttributeValueRepository(db)
             .byTrackedEntity(int.parse(id!))
             .find();
 
@@ -119,7 +122,7 @@ class TeiDetails extends StatelessWidget {
                                           event.programStage.target?.name ??
                                               "Unknown Program Stage";
                                       List<D2DataValue> dataValues =
-                                          D2DataValueRepository()
+                                          D2DataValueRepository(db)
                                               .byEvent(event.id)
                                               .find();
 
