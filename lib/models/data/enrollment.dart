@@ -39,9 +39,9 @@ class D2Enrollment extends D2DataResource {
   @Backlink()
   final events = ToMany<D2Event>();
 
-  final relationships = ToMany<Relationship>();
+  final relationships = ToMany<D2Relationship>();
 
-  final trackedEntity = ToOne<TrackedEntity>();
+  final trackedEntity = ToOne<D2TrackedEntity>();
 
   D2Enrollment({
     required this.uid,

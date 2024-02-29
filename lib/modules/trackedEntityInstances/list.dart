@@ -27,7 +27,7 @@ class _TeiListState extends State<TeiList> {
   TextEditingController searchController = TextEditingController();
   late TrackedEntityRepository repository;
   late ObjectBox db;
-  final PagingController<int, TrackedEntity> _pagingController =
+  final PagingController<int, D2TrackedEntity> _pagingController =
       PagingController(firstPageKey: 0);
 
   fetchPage(int page) async {
@@ -38,12 +38,12 @@ class _TeiListState extends State<TeiList> {
     } else {
       repository.clearQuery();
     }
-    QueryBuilder<TrackedEntity> queryBuilder = repository.queryBuilder;
-    Query<TrackedEntity> query = queryBuilder.build();
+    QueryBuilder<D2TrackedEntity> queryBuilder = repository.queryBuilder;
+    Query<D2TrackedEntity> query = queryBuilder.build();
     query
       ..limit = 50
       ..offset = page;
-    List<TrackedEntity> entities = await query.findAsync();
+    List<D2TrackedEntity> entities = await query.findAsync();
     final isLastPage = entities.length < 100;
     if (isLastPage) {
       _pagingController.appendLastPage(entities);
@@ -114,7 +114,7 @@ class _TeiListState extends State<TeiList> {
                           child: Divider(),
                         ),
                     pagingController: _pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<TrackedEntity>(
+                    builderDelegate: PagedChildBuilderDelegate<D2TrackedEntity>(
                         itemBuilder: (context, item, index) {
                       List<D2TrackedEntityAttributeValue> attributeValues =
                           D2TrackedEntityAttributeValueRepository(db)

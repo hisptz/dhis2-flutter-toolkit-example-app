@@ -5,7 +5,7 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeVa
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/baseTrackerData.dart';
 
-class TrackedEntitySync extends BaseTrackerSyncService<TrackedEntity> {
+class TrackedEntitySync extends BaseTrackerSyncService<D2TrackedEntity> {
   TrackedEntitySync(ObjectBox db, DHIS2Client client, {required super.program})
       : super(
             label: "Tracked Entities",
@@ -22,8 +22,8 @@ class TrackedEntitySync extends BaseTrackerSyncService<TrackedEntity> {
             dataKey: "instances");
 
   @override
-  TrackedEntity mapper(Map<String, dynamic> json) {
-    return TrackedEntity.fromMap(db, json);
+  D2TrackedEntity mapper(Map<String, dynamic> json) {
+    return D2TrackedEntity.fromMap(db, json);
   }
 
   @override
@@ -36,7 +36,7 @@ class TrackedEntitySync extends BaseTrackerSyncService<TrackedEntity> {
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
-    List<TrackedEntity> entities = entityData.map(mapper).toList();
+    List<D2TrackedEntity> entities = entityData.map(mapper).toList();
 
     await box.putManyAsync(entities);
 

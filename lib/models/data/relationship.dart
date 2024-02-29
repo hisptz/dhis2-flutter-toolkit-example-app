@@ -21,7 +21,7 @@ Map getRelationshipConstraints(Map json) {
 }
 
 @Entity()
-class Relationship extends D2DataResource {
+class D2Relationship extends D2DataResource {
   @override
   int id = 0;
   @override
@@ -43,7 +43,7 @@ class Relationship extends D2DataResource {
   late String toType;
   late String toId;
 
-  Relationship({
+  D2Relationship({
     required this.createdAt,
     required this.updatedAt,
     required this.uid,
@@ -56,7 +56,7 @@ class Relationship extends D2DataResource {
     required this.toId,
   });
 
-  Relationship.fromMap(ObjectBox db, Map json)
+  D2Relationship.fromMap(ObjectBox db, Map json)
       : createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         uid = json["relationship"],

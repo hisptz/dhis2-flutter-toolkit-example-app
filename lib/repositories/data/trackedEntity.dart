@@ -4,24 +4,24 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeVa
 
 import '../../objectbox.g.dart';
 
-class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
+class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
   TrackedEntityRepository(super.db);
 
   @override
-  TrackedEntity? getByUid(String uid) {
-    Query<TrackedEntity> query =
-        box.query(TrackedEntity_.uid.equals(uid)).build();
+  D2TrackedEntity? getByUid(String uid) {
+    Query<D2TrackedEntity> query =
+        box.query(D2TrackedEntity_.uid.equals(uid)).build();
     return query.findFirst();
   }
 
-  List<TrackedEntity>? getAll() {
+  List<D2TrackedEntity>? getAll() {
     Query query = box.query().build();
-    return query.find() as List<TrackedEntity>;
+    return query.find() as List<D2TrackedEntity>;
   }
 
   @override
-  TrackedEntity mapper(Map<String, dynamic> json) {
-    return TrackedEntity.fromMap(db, json);
+  D2TrackedEntity mapper(Map<String, dynamic> json) {
+    return D2TrackedEntity.fromMap(db, json);
   }
 
   TrackedEntityRepository byIdentifiableToken(String keyword) {
@@ -42,7 +42,7 @@ class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
 
     final uidList = matchingEntities.map((entity) => entity.uid).toList();
 
-    queryConditions = TrackedEntity_.uid
+    queryConditions = D2TrackedEntity_.uid
         .oneOf(uidList.isNotEmpty ? uidList : ["null"], caseSensitive: false);
 
     return this;

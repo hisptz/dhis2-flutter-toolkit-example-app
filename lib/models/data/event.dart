@@ -43,10 +43,10 @@ class D2Event extends D2DataResource {
   String attributeOptionCombo;
   String? notes;
 
-  final relationships = ToMany<Relationship>();
+  final relationships = ToMany<D2Relationship>();
   final dataValues = ToMany<D2DataValue>();
   final enrollment = ToOne<D2Enrollment>();
-  final trackedEntity = ToOne<TrackedEntity>();
+  final trackedEntity = ToOne<D2TrackedEntity>();
   final program = ToOne<D2Program>();
   final programStage = ToOne<D2ProgramStage>();
 

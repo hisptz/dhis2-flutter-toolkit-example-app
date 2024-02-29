@@ -21,7 +21,7 @@ class D2TrackedEntityAttributeValue extends D2DataResource {
   String value;
 
   final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
-  final trackedEntity = ToOne<TrackedEntity>();
+  final trackedEntity = ToOne<D2TrackedEntity>();
 
   D2TrackedEntityAttributeValue({
     required this.createdAt,

@@ -1,6 +1,9 @@
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
+
+Admin? admin;
 
 class DBProvider extends ChangeNotifier {
   ObjectBox? _db;
@@ -18,6 +21,8 @@ class DBProvider extends ChangeNotifier {
 
   Future init(D2Credential credentials) async {
     _db = await ObjectBox.create(credentials);
-    notifyListeners();
+    if (kDebugMode && Admin.isAvailable() && _db != null) {
+      admin = Admin(_db!.store);
+    }
   }
 }

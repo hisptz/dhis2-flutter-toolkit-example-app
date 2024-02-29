@@ -106,10 +106,10 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
   }
 
   Future syncRelationships(List<Map<String, dynamic>> entityData) async {
-    List<Relationship> relationships = [];
+    List<D2Relationship> relationships = [];
     for (final entity in entityData) {
-      List<Relationship> relations = entity["relationships"]
-          .map<Relationship>((rel) => Relationship.fromMap(db, rel))
+      List<D2Relationship> relations = entity["relationships"]
+          .map<D2Relationship>((rel) => D2Relationship.fromMap(db, rel))
           .toList()
           .where((rel) =>
               relationships

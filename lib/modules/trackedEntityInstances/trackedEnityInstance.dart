@@ -37,7 +37,7 @@ class TeiDetails extends StatelessWidget {
     }
 
     TrackedEntityRepository repository = TrackedEntityRepository(db);
-    TrackedEntity? teiInstance = repository.getById(int.parse(id!));
+    D2TrackedEntity? teiInstance = repository.getById(int.parse(id!));
 
     if (teiInstance == null) {
       return Scaffold(

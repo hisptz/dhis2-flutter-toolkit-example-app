@@ -12,7 +12,7 @@ import 'package:objectbox/objectbox.dart';
 import '../../objectbox.g.dart';
 
 @Entity()
-class TrackedEntity extends D2DataResource {
+class D2TrackedEntity extends D2DataResource {
   @override
   int id = 0;
   @override
@@ -35,14 +35,14 @@ class TrackedEntity extends D2DataResource {
   @Backlink()
   final enrollments = ToMany<D2Enrollment>();
 
-  final relationships = ToMany<Relationship>();
+  final relationships = ToMany<D2Relationship>();
 
   final attributes = ToMany<D2TrackedEntityAttributeValue>();
 
   @Backlink()
   final events = ToMany<D2Event>();
 
-  TrackedEntity(
+  D2TrackedEntity(
       {required this.uid,
       required this.trackedEntityType,
       required this.orgUnit,
@@ -54,7 +54,7 @@ class TrackedEntity extends D2DataResource {
       required this.inactive,
       required this.programOwners});
 
-  TrackedEntity.fromMap(ObjectBox db, Map json)
+  D2TrackedEntity.fromMap(ObjectBox db, Map json)
       : uid = json["trackedEntity"],
         trackedEntityType = json["trackedEntityType"],
         orgUnit = json["orgUnit"],
