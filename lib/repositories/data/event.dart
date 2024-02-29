@@ -44,8 +44,15 @@ class D2EventRepository extends BaseRepository<D2Event>
         await Future.wait(unSyncedEvents.map((event) => event.toMap(db: db)));
     Map<String, List<Map<String, dynamic>>> payload = {"events": eventsPayload};
 
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPut<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
     //TODO: Pagination
-    //TODO: Logic to upload
     //TODO: Handle import summary
 
     return <D2Event>[];

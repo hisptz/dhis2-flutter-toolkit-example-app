@@ -115,10 +115,30 @@ class D2Event extends D2DataResource implements SyncableData {
         .map<Future<Map<String, dynamic>>>((e) => e.toMap())
         .toList());
 
-    //TODO: Check if an event has an enrollment
-    return {
-      "enrollment": enrollment.target?.uid,
-      "dataValues": dataValuesPayload
+    Map<String, dynamic> payload = {
+      "scheduledAt": scheduledAt?.toIso8601String(),
+      "program": program,
+      "event": uid,
+      "programStage": programStage.target?.uid,
+      "orgUnit": orgUnit,
+      "enrollmentStatus": status,
+      "status": status,
+      "occurredAt": occurredAt?.toIso8601String(),
+      "attributeCategoryOptions": attributeCategoryOptions,
+      "deleted": deleted,
+      "attributeOptionCombo": attributeOptionCombo,
+      "dataValues": dataValuesPayload,
     };
+
+    // Check if event does have an enrollment link
+    if (enrollment.target?.id != 0) {
+      payload["enrollment"] = enrollment.target?.uid;
+    }
+    // Check if event does have an trackedEntity link
+    if (trackedEntity.target?.id != 0) {
+      payload["trackedEntity"] = trackedEntity.target?.uid;
+    }
+
+    return payload;
   }
 }
