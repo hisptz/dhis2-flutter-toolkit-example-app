@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
@@ -12,7 +13,7 @@ import 'package:objectbox/objectbox.dart';
 import '../../objectbox.g.dart';
 
 @Entity()
-class D2Enrollment extends D2DataResource {
+class D2Enrollment extends D2DataResource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -43,21 +44,21 @@ class D2Enrollment extends D2DataResource {
 
   final trackedEntity = ToOne<D2TrackedEntity>();
 
-  D2Enrollment({
-    required this.uid,
-    required this.program,
-    required this.updatedAt,
-    required this.createdAt,
-    required this.createdAtClient,
-    required this.orgUnit,
-    required this.orgUnitName,
-    required this.enrolledAt,
-    required this.followup,
-    required this.deleted,
-    required this.occurredAt,
-    required this.status,
-    required this.notes,
-  });
+  D2Enrollment(
+      {required this.uid,
+      required this.program,
+      required this.updatedAt,
+      required this.createdAt,
+      required this.createdAtClient,
+      required this.orgUnit,
+      required this.orgUnitName,
+      required this.enrolledAt,
+      required this.followup,
+      required this.deleted,
+      required this.occurredAt,
+      required this.status,
+      required this.notes,
+      required this.synced});
 
   D2Enrollment.fromMap(ObjectBox db, Map json)
       : uid = json["enrollment"],
@@ -72,10 +73,20 @@ class D2Enrollment extends D2DataResource {
         deleted = json["deleted"],
         occurredAt = DateTime.parse(json["occurredAt"]),
         status = json["status"],
+        synced = true,
         notes = jsonEncode(json["notes"]) {
     id = D2EnrollmentRepository(db).getIdByUid(json["enrollment"]) ?? 0;
 
     trackedEntity.target =
         TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
+  }
+
+  @override
+  bool synced;
+
+  @override
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) {
+    // TODO: implement toMap
+    throw UnimplementedError();
   }
 }

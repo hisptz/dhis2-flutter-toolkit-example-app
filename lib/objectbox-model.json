@@ -100,7 +100,7 @@
     },
     {
       "id": "2:3504265121944180400",
-      "lastPropertyId": "10:7461732206814233176",
+      "lastPropertyId": "11:1220524326799596339",
       "name": "D2DataValue",
       "properties": [
         {
@@ -144,13 +144,18 @@
           "flags": 520,
           "indexId": "61:6638229285257689023",
           "relationTarget": "D2DataElement"
+        },
+        {
+          "id": "11:1220524326799596339",
+          "name": "synced",
+          "type": 1
         }
       ],
       "relations": []
     },
     {
       "id": "3:1663155969181960685",
-      "lastPropertyId": "22:305389044243354768",
+      "lastPropertyId": "23:6168278436642439702",
       "name": "D2Enrollment",
       "properties": [
         {
@@ -233,6 +238,11 @@
           "flags": 520,
           "indexId": "62:8899505281667102012",
           "relationTarget": "D2TrackedEntity"
+        },
+        {
+          "id": "23:6168278436642439702",
+          "name": "synced",
+          "type": 1
         }
       ],
       "relations": [
@@ -245,7 +255,7 @@
     },
     {
       "id": "4:6304522207734519244",
-      "lastPropertyId": "29:1632560480152006133",
+      "lastPropertyId": "30:618151849287962582",
       "name": "D2Event",
       "properties": [
         {
@@ -355,6 +365,11 @@
           "flags": 520,
           "indexId": "66:7060712807550520167",
           "relationTarget": "D2ProgramStage"
+        },
+        {
+          "id": "30:618151849287962582",
+          "name": "synced",
+          "type": 1
         }
       ],
       "relations": [

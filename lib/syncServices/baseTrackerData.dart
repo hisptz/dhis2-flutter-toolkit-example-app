@@ -131,7 +131,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
 
-    List<T> entities = entityData.map(mapper).toList();
+    final entities = entityData.map<T>(mapper).toList();
     await box.putManyAsync(entities);
     await syncRelationships(entityData);
   }

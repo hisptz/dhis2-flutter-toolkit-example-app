@@ -4,10 +4,12 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
@@ -18,7 +20,7 @@ import 'package:objectbox/objectbox.dart';
 import '../../objectbox.g.dart';
 
 @Entity()
-class D2Event extends D2DataResource {
+class D2Event extends D2DataResource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -50,22 +52,22 @@ class D2Event extends D2DataResource {
   final program = ToOne<D2Program>();
   final programStage = ToOne<D2ProgramStage>();
 
-  D2Event({
-    required this.attributeCategoryOptions,
-    required this.attributeOptionCombo,
-    required this.updatedAt,
-    required this.createdAt,
-    required this.createdAtClient,
-    required this.orgUnit,
-    required this.orgUnitName,
-    required this.followup,
-    required this.deleted,
-    required this.status,
-    required this.notes,
-    required this.scheduledAt,
-    required this.uid,
-    required this.occurredAt,
-  });
+  D2Event(
+      {required this.attributeCategoryOptions,
+      required this.attributeOptionCombo,
+      required this.updatedAt,
+      required this.createdAt,
+      required this.createdAtClient,
+      required this.orgUnit,
+      required this.orgUnitName,
+      required this.followup,
+      required this.deleted,
+      required this.status,
+      required this.notes,
+      required this.scheduledAt,
+      required this.uid,
+      required this.occurredAt,
+      required this.synced});
 
   D2Event.fromMap(ObjectBox db, Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],
@@ -78,6 +80,7 @@ class D2Event extends D2DataResource {
         followup = json["followup"],
         deleted = json["deleted"],
         status = json["status"],
+        synced = true,
         notes = jsonEncode(json["notes"]),
         scheduledAt = DateTime.parse(json["scheduledAt"] ?? "1999-01-01T00:00"),
         uid = json["event"],
@@ -95,5 +98,27 @@ class D2Event extends D2DataResource {
 
     programStage.target =
         D2ProgramStageRepository(db).getByUid(json["programStage"]);
+  }
+
+  @override
+  bool synced;
+
+  @override
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) async {
+    if (db == null) {
+      throw "ObjectBox instance is required";
+    }
+
+    List<D2DataValue> dataValues =
+        await D2DataValueRepository(db).getByEvent(this);
+    List<Map<String, dynamic>> dataValuesPayload = await Future.wait(dataValues
+        .map<Future<Map<String, dynamic>>>((e) => e.toMap())
+        .toList());
+
+    //TODO: Check if an event has an enrollment
+    return {
+      "enrollment": enrollment.target?.uid,
+      "dataValues": dataValuesPayload
+    };
   }
 }
