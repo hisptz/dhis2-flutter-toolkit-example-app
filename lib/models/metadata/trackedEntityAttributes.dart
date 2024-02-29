@@ -6,8 +6,6 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
-final trackedEntityAttributeBox = db.store.box<D2TrackedEntityAttribute>();
-
 @Entity()
 class D2TrackedEntityAttribute extends D2MetadataResource {
   @override
@@ -47,7 +45,7 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
       required this.valueType,
       this.zeroIsSignificant});
 
-  D2TrackedEntityAttribute.fromMap(Map json)
+  D2TrackedEntityAttribute.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -59,16 +57,16 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    id = D2TrackedEntityAttributeRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2TrackedEntityAttributeRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2LegendSet> legendSet = json["attributeValues"]
         .cast<Map>()
-        .map<D2LegendSet>(D2LegendSet.fromMap)
+        .map<D2LegendSet>((Map json) => D2LegendSet.fromMap(db, json))
         .toList();
 
     legendSets.addAll(legendSet);
     if (json["optionSet"] != null) {
       optionSet.target =
-          D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+          D2OptionSetRepository(db).getByUid(json["optionSet"]["id"]);
     }
   }
 }

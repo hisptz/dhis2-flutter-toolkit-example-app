@@ -5,7 +5,9 @@ import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttrib
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntityAttribute.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProgramDetails extends StatelessWidget {
   const ProgramDetails({super.key, this.id});
@@ -14,6 +16,7 @@ class ProgramDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final db = Provider.of<DBProvider>(context, listen: false).db;
     if (id == null) {
       return Scaffold(
         appBar: AppBar(
@@ -29,7 +32,7 @@ class ProgramDetails extends StatelessWidget {
       );
     }
 
-    D2ProgramRepository repository = D2ProgramRepository();
+    D2ProgramRepository repository = D2ProgramRepository(db);
     D2Program? program = repository.getById(int.parse(id!));
 
     if (program == null) {
@@ -48,10 +51,10 @@ class ProgramDetails extends StatelessWidget {
     }
 
     List<D2ProgramStage> programStages =
-        D2ProgramStageRepository().byProgram(program.id).find();
+        D2ProgramStageRepository(db).byProgram(program.id).find();
 
     List<D2ProgramTrackedEntityAttribute> attributes =
-        D2ProgramTrackedEntityAttributeRepository()
+        D2ProgramTrackedEntityAttributeRepository(db)
             .byProgram(program.id)
             .find();
 

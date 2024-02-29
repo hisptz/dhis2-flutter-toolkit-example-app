@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnitLevel.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -26,12 +27,12 @@ class D2OrganisationUnitLevel implements D2MetadataResource {
       required this.created,
       required this.lastUpdated});
 
-  D2OrganisationUnitLevel.fromMap(Map json)
+  D2OrganisationUnitLevel.fromMap(ObjectBox db, Map json)
       : name = json["name"],
         uid = json["id"],
         level = json["level"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
-    id = D2OrgUnitLevelRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2OrgUnitLevelRepository(db).getIdByUid(json["id"]) ?? 0;
   }
 }

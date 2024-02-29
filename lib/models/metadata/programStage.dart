@@ -1,7 +1,9 @@
+import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
@@ -34,6 +36,9 @@ class D2ProgramStage extends D2MetadataResource {
   @Backlink("programStage")
   final programStageSections = ToMany<D2ProgramStageSection>();
 
+  @Backlink()
+  final events = ToMany<D2Event>();
+
   D2ProgramStage({
     required this.created,
     required this.lastUpdated,
@@ -46,7 +51,7 @@ class D2ProgramStage extends D2MetadataResource {
     this.description,
   });
 
-  D2ProgramStage.fromMap(Map json)
+  D2ProgramStage.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -56,8 +61,8 @@ class D2ProgramStage extends D2MetadataResource {
         reportDateToUse = json["reportDateToUse"],
         featureType = json["featureType"],
         description = json["description"] {
-    id = D2ProgramStageRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2ProgramStageRepository(db).getIdByUid(json["id"]) ?? 0;
     program.target =
-        D2ProgramRepository().getByUid(json["program"]?["id"] ?? "");
+        D2ProgramRepository(db).getByUid(json["program"]?["id"] ?? "");
   }
 }

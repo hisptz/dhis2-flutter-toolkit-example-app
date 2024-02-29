@@ -1,6 +1,8 @@
+import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/optionSet.dart';
 import 'package:objectbox/objectbox.dart';
@@ -30,6 +32,8 @@ class D2DataElement extends D2MetadataResource {
   final legendSets = ToMany<D2LegendSet>();
   final optionSet = ToOne<D2OptionSet>();
 
+  final dataValues = ToMany<D2DataValue>();
+
   D2DataElement(
       {required this.created,
       required this.lastUpdated,
@@ -44,7 +48,7 @@ class D2DataElement extends D2MetadataResource {
       required this.domainType,
       this.zeroIsSignificant});
 
-  D2DataElement.fromMap(Map json)
+  D2DataElement.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -57,11 +61,11 @@ class D2DataElement extends D2MetadataResource {
         valueType = json["valueType"],
         domainType = json["domainType"],
         zeroIsSignificant = json["zeroIsSignificant"] {
-    id = D2DataElementRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2DataElementRepository(db).getIdByUid(json["id"]) ?? 0;
 
     if (json["optionSet"] != null) {
       optionSet.target =
-          D2OptionSetRepository().getByUid(json["optionSet"]["id"]);
+          D2OptionSetRepository(db).getByUid(json["optionSet"]["id"]);
     }
   }
 

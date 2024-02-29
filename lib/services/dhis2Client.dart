@@ -110,6 +110,7 @@ class DHIS2Client {
         return null;
       }
     } else {}
+    return null;
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance
@@ -133,10 +134,4 @@ class DHIS2Client {
   String toString() {
     return '$baseURL => $username : $password';
   }
-}
-
-DHIS2Client? dhis2client;
-
-void initializeClient(D2Credential credentials) {
-  dhis2client = DHIS2Client(credentials);
 }

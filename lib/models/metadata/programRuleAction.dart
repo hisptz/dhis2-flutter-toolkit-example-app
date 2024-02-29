@@ -3,6 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRule.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programRuleVariable.dart';
@@ -47,7 +48,7 @@ class D2ProgramRuleAction extends D2MetadataResource {
       this.data,
       this.location});
 
-  D2ProgramRuleAction.fromMap(Map json)
+  D2ProgramRuleAction.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -55,26 +56,26 @@ class D2ProgramRuleAction extends D2MetadataResource {
         content = json["content"],
         data = json["data"],
         location = json["location"] {
-    id = D2ProgramRuleVariableRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2ProgramRuleVariableRepository(db).getIdByUid(json["id"]) ?? 0;
 
     programRule.target =
-        D2ProgramRuleRepository().getByUid(json["programRule"]["id"]);
+        D2ProgramRuleRepository(db).getByUid(json["programRule"]["id"]);
 
     if (json["dataElement"] != null) {
       dataElement.target =
-          D2DataElementRepository().getByUid(json["dataElement"]["id"]);
+          D2DataElementRepository(db).getByUid(json["dataElement"]["id"]);
     }
     if (json["trackedEntityAttribute"] != null) {
-      trackedEntityAttribute.target = D2TrackedEntityAttributeRepository()
+      trackedEntityAttribute.target = D2TrackedEntityAttributeRepository(db)
           .getByUid(json["trackedEntityAttribute"]["id"]);
     }
     if (json["programStageSection"] != null) {
-      programStageSection.target = D2ProgramStageSectionRepository()
+      programStageSection.target = D2ProgramStageSectionRepository(db)
           .getByUid(json["programStageSection"]["id"]);
     }
     if (json["programSection"] != null) {
       programSection.target =
-          D2ProgramSectionRepository().getByUid(json["programSection"]["id"]);
+          D2ProgramSectionRepository(db).getByUid(json["programSection"]["id"]);
     }
   }
 }

@@ -1,23 +1,50 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 
 import '../../objectbox.g.dart';
 
-final trackedEntityBox = db.store.box<TrackedEntity>();
-
-class TrackedEntityRepository extends BaseRepository<TrackedEntity> {
-  TrackedEntityRepository() : super(trackedEntityBox);
+class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
+  TrackedEntityRepository(super.db);
 
   @override
-  TrackedEntity? getByUid(String uid) {
-    Query<TrackedEntity> query =
-        trackedEntityBox.query(TrackedEntity_.uid.equals(uid)).build();
+  D2TrackedEntity? getByUid(String uid) {
+    Query<D2TrackedEntity> query =
+        box.query(D2TrackedEntity_.uid.equals(uid)).build();
     return query.findFirst();
   }
 
+  List<D2TrackedEntity>? getAll() {
+    Query query = box.query().build();
+    return query.find() as List<D2TrackedEntity>;
+  }
+
   @override
-  TrackedEntity mapper(Map<String, dynamic> json) {
-    return TrackedEntity.fromMap(json);
+  D2TrackedEntity mapper(Map<String, dynamic> json) {
+    return D2TrackedEntity.fromMap(db, json);
+  }
+
+  TrackedEntityRepository byIdentifiableToken(String keyword) {
+    final trackedEntities = box.getAll();
+
+    final matchingEntities = trackedEntities.where((trackedEntity) {
+      final attributeEntities = D2TrackedEntityAttributeValueRepository(db)
+          .byTrackedEntity(trackedEntity.id)
+          .find();
+
+      final nameAttributes = attributeEntities.where((attribute) =>
+          (attribute.trackedEntityAttribute.target?.name == "First name") ||
+          (attribute.trackedEntityAttribute.target?.name == "Last name"));
+
+      return nameAttributes.any((attribute) =>
+          attribute.value.toLowerCase().contains(keyword.toLowerCase()));
+    });
+
+    final uidList = matchingEntities.map((entity) => entity.uid).toList();
+
+    queryConditions = D2TrackedEntity_.uid
+        .oneOf(uidList.isNotEmpty ? uidList : ["null"], caseSensitive: false);
+
+    return this;
   }
 }

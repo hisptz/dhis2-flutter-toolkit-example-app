@@ -1,7 +1,9 @@
 import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserInfoWidget extends StatefulWidget {
   const UserInfoWidget({super.key});
@@ -12,12 +14,14 @@ class UserInfoWidget extends StatefulWidget {
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
   bool loading = false;
-  D2UserRepository repository = D2UserRepository();
+  late D2UserRepository repository;
   D2User? info;
 
   @override
   void initState() {
     setState(() {
+      final db = Provider.of<DBProvider>(context, listen: false).db;
+      repository = D2UserRepository(db);
       info = repository.get();
     });
     super.initState();
@@ -64,7 +68,14 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                       .map((group) => group.name)
                       .toList()
                       .join(", ") ??
-                  "")
+                  ""),
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  info = repository.get();
+                });
+              },
+              child: const Text("Refresh"))
         ],
       ),
     );

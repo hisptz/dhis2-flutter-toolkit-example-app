@@ -1,11 +1,16 @@
 import 'package:dhis2_flutter_toolkit/models/base.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
 abstract class BaseRepository<T extends DHIS2Resource> {
-  Box<T> box;
+  ObjectBox db;
 
-  BaseRepository(this.box);
+  Box<T> get box {
+    return db.store.box<T>();
+  }
+
+  BaseRepository(this.db);
 
   T mapper(Map<String, dynamic> json);
 
@@ -21,6 +26,10 @@ abstract class BaseRepository<T extends DHIS2Resource> {
 
   Query<T> get query {
     return queryBuilder.build();
+  }
+
+  Future saveEntities(List<T> entities) {
+    return box.putManyAsync(entities);
   }
 
   List<T> find() {

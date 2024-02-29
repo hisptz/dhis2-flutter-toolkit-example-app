@@ -1,18 +1,18 @@
 import 'dart:async';
 
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:objectbox/objectbox.dart';
 
 import '../models/base.dart';
-import '../objectbox.g.dart';
 
 abstract class BaseSingleSyncService<T extends DHIS2Resource> {
+  ObjectBox db;
+  DHIS2Client client;
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
   T? entity;
-  Box<T> box;
   String label;
   StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
@@ -20,11 +20,16 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
       {required this.resource,
       this.fields,
       this.filters,
-      required this.box,
-      required this.label});
+      required this.db,
+      required this.label,
+      required this.client});
 
   get url {
     return resource;
+  }
+
+  get box {
+    return db.store.box<T>();
   }
 
   get stream {
@@ -50,7 +55,7 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
   }
 
   Future<D?> getData<D>() async {
-    return await dhis2client?.httpGet<D>(url, queryParameters: queryParams);
+    return await client.httpGet<D>(url, queryParameters: queryParams);
   }
 
   T mapper(Map<String, dynamic> json);

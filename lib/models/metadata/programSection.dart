@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
@@ -33,17 +34,17 @@ class D2ProgramSection extends D2MetadataResource {
       required this.name,
       required this.sortOrder});
 
-  D2ProgramSection.fromMap(Map json)
+  D2ProgramSection.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
         sortOrder = json["sortOrder"] {
-    id = D2ProgramSectionRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2ProgramSectionRepository(db).getIdByUid(json["id"]) ?? 0;
     List<D2TrackedEntityAttribute?> tei = json["trackedEntityAttributes"]
         .cast<Map>()
         .map<D2TrackedEntityAttribute?>((Map tea) =>
-            D2TrackedEntityAttributeRepository().getByUid(tea["id"]))
+            D2TrackedEntityAttributeRepository(db).getByUid(tea["id"]))
         .toList();
 
     List<D2TrackedEntityAttribute> actualTea = tei
@@ -51,6 +52,6 @@ class D2ProgramSection extends D2MetadataResource {
         .toList()
         .cast<D2TrackedEntityAttribute>();
     trackedEntityAttributes.addAll(actualTea);
-    program.target = D2ProgramRepository().getByUid(json["program"]["id"]);
+    program.target = D2ProgramRepository(db).getByUid(json["program"]["id"]);
   }
 }

@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -13,78 +16,66 @@ class D2Enrollment extends D2DataResource {
   @override
   int id = 0;
   @override
-  DateTime created;
+  DateTime createdAt;
 
   @override
-  DateTime lastUpdated;
+  DateTime updatedAt;
 
   DateTime createdAtClient;
 
-  @override
   @Unique()
   String uid;
   String program;
-  String trackedEntityInstance;
-  String trackedEntityType;
+
   String orgUnit;
   String orgUnitName;
-  DateTime enrollmentDate;
+  DateTime enrolledAt;
   bool deleted;
   bool followup;
-  DateTime incidentDate;
+  DateTime occurredAt;
   String status;
   String? notes;
 
+  @Backlink()
   final events = ToMany<D2Event>();
-  final relationships = ToMany<Relationship>();
-  final attributes = ToMany<D2TrackedEntityAttributeValue>();
+
+  final relationships = ToMany<D2Relationship>();
+
+  final trackedEntity = ToOne<D2TrackedEntity>();
 
   D2Enrollment({
     required this.uid,
     required this.program,
-    required this.lastUpdated,
-    required this.created,
+    required this.updatedAt,
+    required this.createdAt,
     required this.createdAtClient,
     required this.orgUnit,
     required this.orgUnitName,
-    required this.trackedEntityInstance,
-    required this.trackedEntityType,
-    required this.enrollmentDate,
+    required this.enrolledAt,
     required this.followup,
     required this.deleted,
-    required this.incidentDate,
+    required this.occurredAt,
     required this.status,
     required this.notes,
   });
 
-  D2Enrollment.fromMap(Map json)
+  D2Enrollment.fromMap(ObjectBox db, Map json)
       : uid = json["enrollment"],
         program = json["program"],
-        lastUpdated = DateTime.parse(json["lastUpdated"]),
-        created = DateTime.parse(json["created"]),
+        updatedAt = DateTime.parse(json["updatedAt"]),
+        createdAt = DateTime.parse(json["createdAt"]),
         createdAtClient = DateTime.parse(json["createdAtClient"]),
         orgUnit = json["orgUnit"],
         orgUnitName = json["orgUnitName"],
-        trackedEntityInstance = json["trackedEntityInstance"],
-        trackedEntityType = json["trackedEntityType"],
-        enrollmentDate = DateTime.parse(json["enrollmentDate"]),
-        followup = json["followup"],
+        enrolledAt = DateTime.parse(json["enrolledAt"]),
+        followup = json["followUp"],
         deleted = json["deleted"],
-        incidentDate = DateTime.parse(json["incidentDate"]),
+        occurredAt = DateTime.parse(json["occurredAt"]),
         status = json["status"],
         notes = jsonEncode(json["notes"]) {
-    List<D2Event> event = json["events"].map(D2Event.fromMap);
+    id = D2EnrollmentRepository(db).getIdByUid(json["enrollment"]) ?? 0;
 
-    events.addAll(event);
-
-    List<Relationship> relationship =
-        json["relationships"].map(Relationship.fromMap);
-
-    relationships.addAll(relationship);
-
-    List<D2TrackedEntityAttributeValue> attributeValue =
-        json["attributes"].map(D2TrackedEntityAttributeValue.fromMap);
-
-    attributes.addAll(attributeValue);
+    trackedEntity.target =
+        TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
   }
 }

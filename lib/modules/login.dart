@@ -1,5 +1,4 @@
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -30,11 +29,10 @@ class _LoginState extends State<Login> {
           username: username, password: password, baseURL: baseURL);
 
       if (await credentials.verify()) {
-        initializeClient(credentials);
         setState(() {
           loading = false;
         });
-        context.go("/");
+        context.replace("/");
       } else {
         print("Why falling here");
       }

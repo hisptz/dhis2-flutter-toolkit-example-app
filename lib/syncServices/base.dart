@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:objectbox/objectbox.dart';
 
 import '../models/base.dart';
-import '../objectbox.g.dart';
 
 class Pagination {
   int total;
@@ -21,12 +20,13 @@ class Pagination {
 }
 
 abstract class BaseSyncService<T extends DHIS2Resource> {
+  ObjectBox db;
+  DHIS2Client client;
   StreamController<SyncStatus> controller = StreamController();
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
   Map<String, dynamic>? extraParams;
-  Box<T> box;
   String label;
   String?
       dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
@@ -37,11 +37,16 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       this.filters,
       this.dataKey,
       this.extraParams,
-      required this.box,
-      required this.label});
+      required this.db,
+      required this.label,
+      required this.client});
 
   get url {
     return resource;
+  }
+
+  get box {
+    return db.store.box<T>();
   }
 
   get queryParams {
@@ -74,7 +79,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
 
   Future<Pagination> getPagination() async {
     Map<String, dynamic>? response =
-        await dhis2client?.httpGetPagination<Map<String, dynamic>>(url,
+        await client.httpGetPagination<Map<String, dynamic>>(url,
             queryParameters: queryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
@@ -87,7 +92,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       ...queryParams,
       "page": page.toString()
     };
-    return await dhis2client?.httpGet<D>(url, queryParameters: updatedParams);
+    return await client.httpGet<D>(url, queryParameters: updatedParams);
   }
 
   Future syncPage(int page) async {
@@ -97,6 +102,7 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     }
     List<Map<String, dynamic>> entityData =
         data[dataKey ?? resource].cast<Map<String, dynamic>>();
+
     List<T> entities = entityData.map(mapper).toList();
 
     await box.putManyAsync(entities);

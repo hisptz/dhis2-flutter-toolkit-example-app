@@ -1,6 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
+import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SystemInfoWidget extends StatefulWidget {
   const SystemInfoWidget({super.key});
@@ -11,12 +13,14 @@ class SystemInfoWidget extends StatefulWidget {
 
 class _SystemInfoWidgetState extends State<SystemInfoWidget> {
   bool loading = false;
-  SystemInfoRepository repository = SystemInfoRepository();
+  late SystemInfoRepository repository;
   D2SystemInfo? info;
 
   @override
   void initState() {
     setState(() {
+      final db = Provider.of<DBProvider>(context, listen: false).db;
+      repository = SystemInfoRepository(db);
       info = repository.get();
     });
     super.initState();

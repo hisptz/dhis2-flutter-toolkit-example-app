@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/metadataBase.dart';
+import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -31,7 +32,7 @@ class D2Legend extends D2MetadataResource {
       required this.color,
       required this.displayName});
 
-  D2Legend.fromMap(Map json)
+  D2Legend.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
@@ -40,6 +41,6 @@ class D2Legend extends D2MetadataResource {
         endValue = json["endValue"].toDouble(),
         color = json["color"],
         displayName = json["displayName"] {
-    id = D2LegendRepository().getIdByUid(json["id"]) ?? 0;
+    id = D2LegendRepository(db).getIdByUid(json["id"]) ?? 0;
   }
 }
