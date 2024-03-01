@@ -36,7 +36,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     //TODO: Pagination
     //TODO: Handle import summary
 
-    queryConditions = D2Enrollment_.synced.equals(true);
+    queryConditions = D2Enrollment_.synced.equals(false);
     List<D2Enrollment> unSyncedEnrollments = await query.findAsync();
     List<Map<String, dynamic>> enrollmentPayload = await Future.wait(
         unSyncedEnrollments.map((enrollemnt) => enrollemnt.toMap(db: db)));
