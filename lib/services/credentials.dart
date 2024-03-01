@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/services/preferences.dart';
+import 'package:dhis2_flutter_toolkit/services/users.dart';
 
 class D2Credential {
   String username;
   String password;
   String baseURL;
   String? systemId;
+
+  get id {
+    return "${username}_$systemId";
+  }
 
   D2Credential(
       {required this.username,
@@ -14,33 +20,33 @@ class D2Credential {
       this.systemId});
 
   Future saveToPreference() async {
-    await preferences?.setString("baseURL", baseURL);
-    await preferences?.setString("username", username);
-    await preferences?.setString("password", password);
-    await preferences?.setString("systemId", systemId!);
+    await AppAuth().saveUser(this);
   }
 
-  static fromPreferences() {
-    String? baseURL = preferences?.getString("baseURL");
-    String? username = preferences?.getString("username");
-    String? password = preferences?.getString("password");
-    String? systemId = preferences?.getString("systemId");
+  Map<String, String> toMap() {
+    return {
+      "username": username,
+      "password": password,
+      "systemId": systemId ?? "",
+      "baseURL": baseURL
+    };
+  }
 
-    if (baseURL != null && username != null && password != null) {
-      return D2Credential(
-          username: username,
-          password: password,
-          baseURL: baseURL,
-          systemId: systemId);
-    }
-    return null;
+  static D2Credential fromPreferences(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+    String baseURL = map["baseURL"]!;
+    String username = map["username"]!;
+    String password = map["password"]!;
+    String systemId = map["systemId"]!;
+    return D2Credential(
+        username: username,
+        password: password,
+        baseURL: baseURL,
+        systemId: systemId);
   }
 
   Future<void> logout() async {
-    await preferences?.remove("username");
-    await preferences?.remove("baseURL");
-    await preferences?.remove("password");
-    await preferences?.remove("systemId");
+    return AppAuth().logoutUser();
   }
 
   Future<bool> verify() async {
@@ -54,6 +60,7 @@ class D2Credential {
     }
     systemId = data["systemId"];
     await saveToPreference();
+    await AppAuth().loginUser(this);
     return true;
   }
 }

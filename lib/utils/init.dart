@@ -1,5 +1,6 @@
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
+import 'package:dhis2_flutter_toolkit/services/users.dart';
 import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,7 @@ Admin? admin;
 
 class D2Utils {
   static Future initialize(BuildContext context) async {
-    D2Credential? credentials = D2Credential.fromPreferences();
+    D2Credential? credentials = AppAuth().getLoggedInUser();
     if (credentials != null) {
       initializeClient(context, credentials);
       await initializeDb(context, credentials);

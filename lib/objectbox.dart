@@ -17,8 +17,7 @@ class ObjectBox {
 
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create(D2Credential credentials) async {
-    String storeId =
-        "${credentials.username}-${credentials.systemId}".replaceAll("-", "_");
+    String storeId = credentials.id;
     final docsDir = await getApplicationDocumentsDirectory();
     final store = await openStore(
       directory: p.join(docsDir.path, storeId),
