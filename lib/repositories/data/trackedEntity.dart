@@ -69,8 +69,6 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
       "async": "false",
     };
 
-    print(payload);
-
     Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
         "tracker", payload,
         queryParameters: params);
