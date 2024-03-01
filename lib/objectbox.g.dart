@@ -1612,7 +1612,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(25, 3195768304427450112),
       name: 'D2TrackedEntityAttributeValue',
-      lastPropertyId: const obx_int.IdUid(12, 7565238440618531892),
+      lastPropertyId: const obx_int.IdUid(13, 4391847928270235023),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -1648,7 +1648,12 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(68, 4564061379773709081),
-            relationTarget: 'D2TrackedEntity')
+            relationTarget: 'D2TrackedEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 4391847928270235023),
+            name: 'synced',
+            type: 1,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -1931,7 +1936,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(37, 7421924221224556190),
       name: 'D2Relationship',
-      lastPropertyId: const obx_int.IdUid(11, 2627170903828435516),
+      lastPropertyId: const obx_int.IdUid(12, 8409185421240647208),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -1989,6 +1994,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(11, 2627170903828435516),
             name: 'toId',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8409185421240647208),
+            name: 'synced',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -1996,7 +2006,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(38, 1373460908356869576),
       name: 'D2TrackedEntity',
-      lastPropertyId: const obx_int.IdUid(11, 792141173574313391),
+      lastPropertyId: const obx_int.IdUid(12, 3196558629111098065),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -2053,6 +2063,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(11, 792141173574313391),
             name: 'inactive',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 3196558629111098065),
+            name: 'synced',
             type: 1,
             flags: 0)
       ],
@@ -3927,13 +3942,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
             },
             objectToFB: (D2TrackedEntityAttributeValue object, fb.Builder fbb) {
               final valueOffset = fbb.writeString(object.value);
-              fbb.startTable(13);
+              fbb.startTable(14);
               fbb.addInt64(0, object.id);
               fbb.addOffset(6, valueOffset);
               fbb.addInt64(8, object.createdAt.millisecondsSinceEpoch);
               fbb.addInt64(9, object.updatedAt.millisecondsSinceEpoch);
               fbb.addInt64(10, object.trackedEntityAttribute.targetId);
               fbb.addInt64(11, object.trackedEntity.targetId);
+              fbb.addBool(12, object.synced);
               fbb.finish(fbb.endTable());
               return object.id;
             },
@@ -3946,10 +3962,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
               final valueParam = const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, '');
+              final syncedParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 28, false);
               final object = D2TrackedEntityAttributeValue(
                   createdAt: createdAtParam,
                   updatedAt: updatedAtParam,
-                  value: valueParam)
+                  value: valueParam,
+                  synced: syncedParam)
                 ..id =
                     const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
               object.trackedEntityAttribute.targetId =
@@ -4289,7 +4308,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final fromIdOffset = fbb.writeString(object.fromId);
           final toTypeOffset = fbb.writeString(object.toType);
           final toIdOffset = fbb.writeString(object.toId);
-          fbb.startTable(12);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.createdAt.millisecondsSinceEpoch);
           fbb.addInt64(2, object.updatedAt.millisecondsSinceEpoch);
@@ -4301,6 +4320,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, fromIdOffset);
           fbb.addOffset(9, toTypeOffset);
           fbb.addOffset(10, toIdOffset);
+          fbb.addBool(11, object.synced);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4329,6 +4349,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 22, '');
           final toIdParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 24, '');
+          final syncedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = D2Relationship(
               createdAt: createdAtParam,
               updatedAt: updatedAtParam,
@@ -4339,7 +4361,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fromId: fromIdParam,
               fromType: fromTypeParam,
               toType: toTypeParam,
-              toId: toIdParam)
+              toId: toIdParam,
+              synced: syncedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -4368,7 +4391,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.trackedEntityType);
           final programOwnersOffset = fbb.writeString(object.programOwners);
           final orgUnitOffset = fbb.writeString(object.orgUnit);
-          fbb.startTable(12);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.createdAt.millisecondsSinceEpoch);
           fbb.addInt64(2, object.updatedAt.millisecondsSinceEpoch);
@@ -4380,6 +4403,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addBool(8, object.potentialDuplicate);
           fbb.addBool(9, object.deleted);
           fbb.addBool(10, object.inactive);
+          fbb.addBool(11, object.synced);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4408,6 +4432,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final programOwnersParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, '');
+          final syncedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = D2TrackedEntity(
               uid: uidParam,
               trackedEntityType: trackedEntityTypeParam,
@@ -4418,7 +4444,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               deleted: deletedParam,
               potentialDuplicate: potentialDuplicateParam,
               inactive: inactiveParam,
-              programOwners: programOwnersParam)
+              programOwners: programOwnersParam,
+              synced: syncedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           obx_int.InternalToManyAccess.setRelInfo<D2TrackedEntity>(
               object.relationships,
@@ -5609,6 +5636,10 @@ class D2TrackedEntityAttributeValue_ {
   static final trackedEntity =
       obx.QueryRelationToOne<D2TrackedEntityAttributeValue, D2TrackedEntity>(
           _entities[24].properties[5]);
+
+  /// see [D2TrackedEntityAttributeValue.synced]
+  static final synced = obx.QueryBooleanProperty<D2TrackedEntityAttributeValue>(
+      _entities[24].properties[6]);
 }
 
 /// [D2TrackedEntityType] entity fields to define ObjectBox queries.
@@ -5852,6 +5883,10 @@ class D2Relationship_ {
   /// see [D2Relationship.toId]
   static final toId =
       obx.QueryStringProperty<D2Relationship>(_entities[31].properties[10]);
+
+  /// see [D2Relationship.synced]
+  static final synced =
+      obx.QueryBooleanProperty<D2Relationship>(_entities[31].properties[11]);
 }
 
 /// [D2TrackedEntity] entity fields to define ObjectBox queries.
@@ -5899,6 +5934,10 @@ class D2TrackedEntity_ {
   /// see [D2TrackedEntity.inactive]
   static final inactive =
       obx.QueryBooleanProperty<D2TrackedEntity>(_entities[32].properties[10]);
+
+  /// see [D2TrackedEntity.synced]
+  static final synced =
+      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[32].properties[11]);
 
   /// see [D2TrackedEntity.relationships]
   static final relationships =

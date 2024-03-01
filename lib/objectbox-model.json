@@ -1590,7 +1590,7 @@
     },
     {
       "id": "25:3195768304427450112",
-      "lastPropertyId": "12:7565238440618531892",
+      "lastPropertyId": "13:4391847928270235023",
       "name": "D2TrackedEntityAttributeValue",
       "properties": [
         {
@@ -1629,6 +1629,11 @@
           "flags": 520,
           "indexId": "68:4564061379773709081",
           "relationTarget": "D2TrackedEntity"
+        },
+        {
+          "id": "13:4391847928270235023",
+          "name": "synced",
+          "type": 1
         }
       ],
       "relations": []
@@ -1923,7 +1928,7 @@
     },
     {
       "id": "37:7421924221224556190",
-      "lastPropertyId": "11:2627170903828435516",
+      "lastPropertyId": "12:8409185421240647208",
       "name": "D2Relationship",
       "properties": [
         {
@@ -1983,13 +1988,18 @@
           "id": "11:2627170903828435516",
           "name": "toId",
           "type": 9
+        },
+        {
+          "id": "12:8409185421240647208",
+          "name": "synced",
+          "type": 1
         }
       ],
       "relations": []
     },
     {
       "id": "38:1373460908356869576",
-      "lastPropertyId": "11:792141173574313391",
+      "lastPropertyId": "12:3196558629111098065",
       "name": "D2TrackedEntity",
       "properties": [
         {
@@ -2048,6 +2058,11 @@
         {
           "id": "11:792141173574313391",
           "name": "inactive",
+          "type": 1
+        },
+        {
+          "id": "12:3196558629111098065",
+          "name": "synced",
           "type": 1
         }
       ],
