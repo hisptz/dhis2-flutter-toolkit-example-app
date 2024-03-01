@@ -32,15 +32,45 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
   }
 
   @override
-  Future<List<D2Enrollment>> syncMany(
-      DHIS2Client client, List<D2Enrollment> entities) {
-    // TODO: implement syncMany
-    throw UnimplementedError();
+  Future syncMany(DHIS2Client client, List<D2Enrollment> entities) async {
+    //TODO: Pagination
+    //TODO: Handle import summary
+
+    queryConditions = D2Enrollment_.synced.equals(true);
+    List<D2Enrollment> unSyncedEnrollments = await query.findAsync();
+    List<Map<String, dynamic>> enrollmentPayload = await Future.wait(
+        unSyncedEnrollments.map((enrollemnt) => enrollemnt.toMap(db: db)));
+    Map<String, List<Map<String, dynamic>>> payload = {
+      "enrollments": enrollmentPayload
+    };
+
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
+    return response;
   }
 
   @override
-  Future syncOne(DHIS2Client client, D2Enrollment entity) {
-    // TODO: implement syncOne
-    throw UnimplementedError();
+  Future syncOne(DHIS2Client client, D2Enrollment entity) async {
+    Map<String, dynamic> enrollmentPayload = await entity.toMap(db: db);
+
+    Map<String, List<Map<String, dynamic>>> payload = {
+      "enrollments": [enrollmentPayload]
+    };
+
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
+    return response;
   }
 }

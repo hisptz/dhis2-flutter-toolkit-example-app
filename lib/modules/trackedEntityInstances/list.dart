@@ -5,8 +5,10 @@ import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.da
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +74,9 @@ class _TeiListState extends State<TeiList> {
 
   @override
   Widget build(BuildContext context) {
+    final client =
+        Provider.of<D2HttpClientProvider>(context, listen: false).client;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -157,6 +162,22 @@ class _TeiListState extends State<TeiList> {
                               DetailsRow(
                                   label: "Enrollments",
                                   value: enrollments.length.toString()),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      onPressed: () async {
+                                        final response =
+                                            await D2EnrollmentRepository(db)
+                                                .syncMany(client, enrollments);
+                                        print(response);
+                                      },
+                                      icon: const Icon(
+                                        Icons.sync,
+                                        color: Colors.blueAccent,
+                                      )),
+                                ],
+                              )
                             ],
                           ),
                         ),

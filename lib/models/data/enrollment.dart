@@ -85,8 +85,23 @@ class D2Enrollment extends D2DataResource implements SyncableData {
   bool synced;
 
   @override
-  Future<Map<String, dynamic>> toMap({ObjectBox? db}) {
-    // TODO: implement toMap
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) async {
+    if (db == null) {
+      throw "ObjectBox instance is required";
+    }
+
+    Map<String, dynamic> payload = {
+      "orgUnit": orgUnit,
+      "program": program,
+      "trackedEntity": trackedEntity.target?.uid,
+      "enrollment": uid,
+      "enrolledAt": enrolledAt.toIso8601String(),
+      "deleted": deleted,
+      "occurredAt": occurredAt.toIso8601String(),
+      "status": status,
+      "notes": jsonDecode(notes ?? "[]"),
+    };
+
+    return payload;
   }
 }
