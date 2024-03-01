@@ -91,7 +91,7 @@ class D2Event extends D2DataResource implements SyncableData {
 
     if (json["trackedEntity"] != null) {
       trackedEntity.target =
-          TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
+          D2TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
     }
 
     program.target = D2ProgramRepository(db).getByUid(json["program"]);

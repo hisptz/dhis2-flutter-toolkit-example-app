@@ -78,7 +78,7 @@ class D2Enrollment extends D2DataResource implements SyncableData {
     id = D2EnrollmentRepository(db).getIdByUid(json["enrollment"]) ?? 0;
 
     trackedEntity.target =
-        TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
+        D2TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
   }
 
   @override
