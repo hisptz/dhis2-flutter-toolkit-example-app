@@ -7,6 +7,7 @@ import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.da
 import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/state/client.dart';
@@ -39,7 +40,7 @@ class TeiDetails extends StatelessWidget {
       );
     }
 
-    TrackedEntityRepository repository = TrackedEntityRepository(db);
+    D2TrackedEntityRepository repository = D2TrackedEntityRepository(db);
     D2TrackedEntity? teiInstance = repository.getById(int.parse(id!));
 
     if (teiInstance == null) {
@@ -77,25 +78,10 @@ class TeiDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              fullName,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            IconButton(
-                onPressed: () async {
-                  final response =
-                      await D2EventRepository(db).syncMany(client, events);
-                  print(response);
-                },
-                icon: const Icon(
-                  Icons.sync,
-                  color: Colors.white,
-                ))
-          ],
+        title: Text(
+          fullName,
+          style:
+              const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: SingleChildScrollView(
@@ -108,56 +94,100 @@ class TeiDetails extends StatelessWidget {
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DetailsRow(
-                          label: "Created At",
-                          value: enrollments
-                              .map((enrollment) => enrollment.createdAt)
-                              .toList()
-                              .join(", "),
-                        ),
-                        DetailsRow(
-                          label: "Updated At",
-                          value: enrollments
-                              .map((enrollment) => enrollment.updatedAt)
-                              .toList()
-                              .join(", "),
-                        ),
-                        DetailsRow(
-                          label: "Organisation Unit",
-                          value: enrollments
-                              .map((enrollment) => enrollment.orgUnitName)
-                              .toList()
-                              .join(", "),
-                        ),
-                        DetailsRow(
-                            label: "Events",
-                            value: events.isNotEmpty
-                                ? events
-                                    .map((event) {
-                                      final programStageName =
-                                          event.programStage.target?.name ??
-                                              "Unknown Program Stage";
-                                      List<D2DataValue> dataValues =
-                                          D2DataValueRepository(db)
-                                              .byEvent(event.id)
-                                              .find();
-
-                                      final dataValueList =
-                                          dataValues.isNotEmpty
-                                              ? dataValues
-                                                  .map((data) {
-                                                    return "${data.dataElement.target?.name} :  ${data.value}";
-                                                  })
-                                                  .toList()
-                                                  .join("\n ")
-                                              : "No Data Values";
-                                      return "Program Stage : $programStageName \n$dataValueList";
-                                    })
+                        Expanded(
+                          child: Column(
+                            children: [
+                              DetailsRow(
+                                label: "Created At",
+                                value: enrollments
+                                    .map((enrollment) => enrollment.createdAt)
                                     .toList()
-                                    .join("\n\n")
-                                : "None"),
+                                    .join(", "),
+                              ),
+                              DetailsRow(
+                                label: "Updated At",
+                                value: enrollments
+                                    .map((enrollment) => enrollment.updatedAt)
+                                    .toList()
+                                    .join(", "),
+                              ),
+                              DetailsRow(
+                                label: "Organisation Unit",
+                                value: enrollments
+                                    .map((enrollment) => enrollment.orgUnitName)
+                                    .toList()
+                                    .join(", "),
+                              ),
+                              DetailsRow(
+                                  label: "Events",
+                                  value: events.isNotEmpty
+                                      ? events
+                                          .map((event) {
+                                            final programStageName = event
+                                                    .programStage
+                                                    .target
+                                                    ?.name ??
+                                                "Unknown Program Stage";
+                                            List<D2DataValue> dataValues =
+                                                D2DataValueRepository(db)
+                                                    .byEvent(event.id)
+                                                    .find();
+
+                                            final dataValueList =
+                                                dataValues.isNotEmpty
+                                                    ? dataValues
+                                                        .map((data) {
+                                                          return "${data.dataElement.target?.name} :  ${data.value}";
+                                                        })
+                                                        .toList()
+                                                        .join("\n ")
+                                                    : "No Data Values";
+                                            return "Program Stage : $programStageName \n$dataValueList";
+                                          })
+                                          .toList()
+                                          .join("\n\n")
+                                      : "None"),
+                            ],
+                          ),
+                        ),
+                        PopupMenuButton<String>(
+                          onSelected: (String value) async {
+                            switch (value) {
+                              case "Events":
+                                final response = await D2EventRepository(db)
+                                    .syncMany(client, events);
+                                print(response);
+                                break;
+                              case "Relationships":
+                                final response =
+                                    await RelationshipRepository(db)
+                                        .syncMany(client, []);
+                                print(response);
+                                break;
+                              default:
+                            }
+                            print(value);
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'Events',
+                              child: Text('Events'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Relationships',
+                              child: Text('Relationships'),
+                            ),
+                          ],
+                          icon: const Icon(
+                            Icons.sync,
+                            color: Colors.blueAccent,
+                          ),
+                        )
                       ],
                     ),
                   ),
