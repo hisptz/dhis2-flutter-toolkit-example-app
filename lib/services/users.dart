@@ -40,8 +40,9 @@ class AppAuth {
 
   Future saveUser(D2Credential credentials) async {
     List<D2Credential> users = getUsers();
+    print(credentials.id);
     D2Credential? updatedUser = users
-        .firstWhereOrNull((credential) => credentials.id == credentials.id);
+        .firstWhereOrNull((D2Credential user) => user.id == credentials.id);
     if (updatedUser != null) {
       int index = users.indexOf(credentials);
       users[index] = credentials;
@@ -67,5 +68,21 @@ class AppAuth {
     D2Credential? user =
         users.firstWhereOrNull((element) => element.id == loggedInUserId);
     return user;
+  }
+
+  bool verifyUser(D2Credential credentials) {
+    List<D2Credential> users = getUsers();
+    D2Credential? user =
+        users.firstWhereOrNull((element) => element.id == credentials.id);
+    if (user == null) {
+      return false;
+    }
+
+    //TODO: This looks terrible.
+    if (credentials.password != user.password) {
+      throw "Invalid password";
+    }
+    //I guess all is good. I hope so
+    return true;
   }
 }

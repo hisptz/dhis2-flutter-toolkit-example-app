@@ -7,29 +7,24 @@ class D2Credential {
   String username;
   String password;
   String baseURL;
-  String? systemId;
 
   get id {
+    String systemId = baseURL.replaceAll("/", "-");
     return "${username}_$systemId";
   }
 
-  D2Credential(
-      {required this.username,
-      required this.password,
-      required this.baseURL,
-      this.systemId});
+  D2Credential({
+    required this.username,
+    required this.password,
+    required this.baseURL,
+  });
 
   Future saveToPreference() async {
     await AppAuth().saveUser(this);
   }
 
   Map<String, String> toMap() {
-    return {
-      "username": username,
-      "password": password,
-      "systemId": systemId ?? "",
-      "baseURL": baseURL
-    };
+    return {"username": username, "password": password, "baseURL": baseURL};
   }
 
   static D2Credential fromPreferences(String json) {
@@ -37,19 +32,18 @@ class D2Credential {
     String baseURL = map["baseURL"]!;
     String username = map["username"]!;
     String password = map["password"]!;
-    String systemId = map["systemId"]!;
     return D2Credential(
-        username: username,
-        password: password,
-        baseURL: baseURL,
-        systemId: systemId);
+      username: username,
+      password: password,
+      baseURL: baseURL,
+    );
   }
 
   Future<void> logout() async {
     return AppAuth().logoutUser();
   }
 
-  Future<bool> verify() async {
+  Future<bool> verifyOnline() async {
     DHIS2Client client = DHIS2Client(this);
     Map? data = await client.httpGet<Map>("system/info");
     if (data == null) {
@@ -58,8 +52,20 @@ class D2Credential {
     if (data["httpStatusCode"] == 401) {
       throw "Invalid username or password";
     }
-    systemId = data["systemId"];
     await saveToPreference();
+    await AppAuth().loginUser(this);
+    return true;
+  }
+
+  Future<bool> verifyOffline() async {
+    return AppAuth().verifyUser(this);
+  }
+
+  Future<bool> verify() async {
+    bool verified = await verifyOffline();
+    if (!verified) {
+      return await verifyOnline();
+    }
     await AppAuth().loginUser(this);
     return true;
   }
