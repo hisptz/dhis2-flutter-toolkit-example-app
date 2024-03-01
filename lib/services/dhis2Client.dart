@@ -58,7 +58,7 @@ class DHIS2Client {
     http.Response response = await http.post(
       apiUrl,
       headers: headers,
-      body: body,
+      body: jsonEncode(body),
     );
     return jsonDecode(response.body) as T;
   }
@@ -75,7 +75,7 @@ class DHIS2Client {
     http.Response response = await http.put(
       apiUrl,
       headers: headers,
-      body: body,
+      body: jsonEncode(body),
     );
 
     return jsonDecode(response.body) as T;

@@ -36,8 +36,10 @@ class D2EventRepository extends BaseRepository<D2Event>
   }
 
   @override
-  Future<List<D2Event>> syncMany(
-      DHIS2Client client, List<D2Event> entities) async {
+  Future syncMany(DHIS2Client client, List<D2Event> entities) async {
+    //TODO: Pagination
+    //TODO: Handle import summary
+
     queryConditions = D2Event_.synced.equals(false);
     List<D2Event> unSyncedEvents = await query.findAsync();
     List<Map<String, dynamic>> eventsPayload =
@@ -48,19 +50,29 @@ class D2EventRepository extends BaseRepository<D2Event>
       "async": "false",
     };
 
-    Map<String, dynamic> response = await client.httpPut<Map<String, dynamic>>(
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
         "tracker", payload,
         queryParameters: params);
 
-    //TODO: Pagination
-    //TODO: Handle import summary
-
-    return <D2Event>[];
+    return response;
   }
 
   @override
-  Future syncOne(DHIS2Client client, D2Event entity) {
-    // TODO: implement syncOne
-    throw UnimplementedError();
+  Future syncOne(DHIS2Client client, D2Event entity) async {
+    Map<String, dynamic> eventPayload = await entity.toMap(db: db);
+
+    Map<String, List<Map<String, dynamic>>> payload = {
+      "events": [eventPayload]
+    };
+
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
+    return response;
   }
 }

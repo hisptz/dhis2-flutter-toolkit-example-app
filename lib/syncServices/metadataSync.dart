@@ -90,6 +90,8 @@ class MetadataSync {
       D2EventSync eventsSync = D2EventSync(db, client, program: program);
       eventsSync.sync();
       await controller.addStream(eventsSync.stream);
+
+      break;
     }
   }
 

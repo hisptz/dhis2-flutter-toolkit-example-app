@@ -117,7 +117,7 @@ class D2Event extends D2DataResource implements SyncableData {
 
     Map<String, dynamic> payload = {
       "scheduledAt": scheduledAt?.toIso8601String(),
-      "program": program,
+      "program": program.target?.uid,
       "event": uid,
       "programStage": programStage.target?.uid,
       "orgUnit": orgUnit,

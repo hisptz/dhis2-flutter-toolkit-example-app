@@ -9,6 +9,7 @@ import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class TeiDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = Provider.of<DBProvider>(context, listen: false).db;
+    final client =
+        Provider.of<D2HttpClientProvider>(context, listen: false).client;
     if (id == null) {
       return Scaffold(
         appBar: AppBar(
@@ -74,10 +77,25 @@ class TeiDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          fullName,
-          style:
-              const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              fullName,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            IconButton(
+                onPressed: () async {
+                  final response =
+                      await D2EventRepository(db).syncMany(client, events);
+                  print(response);
+                },
+                icon: const Icon(
+                  Icons.sync,
+                  color: Colors.white,
+                ))
+          ],
         ),
       ),
       body: SingleChildScrollView(
