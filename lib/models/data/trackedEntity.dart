@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:objectbox/objectbox.dart';
-
-import '../../objectbox.g.dart';
 
 @Entity()
 class D2TrackedEntity extends D2DataResource implements SyncableData {
@@ -34,10 +31,11 @@ class D2TrackedEntity extends D2DataResource implements SyncableData {
   bool deleted;
   bool inactive;
 
-  @Backlink()
+  @Backlink("trackedEntity")
   final enrollments = ToMany<D2Enrollment>();
 
-  final relationships = ToMany<D2Relationship>();
+  //Disabled for now
+  // final relationships = ToMany<D2Relationship>();
 
   final attributes = ToMany<D2TrackedEntityAttributeValue>();
 

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
@@ -16,8 +15,6 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
-
-import '../../objectbox.g.dart';
 
 @Entity()
 class D2Event extends D2DataResource implements SyncableData {
@@ -45,10 +42,11 @@ class D2Event extends D2DataResource implements SyncableData {
   String attributeOptionCombo;
   String? notes;
 
-  @Backlink()
-  final relationships = ToMany<D2Relationship>();
+  //Disabled for now
+  // @Backlink("event")
+  // final relationships = ToMany<D2Relationship>();
 
-  @Backlink()
+  @Backlink("event")
   final dataValues = ToMany<D2DataValue>();
   final enrollment = ToOne<D2Enrollment>();
   final trackedEntity = ToOne<D2TrackedEntity>();

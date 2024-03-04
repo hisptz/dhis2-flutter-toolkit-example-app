@@ -199,7 +199,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(3, 1663155969181960685),
       name: 'D2Enrollment',
-      lastPropertyId: const obx_int.IdUid(23, 6168278436642439702),
+      lastPropertyId: const obx_int.IdUid(25, 4473541613204756299),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -208,31 +208,11 @@ final _entities = <obx_int.ModelEntity>[
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 4433930543704613761),
-            name: 'createdAtClient',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(5, 6943217339877337460),
             name: 'uid',
             type: 9,
             flags: 2080,
             indexId: const obx_int.IdUid(4, 6967472152991746614)),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 8355035083546886852),
-            name: 'program',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 3746109662932558515),
-            name: 'orgUnit',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 3973816791637689143),
-            name: 'orgUnitName',
-            type: 9,
-            flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(12, 7809385819915414280),
             name: 'deleted',
@@ -284,17 +264,26 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(23, 6168278436642439702),
             name: 'synced',
             type: 1,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 3522904329757222728),
+            name: 'orgUnitId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(89, 1213347873640978773),
+            relationTarget: 'D2OrganisationUnit'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(25, 4473541613204756299),
+            name: 'programId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(90, 8868934273064290758),
+            relationTarget: 'D2Program')
       ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(3, 4748488664597894263),
-            name: 'relationships',
-            targetId: const obx_int.IdUid(37, 7421924221224556190))
-      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[
         obx_int.ModelBacklink(
-            name: 'events', srcEntity: 'D2Event', srcField: '')
+            name: 'events', srcEntity: 'D2Event', srcField: 'enrollment')
       ]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 6304522207734519244),
@@ -411,17 +400,11 @@ final _entities = <obx_int.ModelEntity>[
             type: 1,
             flags: 0)
       ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(5, 5137975099450215402),
-            name: 'relationships',
-            targetId: const obx_int.IdUid(37, 7421924221224556190)),
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(6, 8741056730089980939),
-            name: 'dataValues',
-            targetId: const obx_int.IdUid(2, 3504265121944180400))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[
+        obx_int.ModelBacklink(
+            name: 'dataValues', srcEntity: 'D2DataValue', srcField: 'event')
+      ]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(5, 6463845131632959574),
       name: 'D2Legend',
@@ -2073,17 +2056,15 @@ final _entities = <obx_int.ModelEntity>[
       ],
       relations: <obx_int.ModelRelation>[
         obx_int.ModelRelation(
-            id: const obx_int.IdUid(27, 2549562181531477861),
-            name: 'relationships',
-            targetId: const obx_int.IdUid(37, 7421924221224556190)),
-        obx_int.ModelRelation(
             id: const obx_int.IdUid(28, 4750695779070416988),
             name: 'attributes',
             targetId: const obx_int.IdUid(25, 3195768304427450112))
       ],
       backlinks: <obx_int.ModelBacklink>[
         obx_int.ModelBacklink(
-            name: 'enrollments', srcEntity: 'D2Enrollment', srcField: ''),
+            name: 'enrollments',
+            srcEntity: 'D2Enrollment',
+            srcField: 'trackedEntity'),
         obx_int.ModelBacklink(
             name: 'events', srcEntity: 'D2Event', srcField: '')
       ])
@@ -2125,7 +2106,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(38, 1373460908356869576),
-      lastIndexId: const obx_int.IdUid(88, 7001122776610672884),
+      lastIndexId: const obx_int.IdUid(90, 8868934273064290758),
       lastRelationId: const obx_int.IdUid(28, 4750695779070416988),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [
@@ -2232,7 +2213,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         8407163552694724171,
         2504752897804572738,
         8453420416935974719,
-        2716010193377614723
+        2716010193377614723,
+        4433930543704613761,
+        8355035083546886852,
+        3746109662932558515,
+        3973816791637689143
       ],
       retiredRelationUids: const [
         1443067466517591468,
@@ -2243,7 +2228,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         7053966055083793025,
         6703153274877028882,
         276019404732129211,
-        4290133851120675811
+        4290133851120675811,
+        4748488664597894263,
+        5137975099450215402,
+        8741056730089980939,
+        2549562181531477861
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -2403,10 +2392,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         }),
     D2Enrollment: obx_int.EntityDefinition<D2Enrollment>(
         model: _entities[2],
-        toOneRelations: (D2Enrollment object) => [object.trackedEntity],
+        toOneRelations: (D2Enrollment object) =>
+            [object.trackedEntity, object.orgUnit, object.program],
         toManyRelations: (D2Enrollment object) => {
-              obx_int.RelInfo<D2Enrollment>.toMany(3, object.id):
-                  object.relationships,
               obx_int.RelInfo<D2Event>.toOneBacklink(26, object.id,
                   (D2Event srcObject) => srcObject.enrollment): object.events
             },
@@ -2416,19 +2404,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (D2Enrollment object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          final programOffset = fbb.writeString(object.program);
-          final orgUnitOffset = fbb.writeString(object.orgUnit);
-          final orgUnitNameOffset = fbb.writeString(object.orgUnitName);
           final statusOffset = fbb.writeString(object.status);
           final notesOffset =
               object.notes == null ? null : fbb.writeString(object.notes!);
-          fbb.startTable(24);
+          fbb.startTable(26);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(3, object.createdAtClient.millisecondsSinceEpoch);
           fbb.addOffset(4, uidOffset);
-          fbb.addOffset(5, programOffset);
-          fbb.addOffset(8, orgUnitOffset);
-          fbb.addOffset(9, orgUnitNameOffset);
           fbb.addBool(11, object.deleted);
           fbb.addBool(12, object.followup);
           fbb.addOffset(14, statusOffset);
@@ -2439,6 +2420,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(20, object.occurredAt.millisecondsSinceEpoch);
           fbb.addInt64(21, object.trackedEntity.targetId);
           fbb.addBool(22, object.synced);
+          fbb.addInt64(23, object.orgUnit.targetId);
+          fbb.addInt64(24, object.program.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2447,19 +2430,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
-          final programParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
           final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0));
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0));
-          final createdAtClientParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
-          final orgUnitParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
-          final orgUnitNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
           final enrolledAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0));
           final followupParam =
@@ -2476,12 +2450,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 48, false);
           final object = D2Enrollment(
               uid: uidParam,
-              program: programParam,
               updatedAt: updatedAtParam,
               createdAt: createdAtParam,
-              createdAtClient: createdAtClientParam,
-              orgUnit: orgUnitParam,
-              orgUnitName: orgUnitNameParam,
               enrolledAt: enrolledAtParam,
               followup: followupParam,
               deleted: deletedParam,
@@ -2493,10 +2463,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.trackedEntity.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
           object.trackedEntity.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<D2Enrollment>(
-              object.relationships,
-              store,
-              obx_int.RelInfo<D2Enrollment>.toMany(3, object.id));
+          object.orgUnit.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
+          object.orgUnit.attach(store);
+          object.program.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          object.program.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<D2Enrollment>(
               object.events,
               store,
@@ -2513,9 +2485,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.programStage
             ],
         toManyRelations: (D2Event object) => {
-              obx_int.RelInfo<D2Event>.toMany(5, object.id):
-                  object.relationships,
-              obx_int.RelInfo<D2Event>.toMany(6, object.id): object.dataValues
+              obx_int.RelInfo<D2DataValue>.toOneBacklink(
+                      9, object.id, (D2DataValue srcObject) => srcObject.event):
+                  object.dataValues
             },
         getId: (D2Event object) => object.id,
         setId: (D2Event object, int id) {
@@ -2627,10 +2599,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.programStage.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
           object.programStage.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<D2Event>(object.relationships,
-              store, obx_int.RelInfo<D2Event>.toMany(5, object.id));
-          obx_int.InternalToManyAccess.setRelInfo<D2Event>(object.dataValues,
-              store, obx_int.RelInfo<D2Event>.toMany(6, object.id));
+          obx_int.InternalToManyAccess.setRelInfo<D2Event>(
+              object.dataValues,
+              store,
+              obx_int.RelInfo<D2DataValue>.toOneBacklink(
+                  9, object.id, (D2DataValue srcObject) => srcObject.event));
           return object;
         }),
     D2Legend: obx_int.EntityDefinition<D2Legend>(
@@ -4371,8 +4344,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
         model: _entities[32],
         toOneRelations: (D2TrackedEntity object) => [],
         toManyRelations: (D2TrackedEntity object) => {
-              obx_int.RelInfo<D2TrackedEntity>.toMany(27, object.id):
-                  object.relationships,
               obx_int.RelInfo<D2TrackedEntity>.toMany(28, object.id):
                   object.attributes,
               obx_int.RelInfo<D2Enrollment>.toOneBacklink(22, object.id,
@@ -4447,10 +4418,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
               programOwners: programOwnersParam,
               synced: syncedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          obx_int.InternalToManyAccess.setRelInfo<D2TrackedEntity>(
-              object.relationships,
-              store,
-              obx_int.RelInfo<D2TrackedEntity>.toMany(27, object.id));
           obx_int.InternalToManyAccess.setRelInfo<D2TrackedEntity>(
               object.attributes,
               store,
@@ -4580,71 +4547,59 @@ class D2Enrollment_ {
   static final id =
       obx.QueryIntegerProperty<D2Enrollment>(_entities[2].properties[0]);
 
-  /// see [D2Enrollment.createdAtClient]
-  static final createdAtClient =
-      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[1]);
-
   /// see [D2Enrollment.uid]
   static final uid =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[2]);
-
-  /// see [D2Enrollment.program]
-  static final program =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[3]);
-
-  /// see [D2Enrollment.orgUnit]
-  static final orgUnit =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[4]);
-
-  /// see [D2Enrollment.orgUnitName]
-  static final orgUnitName =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[5]);
+      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[1]);
 
   /// see [D2Enrollment.deleted]
   static final deleted =
-      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[6]);
+      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[2]);
 
   /// see [D2Enrollment.followup]
   static final followup =
-      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[7]);
+      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[3]);
 
   /// see [D2Enrollment.status]
   static final status =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[8]);
+      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[4]);
 
   /// see [D2Enrollment.notes]
   static final notes =
-      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[9]);
+      obx.QueryStringProperty<D2Enrollment>(_entities[2].properties[5]);
 
   /// see [D2Enrollment.createdAt]
   static final createdAt =
-      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[10]);
+      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[6]);
 
   /// see [D2Enrollment.updatedAt]
   static final updatedAt =
-      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[11]);
+      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[7]);
 
   /// see [D2Enrollment.enrolledAt]
   static final enrolledAt =
-      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[12]);
+      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[8]);
 
   /// see [D2Enrollment.occurredAt]
   static final occurredAt =
-      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[13]);
+      obx.QueryDateProperty<D2Enrollment>(_entities[2].properties[9]);
 
   /// see [D2Enrollment.trackedEntity]
   static final trackedEntity =
       obx.QueryRelationToOne<D2Enrollment, D2TrackedEntity>(
-          _entities[2].properties[14]);
+          _entities[2].properties[10]);
 
   /// see [D2Enrollment.synced]
   static final synced =
-      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[15]);
+      obx.QueryBooleanProperty<D2Enrollment>(_entities[2].properties[11]);
 
-  /// see [D2Enrollment.relationships]
-  static final relationships =
-      obx.QueryRelationToMany<D2Enrollment, D2Relationship>(
-          _entities[2].relations[0]);
+  /// see [D2Enrollment.orgUnit]
+  static final orgUnit =
+      obx.QueryRelationToOne<D2Enrollment, D2OrganisationUnit>(
+          _entities[2].properties[12]);
+
+  /// see [D2Enrollment.program]
+  static final program = obx.QueryRelationToOne<D2Enrollment, D2Program>(
+      _entities[2].properties[13]);
 
   /// see [D2Enrollment.events]
   static final events =
@@ -4733,13 +4688,9 @@ class D2Event_ {
   static final synced =
       obx.QueryBooleanProperty<D2Event>(_entities[3].properties[19]);
 
-  /// see [D2Event.relationships]
-  static final relationships = obx.QueryRelationToMany<D2Event, D2Relationship>(
-      _entities[3].relations[0]);
-
   /// see [D2Event.dataValues]
   static final dataValues =
-      obx.QueryRelationToMany<D2Event, D2DataValue>(_entities[3].relations[1]);
+      obx.QueryBacklinkToMany<D2DataValue, D2Event>(D2DataValue_.event);
 }
 
 /// [D2Legend] entity fields to define ObjectBox queries.
@@ -5939,15 +5890,10 @@ class D2TrackedEntity_ {
   static final synced =
       obx.QueryBooleanProperty<D2TrackedEntity>(_entities[32].properties[11]);
 
-  /// see [D2TrackedEntity.relationships]
-  static final relationships =
-      obx.QueryRelationToMany<D2TrackedEntity, D2Relationship>(
-          _entities[32].relations[0]);
-
   /// see [D2TrackedEntity.attributes]
   static final attributes =
       obx.QueryRelationToMany<D2TrackedEntity, D2TrackedEntityAttributeValue>(
-          _entities[32].relations[1]);
+          _entities[32].relations[0]);
 
   /// see [D2TrackedEntity.enrollments]
   static final enrollments =

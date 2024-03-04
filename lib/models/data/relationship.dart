@@ -4,8 +4,6 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../objectbox.g.dart';
-
 Map getRelationshipConstraints(Map json) {
   if (json["trackedEntity"] != null) {
     return {

@@ -7,8 +7,6 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../objectbox.g.dart';
-
 @Entity()
 class D2TrackedEntityAttributeValue extends D2DataResource
     implements SyncableData {

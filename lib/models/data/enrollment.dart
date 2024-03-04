@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
@@ -13,8 +12,6 @@ import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
-
-import '../../objectbox.g.dart';
 
 @Entity()
 class D2Enrollment extends D2DataResource implements SyncableData {
@@ -35,16 +32,22 @@ class D2Enrollment extends D2DataResource implements SyncableData {
   String status;
   String? notes;
 
-  @Backlink()
+  @Backlink("enrollment")
   final events = ToMany<D2Event>();
 
-  final relationships = ToMany<D2Relationship>();
+  //Disabled for now
+  // @Backlink("enrollment")
+  // final relationships = ToMany<D2Relationship>();
 
   final trackedEntity = ToOne<D2TrackedEntity>();
 
   final orgUnit = ToOne<D2OrganisationUnit>();
 
   final program = ToOne<D2Program>();
+
+  get orgUnitName {
+    return orgUnit.target?.name;
+  }
 
   D2Enrollment(
       {required this.uid,

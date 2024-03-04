@@ -7,8 +7,6 @@ import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../objectbox.g.dart';
-
 @Entity()
 class D2DataValue extends D2DataResource implements SyncableData {
   @override
