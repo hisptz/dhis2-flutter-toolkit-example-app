@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -23,10 +23,6 @@ class D2TrackedEntity extends D2DataResource implements SyncableData {
   @Unique()
   String uid;
   String trackedEntityType;
-
-  String programOwners;
-  String orgUnit;
-  DateTime createdAtClient;
   bool potentialDuplicate;
   bool deleted;
   bool inactive;
@@ -37,37 +33,36 @@ class D2TrackedEntity extends D2DataResource implements SyncableData {
   //Disabled for now
   // final relationships = ToMany<D2Relationship>();
 
+  final orgUnit = ToOne<D2OrganisationUnit>();
+
+  @Backlink("trackedEntity")
   final attributes = ToMany<D2TrackedEntityAttributeValue>();
 
   @Backlink()
   final events = ToMany<D2Event>();
 
   D2TrackedEntity(
-      {required this.uid,
-      required this.trackedEntityType,
-      required this.orgUnit,
-      required this.createdAtClient,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.deleted,
-      required this.potentialDuplicate,
-      required this.inactive,
-      required this.programOwners,
-      required this.synced});
+      this.uid,
+      this.trackedEntityType,
+      this.createdAt,
+      this.updatedAt,
+      this.deleted,
+      this.potentialDuplicate,
+      this.inactive,
+      this.synced);
 
   D2TrackedEntity.fromMap(ObjectBox db, Map json)
       : uid = json["trackedEntity"],
         trackedEntityType = json["trackedEntityType"],
-        orgUnit = json["orgUnit"],
-        createdAtClient = DateTime.parse(json["createdAtClient"]),
         createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         deleted = json["deleted"],
         synced = true,
         potentialDuplicate = json["potentialDuplicate"],
-        programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
     id = D2TrackedEntityRepository(db).getIdByUid(json["trackedEntity"]) ?? 0;
+
+    orgUnit.target = D2OrgUnitRepository(db).getByUid(json["orgUnit"]);
   }
 
   @override
