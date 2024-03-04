@@ -23,27 +23,44 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
 
   @override
   Future syncMany(DHIS2Client client) async {
-    //TODO: Pagination
     //TODO: Handle import summary
 
     queryConditions = D2Relationship_.synced.equals(false);
     List<D2Relationship> unSyncedRelationships = await query.findAsync();
-    List<Map<String, dynamic>> relationshipsPayload = await Future.wait(
-        unSyncedRelationships
-            .map((relationship) => relationship.toMap(db: db)));
-    Map<String, List<Map<String, dynamic>>> payload = {
-      "relationships": relationshipsPayload
-    };
+    List<Map<String, dynamic>> responses = [];
+    int chunkSize = 100;
+    int currentIndex = 0;
 
-    Map<String, String> params = {
-      "async": "false",
-    };
+    while (currentIndex < unSyncedRelationships.length) {
+      int endIndex = currentIndex + chunkSize;
+      if (endIndex > unSyncedRelationships.length) {
+        endIndex = unSyncedRelationships.length;
+      }
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+      List<D2Relationship> currentChunk =
+          unSyncedRelationships.sublist(currentIndex, endIndex);
 
-    return response;
+      List<Map<String, dynamic>> chunkPayload = await Future.wait(
+          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
+
+      Map<String, List<Map<String, dynamic>>> payload = {
+        "relationships": chunkPayload
+      };
+
+      Map<String, String> params = {
+        "async": "false",
+      };
+
+      Map<String, dynamic> response =
+          await client.httpPost<Map<String, dynamic>>("tracker", payload,
+              queryParameters: params);
+
+      responses.add(response);
+
+      currentIndex += chunkSize;
+    }
+
+    return responses;
   }
 
   @override
