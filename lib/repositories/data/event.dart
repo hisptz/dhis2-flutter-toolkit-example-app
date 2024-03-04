@@ -37,24 +37,44 @@ class D2EventRepository extends BaseRepository<D2Event>
 
   @override
   Future syncMany(DHIS2Client client) async {
-    //TODO: Pagination
     //TODO: Handle import summary
 
     queryConditions = D2Event_.synced.equals(false);
     List<D2Event> unSyncedEvents = await query.findAsync();
-    List<Map<String, dynamic>> eventsPayload =
-        await Future.wait(unSyncedEvents.map((event) => event.toMap(db: db)));
-    Map<String, List<Map<String, dynamic>>> payload = {"events": eventsPayload};
+    List<Map<String, dynamic>> responses = [];
+    int chunkSize = 100;
+    int currentIndex = 0;
 
-    Map<String, String> params = {
-      "async": "false",
-    };
+    while (currentIndex < unSyncedEvents.length) {
+      int endIndex = currentIndex + chunkSize;
+      if (endIndex > unSyncedEvents.length) {
+        endIndex = unSyncedEvents.length;
+      }
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+      List<D2Event> currentChunk =
+          unSyncedEvents.sublist(currentIndex, endIndex);
 
-    return response;
+      List<Map<String, dynamic>> chunkPayload = await Future.wait(
+          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
+
+      Map<String, List<Map<String, dynamic>>> payload = {
+        "events": chunkPayload
+      };
+
+      Map<String, String> params = {
+        "async": "false",
+      };
+
+      Map<String, dynamic> response =
+          await client.httpPost<Map<String, dynamic>>("tracker", payload,
+              queryParameters: params);
+
+      responses.add(response);
+
+      currentIndex += chunkSize;
+    }
+
+    return responses;
   }
 
   @override
