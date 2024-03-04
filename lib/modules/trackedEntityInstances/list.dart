@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
@@ -7,6 +6,7 @@ import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ final debouncer = Debouncer(milliseconds: 1000);
 
 class _TeiListState extends State<TeiList> {
   TextEditingController searchController = TextEditingController();
-  late TrackedEntityRepository repository;
+  late D2TrackedEntityRepository repository;
   late ObjectBox db;
   final PagingController<int, D2TrackedEntity> _pagingController =
       PagingController(firstPageKey: 0);
@@ -57,7 +57,7 @@ class _TeiListState extends State<TeiList> {
   void initState() {
     setState(() {
       db = Provider.of<DBProvider>(context, listen: false).db;
-      repository = TrackedEntityRepository(db);
+      repository = D2TrackedEntityRepository(db);
     });
 
     _pagingController.addPageRequestListener((pageKey) {
@@ -72,11 +72,29 @@ class _TeiListState extends State<TeiList> {
 
   @override
   Widget build(BuildContext context) {
+    final client =
+        Provider.of<D2HttpClientProvider>(context, listen: false).client;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Tracked Entity Instances",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Tracked Entity Instances",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            IconButton(
+                onPressed: () async {
+                  final response =
+                      await D2TrackedEntityRepository(db).syncMany(client);
+                },
+                icon: const Icon(
+                  Icons.sync,
+                  color: Colors.white,
+                )),
+          ],
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -141,22 +159,56 @@ class _TeiListState extends State<TeiList> {
                           onTap: () {
                             context.push("/tei/${item.id}");
                           },
-                          child: Column(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              DetailsRow(label: "Full name", value: fullName),
-                              DetailsRow(
-                                label: "Attributes",
-                                value: attributeValues
-                                    .map((value) {
-                                      return "${value.trackedEntityAttribute.target!.name}: ${value.value}";
-                                    })
-                                    .toList()
-                                    .join(", "),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          fullName,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(enrollments.isNotEmpty
+                                            ? "Has Enrollments"
+                                            : "No Enrollments")
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                              DetailsRow(
-                                  label: "Enrollments",
-                                  value: enrollments.length.toString()),
+                              PopupMenuButton<String>(
+                                onSelected: (String value) async {
+                                  switch (value) {
+                                    case "TrackedEntity":
+                                      final response =
+                                          await D2TrackedEntityRepository(db)
+                                              .syncOne(client, item);
+                                      print(response);
+                                      break;
+                                    default:
+                                  }
+                                  print(value);
+                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry<String>>[
+                                  const PopupMenuItem<String>(
+                                    value: 'TrackedEntity',
+                                    child: Text('Tracked Entity'),
+                                  ),
+                                ],
+                                icon: const Icon(
+                                  Icons.sync,
+                                  color: Colors.blueAccent,
+                                ),
+                              )
                             ],
                           ),
                         ),

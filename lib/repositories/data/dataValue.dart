@@ -27,6 +27,7 @@ class D2DataValueRepository extends BaseRepository<D2DataValue> {
     return query.findAsync();
   }
 
+  @override
   Future saveEntities(List<D2DataValue> entities) async {
     return box.putManyAsync(entities);
   }

@@ -4,5 +4,5 @@ abstract class SyncableRepository<T> {
   //Sync that one entity to the server
   Future syncOne(DHIS2Client client, T entity);
 
-  Future<List<T>> syncMany(DHIS2Client client, List<T> entities);
+  Future syncMany(DHIS2Client client);
 }

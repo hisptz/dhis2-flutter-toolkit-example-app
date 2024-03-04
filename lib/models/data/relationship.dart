@@ -1,4 +1,5 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
+import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:objectbox/objectbox.dart';
@@ -21,7 +22,7 @@ Map getRelationshipConstraints(Map json) {
 }
 
 @Entity()
-class D2Relationship extends D2DataResource {
+class D2Relationship extends D2DataResource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -43,23 +44,24 @@ class D2Relationship extends D2DataResource {
   late String toType;
   late String toId;
 
-  D2Relationship({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.uid,
-    required this.relationshipName,
-    required this.relationshipType,
-    required this.bidirectional,
-    required this.fromId,
-    required this.fromType,
-    required this.toType,
-    required this.toId,
-  });
+  D2Relationship(
+      {required this.createdAt,
+      required this.updatedAt,
+      required this.uid,
+      required this.relationshipName,
+      required this.relationshipType,
+      required this.bidirectional,
+      required this.fromId,
+      required this.fromType,
+      required this.toType,
+      required this.toId,
+      required this.synced});
 
   D2Relationship.fromMap(ObjectBox db, Map json)
       : createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         uid = json["relationship"],
+        synced = true,
         relationshipName = json["relationshipName"],
         relationshipType = json["relationshipType"],
         bidirectional = json["bidirectional"] {
@@ -75,5 +77,27 @@ class D2Relationship extends D2DataResource {
     Map toData = getRelationshipConstraints(to);
     toType = toData["type"];
     toId = toData["id"];
+  }
+
+  @override
+  bool synced;
+
+  @override
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) async {
+    if (db == null) {
+      throw "ObjectBox instance is required";
+    }
+
+    Map<String, dynamic> payload = {
+      "relationshipType": relationshipType,
+      "from": {
+        fromType: {fromType: fromId}
+      },
+      "to": {
+        toType: {toType: toId}
+      }
+    };
+
+    return payload;
   }
 }

@@ -36,6 +36,10 @@ abstract class BaseRepository<T extends DHIS2Resource> {
     return query.find();
   }
 
+  Future<List<T>> findAsync() async {
+    return await query.findAsync();
+  }
+
   T? getById(int id) {
     return box.get(id);
   }

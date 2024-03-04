@@ -72,7 +72,7 @@ class D2Enrollment extends D2DataResource implements SyncableData {
     id = D2EnrollmentRepository(db).getIdByUid(json["enrollment"]) ?? 0;
 
     trackedEntity.target =
-        TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
+        D2TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
     orgUnit.target = D2OrgUnitRepository(db).getByUid(json["orgUnit"]);
     program.target = D2ProgramRepository(db).getByUid(json["program"]);
   }
@@ -81,8 +81,23 @@ class D2Enrollment extends D2DataResource implements SyncableData {
   bool synced;
 
   @override
-  Future<Map<String, dynamic>> toMap({ObjectBox? db}) {
-    // TODO: implement toMap
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) async {
+    if (db == null) {
+      throw "ObjectBox instance is required";
+    }
+
+    Map<String, dynamic> payload = {
+      "orgUnit": orgUnit.target?.uid,
+      "program": program.target?.uid,
+      "trackedEntity": trackedEntity.target?.uid,
+      "enrollment": uid,
+      "enrolledAt": enrolledAt.toIso8601String(),
+      "deleted": deleted,
+      "occurredAt": occurredAt.toIso8601String(),
+      "status": status,
+      "notes": jsonDecode(notes ?? "[]"),
+    };
+
+    return payload;
   }
 }

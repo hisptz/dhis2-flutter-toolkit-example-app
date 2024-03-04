@@ -1,11 +1,14 @@
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 
 import '../../objectbox.g.dart';
 
-class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
-  TrackedEntityRepository(super.db);
+class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
+    implements SyncableRepository<D2TrackedEntity> {
+  D2TrackedEntityRepository(super.db);
 
   @override
   D2TrackedEntity? getByUid(String uid) {
@@ -24,7 +27,7 @@ class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
     return D2TrackedEntity.fromMap(db, json);
   }
 
-  TrackedEntityRepository byIdentifiableToken(String keyword) {
+  D2TrackedEntityRepository byIdentifiableToken(String keyword) {
     final trackedEntities = box.getAll();
 
     final matchingEntities = trackedEntities.where((trackedEntity) {
@@ -46,5 +49,49 @@ class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
         .oneOf(uidList.isNotEmpty ? uidList : ["null"], caseSensitive: false);
 
     return this;
+  }
+
+  @override
+  Future syncMany(DHIS2Client client) async {
+    //TODO: Pagination
+    //TODO: Handle import summary
+
+    queryConditions = D2TrackedEntity_.synced.equals(false);
+    List<D2TrackedEntity> unSyncedTrackedEntities = await query.findAsync();
+    List<Map<String, dynamic>> trackedEntitiesPayload = await Future.wait(
+        unSyncedTrackedEntities
+            .map((trackedEntity) => trackedEntity.toMap(db: db)));
+    Map<String, List<Map<String, dynamic>>> payload = {
+      "trackedEntities": trackedEntitiesPayload
+    };
+
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
+    return response;
+  }
+
+  @override
+  Future syncOne(DHIS2Client client, D2TrackedEntity entity) async {
+    Map<String, dynamic> trackedEntityPayload = await entity.toMap(db: db);
+
+    Map<String, List<Map<String, dynamic>>> payload = {
+      "trackedEntities": [trackedEntityPayload]
+    };
+
+    Map<String, String> params = {
+      "async": "false",
+    };
+
+    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
+        "tracker", payload,
+        queryParameters: params);
+
+    return response;
   }
 }

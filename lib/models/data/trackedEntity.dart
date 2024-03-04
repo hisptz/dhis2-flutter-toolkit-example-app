@@ -4,15 +4,17 @@ import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
+import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
 
 @Entity()
-class D2TrackedEntity extends D2DataResource {
+class D2TrackedEntity extends D2DataResource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -52,7 +54,8 @@ class D2TrackedEntity extends D2DataResource {
       required this.deleted,
       required this.potentialDuplicate,
       required this.inactive,
-      required this.programOwners});
+      required this.programOwners,
+      required this.synced});
 
   D2TrackedEntity.fromMap(ObjectBox db, Map json)
       : uid = json["trackedEntity"],
@@ -62,9 +65,38 @@ class D2TrackedEntity extends D2DataResource {
         createdAt = DateTime.parse(json["createdAt"]),
         updatedAt = DateTime.parse(json["updatedAt"]),
         deleted = json["deleted"],
+        synced = true,
         potentialDuplicate = json["potentialDuplicate"],
         programOwners = jsonEncode(json["programOwners"] ?? ""),
         inactive = json["inactive"] {
-    id = TrackedEntityRepository(db).getIdByUid(json["trackedEntity"]) ?? 0;
+    id = D2TrackedEntityRepository(db).getIdByUid(json["trackedEntity"]) ?? 0;
+  }
+
+  @override
+  bool synced;
+
+  @override
+  Future<Map<String, dynamic>> toMap({ObjectBox? db}) async {
+    if (db == null) {
+      throw "ObjectBox instance is required";
+    }
+
+    List<D2TrackedEntityAttributeValue> attributes =
+        await D2TrackedEntityAttributeValueRepository(db)
+            .byTrackedEntity(id)
+            .findAsync();
+
+    List<Map<String, dynamic>> attributesPayload = await Future.wait(attributes
+        .map<Future<Map<String, dynamic>>>((e) => e.toMap())
+        .toList());
+
+    Map<String, dynamic> payload = {
+      "orgUnit": orgUnit,
+      "trackedEntity": uid,
+      "trackedEntityType": trackedEntityType,
+      "attributes": attributesPayload,
+    };
+
+    return payload;
   }
 }
