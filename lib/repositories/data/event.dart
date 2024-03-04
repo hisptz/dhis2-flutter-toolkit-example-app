@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
 class D2EventRepository extends BaseRepository<D2Event>
     implements SyncableRepository<D2Event> {
   D2EventRepository(super.db);
+
+  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
   @override
   D2Event? getByUid(String uid) {
@@ -42,8 +47,15 @@ class D2EventRepository extends BaseRepository<D2Event>
     queryConditions = D2Event_.synced.equals(false);
     List<D2Event> unSyncedEvents = await query.findAsync();
     List<Map<String, dynamic>> responses = [];
-    int chunkSize = 100;
+    int chunkSize = 50;
     int currentIndex = 0;
+
+    SyncStatus status = SyncStatus(
+        synced: 0,
+        total: (unSyncedEvents.length / chunkSize).ceil(),
+        status: Status.initialized,
+        label: "Events");
+    controller.add(status);
 
     while (currentIndex < unSyncedEvents.length) {
       int endIndex = currentIndex + chunkSize;
@@ -65,15 +77,21 @@ class D2EventRepository extends BaseRepository<D2Event>
         "async": "false",
       };
 
-      Map<String, dynamic> response =
-          await client.httpPost<Map<String, dynamic>>("tracker", payload,
-              queryParameters: params);
-
-      responses.add(response);
+      try {
+        Map<String, dynamic> response =
+            await client.httpPost<Map<String, dynamic>>("tracker", payload,
+                queryParameters: params);
+        responses.add(response);
+      } catch (e) {
+        controller.addError("Could not upload Events");
+        return;
+      }
 
       currentIndex += chunkSize;
     }
 
+    controller.add(status.complete());
+    controller.close();
     return responses;
   }
 
@@ -85,13 +103,27 @@ class D2EventRepository extends BaseRepository<D2Event>
       "events": [eventPayload]
     };
 
+    Map<String, dynamic> response = {};
+
+    SyncStatus status = SyncStatus(
+        synced: 0, total: 1, status: Status.initialized, label: "Events");
+    controller.add(status);
+
     Map<String, String> params = {
       "async": "false",
     };
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    try {
+      response = await client.httpPost<Map<String, dynamic>>("tracker", payload,
+          queryParameters: params);
+    } catch (e) {
+      controller.addError("Could not upload event");
+      return;
+    }
+
+    controller.add(status.increment());
+    controller.add(status.complete());
+    controller.close();
 
     return response;
   }
