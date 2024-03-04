@@ -50,16 +50,16 @@ class D2Enrollment extends D2DataResource implements SyncableData {
   }
 
   D2Enrollment(
-      {required this.uid,
-      required this.updatedAt,
-      required this.createdAt,
-      required this.enrolledAt,
-      required this.followup,
-      required this.deleted,
-      required this.occurredAt,
-      required this.status,
-      required this.notes,
-      required this.synced});
+      this.uid,
+      this.updatedAt,
+      this.createdAt,
+      this.enrolledAt,
+      this.followup,
+      this.deleted,
+      this.occurredAt,
+      this.status,
+      this.notes,
+      this.synced);
 
   D2Enrollment.fromMap(ObjectBox db, Map json)
       : uid = json["enrollment"],

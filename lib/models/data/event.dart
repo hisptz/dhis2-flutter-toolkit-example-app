@@ -51,18 +51,18 @@ class D2Event extends D2DataResource implements SyncableData {
   final orgUnit = ToOne<D2OrganisationUnit>();
 
   D2Event(
-      {required this.attributeCategoryOptions,
-      required this.attributeOptionCombo,
-      required this.updatedAt,
-      required this.createdAt,
-      required this.followup,
-      required this.deleted,
-      required this.status,
-      required this.notes,
-      required this.scheduledAt,
-      required this.uid,
-      required this.occurredAt,
-      required this.synced});
+      this.attributeCategoryOptions,
+      this.attributeOptionCombo,
+      this.updatedAt,
+      this.createdAt,
+      this.followup,
+      this.deleted,
+      this.status,
+      this.notes,
+      this.scheduledAt,
+      this.uid,
+      this.occurredAt,
+      this.synced);
 
   D2Event.fromMap(ObjectBox db, Map json)
       : attributeCategoryOptions = json["attributeCategoryOptions"],

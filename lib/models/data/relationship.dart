@@ -43,17 +43,18 @@ class D2Relationship extends D2DataResource implements SyncableData {
   late String toId;
 
   D2Relationship(
-      {required this.createdAt,
-      required this.updatedAt,
-      required this.uid,
-      required this.relationshipName,
-      required this.relationshipType,
-      required this.bidirectional,
-      required this.fromId,
-      required this.fromType,
-      required this.toType,
-      required this.toId,
-      required this.synced});
+      this.id,
+      this.createdAt,
+      this.updatedAt,
+      this.uid,
+      this.relationshipName,
+      this.bidirectional,
+      this.relationshipType,
+      this.fromType,
+      this.fromId,
+      this.toType,
+      this.toId,
+      this.synced);
 
   D2Relationship.fromMap(ObjectBox db, Map json)
       : createdAt = DateTime.parse(json["createdAt"]),

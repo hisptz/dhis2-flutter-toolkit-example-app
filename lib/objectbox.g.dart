@@ -2444,16 +2444,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final syncedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 48, false);
           final object = D2Enrollment(
-              uid: uidParam,
-              updatedAt: updatedAtParam,
-              createdAt: createdAtParam,
-              enrolledAt: enrolledAtParam,
-              followup: followupParam,
-              deleted: deletedParam,
-              occurredAt: occurredAtParam,
-              status: statusParam,
-              notes: notesParam,
-              synced: syncedParam)
+              uidParam,
+              updatedAtParam,
+              createdAtParam,
+              enrolledAtParam,
+              followupParam,
+              deletedParam,
+              occurredAtParam,
+              statusParam,
+              notesParam,
+              syncedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.trackedEntity.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
@@ -2556,18 +2556,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final syncedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 62, false);
           final object = D2Event(
-              attributeCategoryOptions: attributeCategoryOptionsParam,
-              attributeOptionCombo: attributeOptionComboParam,
-              updatedAt: updatedAtParam,
-              createdAt: createdAtParam,
-              followup: followupParam,
-              deleted: deletedParam,
-              status: statusParam,
-              notes: notesParam,
-              scheduledAt: scheduledAtParam,
-              uid: uidParam,
-              occurredAt: occurredAtParam,
-              synced: syncedParam)
+              attributeCategoryOptionsParam,
+              attributeOptionComboParam,
+              updatedAtParam,
+              createdAtParam,
+              followupParam,
+              deletedParam,
+              statusParam,
+              notesParam,
+              scheduledAtParam,
+              uidParam,
+              occurredAtParam,
+              syncedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.enrollment.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
@@ -4285,6 +4285,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
           final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
@@ -4294,15 +4296,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final relationshipNameParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, '');
+          final bidirectionalParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
           final relationshipTypeParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, '');
-          final bidirectionalParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
-          final fromIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
           final fromTypeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 18, '');
+          final fromIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 20, '');
           final toTypeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 22, '');
           final toIdParam = const fb.StringReader(asciiOptimization: true)
@@ -4310,18 +4312,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final syncedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = D2Relationship(
-              createdAt: createdAtParam,
-              updatedAt: updatedAtParam,
-              uid: uidParam,
-              relationshipName: relationshipNameParam,
-              relationshipType: relationshipTypeParam,
-              bidirectional: bidirectionalParam,
-              fromId: fromIdParam,
-              fromType: fromTypeParam,
-              toType: toTypeParam,
-              toId: toIdParam,
-              synced: syncedParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              idParam,
+              createdAtParam,
+              updatedAtParam,
+              uidParam,
+              relationshipNameParam,
+              bidirectionalParam,
+              relationshipTypeParam,
+              fromTypeParam,
+              fromIdParam,
+              toTypeParam,
+              toIdParam,
+              syncedParam);
 
           return object;
         }),
