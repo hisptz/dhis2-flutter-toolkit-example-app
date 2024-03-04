@@ -4,9 +4,11 @@ import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programSection.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programTrackedEntityAttribute.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -39,6 +41,8 @@ class D2Program extends D2MetadataResource {
   @Backlink("program")
   final programSections = ToMany<D2ProgramSection>();
 
+  final trackedEntityType = ToOne<D2TrackedEntityType>();
+
   @Backlink("program")
   final programTrackedEntityAttributes =
       ToMany<D2ProgramTrackedEntityAttribute>();
@@ -67,6 +71,12 @@ class D2Program extends D2MetadataResource {
         shortName = json["shortName"],
         programType = json["programType"] {
     id = D2ProgramRepository(db).getIdByUid(json["id"]) ?? 0;
+
+    if (json["trackedEntityType"] != null) {
+      trackedEntityType.target = D2TrackedEntityTypeRepository(db)
+          .getByUid(json["trackedEntityType"]["id"]);
+    }
+
     List<D2OrgUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
         .map<D2OrgUnit?>(

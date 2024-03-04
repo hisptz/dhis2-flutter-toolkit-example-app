@@ -673,7 +673,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(12, 3213498343638079503),
       name: 'D2Program',
-      lastPropertyId: const obx_int.IdUid(11, 8830853787814593461),
+      lastPropertyId: const obx_int.IdUid(12, 4906739870145554603),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -731,7 +731,14 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(11, 8830853787814593461),
             name: 'displayName',
             type: 9,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4906739870145554603),
+            name: 'trackedEntityTypeId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(102, 426424824265261228),
+            relationTarget: 'D2TrackedEntityType')
       ],
       relations: <obx_int.ModelRelation>[
         obx_int.ModelRelation(
@@ -1319,7 +1326,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(22, 4073851612336976734),
       name: 'D2RelationshipType',
-      lastPropertyId: const obx_int.IdUid(23, 6679297122752289912),
+      lastPropertyId: const obx_int.IdUid(25, 2387371551949892258),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -1366,16 +1373,6 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(13, 7437280439870745491),
             name: 'displayName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 6722383960871463825),
-            name: 'fromToDisplayName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 8169649373673759501),
-            name: 'toFromDisplayName',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
@@ -1428,6 +1425,16 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(23, 6679297122752289912),
             name: 'toRelationshipEntity',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 2018133732371442111),
+            name: 'displayFromToName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(25, 2387371551949892258),
+            name: 'displayToFromName',
             type: 9,
             flags: 0)
       ],
@@ -1988,7 +1995,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(38, 1373460908356869576),
       name: 'D2TrackedEntity',
-      lastPropertyId: const obx_int.IdUid(13, 4311274317218372080),
+      lastPropertyId: const obx_int.IdUid(14, 5049054988691460903),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -2012,11 +2019,6 @@ final _entities = <obx_int.ModelEntity>[
             type: 9,
             flags: 2080,
             indexId: const obx_int.IdUid(88, 7001122776610672884)),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 2450615786460859343),
-            name: 'trackedEntityType',
-            type: 9,
-            flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(9, 7734083470715492788),
             name: 'potentialDuplicate',
@@ -2043,7 +2045,14 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(92, 8348706797632181549),
-            relationTarget: 'D2OrgUnit')
+            relationTarget: 'D2OrgUnit'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 5049054988691460903),
+            name: 'trackedEntityTypeId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(103, 8479977822172307133),
+            relationTarget: 'D2TrackedEntityType')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[
@@ -2196,7 +2205,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(40, 4438887848042100616),
-      lastIndexId: const obx_int.IdUid(101, 435121403601169335),
+      lastIndexId: const obx_int.IdUid(103, 8479977822172307133),
       lastRelationId: const obx_int.IdUid(29, 4443409743887074129),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [
@@ -2342,7 +2351,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         8849677971131034832,
         8703352410903628113,
         4713838509211956277,
-        677584511719110522
+        677584511719110522,
+        6722383960871463825,
+        8169649373673759501,
+        2450615786460859343
       ],
       retiredRelationUids: const [
         1443067466517591468,
@@ -3021,7 +3033,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         }),
     D2Program: obx_int.EntityDefinition<D2Program>(
         model: _entities[9],
-        toOneRelations: (D2Program object) => [],
+        toOneRelations: (D2Program object) => [object.trackedEntityType],
         toManyRelations: (D2Program object) => {
               obx_int.RelInfo<D2Program>.toMany(10, object.id):
                   object.organisationUnits,
@@ -3053,7 +3065,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final displayNameOffset = object.displayName == null
               ? null
               : fbb.writeString(object.displayName!);
-          fbb.startTable(12);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
@@ -3065,6 +3077,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addBool(8, object.onlyEnrollOnce);
           fbb.addBool(9, object.selectEnrollmentDatesInFuture);
           fbb.addOffset(10, displayNameOffset);
+          fbb.addInt64(11, object.trackedEntityType.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3105,6 +3118,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..selectEnrollmentDatesInFuture =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 22);
+          object.trackedEntityType.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          object.trackedEntityType.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<D2Program>(
               object.organisationUnits,
               store,
@@ -3770,20 +3786,26 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (D2RelationshipType object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
           final nameOffset = fbb.writeString(object.name);
-          final fromToNameOffset = fbb.writeString(object.fromToName);
-          final toFromNameOffset = fbb.writeString(object.toFromName);
+          final fromToNameOffset = object.fromToName == null
+              ? null
+              : fbb.writeString(object.fromToName!);
+          final toFromNameOffset = object.toFromName == null
+              ? null
+              : fbb.writeString(object.toFromName!);
           final displayNameOffset = object.displayName == null
               ? null
               : fbb.writeString(object.displayName!);
-          final fromToDisplayNameOffset =
-              fbb.writeString(object.fromToDisplayName);
-          final toFromDisplayNameOffset =
-              fbb.writeString(object.toFromDisplayName);
           final fromRelationshipEntityOffset =
               fbb.writeString(object.fromRelationshipEntity);
           final toRelationshipEntityOffset =
               fbb.writeString(object.toRelationshipEntity);
-          fbb.startTable(24);
+          final displayFromToNameOffset = object.displayFromToName == null
+              ? null
+              : fbb.writeString(object.displayFromToName!);
+          final displayToFromNameOffset = object.displayToFromName == null
+              ? null
+              : fbb.writeString(object.displayToFromName!);
+          fbb.startTable(26);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.created.millisecondsSinceEpoch);
           fbb.addInt64(2, object.lastUpdated.millisecondsSinceEpoch);
@@ -3793,8 +3815,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, fromToNameOffset);
           fbb.addOffset(9, toFromNameOffset);
           fbb.addOffset(12, displayNameOffset);
-          fbb.addOffset(13, fromToDisplayNameOffset);
-          fbb.addOffset(14, toFromDisplayNameOffset);
           fbb.addInt64(15, object.fromTrackedEntityType.targetId);
           fbb.addInt64(16, object.fromProgram.targetId);
           fbb.addInt64(17, object.fromProgramStage.targetId);
@@ -3803,6 +3823,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(20, object.toProgramStage.targetId);
           fbb.addOffset(21, fromRelationshipEntityOffset);
           fbb.addOffset(22, toRelationshipEntityOffset);
+          fbb.addOffset(23, displayFromToNameOffset);
+          fbb.addOffset(24, displayToFromNameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3817,15 +3839,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 28);
           final fromToNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
+              .vTableGetNullable(buffer, rootOffset, 20);
           final toFromNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 22, '');
-          final fromToDisplayNameParam =
+              .vTableGetNullable(buffer, rootOffset, 22);
+          final displayFromToNameParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 30, '');
-          final toFromDisplayNameParam =
+                  .vTableGetNullable(buffer, rootOffset, 50);
+          final displayToFromNameParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 32, '');
+                  .vTableGetNullable(buffer, rootOffset, 52);
           final referralParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
           final fromRelationshipEntityParam =
@@ -3846,8 +3868,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               displayNameParam,
               fromToNameParam,
               toFromNameParam,
-              fromToDisplayNameParam,
-              toFromDisplayNameParam,
+              displayFromToNameParam,
+              displayToFromNameParam,
               referralParam,
               fromRelationshipEntityParam,
               toRelationshipEntityParam,
@@ -4509,7 +4531,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         }),
     D2TrackedEntity: obx_int.EntityDefinition<D2TrackedEntity>(
         model: _entities[29],
-        toOneRelations: (D2TrackedEntity object) => [object.orgUnit],
+        toOneRelations: (D2TrackedEntity object) =>
+            [object.orgUnit, object.trackedEntityType],
         toManyRelations: (D2TrackedEntity object) => {
               obx_int.RelInfo<D2Enrollment>.toOneBacklink(22, object.id,
                       (D2Enrollment srcObject) => srcObject.trackedEntity):
@@ -4528,19 +4551,17 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (D2TrackedEntity object, fb.Builder fbb) {
           final uidOffset = fbb.writeString(object.uid);
-          final trackedEntityTypeOffset =
-              fbb.writeString(object.trackedEntityType);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.createdAt.millisecondsSinceEpoch);
           fbb.addInt64(2, object.updatedAt.millisecondsSinceEpoch);
           fbb.addOffset(3, uidOffset);
-          fbb.addOffset(4, trackedEntityTypeOffset);
           fbb.addBool(8, object.potentialDuplicate);
           fbb.addBool(9, object.deleted);
           fbb.addBool(10, object.inactive);
           fbb.addBool(11, object.synced);
           fbb.addInt64(12, object.orgUnit.targetId);
+          fbb.addInt64(13, object.trackedEntityType.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4549,9 +4570,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final uidParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final trackedEntityTypeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, '');
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
           final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
@@ -4566,7 +4584,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
           final object = D2TrackedEntity(
               uidParam,
-              trackedEntityTypeParam,
               createdAtParam,
               updatedAtParam,
               deletedParam,
@@ -4577,6 +4594,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.orgUnit.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.orgUnit.attach(store);
+          object.trackedEntityType.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.trackedEntityType.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<D2TrackedEntity>(
               object.enrollments,
               store,
@@ -5203,6 +5223,11 @@ class D2Program_ {
   static final displayName =
       obx.QueryStringProperty<D2Program>(_entities[9].properties[10]);
 
+  /// see [D2Program.trackedEntityType]
+  static final trackedEntityType =
+      obx.QueryRelationToOne<D2Program, D2TrackedEntityType>(
+          _entities[9].properties[11]);
+
   /// see [D2Program.organisationUnits]
   static final organisationUnits =
       obx.QueryRelationToMany<D2Program, D2OrgUnit>(_entities[9].relations[0]);
@@ -5681,50 +5706,50 @@ class D2RelationshipType_ {
   static final displayName =
       obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[8]);
 
-  /// see [D2RelationshipType.fromToDisplayName]
-  static final fromToDisplayName =
-      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[9]);
-
-  /// see [D2RelationshipType.toFromDisplayName]
-  static final toFromDisplayName =
-      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[10]);
-
   /// see [D2RelationshipType.fromTrackedEntityType]
   static final fromTrackedEntityType =
       obx.QueryRelationToOne<D2RelationshipType, D2TrackedEntityType>(
-          _entities[18].properties[11]);
+          _entities[18].properties[9]);
 
   /// see [D2RelationshipType.fromProgram]
   static final fromProgram =
       obx.QueryRelationToOne<D2RelationshipType, D2Program>(
-          _entities[18].properties[12]);
+          _entities[18].properties[10]);
 
   /// see [D2RelationshipType.fromProgramStage]
   static final fromProgramStage =
       obx.QueryRelationToOne<D2RelationshipType, D2ProgramStage>(
-          _entities[18].properties[13]);
+          _entities[18].properties[11]);
 
   /// see [D2RelationshipType.toTrackedEntityType]
   static final toTrackedEntityType =
       obx.QueryRelationToOne<D2RelationshipType, D2TrackedEntityType>(
-          _entities[18].properties[14]);
+          _entities[18].properties[12]);
 
   /// see [D2RelationshipType.toProgram]
   static final toProgram =
       obx.QueryRelationToOne<D2RelationshipType, D2Program>(
-          _entities[18].properties[15]);
+          _entities[18].properties[13]);
 
   /// see [D2RelationshipType.toProgramStage]
   static final toProgramStage =
       obx.QueryRelationToOne<D2RelationshipType, D2ProgramStage>(
-          _entities[18].properties[16]);
+          _entities[18].properties[14]);
 
   /// see [D2RelationshipType.fromRelationshipEntity]
   static final fromRelationshipEntity =
-      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[17]);
+      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[15]);
 
   /// see [D2RelationshipType.toRelationshipEntity]
   static final toRelationshipEntity =
+      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[16]);
+
+  /// see [D2RelationshipType.displayFromToName]
+  static final displayFromToName =
+      obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[17]);
+
+  /// see [D2RelationshipType.displayToFromName]
+  static final displayToFromName =
       obx.QueryStringProperty<D2RelationshipType>(_entities[18].properties[18]);
 }
 
@@ -6145,29 +6170,30 @@ class D2TrackedEntity_ {
   static final uid =
       obx.QueryStringProperty<D2TrackedEntity>(_entities[29].properties[3]);
 
-  /// see [D2TrackedEntity.trackedEntityType]
-  static final trackedEntityType =
-      obx.QueryStringProperty<D2TrackedEntity>(_entities[29].properties[4]);
-
   /// see [D2TrackedEntity.potentialDuplicate]
   static final potentialDuplicate =
-      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[5]);
+      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[4]);
 
   /// see [D2TrackedEntity.deleted]
   static final deleted =
-      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[6]);
+      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[5]);
 
   /// see [D2TrackedEntity.inactive]
   static final inactive =
-      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[7]);
+      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[6]);
 
   /// see [D2TrackedEntity.synced]
   static final synced =
-      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[8]);
+      obx.QueryBooleanProperty<D2TrackedEntity>(_entities[29].properties[7]);
 
   /// see [D2TrackedEntity.orgUnit]
   static final orgUnit = obx.QueryRelationToOne<D2TrackedEntity, D2OrgUnit>(
-      _entities[29].properties[9]);
+      _entities[29].properties[8]);
+
+  /// see [D2TrackedEntity.trackedEntityType]
+  static final trackedEntityType =
+      obx.QueryRelationToOne<D2TrackedEntity, D2TrackedEntityType>(
+          _entities[29].properties[9]);
 
   /// see [D2TrackedEntity.enrollments]
   static final enrollments =

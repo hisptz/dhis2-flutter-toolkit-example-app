@@ -30,10 +30,10 @@ class D2RelationshipType extends D2MetadataResource {
 
   @override
   String? displayName;
-  String fromToName;
-  String toFromName;
-  String fromToDisplayName;
-  String toFromDisplayName;
+  String? fromToName;
+  String? toFromName;
+  String? displayFromToName;
+  String? displayToFromName;
   bool referral;
 
   String fromRelationshipEntity;
@@ -83,8 +83,8 @@ class D2RelationshipType extends D2MetadataResource {
       this.displayName,
       this.fromToName,
       this.toFromName,
-      this.fromToDisplayName,
-      this.toFromDisplayName,
+      this.displayFromToName,
+      this.displayToFromName,
       this.referral,
       this.fromRelationshipEntity,
       this.toRelationshipEntity,
@@ -98,8 +98,8 @@ class D2RelationshipType extends D2MetadataResource {
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         displayName = json["displayName"],
-        fromToDisplayName = json["fromToDisplayName"],
-        toFromDisplayName = json["toFromDisplayName"],
+        displayFromToName = json["displayFromToName"],
+        displayToFromName = json["displayToFromName"],
         fromToName = json["fromToName"],
         toFromName = json["toFromName"],
         referral = json["referral"],

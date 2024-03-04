@@ -10,9 +10,11 @@ import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/relationshipTypeSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/trackedEntitySync.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/trackedEntityTypeSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/userSync.dart';
 
 class MetadataSync {
@@ -54,10 +56,18 @@ class MetadataSync {
         D2OrgUnitSync(db, client, orgUnitIds: user.organisationUnits);
     orgUnitSync.sync();
     await controller.addStream(orgUnitSync.stream);
+    D2TrackedEntityTypeSync trackedEntityTypeSync =
+        D2TrackedEntityTypeSync(db: db, client: client);
+    trackedEntityTypeSync.sync();
+    await controller.addStream(trackedEntityTypeSync.stream);
     List<String> programs = user.programs;
     D2ProgramSync programSync = D2ProgramSync(db, client, programIds: programs);
     programSync.sync();
     await controller.addStream(programSync.stream);
+    D2RelationshipTypeSync relationshipTypeSync =
+        D2RelationshipTypeSync(db: db, client: client);
+    relationshipTypeSync.sync();
+    await controller.addStream(relationshipTypeSync.stream);
   }
 
   Future setupDataSync() async {
