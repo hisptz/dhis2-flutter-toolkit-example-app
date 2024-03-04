@@ -15,7 +15,6 @@ class D2DataValue extends D2DataResource implements SyncableData {
   int id = 0;
   @override
   DateTime createdAt;
-
   @override
   DateTime updatedAt;
 

@@ -5,9 +5,13 @@ import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../../objectbox.g.dart';
@@ -22,14 +26,8 @@ class D2Enrollment extends D2DataResource implements SyncableData {
   @override
   DateTime updatedAt;
 
-  DateTime createdAtClient;
-
   @Unique()
   String uid;
-  String program;
-
-  String orgUnit;
-  String orgUnitName;
   DateTime enrolledAt;
   bool deleted;
   bool followup;
@@ -44,14 +42,14 @@ class D2Enrollment extends D2DataResource implements SyncableData {
 
   final trackedEntity = ToOne<D2TrackedEntity>();
 
+  final orgUnit = ToOne<D2OrganisationUnit>();
+
+  final program = ToOne<D2Program>();
+
   D2Enrollment(
       {required this.uid,
-      required this.program,
       required this.updatedAt,
       required this.createdAt,
-      required this.createdAtClient,
-      required this.orgUnit,
-      required this.orgUnitName,
       required this.enrolledAt,
       required this.followup,
       required this.deleted,
@@ -62,12 +60,8 @@ class D2Enrollment extends D2DataResource implements SyncableData {
 
   D2Enrollment.fromMap(ObjectBox db, Map json)
       : uid = json["enrollment"],
-        program = json["program"],
         updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
-        createdAtClient = DateTime.parse(json["createdAtClient"]),
-        orgUnit = json["orgUnit"],
-        orgUnitName = json["orgUnitName"],
         enrolledAt = DateTime.parse(json["enrolledAt"]),
         followup = json["followUp"],
         deleted = json["deleted"],
@@ -79,6 +73,8 @@ class D2Enrollment extends D2DataResource implements SyncableData {
 
     trackedEntity.target =
         TrackedEntityRepository(db).getByUid(json["trackedEntity"]);
+    orgUnit.target = D2OrgUnitRepository(db).getByUid(json["orgUnit"]);
+    program.target = D2ProgramRepository(db).getByUid(json["program"]);
   }
 
   @override

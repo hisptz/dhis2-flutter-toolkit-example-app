@@ -109,7 +109,8 @@ class TeiDetails extends StatelessWidget {
                         DetailsRow(
                           label: "Organisation Unit",
                           value: enrollments
-                              .map((enrollment) => enrollment.orgUnitName)
+                              .map((enrollment) =>
+                                  enrollment.orgUnit.target?.name)
                               .toList()
                               .join(", "),
                         ),
