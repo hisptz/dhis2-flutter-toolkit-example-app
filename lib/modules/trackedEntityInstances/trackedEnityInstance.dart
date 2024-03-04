@@ -87,7 +87,7 @@ class TeiDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: enrollments.isNotEmpty
+          child: enrollments.isNotEmpty && events.isNotEmpty
               ? ListView.builder(
                   shrinkWrap: true,
                   itemCount: enrollments.length,
@@ -232,7 +232,11 @@ class TeiDetails extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Center(child: Text("No Enrollments"))
+                    const Center(child: Text("No Enrollments")),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Center(child: Text("No Events"))
                   ],
                 ),
         ),
