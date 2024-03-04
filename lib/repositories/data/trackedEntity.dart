@@ -60,12 +60,12 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
   Future syncMany(DHIS2Client client) async {
     //TODO: Handle import summary
 
-    queryConditions = D2TrackedEntity_.synced.equals(true);
+    queryConditions = D2TrackedEntity_.synced.equals(false);
 
     List<D2TrackedEntity> unSyncedTrackedEntities = await query.findAsync();
 
     List<Map<String, dynamic>> responses = [];
-    int chunkSize = 100;
+    int chunkSize = 50;
     int currentIndex = 0;
 
     SyncStatus status = SyncStatus(
@@ -95,13 +95,17 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
         "async": "false",
       };
 
-      Map<String, dynamic> response =
-          await client.httpPost<Map<String, dynamic>>("tracker", payload,
-              queryParameters: params);
+      try {
+        Map<String, dynamic> response =
+            await client.httpPost<Map<String, dynamic>>("tracker", payload,
+                queryParameters: params);
+        responses.add(response);
+      } catch (e) {
+        controller.addError("Could not upload trackedEntities");
+        return;
+      }
 
       controller.add(status.increment());
-
-      responses.add(response);
 
       currentIndex += chunkSize;
     }
@@ -119,13 +123,30 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
       "trackedEntities": [trackedEntityPayload]
     };
 
+    Map<String, dynamic> response = {};
+
+    SyncStatus status = SyncStatus(
+        synced: 0,
+        total: 1,
+        status: Status.initialized,
+        label: "Tracked Entity");
+    controller.add(status);
+
     Map<String, String> params = {
       "async": "false",
     };
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    try {
+      response = await client.httpPost<Map<String, dynamic>>("tracker", payload,
+          queryParameters: params);
+    } catch (e) {
+      controller.addError("Could not upload trackedEntities");
+      return;
+    }
+
+    controller.add(status.increment());
+    controller.add(status.complete());
+    controller.close();
 
     return response;
   }
