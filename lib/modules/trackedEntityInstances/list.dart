@@ -87,6 +87,7 @@ class _TeiListState extends State<TeiList> {
             ),
             IconButton(
                 onPressed: () async {
+                  print(D2TrackedEntityRepository(db).controller);
                   final response =
                       await D2TrackedEntityRepository(db).syncMany(client);
                 },

@@ -1,14 +1,19 @@
+import 'dart:async';
+
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
 class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
     implements SyncableRepository<D2TrackedEntity> {
   D2TrackedEntityRepository(super.db);
+
+  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
   @override
   D2TrackedEntity? getByUid(String uid) {
@@ -53,27 +58,57 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
 
   @override
   Future syncMany(DHIS2Client client) async {
-    //TODO: Pagination
     //TODO: Handle import summary
 
-    queryConditions = D2TrackedEntity_.synced.equals(false);
+    queryConditions = D2TrackedEntity_.synced.equals(true);
+
     List<D2TrackedEntity> unSyncedTrackedEntities = await query.findAsync();
-    List<Map<String, dynamic>> trackedEntitiesPayload = await Future.wait(
-        unSyncedTrackedEntities
-            .map((trackedEntity) => trackedEntity.toMap(db: db)));
-    Map<String, List<Map<String, dynamic>>> payload = {
-      "trackedEntities": trackedEntitiesPayload
-    };
 
-    Map<String, String> params = {
-      "async": "false",
-    };
+    List<Map<String, dynamic>> responses = [];
+    int chunkSize = 100;
+    int currentIndex = 0;
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    SyncStatus status = SyncStatus(
+        synced: 0,
+        total: (unSyncedTrackedEntities.length / chunkSize).ceil(),
+        status: Status.initialized,
+        label: "Tracked Entity");
+    controller.add(status);
 
-    return response;
+    while (currentIndex < unSyncedTrackedEntities.length) {
+      int endIndex = currentIndex + chunkSize;
+      if (endIndex > unSyncedTrackedEntities.length) {
+        endIndex = unSyncedTrackedEntities.length;
+      }
+
+      List<D2TrackedEntity> currentChunk =
+          unSyncedTrackedEntities.sublist(currentIndex, endIndex);
+
+      List<Map<String, dynamic>> chunkPayload = await Future.wait(
+          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
+
+      Map<String, List<Map<String, dynamic>>> payload = {
+        "trackedEntities": chunkPayload
+      };
+
+      Map<String, String> params = {
+        "async": "false",
+      };
+
+      Map<String, dynamic> response =
+          await client.httpPost<Map<String, dynamic>>("tracker", payload,
+              queryParameters: params);
+
+      controller.add(status.increment());
+
+      responses.add(response);
+
+      currentIndex += chunkSize;
+    }
+
+    controller.add(status.complete());
+    controller.close();
+    return responses;
   }
 
   @override

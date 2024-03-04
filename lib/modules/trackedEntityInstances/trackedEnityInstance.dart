@@ -183,7 +183,7 @@ class TeiDetails extends StatelessWidget {
                                   case "Enrollments":
                                     final response =
                                         await D2EnrollmentRepository(db)
-                                            .syncOne(client, enrollments.first);
+                                            .syncMany(client);
                                     break;
                                   default:
                                 }
