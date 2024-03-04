@@ -74,9 +74,9 @@ class D2Event extends D2DataResource implements SyncableData {
         status = json["status"],
         synced = true,
         notes = jsonEncode(json["notes"]),
-        scheduledAt = DateTime.tryParse(json["scheduledAt"]),
+        scheduledAt = DateTime.tryParse(json["scheduledAt"] ?? ""),
         uid = json["event"],
-        occurredAt = DateTime.tryParse(json["occurredAt"]) {
+        occurredAt = DateTime.tryParse(json["occurredAt"] ?? "") {
     id = D2EventRepository(db).getIdByUid(json["event"]) ?? 0;
 
     if (json["enrollment"] != null) {
