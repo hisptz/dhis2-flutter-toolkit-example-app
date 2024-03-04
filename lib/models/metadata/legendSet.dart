@@ -22,22 +22,19 @@ class D2LegendSet extends D2MetadataResource {
   String name;
   String? code;
 
+  @Backlink("legendSet")
   final legends = ToMany<D2Legend>();
 
-  D2LegendSet({
-    required this.created,
-    required this.lastUpdated,
-    required this.uid,
-    required this.name,
-    this.code,
-  });
+  D2LegendSet(this.id, this.created, this.lastUpdated, this.uid, this.name,
+      this.code, this.displayName);
 
   D2LegendSet.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
-        code = json["code"] {
+        code = json["code"],
+        displayName = json["displayName"] {
     List<D2Legend> allLegends = json["legends"]
         .cast<Map>()
         .map<D2Legend>((Map json) => D2Legend.fromMap(db, json))
@@ -46,4 +43,7 @@ class D2LegendSet extends D2MetadataResource {
 
     id = D2LegendSetRepository(db).getIdByUid(json["id"]) ?? 0;
   }
+
+  @override
+  String? displayName;
 }

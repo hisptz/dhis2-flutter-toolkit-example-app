@@ -48,7 +48,7 @@ class D2Event extends D2DataResource implements SyncableData {
   final trackedEntity = ToOne<D2TrackedEntity>();
   final program = ToOne<D2Program>();
   final programStage = ToOne<D2ProgramStage>();
-  final orgUnit = ToOne<D2OrganisationUnit>();
+  final orgUnit = ToOne<D2OrgUnit>();
 
   D2Event(
       this.attributeCategoryOptions,

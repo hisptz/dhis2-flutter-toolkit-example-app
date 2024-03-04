@@ -41,7 +41,7 @@ class D2Enrollment extends D2DataResource implements SyncableData {
 
   final trackedEntity = ToOne<D2TrackedEntity>();
 
-  final orgUnit = ToOne<D2OrganisationUnit>();
+  final orgUnit = ToOne<D2OrgUnit>();
 
   final program = ToOne<D2Program>();
 

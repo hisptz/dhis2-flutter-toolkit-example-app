@@ -17,14 +17,8 @@ class D2SystemInfo extends DHIS2Resource {
   @Index()
   String systemName;
 
-  D2SystemInfo(
-      {required this.version,
-      required this.revision,
-      required this.calendar,
-      required this.dateFormat,
-      required this.contextPath,
-      required this.systemId,
-      required this.systemName});
+  D2SystemInfo(this.id, this.version, this.revision, this.calendar,
+      this.dateFormat, this.contextPath, this.systemId, this.systemName);
 
   D2SystemInfo.fromMap(ObjectBox db, Map json)
       : calendar = json["calendar"],

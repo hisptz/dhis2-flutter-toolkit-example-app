@@ -33,17 +33,17 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
   final optionSet = ToOne<D2OptionSet>();
 
   D2TrackedEntityAttribute(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.name,
       this.code,
       this.formName,
-      required this.shortName,
+      this.shortName,
       this.description,
-      required this.aggregationType,
-      required this.valueType,
-      this.zeroIsSignificant});
+      this.aggregationType,
+      this.valueType,
+      this.zeroIsSignificant);
 
   D2TrackedEntityAttribute.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
@@ -53,6 +53,8 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
         code = json["code"],
         formName = json["formName"],
         shortName = json["shortName"],
+        displayName = json["displayName"],
+        displayFormName = json["displayFormName"],
         description = json["description"],
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
@@ -69,4 +71,8 @@ class D2TrackedEntityAttribute extends D2MetadataResource {
           D2OptionSetRepository(db).getByUid(json["optionSet"]["id"]);
     }
   }
+
+  @override
+  String? displayName;
+  String? displayFormName;
 }

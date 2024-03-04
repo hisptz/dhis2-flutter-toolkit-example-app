@@ -39,23 +39,26 @@ class D2ProgramStage extends D2MetadataResource {
   @Backlink()
   final events = ToMany<D2Event>();
 
-  D2ProgramStage({
-    required this.created,
-    required this.lastUpdated,
-    required this.uid,
-    required this.name,
-    required this.sortOrder,
+  D2ProgramStage(
+    this.created,
+    this.displayName,
+    this.id,
+    this.lastUpdated,
+    this.uid,
+    this.name,
+    this.sortOrder,
     this.validationStrategy,
     this.reportDateToUse,
     this.featureType,
     this.description,
-  });
+  );
 
   D2ProgramStage.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
+        displayName = json["displayName"],
         sortOrder = json["sortOrder"],
         validationStrategy = json["validationStrategy"],
         reportDateToUse = json["reportDateToUse"],
@@ -65,4 +68,7 @@ class D2ProgramStage extends D2MetadataResource {
     program.target =
         D2ProgramRepository(db).getByUid(json["program"]?["id"] ?? "");
   }
+
+  @override
+  String? displayName;
 }

@@ -4,4 +4,5 @@ abstract class D2MetadataResource extends DHIS2Resource {
   abstract DateTime created;
   abstract DateTime lastUpdated;
   abstract String uid;
+  abstract String? displayName;
 }

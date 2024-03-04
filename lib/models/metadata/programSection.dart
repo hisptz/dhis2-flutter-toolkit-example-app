@@ -54,4 +54,7 @@ class D2ProgramSection extends D2MetadataResource {
     trackedEntityAttributes.addAll(actualTea);
     program.target = D2ProgramRepository(db).getByUid(json["program"]["id"]);
   }
+
+  @override
+  String? displayName;
 }

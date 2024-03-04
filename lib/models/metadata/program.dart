@@ -32,42 +32,54 @@ class D2Program extends D2MetadataResource {
 
   bool? selectEnrollmentDatesInFuture;
 
-  final organisationUnits = ToMany<D2OrganisationUnit>();
+  final organisationUnits = ToMany<D2OrgUnit>();
 
-  @Backlink()
+  @Backlink("program")
   final programStages = ToMany<D2ProgramStage>();
-  @Backlink()
+  @Backlink("program")
   final programSections = ToMany<D2ProgramSection>();
 
-  @Backlink()
+  @Backlink("program")
   final programTrackedEntityAttributes =
       ToMany<D2ProgramTrackedEntityAttribute>();
 
   @Backlink()
   final events = ToMany<D2Event>();
 
-  D2Program(this.created, this.lastUpdated, this.uid, this.accessLevel,
-      this.name, this.shortName, this.programType, this.onlyEnrollOnce);
+  D2Program(
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.accessLevel,
+      this.name,
+      this.shortName,
+      this.programType,
+      this.onlyEnrollOnce,
+      this.displayName);
 
   D2Program.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
+        displayName = json["displayName"],
         accessLevel = json["accessLevel"],
         name = json["name"],
         shortName = json["shortName"],
         programType = json["programType"] {
     id = D2ProgramRepository(db).getIdByUid(json["id"]) ?? 0;
-    List<D2OrganisationUnit?> programOrgUnits = json["organisationUnits"]
+    List<D2OrgUnit?> programOrgUnits = json["organisationUnits"]
         .cast<Map>()
-        .map<D2OrganisationUnit?>(
+        .map<D2OrgUnit?>(
             (Map orgUnit) => D2OrgUnitRepository(db).getByUid(orgUnit["id"]))
         .toList();
 
-    List<D2OrganisationUnit> orgUnits = programOrgUnits
-        .where((D2OrganisationUnit? element) => element != null)
+    List<D2OrgUnit> orgUnits = programOrgUnits
+        .where((D2OrgUnit? element) => element != null)
         .toList()
-        .cast<D2OrganisationUnit>();
+        .cast<D2OrgUnit>();
     organisationUnits.addAll(orgUnits);
   }
+
+  @override
+  String? displayName;
 }

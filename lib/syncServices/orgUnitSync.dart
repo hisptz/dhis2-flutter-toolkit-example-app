@@ -3,7 +3,7 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 
-class D2OrgUnitSync extends BaseSyncService<D2OrganisationUnit> {
+class D2OrgUnitSync extends BaseSyncService<D2OrgUnit> {
   List<String> orgUnitIds;
 
   D2OrgUnitSync(ObjectBox db, DHIS2Client client, {required this.orgUnitIds})
@@ -19,7 +19,7 @@ class D2OrgUnitSync extends BaseSyncService<D2OrganisationUnit> {
         );
 
   @override
-  D2OrganisationUnit mapper(Map<String, dynamic> json) {
-    return D2OrganisationUnit.fromMap(db, json);
+  D2OrgUnit mapper(Map<String, dynamic> json) {
+    return D2OrgUnit.fromMap(db, json);
   }
 }

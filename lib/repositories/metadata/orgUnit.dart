@@ -2,7 +2,7 @@ import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 
-class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnit> {
+class D2OrgUnitRepository extends BaseRepository<D2OrgUnit> {
   D2OrgUnitRepository(super.db);
 
   @override
@@ -11,14 +11,13 @@ class D2OrgUnitRepository extends BaseRepository<D2OrganisationUnit> {
   }
 
   @override
-  D2OrganisationUnit? getByUid(String uid) {
-    Query<D2OrganisationUnit> query =
-        box.query(D2OrganisationUnit_.uid.equals(uid)).build();
+  D2OrgUnit? getByUid(String uid) {
+    Query<D2OrgUnit> query = box.query(D2OrgUnit_.uid.equals(uid)).build();
     return query.findFirst();
   }
 
   @override
-  D2OrganisationUnit mapper(Map<String, dynamic> json) {
-    return D2OrganisationUnit.fromMap(db, json);
+  D2OrgUnit mapper(Map<String, dynamic> json) {
+    return D2OrgUnit.fromMap(db, json);
   }
 }

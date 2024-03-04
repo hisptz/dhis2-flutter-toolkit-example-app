@@ -42,4 +42,7 @@ class D2ProgramStageDataElement extends D2MetadataResource {
     programStage.target =
         D2ProgramStageRepository(db).getByUid(json["programStage"]["id"]);
   }
+
+  @override
+  String? displayName;
 }

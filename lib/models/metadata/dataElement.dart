@@ -11,7 +11,6 @@ import 'package:objectbox/objectbox.dart';
 class D2DataElement extends D2MetadataResource {
   @override
   DateTime created;
-
   @override
   DateTime lastUpdated;
 
@@ -21,6 +20,9 @@ class D2DataElement extends D2MetadataResource {
 
   String name;
   String? code;
+  String? displayFormName;
+  @override
+  String? displayName;
 
   String? formName;
   String shortName;
@@ -35,18 +37,20 @@ class D2DataElement extends D2MetadataResource {
   final dataValues = ToMany<D2DataValue>();
 
   D2DataElement(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.name,
       this.code,
       this.formName,
-      required this.shortName,
+      this.shortName,
       this.description,
-      required this.aggregationType,
-      required this.valueType,
-      required this.domainType,
-      this.zeroIsSignificant});
+      this.aggregationType,
+      this.valueType,
+      this.domainType,
+      this.zeroIsSignificant,
+      this.displayFormName,
+      this.displayName);
 
   D2DataElement.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
@@ -60,6 +64,8 @@ class D2DataElement extends D2MetadataResource {
         aggregationType = json["aggregationType"],
         valueType = json["valueType"],
         domainType = json["domainType"],
+        displayFormName = json["displayFormName"],
+        displayName = json["displayName"],
         zeroIsSignificant = json["zeroIsSignificant"] {
     id = D2DataElementRepository(db).getIdByUid(json["id"]) ?? 0;
 

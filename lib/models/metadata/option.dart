@@ -24,13 +24,8 @@ class D2Option extends D2MetadataResource {
 
   final optionSet = ToOne<D2OptionSet>();
 
-  D2Option(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
-      required this.code,
-      required this.sortOrder});
+  D2Option(this.id, this.created, this.lastUpdated, this.uid, this.name,
+      this.code, this.sortOrder, this.displayName);
 
   D2Option.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
@@ -38,9 +33,13 @@ class D2Option extends D2MetadataResource {
         uid = json["id"],
         name = json["name"],
         code = json["code"],
-        sortOrder = json["sortOrder"] {
+        sortOrder = json["sortOrder"],
+        displayName = json["displayName"] {
     id = D2OptionRepository(db).getIdByUid(json["id"]) ?? 0;
     optionSet.target =
         D2OptionSetRepository(db).getByUid(json["optionSet"]["id"]);
   }
+
+  @override
+  String? displayName;
 }

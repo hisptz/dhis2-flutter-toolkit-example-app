@@ -33,7 +33,7 @@ class D2TrackedEntity extends D2DataResource implements SyncableData {
   //Disabled for now
   // final relationships = ToMany<D2Relationship>();
 
-  final orgUnit = ToOne<D2OrganisationUnit>();
+  final orgUnit = ToOne<D2OrgUnit>();
 
   @Backlink("trackedEntity")
   final attributes = ToMany<D2TrackedEntityAttributeValue>();

@@ -28,11 +28,7 @@ class D2ProgramStageSection extends D2MetadataResource {
   final dataElements = ToMany<D2DataElement>();
 
   D2ProgramStageSection(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
-      required this.sortOrder});
+      this.created, this.lastUpdated, this.uid, this.name, this.sortOrder);
 
   D2ProgramStageSection.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
@@ -55,4 +51,7 @@ class D2ProgramStageSection extends D2MetadataResource {
     programStage.target =
         D2ProgramStageRepository(db).getByUid(json["programStage"]["id"]);
   }
+
+  @override
+  String? displayName;
 }
