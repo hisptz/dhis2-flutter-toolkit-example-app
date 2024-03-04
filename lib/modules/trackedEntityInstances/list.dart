@@ -169,32 +169,26 @@ class _TeiListState extends State<TeiList> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    DetailsRow(
-                                        label: "Full name", value: fullName),
-                                    DetailsRow(
-                                      label: "Attributes",
-                                      value: attributeValues
-                                          .map((value) {
-                                            return "${value.trackedEntityAttribute.target!.name}: ${value.value}";
-                                          })
-                                          .toList()
-                                          .join(", "),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          fullName,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(enrollments.isNotEmpty
+                                            ? "Has Enrollments"
+                                            : "No Enrollments")
+                                      ],
                                     ),
-                                    DetailsRow(
-                                        label: "Enrollments",
-                                        value: enrollments.length.toString()),
                                   ],
                                 ),
                               ),
                               PopupMenuButton<String>(
                                 onSelected: (String value) async {
                                   switch (value) {
-                                    case "Enrollments":
-                                      final response =
-                                          await D2EnrollmentRepository(db)
-                                              .syncMany(client, enrollments);
-                                      print(response);
-                                      break;
                                     case "TrackedEntity":
                                       final response =
                                           await D2TrackedEntityRepository(db)
@@ -210,10 +204,6 @@ class _TeiListState extends State<TeiList> {
                                   const PopupMenuItem<String>(
                                     value: 'TrackedEntity',
                                     child: Text('Tracked Entity'),
-                                  ),
-                                  const PopupMenuItem<String>(
-                                    value: 'Enrollments',
-                                    child: Text('Enrollments'),
                                   ),
                                 ],
                                 icon: const Icon(

@@ -87,112 +87,154 @@ class TeiDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: enrollments.length,
-              itemBuilder: (item, index) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              DetailsRow(
-                                label: "Created At",
-                                value: enrollments
-                                    .map((enrollment) => enrollment.createdAt)
-                                    .toList()
-                                    .join(", "),
-                              ),
-                              DetailsRow(
-                                label: "Updated At",
-                                value: enrollments
-                                    .map((enrollment) => enrollment.updatedAt)
-                                    .toList()
-                                    .join(", "),
-                              ),
-                              DetailsRow(
-                                label: "Organisation Unit",
-                                value: enrollments
-                                    .map((enrollment) => enrollment.orgUnitName)
-                                    .toList()
-                                    .join(", "),
-                              ),
-                              DetailsRow(
-                                  label: "Events",
-                                  value: events.isNotEmpty
-                                      ? events
-                                          .map((event) {
-                                            final programStageName = event
-                                                    .programStage
-                                                    .target
-                                                    ?.name ??
-                                                "Unknown Program Stage";
-                                            List<D2DataValue> dataValues =
-                                                D2DataValueRepository(db)
-                                                    .byEvent(event.id)
-                                                    .find();
+          child: enrollments.isNotEmpty
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: enrollments.length,
+                  itemBuilder: (item, index) {
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  DetailsRow(
+                                    label: "Attributes",
+                                    value: attributeValues
+                                        .map((value) {
+                                          return "${value.trackedEntityAttribute.target!.name}: ${value.value}";
+                                        })
+                                        .toList()
+                                        .join(", "),
+                                  ),
+                                  DetailsRow(
+                                    label: "Created At",
+                                    value: enrollments
+                                        .map((enrollment) =>
+                                            enrollment.createdAt)
+                                        .toList()
+                                        .join(", "),
+                                  ),
+                                  DetailsRow(
+                                    label: "Updated At",
+                                    value: enrollments
+                                        .map((enrollment) =>
+                                            enrollment.updatedAt)
+                                        .toList()
+                                        .join(", "),
+                                  ),
+                                  DetailsRow(
+                                    label: "Organisation Unit",
+                                    value: enrollments
+                                        .map((enrollment) =>
+                                            enrollment.orgUnitName)
+                                        .toList()
+                                        .join(", "),
+                                  ),
+                                  DetailsRow(
+                                      label: "Events",
+                                      value: events.isNotEmpty
+                                          ? events
+                                              .map((event) {
+                                                final programStageName = event
+                                                        .programStage
+                                                        .target
+                                                        ?.name ??
+                                                    "Unknown Program Stage";
+                                                List<D2DataValue> dataValues =
+                                                    D2DataValueRepository(db)
+                                                        .byEvent(event.id)
+                                                        .find();
 
-                                            final dataValueList =
-                                                dataValues.isNotEmpty
-                                                    ? dataValues
-                                                        .map((data) {
-                                                          return "${data.dataElement.target?.name} :  ${data.value}";
-                                                        })
-                                                        .toList()
-                                                        .join("\n ")
-                                                    : "No Data Values";
-                                            return "Program Stage : $programStageName \n$dataValueList";
-                                          })
-                                          .toList()
-                                          .join("\n\n")
-                                      : "None"),
-                            ],
-                          ),
-                        ),
-                        PopupMenuButton<String>(
-                          onSelected: (String value) async {
-                            switch (value) {
-                              case "Events":
-                                final response = await D2EventRepository(db)
-                                    .syncMany(client, events);
-                                print(response);
-                                break;
-                              case "Relationships":
-                                final response =
-                                    await RelationshipRepository(db)
-                                        .syncMany(client, []);
-                                print(response);
-                                break;
-                              default:
-                            }
-                            print(value);
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Events',
-                              child: Text('Events'),
+                                                final dataValueList =
+                                                    dataValues.isNotEmpty
+                                                        ? dataValues
+                                                            .map((data) {
+                                                              return "${data.dataElement.target?.name} :  ${data.value}";
+                                                            })
+                                                            .toList()
+                                                            .join("\n ")
+                                                        : "No Data Values";
+                                                return "Program Stage : $programStageName \n$dataValueList";
+                                              })
+                                              .toList()
+                                              .join("\n\n")
+                                          : "None"),
+                                ],
+                              ),
                             ),
-                            const PopupMenuItem<String>(
-                              value: 'Relationships',
-                              child: Text('Relationships'),
-                            ),
+                            PopupMenuButton<String>(
+                              onSelected: (String value) async {
+                                switch (value) {
+                                  case "Events":
+                                    final response = await D2EventRepository(db)
+                                        .syncMany(client, events);
+                                    print(response);
+                                    break;
+                                  case "Relationships":
+                                    final response =
+                                        await RelationshipRepository(db)
+                                            .syncMany(client, []);
+                                    print(response);
+                                    break;
+
+                                  case "Enrollments":
+                                    final response =
+                                        await D2EnrollmentRepository(db)
+                                            .syncOne(client, enrollments.first);
+                                    print(response);
+                                    break;
+                                  default:
+                                }
+                                print(value);
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<String>>[
+                                const PopupMenuItem<String>(
+                                  value: 'Enrollments',
+                                  child: Text('Enrollments'),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: 'Events',
+                                  child: Text('Events'),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: 'Relationships',
+                                  child: Text('Relationships'),
+                                ),
+                              ],
+                              icon: const Icon(
+                                Icons.sync,
+                                color: Colors.blueAccent,
+                              ),
+                            )
                           ],
-                          icon: const Icon(
-                            Icons.sync,
-                            color: Colors.blueAccent,
-                          ),
-                        )
-                      ],
+                        ),
+                      ),
+                    );
+                  })
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DetailsRow(
+                      label: "Attributes",
+                      value: attributeValues
+                          .map((value) {
+                            return "${value.trackedEntityAttribute.target!.name}: ${value.value}";
+                          })
+                          .toList()
+                          .join(", "),
                     ),
-                  ),
-                );
-              }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Center(child: Text("No Enrollments"))
+                  ],
+                ),
         ),
       ),
     );
