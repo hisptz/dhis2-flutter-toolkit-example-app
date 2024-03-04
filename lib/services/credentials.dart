@@ -1,49 +1,49 @@
+import 'dart:convert';
+
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/services/preferences.dart';
+import 'package:dhis2_flutter_toolkit/services/users.dart';
 
 class D2Credential {
   String username;
   String password;
   String baseURL;
-  String? systemId;
 
-  D2Credential(
-      {required this.username,
-      required this.password,
-      required this.baseURL,
-      this.systemId});
-
-  Future saveToPreference() async {
-    await preferences?.setString("baseURL", baseURL);
-    await preferences?.setString("username", username);
-    await preferences?.setString("password", password);
-    await preferences?.setString("systemId", systemId!);
+  get id {
+    String systemId = baseURL.replaceAll("/", "-");
+    return "${username}_$systemId";
   }
 
-  static fromPreferences() {
-    String? baseURL = preferences?.getString("baseURL");
-    String? username = preferences?.getString("username");
-    String? password = preferences?.getString("password");
-    String? systemId = preferences?.getString("systemId");
+  D2Credential({
+    required this.username,
+    required this.password,
+    required this.baseURL,
+  });
 
-    if (baseURL != null && username != null && password != null) {
-      return D2Credential(
-          username: username,
-          password: password,
-          baseURL: baseURL,
-          systemId: systemId);
-    }
-    return null;
+  Future saveToPreference() async {
+    await AppAuth().saveUser(this);
+  }
+
+  Map<String, String> toMap() {
+    return {"username": username, "password": password, "baseURL": baseURL};
+  }
+
+  static D2Credential fromPreferences(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+    String baseURL = map["baseURL"]!;
+    String username = map["username"]!;
+    String password = map["password"]!;
+    return D2Credential(
+      username: username,
+      password: password,
+      baseURL: baseURL,
+    );
   }
 
   Future<void> logout() async {
-    await preferences?.remove("username");
-    await preferences?.remove("baseURL");
-    await preferences?.remove("password");
-    await preferences?.remove("systemId");
+    return AppAuth().logoutUser();
   }
 
-  Future<bool> verify() async {
+  Future<bool> verifyOnline() async {
     DHIS2Client client = DHIS2Client(this);
     Map? data = await client.httpGet<Map>("system/info");
     if (data == null) {
@@ -52,8 +52,21 @@ class D2Credential {
     if (data["httpStatusCode"] == 401) {
       throw "Invalid username or password";
     }
-    systemId = data["systemId"];
     await saveToPreference();
+    await AppAuth().loginUser(this);
+    return true;
+  }
+
+  Future<bool> verifyOffline() async {
+    return AppAuth().verifyUser(this);
+  }
+
+  Future<bool> verify() async {
+    bool verified = await verifyOffline();
+    if (!verified) {
+      return await verifyOnline();
+    }
+    await AppAuth().loginUser(this);
     return true;
   }
 }

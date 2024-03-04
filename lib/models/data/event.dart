@@ -45,7 +45,10 @@ class D2Event extends D2DataResource implements SyncableData {
   String attributeOptionCombo;
   String? notes;
 
+  @Backlink()
   final relationships = ToMany<D2Relationship>();
+
+  @Backlink()
   final dataValues = ToMany<D2DataValue>();
   final enrollment = ToOne<D2Enrollment>();
   final trackedEntity = ToOne<D2TrackedEntity>();

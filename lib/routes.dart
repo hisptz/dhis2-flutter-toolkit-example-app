@@ -7,6 +7,7 @@ import 'package:dhis2_flutter_toolkit/modules/sync.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/list.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/trackedEnityInstance.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
+import 'package:dhis2_flutter_toolkit/services/users.dart';
 import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
@@ -19,7 +20,7 @@ final router = GoRouter(
     GoRoute(
       path: "/",
       redirect: (context, state) async {
-        final D2Credential? credentials = D2Credential.fromPreferences();
+        final D2Credential? credentials = AppAuth().getLoggedInUser();
         if (credentials == null) {
           return "/login";
         }

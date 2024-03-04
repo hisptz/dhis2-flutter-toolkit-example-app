@@ -1,6 +1,7 @@
 import 'package:dhis2_flutter_toolkit/components/SystemInfo.dart';
 import 'package:dhis2_flutter_toolkit/components/UserInfoWidget.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
+import 'package:dhis2_flutter_toolkit/services/users.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +20,7 @@ class Home extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  D2Credential credentials = D2Credential.fromPreferences();
+                  D2Credential credentials = AppAuth().getLoggedInUser()!;
                   Provider.of<DBProvider>(context, listen: false).close();
                   credentials.logout().then((_) => context.replace("/"));
                 },
