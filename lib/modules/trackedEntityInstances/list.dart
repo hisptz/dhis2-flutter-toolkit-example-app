@@ -1,4 +1,3 @@
-import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
@@ -88,9 +87,8 @@ class _TeiListState extends State<TeiList> {
             ),
             IconButton(
                 onPressed: () async {
-                  final response = await D2TrackedEntityRepository(db)
-                      .syncMany(client, repository.getAll()!);
-                  print(response);
+                  final response =
+                      await D2TrackedEntityRepository(db).syncMany(client);
                 },
                 icon: const Icon(
                   Icons.sync,

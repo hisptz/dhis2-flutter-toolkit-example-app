@@ -52,7 +52,7 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
   }
 
   @override
-  Future syncMany(DHIS2Client client, List<D2TrackedEntity> entities) async {
+  Future syncMany(DHIS2Client client) async {
     //TODO: Pagination
     //TODO: Handle import summary
 

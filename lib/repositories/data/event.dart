@@ -36,7 +36,7 @@ class D2EventRepository extends BaseRepository<D2Event>
   }
 
   @override
-  Future syncMany(DHIS2Client client, List<D2Event> entities) async {
+  Future syncMany(DHIS2Client client) async {
     //TODO: Pagination
     //TODO: Handle import summary
 

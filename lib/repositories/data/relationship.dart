@@ -22,7 +22,7 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
   }
 
   @override
-  Future syncMany(DHIS2Client client, List<D2Relationship> entities) async {
+  Future syncMany(DHIS2Client client) async {
     //TODO: Pagination
     //TODO: Handle import summary
 

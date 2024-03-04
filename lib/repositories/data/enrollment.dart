@@ -32,7 +32,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
   }
 
   @override
-  Future syncMany(DHIS2Client client, List<D2Enrollment> entities) async {
+  Future syncMany(DHIS2Client client) async {
     //TODO: Pagination
     //TODO: Handle import summary
 
