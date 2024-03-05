@@ -74,6 +74,12 @@ class _TeiListState extends State<TeiList> {
   }
 
   @override
+  void dispose() {
+    repository.controller.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final client =
         Provider.of<D2HttpClientProvider>(context, listen: false).client;
