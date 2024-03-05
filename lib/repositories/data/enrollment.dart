@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
 class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     implements SyncableRepository<D2Enrollment> {
   D2EnrollmentRepository(super.db);
+
+  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
   @override
   D2Enrollment? getByUid(String uid) {
@@ -33,26 +38,57 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
 
   @override
   Future syncMany(DHIS2Client client) async {
-    //TODO: Pagination
     //TODO: Handle import summary
 
     queryConditions = D2Enrollment_.synced.equals(false);
     List<D2Enrollment> unSyncedEnrollments = await query.findAsync();
-    List<Map<String, dynamic>> enrollmentPayload = await Future.wait(
-        unSyncedEnrollments.map((enrollemnt) => enrollemnt.toMap(db: db)));
-    Map<String, List<Map<String, dynamic>>> payload = {
-      "enrollments": enrollmentPayload
-    };
+    List<Map<String, dynamic>> responses = [];
+    int chunkSize = 50;
+    int currentIndex = 0;
 
-    Map<String, String> params = {
-      "async": "false",
-    };
+    SyncStatus status = SyncStatus(
+        synced: 0,
+        total: (unSyncedEnrollments.length / chunkSize).ceil(),
+        status: Status.initialized,
+        label: "Enrollments");
+    controller.add(status);
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    while (currentIndex < unSyncedEnrollments.length) {
+      int endIndex = currentIndex + chunkSize;
+      if (endIndex > unSyncedEnrollments.length) {
+        endIndex = unSyncedEnrollments.length;
+      }
 
-    return response;
+      List<D2Enrollment> currentChunk =
+          unSyncedEnrollments.sublist(currentIndex, endIndex);
+
+      List<Map<String, dynamic>> chunkPayload = await Future.wait(
+          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
+
+      Map<String, List<Map<String, dynamic>>> payload = {
+        "enrollments": chunkPayload
+      };
+
+      Map<String, String> params = {
+        "async": "false",
+      };
+
+      try {
+        Map<String, dynamic> response =
+            await client.httpPost<Map<String, dynamic>>("tracker", payload,
+                queryParameters: params);
+        responses.add(response);
+      } catch (e) {
+        controller.addError("Could not upload Enrollments");
+        return;
+      }
+
+      currentIndex += chunkSize;
+    }
+
+    controller.add(status.complete());
+    controller.close();
+    return responses;
   }
 
   @override
@@ -62,14 +98,27 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     Map<String, List<Map<String, dynamic>>> payload = {
       "enrollments": [enrollmentPayload]
     };
+    Map<String, dynamic> response = {};
+
+    SyncStatus status = SyncStatus(
+        synced: 0, total: 1, status: Status.initialized, label: "Enrollment");
+    controller.add(status);
 
     Map<String, String> params = {
       "async": "false",
     };
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    try {
+      response = await client.httpPost<Map<String, dynamic>>("tracker", payload,
+          queryParameters: params);
+    } catch (e) {
+      controller.addError("Could not upload enrollment");
+      return;
+    }
+
+    controller.add(status.increment());
+    controller.add(status.complete());
+    controller.close();
 
     return response;
   }

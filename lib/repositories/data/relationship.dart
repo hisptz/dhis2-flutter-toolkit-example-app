@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
 class RelationshipRepository extends BaseRepository<D2Relationship>
     implements SyncableRepository<D2Relationship> {
   RelationshipRepository(super.db);
+
+  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
 
   @override
   D2Relationship? getByUid(String uid) {
@@ -23,27 +28,57 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
 
   @override
   Future syncMany(DHIS2Client client) async {
-    //TODO: Pagination
     //TODO: Handle import summary
 
     queryConditions = D2Relationship_.synced.equals(false);
     List<D2Relationship> unSyncedRelationships = await query.findAsync();
-    List<Map<String, dynamic>> relationshipsPayload = await Future.wait(
-        unSyncedRelationships
-            .map((relationship) => relationship.toMap(db: db)));
-    Map<String, List<Map<String, dynamic>>> payload = {
-      "relationships": relationshipsPayload
-    };
+    List<Map<String, dynamic>> responses = [];
+    int chunkSize = 50;
+    int currentIndex = 0;
 
-    Map<String, String> params = {
-      "async": "false",
-    };
+    SyncStatus status = SyncStatus(
+        synced: 0,
+        total: (unSyncedRelationships.length / chunkSize).ceil(),
+        status: Status.initialized,
+        label: "Events");
+    controller.add(status);
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    while (currentIndex < unSyncedRelationships.length) {
+      int endIndex = currentIndex + chunkSize;
+      if (endIndex > unSyncedRelationships.length) {
+        endIndex = unSyncedRelationships.length;
+      }
 
-    return response;
+      List<D2Relationship> currentChunk =
+          unSyncedRelationships.sublist(currentIndex, endIndex);
+
+      List<Map<String, dynamic>> chunkPayload = await Future.wait(
+          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
+
+      Map<String, List<Map<String, dynamic>>> payload = {
+        "events": chunkPayload
+      };
+
+      Map<String, String> params = {
+        "async": "false",
+      };
+
+      try {
+        Map<String, dynamic> response =
+            await client.httpPost<Map<String, dynamic>>("tracker", payload,
+                queryParameters: params);
+        responses.add(response);
+      } catch (e) {
+        controller.addError("Could not upload Relationships");
+        return;
+      }
+
+      currentIndex += chunkSize;
+    }
+
+    controller.add(status.complete());
+    controller.close();
+    return responses;
   }
 
   @override
@@ -54,13 +89,27 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
       "relationships": [relationshipPayload]
     };
 
+    Map<String, dynamic> response = {};
+
+    SyncStatus status = SyncStatus(
+        synced: 0, total: 1, status: Status.initialized, label: "Relationship");
+    controller.add(status);
+
     Map<String, String> params = {
       "async": "false",
     };
 
-    Map<String, dynamic> response = await client.httpPost<Map<String, dynamic>>(
-        "tracker", payload,
-        queryParameters: params);
+    try {
+      response = await client.httpPost<Map<String, dynamic>>("tracker", payload,
+          queryParameters: params);
+    } catch (e) {
+      controller.addError("Could not upload relationship");
+      return;
+    }
+
+    controller.add(status.increment());
+    controller.add(status.complete());
+    controller.close();
 
     return response;
   }
