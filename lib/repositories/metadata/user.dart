@@ -1,9 +1,14 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/base_single_meta_download_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/user_download_mixin.dart';
 
 import '../../objectbox.g.dart';
 
-class D2UserRepository extends BaseRepository<D2User> {
+class D2UserRepository extends BaseMetaRepository<D2User>
+    with
+        BaseSingleMetaDownloadServiceMixin<D2User>,
+        D2UserDownloadServiceMixin {
   D2UserRepository(super.db);
 
   @override

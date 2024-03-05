@@ -1,5 +1,5 @@
-import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
-import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
+import 'package:dhis2_flutter_toolkit/models/data/base.dart';
+import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityAttributes.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';

@@ -1,6 +1,5 @@
 import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ class _SyncPageState extends State<SyncPage> {
   late MetadataSync metadataSyncService;
 
   int progress = 0;
-  List<BaseSyncService> unSyncedMeta = [];
 
   @override
   void initState() {
@@ -36,10 +34,10 @@ class _SyncPageState extends State<SyncPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<SyncStatus>(
+    return StreamBuilder<DownloadStatus>(
       stream: metadataSyncService.stream,
       builder: (context, data) {
-        SyncStatus? status = data.data;
+        DownloadStatus? status = data.data;
         var error = data.error;
         return Scaffold(
             body: Center(

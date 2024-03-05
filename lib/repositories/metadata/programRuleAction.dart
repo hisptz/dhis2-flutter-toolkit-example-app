@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/programRuleAction.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
 class D2ProgramRuleActionRepository
-    extends BaseRepository<D2ProgramRuleAction> {
+    extends BaseMetaRepository<D2ProgramRuleAction> {
   D2ProgramRuleActionRepository(super.db);
 
   @override

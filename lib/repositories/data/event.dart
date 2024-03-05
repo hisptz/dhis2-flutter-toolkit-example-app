@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
-class D2EventRepository extends BaseRepository<D2Event>
+class D2EventRepository extends BaseDataRepository<D2Event>
     implements SyncableRepository<D2Event> {
   D2EventRepository(super.db);
 
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   @override
   D2Event? getByUid(String uid) {
@@ -50,7 +51,7 @@ class D2EventRepository extends BaseRepository<D2Event>
     int chunkSize = 50;
     int currentIndex = 0;
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: (unSyncedEvents.length / chunkSize).ceil(),
         status: Status.initialized,
@@ -105,7 +106,7 @@ class D2EventRepository extends BaseRepository<D2Event>
 
     Map<String, dynamic> response = {};
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0, total: 1, status: Status.initialized, label: "Events");
     controller.add(status);
 

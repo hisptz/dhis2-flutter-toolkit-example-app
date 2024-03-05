@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
@@ -9,11 +9,12 @@ import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
-class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
+class D2TrackedEntityRepository extends BaseDataRepository<D2TrackedEntity>
     implements SyncableRepository<D2TrackedEntity> {
   D2TrackedEntityRepository(super.db);
 
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   @override
   D2TrackedEntity? getByUid(String uid) {
@@ -68,7 +69,7 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
     int chunkSize = 50;
     int currentIndex = 0;
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: (unSyncedTrackedEntities.length / chunkSize).ceil(),
         status: Status.initialized,
@@ -125,7 +126,7 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
 
     Map<String, dynamic> response = {};
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: 1,
         status: Status.initialized,

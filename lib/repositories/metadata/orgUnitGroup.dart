@@ -1,8 +1,13 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnitGroup.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/base_meta_download_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/org_unit_group_download_mixin.dart';
 
-class D2OrgUnitGroupRepository extends BaseRepository<D2OrgUnitGroup> {
+class D2OrgUnitGroupRepository extends BaseMetaRepository<D2OrgUnitGroup>
+    with
+        BaseMetaDownloadServiceMixin<D2OrgUnitGroup>,
+        D2OrgUnitGroupDownloadServiceMixin {
   D2OrgUnitGroupRepository(super.db);
 
   @override

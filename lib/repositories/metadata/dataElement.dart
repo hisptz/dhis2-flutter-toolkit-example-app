@@ -1,8 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
-class D2DataElementRepository extends BaseRepository<D2DataElement> {
+class D2DataElementRepository extends BaseMetaRepository<D2DataElement> {
   D2DataElementRepository(super.db);
 
   @override

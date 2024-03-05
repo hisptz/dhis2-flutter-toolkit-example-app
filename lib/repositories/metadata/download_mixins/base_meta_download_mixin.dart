@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
-import '../models/base.dart';
+import '../../../models/metadata/base.dart';
 
 class Pagination {
   int total;
@@ -19,34 +19,20 @@ class Pagination {
         pageCount = json["pageCount"];
 }
 
-abstract class BaseSyncService<T extends DHIS2Resource> {
-  ObjectBox db;
-  DHIS2Client client;
-  StreamController<SyncStatus> controller = StreamController();
-  String resource;
-  List<String>? fields = [];
-  List<String>? filters = [];
+mixin BaseMetaDownloadServiceMixin<T extends D2MetaResource>
+    on BaseMetaRepository<T> {
+  DHIS2Client? client;
+  StreamController<DownloadStatus> downloadController = StreamController();
+  abstract String resource;
+  abstract String label;
+  List<String> downloadFields = [];
+  List<String> downloadFilters = [];
   Map<String, dynamic>? extraParams;
-  String label;
   String?
       dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
 
-  BaseSyncService(
-      {required this.resource,
-      this.fields,
-      this.filters,
-      this.dataKey,
-      this.extraParams,
-      required this.db,
-      required this.label,
-      required this.client});
-
   get url {
     return resource;
-  }
-
-  get box {
-    return db.store.box<T>();
   }
 
   get queryParams {
@@ -56,17 +42,32 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       "pageSize": "50",
       "totalPages": "true"
     };
-    if (fields != null) {
-      params["fields"] = fields!.isNotEmpty ? fields!.join(",") : "";
+    if (downloadFields.isNotEmpty) {
+      params["fields"] = downloadFields.join(",");
     }
-    if (filters != null) {
-      params["filters"] = filters!.isNotEmpty ? filters!.join(",") : "";
+    if (downloadFilters.isNotEmpty) {
+      params["filters"] = downloadFilters.join(",");
     }
     return params;
   }
 
-  get stream {
-    return controller.stream;
+  get downloadStream {
+    return downloadController.stream;
+  }
+
+  BaseMetaDownloadServiceMixin<T> setClient(DHIS2Client client) {
+    this.client = client;
+    return this;
+  }
+
+  BaseMetaDownloadServiceMixin<T> setFilters(List<String> filters) {
+    this.downloadFilters.addAll(filters);
+    return this;
+  }
+
+  BaseMetaDownloadServiceMixin<T> setFields(List<String> fields) {
+    this.downloadFields.addAll(fields);
+    return this;
   }
 
   //Currently just checks if there is any data on the specific data model
@@ -75,11 +76,9 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     return entity.isNotEmpty;
   }
 
-  T mapper(Map<String, dynamic> json);
-
   Future<Pagination> getPagination() async {
-    Map<String, dynamic>? response =
-        await client.httpGetPagination<Map<String, dynamic>>(url,
+    Map<String, dynamic>? response = await client!
+        .httpGetPagination<Map<String, dynamic>>(url,
             queryParameters: queryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
@@ -92,10 +91,10 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
       ...queryParams,
       "page": page.toString()
     };
-    return await client.httpGet<D>(url, queryParameters: updatedParams);
+    return await client!.httpGet<D>(url, queryParameters: updatedParams);
   }
 
-  Future syncPage(int page) async {
+  Future downloadPage(int page) async {
     Map<String, dynamic>? data = await getData<Map<String, dynamic>>(page);
     if (data == null) {
       throw "Error getting data for page $page";
@@ -108,21 +107,21 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
     await box.putManyAsync(entities);
   }
 
-  Future setupSync() async {
+  Future initializeDownload() async {
     Pagination pagination = await getPagination();
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: pagination.pageCount,
         status: Status.initialized,
         label: label);
-    controller.add(status);
+    downloadController.add(status);
 
     for (int page = 1; page <= pagination.pageCount; page++) {
-      await syncPage(page);
-      controller.add(status.increment());
+      await downloadPage(page);
+      downloadController.add(status.increment());
     }
-    controller.add(status.complete());
-    controller.close();
+    downloadController.add(status.complete());
+    downloadController.close();
   }
 
   /*
@@ -139,8 +138,10 @@ abstract class BaseSyncService<T extends DHIS2Resource> {
   *
 
   ** */
-
-  void sync() {
-    setupSync();
+  Future<void> download() async {
+    if (client == null) {
+      throw "DHIS2 client not found. Make sure you call setClient first";
+    }
+    return await initializeDownload();
   }
 }

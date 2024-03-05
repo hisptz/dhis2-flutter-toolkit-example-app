@@ -4,9 +4,9 @@ import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
-import '../models/base.dart';
+import '../models/metadata/base.dart';
 
-abstract class BaseSingleSyncService<T extends DHIS2Resource> {
+abstract class BaseSingleSyncService<T extends D2MetaResource> {
   ObjectBox db;
   DHIS2Client client;
   String resource;
@@ -14,7 +14,8 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
   List<String>? filters = [];
   T? entity;
   String label;
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   BaseSingleSyncService(
       {required this.resource,
@@ -61,7 +62,7 @@ abstract class BaseSingleSyncService<T extends DHIS2Resource> {
   T mapper(Map<String, dynamic> json);
 
   void sync() async {
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0, total: 1, status: Status.initialized, label: label);
     controller.add(status);
     Map<String, dynamic>? data = await getData<Map<String, dynamic>>();

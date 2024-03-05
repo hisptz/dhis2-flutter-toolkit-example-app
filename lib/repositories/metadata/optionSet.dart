@@ -1,8 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/optionSet.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
-class D2OptionSetRepository extends BaseRepository<D2OptionSet> {
+class D2OptionSetRepository extends BaseMetaRepository<D2OptionSet> {
   D2OptionSetRepository(super.db);
 
   @override

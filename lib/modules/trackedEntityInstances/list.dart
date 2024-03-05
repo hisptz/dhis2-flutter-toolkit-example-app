@@ -33,6 +33,7 @@ class _TeiListState extends State<TeiList> {
       PagingController(firstPageKey: 0);
 
   bool uploadStarted = false;
+
   fetchPage(int page) async {
     String keyword = searchController.text;
 
@@ -78,10 +79,10 @@ class _TeiListState extends State<TeiList> {
     final client =
         Provider.of<D2HttpClientProvider>(context, listen: false).client;
 
-    return StreamBuilder<SyncStatus>(
+    return StreamBuilder<DownloadStatus>(
       stream: repository.controller.stream,
       builder: (context, data) {
-        SyncStatus? status = data.data;
+        DownloadStatus? status = data.data;
         var error = data.error;
         return Scaffold(
           appBar: AppBar(

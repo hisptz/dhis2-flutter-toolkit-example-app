@@ -1,10 +1,10 @@
-import 'package:dhis2_flutter_toolkit/models/base.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class D2SystemInfo extends DHIS2Resource {
+class D2SystemInfo extends D2MetaResource {
   int id = 0;
 
   String version;
@@ -28,6 +28,6 @@ class D2SystemInfo extends DHIS2Resource {
         contextPath = json["contextPath"],
         systemName = json["systemName"],
         systemId = json["systemId"] {
-    id = SystemInfoRepository(db).getIdByUid(json["systemId"]) ?? 0;
+    id = D2SystemInfoRepository(db).getIdByUid(json["systemId"]) ?? 0;
   }
 }

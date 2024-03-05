@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
-class RelationshipRepository extends BaseRepository<D2Relationship>
+class RelationshipRepository extends BaseDataRepository<D2Relationship>
     implements SyncableRepository<D2Relationship> {
   RelationshipRepository(super.db);
 
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   @override
   D2Relationship? getByUid(String uid) {
@@ -36,7 +37,7 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
     int chunkSize = 50;
     int currentIndex = 0;
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: (unSyncedRelationships.length / chunkSize).ceil(),
         status: Status.initialized,
@@ -91,7 +92,7 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
 
     Map<String, dynamic> response = {};
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0, total: 1, status: Status.initialized, label: "Relationship");
     controller.add(status);
 

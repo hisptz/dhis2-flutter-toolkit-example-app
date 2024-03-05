@@ -1,4 +1,4 @@
-import 'package:dhis2_flutter_toolkit/models/base.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
@@ -6,7 +6,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class D2User extends DHIS2Resource {
+class D2User extends D2MetaResource {
   int id = 0;
   String username;
   String firstName;

@@ -1,8 +1,13 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/base_meta_download_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/program_download_mixin.dart';
 
-class D2ProgramRepository extends BaseRepository<D2Program> {
+class D2ProgramRepository extends BaseMetaRepository<D2Program>
+    with
+        BaseMetaDownloadServiceMixin<D2Program>,
+        D2ProgramDownloadServiceMixin {
   D2ProgramRepository(super.db);
 
   @override

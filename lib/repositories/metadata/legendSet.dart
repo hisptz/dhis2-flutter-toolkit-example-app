@@ -1,8 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
-class D2LegendSetRepository extends BaseRepository<D2LegendSet> {
+class D2LegendSetRepository extends BaseMetaRepository<D2LegendSet> {
   D2LegendSetRepository(super.db);
 
   @override

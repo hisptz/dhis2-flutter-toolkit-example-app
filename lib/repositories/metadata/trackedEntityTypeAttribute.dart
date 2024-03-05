@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityTypeAttribute.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
 class D2TrackedEntityTypeAttributeRepository
-    extends BaseRepository<D2TrackedEntityTypeAttribute> {
+    extends BaseMetaRepository<D2TrackedEntityTypeAttribute> {
   D2TrackedEntityTypeAttributeRepository(super.db);
 
   @override

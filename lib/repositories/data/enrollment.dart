@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
 
 import '../../objectbox.g.dart';
 
-class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
+class D2EnrollmentRepository extends BaseDataRepository<D2Enrollment>
     implements SyncableRepository<D2Enrollment> {
   D2EnrollmentRepository(super.db);
 
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   @override
   D2Enrollment? getByUid(String uid) {
@@ -46,7 +47,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     int chunkSize = 50;
     int currentIndex = 0;
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: (unSyncedEnrollments.length / chunkSize).ceil(),
         status: Status.initialized,
@@ -100,7 +101,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     };
     Map<String, dynamic> response = {};
 
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0, total: 1, status: Status.initialized, label: "Enrollment");
     controller.add(status);
 

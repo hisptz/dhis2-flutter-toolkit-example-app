@@ -1,16 +1,16 @@
-import 'package:dhis2_flutter_toolkit/models/base.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
-abstract class BaseRepository<T extends DHIS2Resource> {
+abstract class BaseMetaRepository<T extends D2MetaResource> {
   ObjectBox db;
 
   Box<T> get box {
     return db.store.box<T>();
   }
 
-  BaseRepository(this.db);
+  BaseMetaRepository(this.db);
 
   T mapper(Map<String, dynamic> json);
 
@@ -51,7 +51,7 @@ abstract class BaseRepository<T extends DHIS2Resource> {
     return box.putAndGetManyAsync(entities);
   }
 
-  BaseRepository<T> clearQuery() {
+  BaseMetaRepository<T> clearQuery() {
     queryConditions = null;
     return this;
   }

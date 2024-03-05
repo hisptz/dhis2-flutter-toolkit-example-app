@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:dhis2_flutter_toolkit/models/data/base.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-
-import '../models/base.dart';
 
 class Pagination {
   int total;
@@ -19,11 +18,12 @@ class Pagination {
       {required this.total, required this.pageSize, required this.pageCount});
 }
 
-abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
+abstract class BaseTrackerSyncService<T extends D2DataResource> {
   ObjectBox db;
   D2Program program;
   DHIS2Client client;
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
   String resource;
   List<String>? fields = [];
   List<String>? filters = [];
@@ -138,7 +138,7 @@ abstract class BaseTrackerSyncService<T extends DHIS2Resource> {
 
   Future setupSync() async {
     Pagination pagination = await getPagination();
-    SyncStatus status = SyncStatus(
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: pagination.pageCount,
         status: Status.initialized,

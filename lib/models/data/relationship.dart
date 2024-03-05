@@ -1,5 +1,5 @@
-import 'package:dhis2_flutter_toolkit/models/data/dataBase.dart';
-import 'package:dhis2_flutter_toolkit/models/data/sync.dart';
+import 'package:dhis2_flutter_toolkit/models/data/base.dart';
+import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:objectbox/objectbox.dart';
