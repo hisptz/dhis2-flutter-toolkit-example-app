@@ -187,7 +187,6 @@ class TeiDetails extends StatelessWidget {
                                     break;
                                   default:
                                 }
-                                print(value);
                               },
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry<String>>[

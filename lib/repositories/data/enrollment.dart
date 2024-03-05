@@ -87,7 +87,7 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
     }
 
     controller.add(status.complete());
-    controller.close();
+
     return responses;
   }
 
@@ -118,7 +118,6 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
 
     controller.add(status.increment());
     controller.add(status.complete());
-    controller.close();
 
     return response;
   }
