@@ -77,7 +77,7 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
     }
 
     controller.add(status.complete());
-    controller.close();
+
     return responses;
   }
 
@@ -109,7 +109,6 @@ class RelationshipRepository extends BaseRepository<D2Relationship>
 
     controller.add(status.increment());
     controller.add(status.complete());
-    controller.close();
 
     return response;
   }
