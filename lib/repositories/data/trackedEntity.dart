@@ -111,7 +111,7 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
     }
 
     controller.add(status.complete());
-    controller.close();
+
     return responses;
   }
 
@@ -146,7 +146,6 @@ class D2TrackedEntityRepository extends BaseRepository<D2TrackedEntity>
 
     controller.add(status.increment());
     controller.add(status.complete());
-    controller.close();
 
     return response;
   }
