@@ -2,22 +2,10 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
+import 'package:dhis2_flutter_toolkit/utils/pagination.dart';
 
 import '../../../models/metadata/base.dart';
-
-class Pagination {
-  int total;
-  int pageSize;
-  int pageCount;
-
-  Pagination(this.total, this.pageSize, this.pageCount);
-
-  Pagination.fromMap(Map json)
-      : total = json["total"],
-        pageSize = json["pageSize"],
-        pageCount = json["pageCount"];
-}
 
 mixin BaseMetaDownloadServiceMixin<T extends D2MetaResource>
     on BaseMetaRepository<T> {

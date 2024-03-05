@@ -2,14 +2,19 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/tracked_entity_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../objectbox.g.dart';
 
 class D2TrackedEntityRepository extends BaseDataRepository<D2TrackedEntity>
+    with
+        BaseTrackerDataDownloadServiceMixin<D2TrackedEntity>,
+        TrackedEntityDataDownloadServiceMixin
     implements SyncableRepository<D2TrackedEntity> {
   D2TrackedEntityRepository(super.db);
 

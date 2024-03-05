@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
@@ -10,12 +9,9 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/trackedEntitySync.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
-class MetadataSync {
+class D2MetadataDownloadService {
   ObjectBox db;
   DHIS2Client client;
   StreamController<DownloadStatus> controller =
@@ -32,7 +28,7 @@ class MetadataSync {
     return controller.stream;
   }
 
-  MetadataSync(this.db, this.client) {
+  D2MetadataDownloadService(this.db, this.client) {
     userRepository = D2UserRepository(db);
     sysInfoRepository = D2SystemInfoRepository(db);
     orgUnitRepository = D2OrgUnitRepository(db);
@@ -76,48 +72,13 @@ class MetadataSync {
     await setupUserMetadataDownload(user);
   }
 
-  Future setupDataSync() async {
-    D2User? user = D2UserRepository(db).get();
-    if (user == null) {
-      controller.addError("Could not get user");
-      return;
-    }
-    List<String> programs = user.programs;
-
-    for (final programId in programs) {
-      D2Program? program = D2ProgramRepository(db).getByUid(programId);
-
-      if (program == null) {
-        continue;
-      }
-
-      if (program.programType == "WITH_REGISTRATION") {
-        TrackedEntitySync trackedEntitySync =
-            TrackedEntitySync(db, client, program: program);
-        trackedEntitySync.sync();
-        await controller.addStream(trackedEntitySync.stream);
-
-        D2EnrollmentSync enrollmentsSync =
-            D2EnrollmentSync(db, client, program: program);
-        enrollmentsSync.sync();
-        await controller.addStream(enrollmentsSync.stream);
-      }
-
-      D2EventSync eventsSync = D2EventSync(db, client, program: program);
-      eventsSync.sync();
-      await controller.addStream(eventsSync.stream);
-    }
-  }
-
   Future setupSync() async {
     await setupMetadataDownload();
-    await setupDataSync();
-    controller.add(DownloadStatus(
-        synced: 0, total: 0, status: Status.complete, label: "All"));
+    controller.add(DownloadStatus(status: Status.complete, label: "All"));
     controller.close();
   }
 
-  Future<void> sync() async {
+  Future<void> download() async {
     await setupSync();
   }
 }

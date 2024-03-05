@@ -1,7 +1,7 @@
 import 'package:dhis2_flutter_toolkit/state/client.dart';
 import 'package:dhis2_flutter_toolkit/state/db.dart';
 import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +16,7 @@ class SyncPage extends StatefulWidget {
 
 class _SyncPageState extends State<SyncPage> {
   String currentSyncLabel = "";
-  late MetadataSync metadataSyncService;
+  late D2MetadataDownloadService metadataSyncService;
 
   int progress = 0;
 
@@ -25,8 +25,8 @@ class _SyncPageState extends State<SyncPage> {
     final db = Provider.of<DBProvider>(context, listen: false).db;
     final client =
         Provider.of<D2HttpClientProvider>(context, listen: false).client;
-    metadataSyncService = MetadataSync(db, client);
-    metadataSyncService.sync().then((value) {
+    metadataSyncService = D2MetadataDownloadService(db, client);
+    metadataSyncService.download().then((value) {
       context.replace("/");
     });
     super.initState();

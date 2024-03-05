@@ -2,13 +2,18 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/event_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../objectbox.g.dart';
 
 class D2EventRepository extends BaseDataRepository<D2Event>
+    with
+        BaseTrackerDataDownloadServiceMixin<D2Event>,
+        D2EventDataDownloadServiceMixin
     implements SyncableRepository<D2Event> {
   D2EventRepository(super.db);
 

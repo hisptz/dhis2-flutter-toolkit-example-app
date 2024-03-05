@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dhis2_flutter_toolkit/models/metadata/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../../services/dhis2Client.dart';
 

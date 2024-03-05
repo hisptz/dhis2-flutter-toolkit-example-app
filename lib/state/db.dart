@@ -20,6 +20,12 @@ class DBProvider extends ChangeNotifier {
   }
 
   Future init(D2Credential credentials) async {
+    if (_db != null) {
+      if (kDebugMode) {
+        print("STORE already initialized");
+      }
+      return;
+    }
     _db = await ObjectBox.create(credentials);
     if (kDebugMode && Admin.isAvailable() && _db != null) {
       admin = Admin(_db!.store);

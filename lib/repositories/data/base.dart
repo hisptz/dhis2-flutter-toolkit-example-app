@@ -1,16 +1,18 @@
 import 'package:dhis2_flutter_toolkit/models/data/base.dart';
+import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
 abstract class BaseDataRepository<T extends D2DataResource> {
   ObjectBox db;
+  D2Program? program;
 
   Box<T> get box {
     return db.store.box<T>();
   }
 
-  BaseDataRepository(this.db);
+  BaseDataRepository(this.db, {this.program});
 
   T mapper(Map<String, dynamic> json);
 
@@ -30,6 +32,11 @@ abstract class BaseDataRepository<T extends D2DataResource> {
 
   Future saveEntities(List<T> entities) {
     return box.putManyAsync(entities);
+  }
+
+  BaseDataRepository<T> setProgram(D2Program program) {
+    this.program = program;
+    return this;
   }
 
   List<T> find() {

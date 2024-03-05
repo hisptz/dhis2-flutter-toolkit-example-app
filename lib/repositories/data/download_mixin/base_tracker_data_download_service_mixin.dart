@@ -3,52 +3,27 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:dhis2_flutter_toolkit/models/data/base.dart';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
+import 'package:dhis2_flutter_toolkit/utils/pagination.dart';
 
-class Pagination {
-  int total;
-  int pageSize;
-  int pageCount;
-
-  Pagination(
-      {required this.total, required this.pageSize, required this.pageCount});
-}
-
-abstract class BaseTrackerSyncService<T extends D2DataResource> {
-  ObjectBox db;
-  D2Program program;
-  DHIS2Client client;
-  StreamController<DownloadStatus> controller =
+mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
+    on BaseDataRepository<T> {
+  DHIS2Client? client;
+  StreamController<DownloadStatus> downloadController =
       StreamController<DownloadStatus>();
-  String resource;
-  List<String>? fields = [];
-  List<String>? filters = [];
+  abstract String resource;
+  List<String> fields = [];
+  List<String> filters = [];
   Map<String, dynamic>? extraParams;
-  String label;
-  String?
-      dataKey; //Accessor to the JSON payload from the server. If absent, the resource will be used
-
-  BaseTrackerSyncService(
-      {required this.resource,
-      this.fields,
-      this.filters,
-      this.dataKey,
-      this.extraParams,
-      required this.program,
-      required this.db,
-      required this.label,
-      required this.client});
+  abstract String label;
+  String? dataKey =
+      "instances"; //Accessor to the JSON payload from the server. If absent, the resource will be used
 
   get url {
     return resource;
-  }
-
-  get box {
-    return db.store.box<T>();
   }
 
   get queryParams {
@@ -57,33 +32,43 @@ abstract class BaseTrackerSyncService<T extends D2DataResource> {
       "page": "1",
       "pageSize": "200",
       "totalPages": "true",
-      "program": program.uid,
+      "program": program!.uid,
       "ouMode": "ACCESSIBLE",
     };
-    if (fields != null) {
-      params["fields"] = fields!.isNotEmpty ? fields!.join(",") : "";
+    if (fields.isNotEmpty) {
+      params["fields"] = fields.join(",");
     }
-    if (filters != null) {
-      params["filters"] = filters!.isNotEmpty ? filters!.join(",") : "";
+    if (filters.isNotEmpty) {
+      params["filters"] = filters.join(",");
     }
     return params;
   }
 
-  get stream {
-    return controller.stream;
+  get downloadStream {
+    return downloadController.stream;
   }
 
   //Currently just checks if there is any data on the specific data model
   bool isSynced() {
-    List<T> entity = box.getAll();
-    return entity.isNotEmpty;
+    T? entity = box.query().build().findFirst();
+    return entity != null;
   }
 
-  T mapper(Map<String, dynamic> json);
+  setClient(DHIS2Client client) {
+    this.client = client;
+  }
+
+  setFilters(List<String> filters) {
+    this.filters = filters;
+  }
+
+  setFields(List<String> fields) {
+    this.fields = fields;
+  }
 
   Future<Pagination> getPagination() async {
-    Map<String, dynamic>? response =
-        await client.httpGetPagination<Map<String, dynamic>>(url,
+    Map<String, dynamic>? response = await client!
+        .httpGetPagination<Map<String, dynamic>>(url,
             queryParameters: queryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
@@ -102,10 +87,10 @@ abstract class BaseTrackerSyncService<T extends D2DataResource> {
       ...queryParams,
       "page": page.toString()
     };
-    return await client.httpGet<D>(url, queryParameters: updatedParams);
+    return await client!.httpGet<D>(url, queryParameters: updatedParams);
   }
 
-  Future syncRelationships(List<Map<String, dynamic>> entityData) async {
+  Future downloadRelationships(List<Map<String, dynamic>> entityData) async {
     List<D2Relationship> relationships = [];
     for (final entity in entityData) {
       List<D2Relationship> relations = entity["relationships"]
@@ -122,7 +107,7 @@ abstract class BaseTrackerSyncService<T extends D2DataResource> {
     await RelationshipRepository(db).saveEntities(relationships);
   }
 
-  Future syncPage(int page) async {
+  Future downloadPage(int page) async {
     Map<String, dynamic>? data = await getData<Map<String, dynamic>>(page);
     if (data == null) {
       throw "Error getting data for page $page";
@@ -133,24 +118,24 @@ abstract class BaseTrackerSyncService<T extends D2DataResource> {
 
     final entities = entityData.map<T>(mapper).toList();
     await box.putManyAsync(entities);
-    await syncRelationships(entityData);
+    await downloadRelationships(entityData);
   }
 
-  Future setupSync() async {
+  Future initializeDownload() async {
     Pagination pagination = await getPagination();
     DownloadStatus status = DownloadStatus(
         synced: 0,
         total: pagination.pageCount,
         status: Status.initialized,
-        label: "$label for ${program.name} program");
-    controller.add(status);
+        label: "$label for ${program!.name} program");
+    downloadController.add(status);
 
-    for (int page = 1; page <= pagination.pageCount; page++) {
-      await syncPage(page);
-      controller.add(status.increment());
+    for (int page = 1; page <= pagination.pageCount.clamp(1, 5); page++) {
+      await downloadPage(page);
+      downloadController.add(status.increment());
     }
-    controller.add(status.complete());
-    controller.close();
+    downloadController.add(status.complete());
+    downloadController.close();
   }
 
   /*
@@ -168,7 +153,7 @@ abstract class BaseTrackerSyncService<T extends D2DataResource> {
 
   ** */
 
-  void sync() {
-    setupSync();
+  void download() {
+    initializeDownload();
   }
 }

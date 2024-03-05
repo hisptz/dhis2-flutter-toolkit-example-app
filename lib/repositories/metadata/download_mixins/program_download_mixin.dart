@@ -17,7 +17,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntity
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 mixin D2ProgramDownloadServiceMixin on BaseMetaDownloadServiceMixin<D2Program> {
   late List<String> programIds;
