@@ -91,7 +91,7 @@ class D2EventRepository extends BaseRepository<D2Event>
     }
 
     controller.add(status.complete());
-    controller.close();
+
     return responses;
   }
 
@@ -123,7 +123,6 @@ class D2EventRepository extends BaseRepository<D2Event>
 
     controller.add(status.increment());
     controller.add(status.complete());
-    controller.close();
 
     return response;
   }
