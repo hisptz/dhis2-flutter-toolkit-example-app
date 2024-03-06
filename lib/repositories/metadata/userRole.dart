@@ -1,8 +1,8 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/userRole.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
-class D2UserRoleRepository extends BaseRepository<D2UserRole> {
+class D2UserRoleRepository extends BaseMetaRepository<D2UserRole> {
   D2UserRoleRepository(super.db);
 
   @override

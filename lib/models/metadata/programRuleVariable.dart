@@ -38,19 +38,22 @@ class D2ProgramRuleVariable extends D2MetadataResource {
   final program = ToOne<D2Program>();
 
   D2ProgramRuleVariable(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
-      required this.programRuleVariableSourceType,
-      required this.valueType,
-      required this.useCodeForOptionSet});
+      this.displayName,
+      this.id,
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.name,
+      this.programRuleVariableSourceType,
+      this.valueType,
+      this.useCodeForOptionSet);
 
   D2ProgramRuleVariable.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
+        displayName = json["displayName"],
         programRuleVariableSourceType = json["programRuleVariableSourceType"],
         valueType = json["valueType"],
         useCodeForOptionSet = json["useCodeForOptionSet"] {
@@ -71,4 +74,7 @@ class D2ProgramRuleVariable extends D2MetadataResource {
     }
     program.target = D2ProgramRepository(db).getByUid(json["program"]["id"]);
   }
+
+  @override
+  String? displayName;
 }

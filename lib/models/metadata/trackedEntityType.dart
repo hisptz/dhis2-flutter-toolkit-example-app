@@ -23,19 +23,19 @@ class D2TrackedEntityType extends D2MetadataResource {
 
   final trackedEntityTypeAttributes = ToMany<D2TrackedEntityTypeAttribute>();
 
-  D2TrackedEntityType(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.name,
-      required this.description});
+  D2TrackedEntityType(this.id, this.displayName, this.created, this.lastUpdated,
+      this.uid, this.name, this.description);
 
   D2TrackedEntityType.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]),
         uid = json["id"],
         name = json["name"],
-        description = json["description"] {
+        description = json["description"],
+        displayName = json["displayName"] {
     id = D2TrackedEntityTypeRepository(db).getIdByUid(json["id"]) ?? 0;
   }
+
+  @override
+  String? displayName;
 }

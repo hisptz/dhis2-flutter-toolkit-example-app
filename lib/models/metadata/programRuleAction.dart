@@ -32,7 +32,6 @@ class D2ProgramRuleAction extends D2MetadataResource {
   String? data;
   String? location;
 
-//TODO: Add the one 2 one relationships to the constructor
   final programRule = ToOne<D2ProgramRule>();
   final dataElement = ToOne<D2DataElement>();
   final programStageSection = ToOne<D2ProgramStageSection>();
@@ -40,13 +39,15 @@ class D2ProgramRuleAction extends D2MetadataResource {
   final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
   D2ProgramRuleAction(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.programRuleActionType,
+      this.id,
+      this.displayName,
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.programRuleActionType,
       this.content,
       this.data,
-      this.location});
+      this.location);
 
   D2ProgramRuleAction.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),
@@ -55,6 +56,7 @@ class D2ProgramRuleAction extends D2MetadataResource {
         programRuleActionType = json["programRuleActionType"],
         content = json["content"],
         data = json["data"],
+        displayName = json["displayName"],
         location = json["location"] {
     id = D2ProgramRuleVariableRepository(db).getIdByUid(json["id"]) ?? 0;
 
@@ -78,4 +80,7 @@ class D2ProgramRuleAction extends D2MetadataResource {
           D2ProgramSectionRepository(db).getByUid(json["programSection"]["id"]);
     }
   }
+
+  @override
+  String? displayName;
 }

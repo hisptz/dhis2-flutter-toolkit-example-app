@@ -19,15 +19,19 @@ class D2UserRole extends D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  D2UserRole(
-      this.uid, this.name, this.authorities, this.created, this.lastUpdated);
+  D2UserRole(this.displayName, this.uid, this.name, this.authorities,
+      this.created, this.lastUpdated);
 
   D2UserRole.fromMap(ObjectBox db, Map json)
       : uid = json["id"],
         name = json["name"],
+        displayName = json["displayName"],
         authorities = json["authorities"].cast<String>(),
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
     id = D2UserRoleRepository(db).getIdByUid(json["id"]) ?? 0;
   }
+
+  @override
+  String? displayName;
 }

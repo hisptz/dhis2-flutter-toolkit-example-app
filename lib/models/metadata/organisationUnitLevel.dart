@@ -20,19 +20,19 @@ class D2OrganisationUnitLevel implements D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  D2OrganisationUnitLevel(
-      {required this.name,
-      required this.uid,
-      required this.level,
-      required this.created,
-      required this.lastUpdated});
+  D2OrganisationUnitLevel(this.id, this.displayName, this.name, this.uid,
+      this.level, this.created, this.lastUpdated);
 
   D2OrganisationUnitLevel.fromMap(ObjectBox db, Map json)
       : name = json["name"],
         uid = json["id"],
         level = json["level"],
+        displayName = json["displayName"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
     id = D2OrgUnitLevelRepository(db).getIdByUid(json["id"]) ?? 0;
   }
+
+  @override
+  String? displayName;
 }

@@ -23,18 +23,20 @@ class D2TrackedEntityTypeAttribute extends D2MetadataResource {
   final trackedEntityAttribute = ToOne<D2TrackedEntityAttribute>();
 
   String valueType;
-  String displayName;
+  @override
+  String? displayName;
   String displayShortName;
   bool mandatory;
 
   D2TrackedEntityTypeAttribute(
-      {required this.created,
-      required this.lastUpdated,
-      required this.uid,
-      required this.valueType,
-      required this.displayName,
-      required this.displayShortName,
-      required this.mandatory});
+      this.id,
+      this.displayName,
+      this.created,
+      this.lastUpdated,
+      this.uid,
+      this.valueType,
+      this.displayShortName,
+      this.mandatory);
 
   D2TrackedEntityTypeAttribute.fromMap(ObjectBox db, Map json)
       : created = DateTime.parse(json["created"]),

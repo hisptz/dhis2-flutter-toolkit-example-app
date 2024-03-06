@@ -6,6 +6,8 @@ import 'package:dhis2_flutter_toolkit/modules/programs/program.dart';
 import 'package:dhis2_flutter_toolkit/modules/sync.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/list.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/trackedEnityInstance.dart';
+import 'package:dhis2_flutter_toolkit/modules/tracker_data_sync.dart';
+import 'package:dhis2_flutter_toolkit/modules/tracker_data_upload.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/services/users.dart';
 import 'package:dhis2_flutter_toolkit/state/client.dart';
@@ -28,7 +30,7 @@ final router = GoRouter(
         final db = Provider.of<DBProvider>(context, listen: false).db;
         final client =
             Provider.of<D2HttpClientProvider>(context, listen: false).client;
-        final metadataSync = MetadataSync(db, client);
+        final metadataSync = D2MetadataDownloadService(db, client);
         if (!metadataSync.isSynced()) {
           return "/sync";
         }
@@ -49,6 +51,12 @@ final router = GoRouter(
                     id: state.pathParameters["uid"],
                   ))
         ]),
+    GoRoute(
+        path: "/data-sync",
+        builder: (context, state) => const TrackerDataSyncPage()),
+    GoRoute(
+        path: "/data-upload",
+        builder: (context, state) => const TrackerDataUploadPage()),
     GoRoute(
         path: "/tei",
         builder: (context, state) => const TeiList(),

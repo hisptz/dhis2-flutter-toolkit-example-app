@@ -13,14 +13,14 @@ class SystemInfoWidget extends StatefulWidget {
 
 class _SystemInfoWidgetState extends State<SystemInfoWidget> {
   bool loading = false;
-  late SystemInfoRepository repository;
+  late D2SystemInfoRepository repository;
   D2SystemInfo? info;
 
   @override
   void initState() {
     setState(() {
       final db = Provider.of<DBProvider>(context, listen: false).db;
-      repository = SystemInfoRepository(db);
+      repository = D2SystemInfoRepository(db);
       info = repository.get();
     });
     super.initState();

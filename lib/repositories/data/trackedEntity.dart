@@ -1,11 +1,24 @@
+import 'dart:async';
+
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/tracked_entity_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/upload_mixin/base_tracker_data_upload_service_mixin.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../objectbox.g.dart';
 
-class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
-  TrackedEntityRepository(super.db);
+class D2TrackedEntityRepository extends BaseDataRepository<D2TrackedEntity>
+    with
+        BaseTrackerDataDownloadServiceMixin<D2TrackedEntity>,
+        TrackedEntityDataDownloadServiceMixin,
+        BaseTrackerDataUploadServiceMixin<D2TrackedEntity> {
+  D2TrackedEntityRepository(super.db);
+
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
 
   @override
   D2TrackedEntity? getByUid(String uid) {
@@ -24,7 +37,7 @@ class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
     return D2TrackedEntity.fromMap(db, json);
   }
 
-  TrackedEntityRepository byIdentifiableToken(String keyword) {
+  D2TrackedEntityRepository byIdentifiableToken(String keyword) {
     final trackedEntities = box.getAll();
 
     final matchingEntities = trackedEntities.where((trackedEntity) {
@@ -46,5 +59,17 @@ class TrackedEntityRepository extends BaseRepository<D2TrackedEntity> {
         .oneOf(uidList.isNotEmpty ? uidList : ["null"], caseSensitive: false);
 
     return this;
+  }
+
+  @override
+  String uploadDataKey = "trackedEntities";
+
+  @override
+  setUnSyncedQuery() {
+    if (queryConditions != null) {
+      queryConditions!.and(D2TrackedEntity_.synced.equals(true));
+    } else {
+      queryConditions = D2TrackedEntity_.synced.equals(true);
+    }
   }
 }

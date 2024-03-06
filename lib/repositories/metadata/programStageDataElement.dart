@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/programStageDataElement.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
 class D2ProgramStageDataElementRepository
-    extends BaseRepository<D2ProgramStageDataElement> {
+    extends BaseMetaRepository<D2ProgramStageDataElement> {
   D2ProgramStageDataElementRepository(super.db);
 
   @override

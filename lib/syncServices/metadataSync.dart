@@ -1,34 +1,40 @@
 import 'dart:async';
 
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/relationshipType.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/enrollmentSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/eventsSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/orgUnitSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/programSync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/trackedEntitySync.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/userSync.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
-class MetadataSync {
+class D2MetadataDownloadService {
   ObjectBox db;
   DHIS2Client client;
-  late UserSyncService userSyncService;
-  late SystemInfoSync systemInfoSync;
-  StreamController<SyncStatus> controller = StreamController<SyncStatus>();
+  StreamController<DownloadStatus> controller =
+      StreamController<DownloadStatus>();
+
+  late D2UserRepository userRepository;
+  late D2SystemInfoRepository sysInfoRepository;
+  late D2OrgUnitRepository orgUnitRepository;
+  late D2TrackedEntityTypeRepository teiTypeRepository;
+  late D2ProgramRepository programRepository;
+  late D2RelationshipTypeRepository relationshipTypeRepository;
 
   get stream {
     return controller.stream;
   }
 
-  MetadataSync(this.db, this.client) {
-    systemInfoSync = SystemInfoSync(db, client);
-    userSyncService = UserSyncService(db, client);
+  D2MetadataDownloadService(this.db, this.client) {
+    userRepository = D2UserRepository(db);
+    sysInfoRepository = D2SystemInfoRepository(db);
+    orgUnitRepository = D2OrgUnitRepository(db);
+    teiTypeRepository = D2TrackedEntityTypeRepository(db);
+    programRepository = D2ProgramRepository(db);
+    relationshipTypeRepository = D2RelationshipTypeRepository(db);
   }
 
   /*
@@ -37,71 +43,42 @@ class MetadataSync {
   * */
 
   isSynced() {
-    return userSyncService.isSynced() && systemInfoSync.isSynced();
+    return userRepository.isSynced();
   }
 
-  Future setupMetadataSync() async {
-    userSyncService.sync();
-    await controller.addStream(userSyncService.stream);
-    systemInfoSync.sync();
-    await controller.addStream(systemInfoSync.stream);
-    D2User? user = D2UserRepository(db).get();
+  Future setupUserMetadataDownload(D2User user) async {
+    List<String> programs = user.programs;
+    programRepository.setupDownload(client, programs).download();
+    await controller.addStream(programRepository.downloadStream);
+  }
+
+  Future setupMetadataDownload() async {
+    userRepository.setupDownload(client).download();
+    await controller.addStream(userRepository.downloadStream);
+    sysInfoRepository.setupDownload(client).download();
+    await controller.addStream(sysInfoRepository.downloadStream);
+    orgUnitRepository.setupDownload(client).download();
+    await controller.addStream(orgUnitRepository.downloadStream);
+    teiTypeRepository.setupDownload(client).download();
+    await controller.addStream(teiTypeRepository.downloadStream);
+    relationshipTypeRepository.setupDownload(client).download();
+    await controller.addStream(relationshipTypeRepository.downloadStream);
+
+    D2User? user = userRepository.get();
     if (user == null) {
       controller.addError("Could not get user");
       return;
     }
-    D2OrgUnitSync orgUnitSync =
-        D2OrgUnitSync(db, client, orgUnitIds: user.organisationUnits);
-    orgUnitSync.sync();
-    await controller.addStream(orgUnitSync.stream);
-    List<String> programs = user.programs;
-    D2ProgramSync programSync = D2ProgramSync(db, client, programIds: programs);
-    programSync.sync();
-    await controller.addStream(programSync.stream);
-  }
-
-  Future setupDataSync() async {
-    D2User? user = D2UserRepository(db).get();
-    if (user == null) {
-      controller.addError("Could not get user");
-      return;
-    }
-    List<String> programs = user.programs;
-
-    for (final programId in programs) {
-      D2Program? program = D2ProgramRepository(db).getByUid(programId);
-
-      if (program == null) {
-        continue;
-      }
-
-      if (program.programType == "WITH_REGISTRATION") {
-        TrackedEntitySync trackedEntitySync =
-            TrackedEntitySync(db, client, program: program);
-        trackedEntitySync.sync();
-        await controller.addStream(trackedEntitySync.stream);
-
-        D2EnrollmentSync enrollmentsSync =
-            D2EnrollmentSync(db, client, program: program);
-        enrollmentsSync.sync();
-        await controller.addStream(enrollmentsSync.stream);
-      }
-
-      D2EventSync eventsSync = D2EventSync(db, client, program: program);
-      eventsSync.sync();
-      await controller.addStream(eventsSync.stream);
-    }
+    await setupUserMetadataDownload(user);
   }
 
   Future setupSync() async {
-    await setupMetadataSync();
-    await setupDataSync();
-    controller.add(
-        SyncStatus(synced: 0, total: 0, status: Status.complete, label: "All"));
+    await setupMetadataDownload();
+    controller.add(DownloadStatus(status: Status.complete, label: "All"));
     controller.close();
   }
 
-  Future<void> sync() async {
+  Future<void> download() async {
     await setupSync();
   }
 }

@@ -57,4 +57,7 @@ class D2ProgramTrackedEntityAttribute extends D2MetadataResource {
     trackedEntityAttribute.target = attribute;
     program.target = D2ProgramRepository(db).getByUid(json["program"]["id"]);
   }
+
+  @override
+  String? displayName;
 }

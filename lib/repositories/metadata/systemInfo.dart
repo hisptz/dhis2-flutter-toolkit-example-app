@@ -1,10 +1,15 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/base_single_meta_download_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/system_info_download_mixin.dart';
 
 import '../../objectbox.g.dart';
 
-class SystemInfoRepository extends BaseRepository<D2SystemInfo> {
-  SystemInfoRepository(super.db);
+class D2SystemInfoRepository extends BaseMetaRepository<D2SystemInfo>
+    with
+        BaseSingleMetaDownloadServiceMixin<D2SystemInfo>,
+        D2SystemInfoDownloadServiceMixin {
+  D2SystemInfoRepository(super.db);
 
   @override
   int? getIdByUid(String uid) {

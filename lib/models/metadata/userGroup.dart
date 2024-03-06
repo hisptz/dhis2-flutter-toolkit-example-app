@@ -19,13 +19,18 @@ class D2UserGroup extends D2MetadataResource {
   @override
   DateTime lastUpdated;
 
-  D2UserGroup(this.uid, this.name, this.created, this.lastUpdated);
+  D2UserGroup(this.id, this.uid, this.displayName, this.name, this.created,
+      this.lastUpdated);
 
   D2UserGroup.fromMap(ObjectBox db, Map json)
       : uid = json["id"],
         name = json["name"],
+        displayName = json["displayName"],
         created = DateTime.parse(json["created"]),
         lastUpdated = DateTime.parse(json["lastUpdated"]) {
     id = D2UserGroupRepository(db).getIdByUid(json["id"]) ?? 0;
   }
+
+  @override
+  String? displayName;
 }

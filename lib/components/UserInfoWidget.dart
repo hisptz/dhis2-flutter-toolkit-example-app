@@ -57,18 +57,18 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
           ),
-          DetailsRow(
-              label: "Authorities", value: info?.authorities.join(", ") ?? ""),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-          ),
-          DetailsRow(
-              label: "User Groups",
-              value: info?.userGroups
-                      .map((group) => group.name)
-                      .toList()
-                      .join(", ") ??
-                  ""),
+          // DetailsRow(
+          //     label: "Authorities", value: info?.authorities.join(", ") ?? ""),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(vertical: 8.0),
+          // ),
+          // DetailsRow(
+          //     label: "User Groups",
+          //     value: info?.userGroups
+          //             .map((group) => group.name)
+          //             .toList()
+          //             .join(", ") ??
+          //         ""),
           TextButton(
               onPressed: () {
                 setState(() {

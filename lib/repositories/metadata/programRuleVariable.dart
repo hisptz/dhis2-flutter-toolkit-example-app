@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/programRuleVariable.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
 class D2ProgramRuleVariableRepository
-    extends BaseRepository<D2ProgramRuleVariable> {
+    extends BaseMetaRepository<D2ProgramRuleVariable> {
   D2ProgramRuleVariableRepository(super.db);
 
   @override

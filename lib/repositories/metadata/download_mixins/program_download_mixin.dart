@@ -1,6 +1,6 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/download_mixins/base_meta_download_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/legend.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/legendSet.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/option.dart';
@@ -17,25 +17,23 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/programTrackedEntity
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityAttribute.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/base.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/syncStatus.dart';
+import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
-class D2ProgramSync extends BaseSyncService<D2Program> {
-  List<String> programIds;
-  late List<D2Program> programs;
-
-  D2ProgramSync(ObjectBox db, DHIS2Client client, {required this.programIds})
-      : super(
-          label: "Programs",
-          filters: ["id:in:[${programIds.join(",")}]"],
-          db: db,
-          client: client,
-          resource: "programs",
-        );
+mixin D2ProgramDownloadServiceMixin on BaseMetaDownloadServiceMixin<D2Program> {
+  late List<String> programIds;
 
   @override
-  D2Program mapper(Map<String, dynamic> json) {
-    return D2Program.fromMap(db, json);
+  String label = "Programs";
+
+  @override
+  String resource = "programs";
+
+  D2ProgramDownloadServiceMixin setupDownload(
+      DHIS2Client client, List<String> programIds) {
+    this.programIds = programIds;
+    setClient(client);
+    setFilters(["id:in:[${programIds.join(",")}]"]);
+    return this;
   }
 
   syncMeta(key, value) {
@@ -95,7 +93,7 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
   ];
 
   Future<void> syncProgram(String programId) async {
-    Map<String, dynamic>? programMetadata = await client
+    Map<String, dynamic>? programMetadata = await client!
         .httpGet<Map<String, dynamic>>("programs/$programId/metadata");
 
     if (programMetadata == null) {
@@ -121,18 +119,18 @@ class D2ProgramSync extends BaseSyncService<D2Program> {
   }
 
   @override
-  Future setupSync() async {
-    SyncStatus status = SyncStatus(
+  Future initializeDownload() async {
+    DownloadStatus status = DownloadStatus(
         synced: 0,
         total: programIds.length,
         status: Status.initialized,
         label: label);
-    controller.add(status);
+    downloadController.add(status);
     for (final programId in programIds) {
       await syncProgram(programId);
-      controller.add(status.increment());
+      downloadController.add(status.increment());
     }
-    controller.add(status.complete());
-    controller.close();
+    downloadController.add(status.complete());
+    downloadController.close();
   }
 }

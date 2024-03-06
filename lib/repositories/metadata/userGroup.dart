@@ -1,9 +1,9 @@
 import 'package:dhis2_flutter_toolkit/models/metadata/userGroup.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/metadata/base.dart';
 
 import '../../objectbox.g.dart';
 
-class D2UserGroupRepository extends BaseRepository<D2UserGroup> {
+class D2UserGroupRepository extends BaseMetaRepository<D2UserGroup> {
   D2UserGroupRepository(super.db);
 
   @override

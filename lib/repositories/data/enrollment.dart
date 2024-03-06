@@ -1,12 +1,16 @@
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
-import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/upload_mixin/base_tracker_data_upload_service_mixin.dart';
 
 import '../../objectbox.g.dart';
+import 'download_mixin/enrollment_data_download_service_mixin.dart';
 
-class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
-    implements SyncableRepository<D2Enrollment> {
+class D2EnrollmentRepository extends BaseDataRepository<D2Enrollment>
+    with
+        BaseTrackerDataDownloadServiceMixin<D2Enrollment>,
+        D2EnrollmentDownloadServiceMixin,
+        BaseTrackerDataUploadServiceMixin<D2Enrollment> {
   D2EnrollmentRepository(super.db);
 
   @override
@@ -32,15 +36,14 @@ class D2EnrollmentRepository extends BaseRepository<D2Enrollment>
   }
 
   @override
-  Future<List<D2Enrollment>> syncMany(
-      DHIS2Client client, List<D2Enrollment> entities) {
-    // TODO: implement syncMany
-    throw UnimplementedError();
-  }
+  String uploadDataKey = "enrollments";
 
   @override
-  Future syncOne(DHIS2Client client, D2Enrollment entity) {
-    // TODO: implement syncOne
-    throw UnimplementedError();
+  setUnSyncedQuery() {
+    if (queryConditions != null) {
+      queryConditions!.and(D2Enrollment_.synced.equals(true));
+    } else {
+      queryConditions = D2Enrollment_.synced.equals(true);
+    }
   }
 }

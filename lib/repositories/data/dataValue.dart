@@ -1,15 +1,15 @@
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/base.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 
 import '../../objectbox.g.dart';
 
-class D2DataValueRepository extends BaseRepository<D2DataValue> {
+class D2DataValueRepository extends BaseDataRepository<D2DataValue> {
   D2DataValueRepository(super.db);
 
   @override
   D2DataValue? getByUid(String uid) {
-    return null;
+    return box.query(D2DataValue_.uid.equals(uid)).build().findFirst();
   }
 
   @override
@@ -27,6 +27,7 @@ class D2DataValueRepository extends BaseRepository<D2DataValue> {
     return query.findAsync();
   }
 
+  @override
   Future saveEntities(List<D2DataValue> entities) async {
     return box.putManyAsync(entities);
   }
