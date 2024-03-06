@@ -5,6 +5,7 @@ import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/event_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/upload_mixin/base_tracker_data_upload_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
@@ -13,7 +14,8 @@ import '../../objectbox.g.dart';
 class D2EventRepository extends BaseDataRepository<D2Event>
     with
         BaseTrackerDataDownloadServiceMixin<D2Event>,
-        D2EventDataDownloadServiceMixin
+        D2EventDataDownloadServiceMixin,
+        BaseTrackerDataUploadServiceMixin<D2Event>
     implements SyncableRepository<D2Event> {
   D2EventRepository(super.db);
 
@@ -132,5 +134,17 @@ class D2EventRepository extends BaseDataRepository<D2Event>
     controller.close();
 
     return response;
+  }
+
+  @override
+  String uploadDataKey = "events";
+
+  @override
+  setUnSyncedQuery() {
+    if (queryConditions != null) {
+      queryConditions!.and(D2Event_.synced.equals(true));
+    } else {
+      queryConditions = D2Event_.synced.equals(true);
+    }
   }
 }

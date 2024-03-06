@@ -97,7 +97,7 @@ class _TeiListState extends State<TeiList> {
                 IconButton(
                     onPressed: () async {
                       uploadStarted = true;
-                      await repository.syncMany(client);
+                      await repository.setupUpload(client).upload();
                       error != null ? null : uploadStarted = false;
                     },
                     icon: const Icon(
@@ -228,9 +228,9 @@ class _TeiListState extends State<TeiList> {
                                             switch (value) {
                                               case "TrackedEntity":
                                                 uploadStarted = true;
-
-                                                await repository.syncOne(
-                                                    client, item);
+                                                await repository
+                                                    .setupUpload(client)
+                                                    .uploadOne(item);
                                                 error != null
                                                     ? null
                                                     : uploadStarted = false;

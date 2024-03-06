@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:dhis2_flutter_toolkit/models/data/base.dart';
 import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/programStage.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
@@ -19,7 +18,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/programStage.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class D2Event extends D2DataResource implements SyncableData {
+class D2Event extends SyncDataSource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -104,8 +103,6 @@ class D2Event extends D2DataResource implements SyncableData {
       throw "ObjectBox instance is required";
     }
 
-    List<D2DataValue> dataValues =
-        await D2DataValueRepository(db).getByEvent(this);
     List<Map<String, dynamic>> dataValuesPayload = await Future.wait(dataValues
         .map<Future<Map<String, dynamic>>>((e) => e.toMap())
         .toList());

@@ -22,15 +22,14 @@ class D2TrackedEntityAttributeValueRepository
 
   @override
   D2TrackedEntityAttributeValue? getByUid(String uid) {
-    return null;
+    return box
+        .query(D2TrackedEntityAttributeValue_.uid.equals(uid))
+        .build()
+        .findFirst();
   }
 
   @override
   D2TrackedEntityAttributeValue mapper(Map<String, dynamic> json) {
     return D2TrackedEntityAttributeValue.fromMap(db, json, "");
-  }
-
-  Future saveEntities(List<D2TrackedEntityAttributeValue> entities) async {
-    return box.putManyAsync(entities);
   }
 }

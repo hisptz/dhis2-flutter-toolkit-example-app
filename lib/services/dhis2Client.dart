@@ -109,8 +109,9 @@ class DHIS2Client {
         print(e);
         return null;
       }
-    } else {}
-    return null;
+    } else {
+      throw response.body;
+    }
   }
 
 //This is the function that sends a Get Request to the DHIS2 Instance

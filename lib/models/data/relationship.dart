@@ -20,7 +20,7 @@ Map getRelationshipConstraints(Map json) {
 }
 
 @Entity()
-class D2Relationship extends D2DataResource implements SyncableData {
+class D2Relationship extends SyncDataSource implements SyncableData {
   @override
   int id = 0;
   @override

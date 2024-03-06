@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:dhis2_flutter_toolkit/models/data/relationship.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/upload_mixin/base_tracker_data_upload_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../objectbox.g.dart';
 
 class RelationshipRepository extends BaseDataRepository<D2Relationship>
+    with BaseTrackerDataUploadServiceMixin<D2Relationship>
     implements SyncableRepository<D2Relationship> {
   RelationshipRepository(super.db);
 
@@ -113,5 +115,20 @@ class RelationshipRepository extends BaseDataRepository<D2Relationship>
     controller.close();
 
     return response;
+  }
+
+  @override
+  String label = "Enrollments";
+
+  @override
+  String uploadDataKey = "enrollments";
+
+  @override
+  setUnSyncedQuery() {
+    if (queryConditions != null) {
+      queryConditions!.and(D2Relationship_.synced.equals(true));
+    } else {
+      queryConditions = D2Relationship_.synced.equals(true);
+    }
   }
 }

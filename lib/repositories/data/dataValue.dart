@@ -9,7 +9,7 @@ class D2DataValueRepository extends BaseDataRepository<D2DataValue> {
 
   @override
   D2DataValue? getByUid(String uid) {
-    return null;
+    return box.query(D2DataValue_.uid.equals(uid)).build().findFirst();
   }
 
   @override

@@ -10,7 +10,7 @@ mixin TrackedEntityDataDownloadServiceMixin
   String label = "Tracked Entities";
 
   @override
-  String resource = "tracker/trackedEntities";
+  String downloadResource = "tracker/trackedEntities";
 
   @override
   Future downloadPage(int page) async {
@@ -20,7 +20,7 @@ mixin TrackedEntityDataDownloadServiceMixin
     }
 
     List<Map<String, dynamic>> entityData =
-        data[dataKey ?? resource].cast<Map<String, dynamic>>();
+        data[dataKey ?? downloadResource].cast<Map<String, dynamic>>();
 
     List<D2TrackedEntity> entities = entityData.map(mapper).toList();
 
@@ -47,10 +47,10 @@ mixin TrackedEntityDataDownloadServiceMixin
   }
 
   @override
-  void download() {
+  Future<void> download() async {
     if (program!.programType != "WITH_REGISTRATION") {
       return;
     }
-    super.download();
+    await super.download();
   }
 }

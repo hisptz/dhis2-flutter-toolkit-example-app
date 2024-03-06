@@ -4,9 +4,8 @@ import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/base.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/base_tracker_data_download_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/download_mixin/tracked_entity_data_download_service_mixin.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/sync.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/upload_mixin/base_tracker_data_upload_service_mixin.dart';
 import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
 import '../../objectbox.g.dart';
@@ -14,8 +13,8 @@ import '../../objectbox.g.dart';
 class D2TrackedEntityRepository extends BaseDataRepository<D2TrackedEntity>
     with
         BaseTrackerDataDownloadServiceMixin<D2TrackedEntity>,
-        TrackedEntityDataDownloadServiceMixin
-    implements SyncableRepository<D2TrackedEntity> {
+        TrackedEntityDataDownloadServiceMixin,
+        BaseTrackerDataUploadServiceMixin<D2TrackedEntity> {
   D2TrackedEntityRepository(super.db);
 
   StreamController<DownloadStatus> controller =
@@ -63,97 +62,14 @@ class D2TrackedEntityRepository extends BaseDataRepository<D2TrackedEntity>
   }
 
   @override
-  Future syncMany(DHIS2Client client) async {
-    //TODO: Handle import summary
-
-    queryConditions = D2TrackedEntity_.synced.equals(false);
-
-    List<D2TrackedEntity> unSyncedTrackedEntities = await query.findAsync();
-
-    List<Map<String, dynamic>> responses = [];
-    int chunkSize = 50;
-    int currentIndex = 0;
-
-    DownloadStatus status = DownloadStatus(
-        synced: 0,
-        total: (unSyncedTrackedEntities.length / chunkSize).ceil(),
-        status: Status.initialized,
-        label: "Tracked Entity");
-    controller.add(status);
-
-    while (currentIndex < unSyncedTrackedEntities.length) {
-      int endIndex = currentIndex + chunkSize;
-      if (endIndex > unSyncedTrackedEntities.length) {
-        endIndex = unSyncedTrackedEntities.length;
-      }
-
-      List<D2TrackedEntity> currentChunk =
-          unSyncedTrackedEntities.sublist(currentIndex, endIndex);
-
-      List<Map<String, dynamic>> chunkPayload = await Future.wait(
-          currentChunk.map((trackedEntity) => trackedEntity.toMap(db: db)));
-
-      Map<String, List<Map<String, dynamic>>> payload = {
-        "trackedEntities": chunkPayload
-      };
-
-      Map<String, String> params = {
-        "async": "false",
-      };
-
-      try {
-        Map<String, dynamic> response =
-            await client.httpPost<Map<String, dynamic>>("tracker", payload,
-                queryParameters: params);
-        responses.add(response);
-      } catch (e) {
-        controller.addError("Could not upload trackedEntities");
-        return;
-      }
-
-      controller.add(status.increment());
-
-      currentIndex += chunkSize;
-    }
-
-    controller.add(status.complete());
-    controller.close();
-    return responses;
-  }
+  String uploadDataKey = "trackedEntities";
 
   @override
-  Future syncOne(DHIS2Client client, D2TrackedEntity entity) async {
-    Map<String, dynamic> trackedEntityPayload = await entity.toMap(db: db);
-
-    Map<String, List<Map<String, dynamic>>> payload = {
-      "trackedEntities": [trackedEntityPayload]
-    };
-
-    Map<String, dynamic> response = {};
-
-    DownloadStatus status = DownloadStatus(
-        synced: 0,
-        total: 1,
-        status: Status.initialized,
-        label: "Tracked Entity");
-    controller.add(status);
-
-    Map<String, String> params = {
-      "async": "false",
-    };
-
-    try {
-      response = await client.httpPost<Map<String, dynamic>>("tracker", payload,
-          queryParameters: params);
-    } catch (e) {
-      controller.addError("Could not upload trackedEntities");
-      return;
+  setUnSyncedQuery() {
+    if (queryConditions != null) {
+      queryConditions!.and(D2TrackedEntity_.synced.equals(true));
+    } else {
+      queryConditions = D2TrackedEntity_.synced.equals(true);
     }
-
-    controller.add(status.increment());
-    controller.add(status.complete());
-    controller.close();
-
-    return response;
   }
 }

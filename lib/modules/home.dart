@@ -50,6 +50,16 @@ class Home extends StatelessWidget {
                   child: const Text("Programs")),
               TextButton(
                   onPressed: () {
+                    context.push("/data-sync");
+                  },
+                  child: const Text("Tracked Data Download")),
+              TextButton(
+                  onPressed: () {
+                    context.push("/data-upload");
+                  },
+                  child: const Text("Tracked Data Upload")),
+              TextButton(
+                  onPressed: () {
                     context.push("/tei");
                   },
                   child: const Text("Tracked Entity Instances"))

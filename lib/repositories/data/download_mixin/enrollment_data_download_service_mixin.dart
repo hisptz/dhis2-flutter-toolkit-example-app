@@ -8,7 +8,7 @@ mixin D2EnrollmentDownloadServiceMixin
   String label = "Enrollments";
 
   @override
-  String resource = "tracker/enrollments";
+  String downloadResource = "tracker/enrollments";
 
   D2EnrollmentDownloadServiceMixin setupDownload(DHIS2Client client) {
     setClient(client);
@@ -17,10 +17,10 @@ mixin D2EnrollmentDownloadServiceMixin
   }
 
   @override
-  void download() {
+  Future<void> download() async {
     if (program!.programType != "WITH_REGISTRATION") {
       return;
     }
-    super.download();
+    await super.download();
   }
 }

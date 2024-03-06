@@ -10,7 +10,7 @@ mixin D2EventDataDownloadServiceMixin
   String label = "Events";
 
   @override
-  String resource = "tracker/events";
+  String downloadResource = "tracker/events";
 
   D2EventDataDownloadServiceMixin setupDownload(DHIS2Client client) {
     setClient(client);
@@ -26,7 +26,7 @@ mixin D2EventDataDownloadServiceMixin
     }
 
     List<Map<String, dynamic>> entityData =
-        data[dataKey ?? resource].cast<Map<String, dynamic>>();
+        data[dataKey ?? downloadResource].cast<Map<String, dynamic>>();
 
     List<D2Event> entities = entityData.map(mapper).toList();
 

@@ -14,7 +14,7 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
   DHIS2Client? client;
   StreamController<DownloadStatus> downloadController =
       StreamController<DownloadStatus>();
-  abstract String resource;
+  abstract String downloadResource;
   List<String> fields = [];
   List<String> filters = [];
   Map<String, dynamic>? extraParams;
@@ -22,11 +22,11 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
   String? dataKey =
       "instances"; //Accessor to the JSON payload from the server. If absent, the resource will be used
 
-  get url {
-    return resource;
+  get downloadURL {
+    return downloadResource;
   }
 
-  get queryParams {
+  get downloadQueryParams {
     Map<String, String> params = {
       ...(extraParams ?? {}),
       "page": "1",
@@ -68,8 +68,8 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
 
   Future<Pagination> getPagination() async {
     Map<String, dynamic>? response = await client!
-        .httpGetPagination<Map<String, dynamic>>(url,
-            queryParameters: queryParams);
+        .httpGetPagination<Map<String, dynamic>>(downloadURL,
+            queryParameters: downloadQueryParams);
     if (response == null) {
       throw "Error getting pagination for data sync";
     }
@@ -84,10 +84,11 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
 
   Future<D?> getData<D>(int page) async {
     Map<String, String> updatedParams = {
-      ...queryParams,
+      ...downloadQueryParams,
       "page": page.toString()
     };
-    return await client!.httpGet<D>(url, queryParameters: updatedParams);
+    return await client!
+        .httpGet<D>(downloadURL, queryParameters: updatedParams);
   }
 
   Future downloadRelationships(List<Map<String, dynamic>> entityData) async {
@@ -114,7 +115,7 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
     }
 
     List<Map<String, dynamic>> entityData =
-        data[dataKey ?? resource].cast<Map<String, dynamic>>();
+        data[dataKey ?? downloadResource].cast<Map<String, dynamic>>();
 
     final entities = entityData.map<T>(mapper).toList();
     await box.putManyAsync(entities);
@@ -153,7 +154,7 @@ mixin BaseTrackerDataDownloadServiceMixin<T extends D2DataResource>
 
   ** */
 
-  void download() {
-    initializeDownload();
+  Future<void> download() async {
+    await initializeDownload();
   }
 }

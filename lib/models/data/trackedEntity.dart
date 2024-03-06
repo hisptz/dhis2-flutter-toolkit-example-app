@@ -1,19 +1,18 @@
 import 'package:dhis2_flutter_toolkit/models/data/base.dart';
 import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
+import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/trackedEntityType.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/orgUnit.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/trackedEntityType.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class D2TrackedEntity extends D2DataResource implements SyncableData {
+class D2TrackedEntity extends SyncDataSource implements SyncableData {
   @override
   int id = 0;
   @override
@@ -70,19 +69,14 @@ class D2TrackedEntity extends D2DataResource implements SyncableData {
       throw "ObjectBox instance is required";
     }
 
-    List<D2TrackedEntityAttributeValue> attributes =
-        await D2TrackedEntityAttributeValueRepository(db)
-            .byTrackedEntity(id)
-            .findAsync();
-
     List<Map<String, dynamic>> attributesPayload = await Future.wait(attributes
-        .map<Future<Map<String, dynamic>>>((e) => e.toMap())
+        .map<Future<Map<String, dynamic>>>((e) => e.toMap(db: db))
         .toList());
 
     Map<String, dynamic> payload = {
-      "orgUnit": orgUnit,
+      "orgUnit": orgUnit.target!.uid,
       "trackedEntity": uid,
-      "trackedEntityType": trackedEntityType,
+      "trackedEntityType": trackedEntityType.target!.uid,
       "attributes": attributesPayload,
     };
 

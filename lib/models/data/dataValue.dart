@@ -3,6 +3,7 @@ import 'package:dhis2_flutter_toolkit/models/data/event.dart';
 import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/dataElement.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
 import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
 import 'package:dhis2_flutter_toolkit/repositories/metadata/dataElement.dart';
 import 'package:objectbox/objectbox.dart';
@@ -16,6 +17,9 @@ class D2DataValue extends D2DataResource implements SyncableData {
   @override
   DateTime updatedAt;
 
+  @Unique()
+  String uid;
+
   String? value;
   bool providedElsewhere;
 
@@ -23,16 +27,19 @@ class D2DataValue extends D2DataResource implements SyncableData {
 
   final dataElement = ToOne<D2DataElement>();
 
-  D2DataValue(this.id, this.createdAt, this.updatedAt, this.value,
+  D2DataValue(this.uid, this.id, this.createdAt, this.updatedAt, this.value,
       this.providedElsewhere, this.synced);
 
   D2DataValue.fromMap(ObjectBox db, Map json, String eventId)
       : updatedAt = DateTime.parse(json["updatedAt"]),
         createdAt = DateTime.parse(json["createdAt"]),
+        uid = "$eventId-${json["dataElement"]}",
         value = json["value"],
         providedElsewhere = json["providedElsewhere"] {
-    event.target = D2EventRepository(db).getByUid(eventId);
+    String uid = "$eventId-${json["dataElement"]}";
+    id = D2DataValueRepository(db).getIdByUid(uid) ?? 0;
 
+    event.target = D2EventRepository(db).getByUid(eventId);
     dataElement.target =
         D2DataElementRepository(db).getByUid(json["dataElement"]);
   }

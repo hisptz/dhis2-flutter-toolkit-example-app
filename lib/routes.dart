@@ -7,6 +7,7 @@ import 'package:dhis2_flutter_toolkit/modules/sync.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/list.dart';
 import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/trackedEnityInstance.dart';
 import 'package:dhis2_flutter_toolkit/modules/tracker_data_sync.dart';
+import 'package:dhis2_flutter_toolkit/modules/tracker_data_upload.dart';
 import 'package:dhis2_flutter_toolkit/services/credentials.dart';
 import 'package:dhis2_flutter_toolkit/services/users.dart';
 import 'package:dhis2_flutter_toolkit/state/client.dart';
@@ -53,6 +54,9 @@ final router = GoRouter(
     GoRoute(
         path: "/data-sync",
         builder: (context, state) => const TrackerDataSyncPage()),
+    GoRoute(
+        path: "/data-upload",
+        builder: (context, state) => const TrackerDataUploadPage()),
     GoRoute(
         path: "/tei",
         builder: (context, state) => const TeiList(),

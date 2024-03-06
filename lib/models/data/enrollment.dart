@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dhis2_flutter_toolkit/models/data/base.dart';
 import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
+import 'package:dhis2_flutter_toolkit/models/data/uploadBase.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/organisationUnit.dart';
 import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.dart';
@@ -14,7 +14,7 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class D2Enrollment extends D2DataResource implements SyncableData {
+class D2Enrollment extends SyncDataSource implements SyncableData {
   @override
   int id = 0;
   @override

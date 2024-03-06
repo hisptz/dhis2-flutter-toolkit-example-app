@@ -11,30 +11,30 @@ import 'package:dhis2_flutter_toolkit/repositories/metadata/user.dart';
 import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
 import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 
-class D2TrackerDataDownload {
+class D2TrackerDataUpload {
   ObjectBox db;
   DHIS2Client client;
-  StreamController<DownloadStatus> downloadController =
+  StreamController<DownloadStatus> uploadController =
       StreamController<DownloadStatus>();
 
-  D2TrackerDataDownload(this.db, this.client);
+  D2TrackerDataUpload(this.db, this.client);
 
-  get downloadStream {
-    return downloadController.stream;
+  get uploadStream {
+    return uploadController.stream;
   }
 
   isSynced() {
-    return false;
+    return true;
   }
 
-  Future setupDataDownload() async {
+  Future setupDataUpload() async {
     D2User? user = D2UserRepository(db).get();
     if (user == null) {
-      downloadController.addError("Could not get user");
-      downloadController.close();
+      uploadController.addError("Could not get user");
       return;
     }
     List<String> programs = user.programs;
+
     for (final programId in programs) {
       D2Program? program = D2ProgramRepository(db).getByUid(programId);
       if (program == null) {
@@ -43,28 +43,25 @@ class D2TrackerDataDownload {
       if (program.programType == "WITH_REGISTRATION") {
         D2TrackedEntityRepository trackedEntityRepository =
             D2TrackedEntityRepository(db);
-        trackedEntityRepository.setProgram(program);
         D2EnrollmentRepository enrollmentRepository =
             D2EnrollmentRepository(db);
+        trackedEntityRepository.setProgram(program);
         enrollmentRepository.setProgram(program);
-        trackedEntityRepository.setupDownload(client).download();
-        await downloadController
-            .addStream(trackedEntityRepository.downloadStream);
-        enrollmentRepository.setupDownload(client).download();
-        await downloadController.addStream(enrollmentRepository.downloadStream);
+        trackedEntityRepository.setupUpload(client).upload();
+        await uploadController.addStream(trackedEntityRepository.uploadStream);
+        enrollmentRepository.setupUpload(client).upload();
+        await uploadController.addStream(enrollmentRepository.uploadStream);
       }
-
       D2EventRepository eventRepository = D2EventRepository(db);
       eventRepository.setProgram(program);
-      eventRepository.setupDownload(client).download();
-      await downloadController.addStream(eventRepository.downloadStream);
+      eventRepository.setupUpload(client).upload();
+      await uploadController.addStream(eventRepository.uploadStream);
     }
   }
 
-  Future<void> download() async {
-    await setupDataDownload();
-    downloadController
-        .add(DownloadStatus(status: Status.complete, label: "All"));
-    downloadController.close();
+  Future<void> upload() async {
+    await setupDataUpload();
+    uploadController.add(DownloadStatus(status: Status.complete, label: "All"));
+    uploadController.close();
   }
 }
