@@ -1,9 +1,8 @@
-import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:dhis2_flutter_toolkit/services/dhis2Client.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/widgets.dart';
 
 class D2HttpClientProvider extends ChangeNotifier {
-  DHIS2Client? _client;
+  D2ClientService? _client;
 
   get client {
     if (_client == null) {
@@ -12,7 +11,7 @@ class D2HttpClientProvider extends ChangeNotifier {
     return _client;
   }
 
-  init(D2Credential credentials) {
-    _client = DHIS2Client(credentials);
+  init(D2UserCredential credentials) {
+    _client = D2ClientService(credentials);
   }
 }

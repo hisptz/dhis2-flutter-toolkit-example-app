@@ -1,11 +1,11 @@
-import 'package:dhis2_flutter_toolkit/state/client.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/tracker_upload_service.dart';
-import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../state/client.dart';
+import '../state/db.dart';
 
 class TrackerDataUploadPage extends StatefulWidget {
   const TrackerDataUploadPage({super.key});
@@ -16,7 +16,7 @@ class TrackerDataUploadPage extends StatefulWidget {
 
 class _TrackerDataUploadPageState extends State<TrackerDataUploadPage> {
   String currentSyncLabel = "";
-  late D2TrackerDataUpload trackerDataUploadService;
+  late D2TrackerDataUploadService trackerDataUploadService;
 
   int progress = 0;
 
@@ -25,17 +25,19 @@ class _TrackerDataUploadPageState extends State<TrackerDataUploadPage> {
     final db = Provider.of<DBProvider>(context, listen: false).db;
     final client =
         Provider.of<D2HttpClientProvider>(context, listen: false).client;
-    trackerDataUploadService = D2TrackerDataUpload(db, client);
-    trackerDataUploadService.upload().then((value) {});
+    trackerDataUploadService = D2TrackerDataUploadService(db, client);
+    trackerDataUploadService.upload().then((value) {
+      context.pop();
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DownloadStatus>(
+    return StreamBuilder<D2SyncStatus>(
       stream: trackerDataUploadService.uploadStream,
       builder: (context, data) {
-        DownloadStatus? status = data.data;
+        D2SyncStatus? status = data.data;
         var error = data.error;
 
         return Scaffold(
@@ -50,7 +52,8 @@ class _TrackerDataUploadPageState extends State<TrackerDataUploadPage> {
                     fontWeight: FontWeight.bold, fontSize: 24.0),
               ),
               status != null
-                  ? status.status == Status.complete && status.label == "All"
+                  ? status.status == D2SyncStatusEnum.complete &&
+                          status.label == "All"
                       ? Column(
                           children: [
                             const Text("Done!"),
@@ -72,3 +75,5 @@ class _TrackerDataUploadPageState extends State<TrackerDataUploadPage> {
     );
   }
 }
+
+class D2TrackerDataUpload {}

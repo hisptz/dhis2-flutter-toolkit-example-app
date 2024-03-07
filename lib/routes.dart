@@ -1,37 +1,35 @@
-import 'package:dhis2_flutter_toolkit/components/Loader.dart';
-import 'package:dhis2_flutter_toolkit/modules/home.dart';
-import 'package:dhis2_flutter_toolkit/modules/login.dart';
-import 'package:dhis2_flutter_toolkit/modules/programs/list.dart';
-import 'package:dhis2_flutter_toolkit/modules/programs/program.dart';
-import 'package:dhis2_flutter_toolkit/modules/sync.dart';
-import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/list.dart';
-import 'package:dhis2_flutter_toolkit/modules/trackedEntityInstances/trackedEnityInstance.dart';
-import 'package:dhis2_flutter_toolkit/modules/tracker_data_sync.dart';
-import 'package:dhis2_flutter_toolkit/modules/tracker_data_upload.dart';
-import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:dhis2_flutter_toolkit/services/users.dart';
-import 'package:dhis2_flutter_toolkit/state/client.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
-import 'package:dhis2_flutter_toolkit/utils/init.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import 'components/Loader.dart';
+import 'modules/home.dart';
+import 'modules/login.dart';
+import 'modules/programs/list.dart';
+import 'modules/programs/program.dart';
+import 'modules/sync.dart';
+import 'modules/trackedEntityInstances/list.dart';
+import 'modules/trackedEntityInstances/trackedEnityInstance.dart';
+import 'modules/tracker_data_sync.dart';
+import 'modules/tracker_data_upload.dart';
+import 'state/db.dart';
+import 'utils/init.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
       path: "/",
       redirect: (context, state) async {
-        final D2Credential? credentials = AppAuth().getLoggedInUser();
+        final D2UserCredential? credentials =
+            await D2AuthService().currentUser();
         if (credentials == null) {
           return "/login";
         }
         await D2Utils.initialize(context);
         final db = Provider.of<DBProvider>(context, listen: false).db;
-        final client =
-            Provider.of<D2HttpClientProvider>(context, listen: false).client;
-        final metadataSync = D2MetadataDownloadService(db, client);
-        if (!metadataSync.isSynced()) {
+        final D2User? user = D2UserRepository(db).get();
+
+        if (user == null) {
           return "/sync";
         }
         return "/home";

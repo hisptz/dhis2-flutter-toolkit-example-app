@@ -1,8 +1,7 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/program.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/program.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
+import 'package:dhis2_flutter_toolkit_example_app/state/db.dart';
+import 'package:dhis2_flutter_toolkit_example_app/utils/debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

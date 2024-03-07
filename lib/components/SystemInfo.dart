@@ -1,6 +1,5 @@
-import 'package:dhis2_flutter_toolkit/models/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/repositories/metadata/systemInfo.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
+import 'package:dhis2_flutter_toolkit_example_app/state/db.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,19 +1,10 @@
-import 'package:dhis2_flutter_toolkit/components/DetailsRow.dart';
-import 'package:dhis2_flutter_toolkit/models/data/dataValue.dart';
-import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/event.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/dataValue.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/event.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/relationship.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/state/client.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../components/DetailsRow.dart';
+import '../../state/client.dart';
+import '../../state/db.dart';
 
 class TeiDetails extends StatelessWidget {
   const TeiDetails({super.key, required this.id});
@@ -58,16 +49,12 @@ class TeiDetails extends StatelessWidget {
       );
     }
 
-    List<D2Enrollment> enrollments =
-        D2EnrollmentRepository(db).byTrackedEntity(int.parse(id!)).find();
+    List<D2Enrollment> enrollments = teiInstance.enrollments;
 
-    List<D2Event> events =
-        D2EventRepository(db).byTrackedEntity(int.parse(id!)).find();
+    List<D2Event> events = [];
 
     List<D2TrackedEntityAttributeValue> attributeValues =
-        D2TrackedEntityAttributeValueRepository(db)
-            .byTrackedEntity(int.parse(id!))
-            .find();
+        teiInstance.attributes;
 
     final attribute = attributeValues.where((value) =>
         value.trackedEntityAttribute.target?.name == "First name" ||
@@ -177,7 +164,7 @@ class TeiDetails extends StatelessWidget {
                                     break;
                                   case "Relationships":
                                     final response =
-                                        await RelationshipRepository(db)
+                                        await D2RelationshipRepository(db)
                                             .setupUpload(client)
                                             .upload();
 

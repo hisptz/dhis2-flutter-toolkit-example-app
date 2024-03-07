@@ -1,20 +1,14 @@
-import 'package:dhis2_flutter_toolkit/models/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/models/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/objectbox.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:dhis2_flutter_toolkit/objectbox.g.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/enrollment.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntity.dart';
-import 'package:dhis2_flutter_toolkit/repositories/data/trackedEntityAttributeValue.dart';
-import 'package:dhis2_flutter_toolkit/state/client.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/utils/debounce.dart';
-import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../state/client.dart';
+import '../../state/db.dart';
+import '../../utils/debounce.dart';
 
 class TeiList extends StatefulWidget {
   const TeiList({super.key});
@@ -28,7 +22,7 @@ final debouncer = Debouncer(milliseconds: 1000);
 class _TeiListState extends State<TeiList> {
   TextEditingController searchController = TextEditingController();
   late D2TrackedEntityRepository repository;
-  late ObjectBox db;
+  late D2ObjectBox db;
   final PagingController<int, D2TrackedEntity> _pagingController =
       PagingController(firstPageKey: 0);
 
@@ -79,10 +73,10 @@ class _TeiListState extends State<TeiList> {
     final client =
         Provider.of<D2HttpClientProvider>(context, listen: false).client;
 
-    return StreamBuilder<DownloadStatus>(
+    return StreamBuilder<D2SyncStatus>(
       stream: repository.controller.stream,
       builder: (context, data) {
-        DownloadStatus? status = data.data;
+        D2SyncStatus? status = data.data;
         var error = data.error;
         return Scaffold(
           appBar: AppBar(

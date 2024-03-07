@@ -1,12 +1,12 @@
-import 'package:dhis2_flutter_toolkit/components/SystemInfo.dart';
-import 'package:dhis2_flutter_toolkit/components/UserInfoWidget.dart';
-import 'package:dhis2_flutter_toolkit/services/credentials.dart';
-import 'package:dhis2_flutter_toolkit/services/users.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../components/SystemInfo.dart';
+import '../components/UserInfoWidget.dart';
+import '../state/db.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -20,9 +20,11 @@ class Home extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  D2Credential credentials = AppAuth().getLoggedInUser()!;
-                  Provider.of<DBProvider>(context, listen: false).close();
-                  credentials.logout().then((_) => context.replace("/"));
+                  D2AuthService authService = D2AuthService();
+                  authService.logoutUser().then((value) {
+                    Provider.of<DBProvider>(context, listen: false).close();
+                    context.replace("/");
+                  });
                 },
                 icon: const Icon(
                   Icons.logout,

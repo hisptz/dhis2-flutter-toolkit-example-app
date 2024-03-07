@@ -1,11 +1,11 @@
-import 'package:dhis2_flutter_toolkit/state/client.dart';
-import 'package:dhis2_flutter_toolkit/state/db.dart';
-import 'package:dhis2_flutter_toolkit/syncServices/metadataSync.dart';
-import 'package:dhis2_flutter_toolkit/utils/download_status.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../state/client.dart';
+import '../state/db.dart';
 
 class SyncPage extends StatefulWidget {
   const SyncPage({super.key});
@@ -34,10 +34,10 @@ class _SyncPageState extends State<SyncPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DownloadStatus>(
+    return StreamBuilder<D2SyncStatus>(
       stream: metadataSyncService.stream,
       builder: (context, data) {
-        DownloadStatus? status = data.data;
+        D2SyncStatus? status = data.data;
         var error = data.error;
         return Scaffold(
             body: Center(

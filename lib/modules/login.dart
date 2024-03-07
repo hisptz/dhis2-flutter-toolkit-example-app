@@ -1,4 +1,4 @@
-import 'package:dhis2_flutter_toolkit/services/credentials.dart';
+import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -25,17 +25,16 @@ class _LoginState extends State<Login> {
     String password = _passwordController.text;
 
     try {
-      D2Credential credentials = D2Credential(
-          username: username, password: password, baseURL: baseURL);
-
-      if (await credentials.verify()) {
-        setState(() {
-          loading = false;
-        });
-        context.replace("/");
-      } else {
-        print("Why falling here");
-      }
+      D2AuthService authService = D2AuthService();
+      await authService.login(
+          baseURL: baseURL,
+          username: username,
+          password: password,
+          offlineFirst: true);
+      setState(() {
+        loading = false;
+      });
+      context.replace("/");
     } catch (e) {
       Fluttertoast.showToast(
         msg: e.toString(),
