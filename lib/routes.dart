@@ -19,7 +19,7 @@ import 'state/db.dart';
 import 'utils/init.dart';
 
 final router = GoRouter(
-  initialLocation: "/",
+  initialLocation: "/ui",
   routes: [
     GoRoute(
       path: "/",

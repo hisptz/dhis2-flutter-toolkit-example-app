@@ -11,9 +11,9 @@ import '../../state/db.dart';
 import '../../utils/debounce.dart';
 
 class TeiList extends StatefulWidget {
-  String? programId;
+  final String? programId;
 
-  TeiList({super.key, this.programId});
+  const TeiList({super.key, this.programId});
 
   @override
   State<TeiList> createState() => _TeiListState();
@@ -31,7 +31,6 @@ class _TeiListState extends State<TeiList> {
   bool uploadStarted = false;
 
   fetchPage(int page) async {
-    String keyword = searchController.text;
     repository.initializeQuery();
     Query<D2TrackedEntity> query = repository.query;
     query

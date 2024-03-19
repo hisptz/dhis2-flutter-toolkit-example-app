@@ -96,7 +96,7 @@ class UIComponents extends StatelessWidget {
                       mandatory: true,
                       clearable: true,
                       name: "numberField",
-                      type: D2InputFieldType.dateAndTime),
+                      type: D2InputFieldType.dateTime),
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
                 InputFieldContainer(
