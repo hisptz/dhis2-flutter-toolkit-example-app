@@ -132,10 +132,11 @@ class TeiDetails extends StatelessWidget {
                                                         .target
                                                         ?.name ??
                                                     "Unknown Program Stage";
-                                                List<D2DataValue> dataValues =
+                                                List<D2DataValue>? dataValues =
                                                     D2DataValueRepository(db)
-                                                        .byEvent(event.id)
-                                                        .find();
+                                                            .byEvent(event.id)
+                                                            .find() ??
+                                                        [];
 
                                                 final dataValueList =
                                                     dataValues.isNotEmpty

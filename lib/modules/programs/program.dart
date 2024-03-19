@@ -2,6 +2,7 @@ import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
 import 'package:dhis2_flutter_toolkit_example_app/components/DetailsRow.dart';
 import 'package:dhis2_flutter_toolkit_example_app/state/db.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProgramDetails extends StatelessWidget {
@@ -91,6 +92,19 @@ class ProgramDetails extends StatelessWidget {
                 label: "Organisation Units",
                 value: program.organisationUnits.length.toString(),
               ),
+              TextButton(
+                  onPressed: () {
+                    context.push("/programs/$id/registration-form");
+                  },
+                  child: const Text("Registration Form")),
+              TextButton(
+                  onPressed: () {
+                    context.push(Uri(
+                            path: "/tei",
+                            queryParameters: {"program": program.id.toString()})
+                        .toString());
+                  },
+                  child: const Text("Teis"))
             ],
           ),
         ),

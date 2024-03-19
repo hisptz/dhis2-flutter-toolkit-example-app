@@ -18,10 +18,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   dhis2_flutter_toolkit:
-    git:
-      url: https://github.com/hisptz/dhis2_flutter_toolkit.git
-      ref: develop
-  #    path: ../dhis2_flutter_toolkit
+    #    git:
+    #      url: https://github.com/hisptz/dhis2_flutter_toolkit.git
+    #      ref: develop
+    path: ../dhis2_flutter_toolkit
   shared_preferences: ^2.2.2
   objectbox_flutter_libs: any
   go_router: ^13.2.0

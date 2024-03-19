@@ -1,4 +1,7 @@
 import 'package:dhis2_flutter_toolkit/dhis2_flutter_toolkit.dart';
+import 'package:dhis2_flutter_toolkit_example_app/modules/controlled_form/controlled_form.dart';
+import 'package:dhis2_flutter_toolkit_example_app/modules/programs/program_form.dart';
+import 'package:dhis2_flutter_toolkit_example_app/modules/ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +19,7 @@ import 'state/db.dart';
 import 'utils/init.dart';
 
 final router = GoRouter(
+  initialLocation: "/",
   routes: [
     GoRoute(
       path: "/",
@@ -47,6 +51,11 @@ final router = GoRouter(
               path: ":uid",
               builder: (context, state) => ProgramDetails(
                     id: state.pathParameters["uid"],
+                  )),
+          GoRoute(
+              path: ":uid/registration-form",
+              builder: (context, state) => ProgramFormExample(
+                    programUid: state.pathParameters["uid"]!,
                   ))
         ]),
     GoRoute(
@@ -57,7 +66,9 @@ final router = GoRouter(
         builder: (context, state) => const TrackerDataUploadPage()),
     GoRoute(
         path: "/tei",
-        builder: (context, state) => const TeiList(),
+        builder: (context, state) => TeiList(
+              programId: state.uri.queryParameters["program"],
+            ),
         routes: [
           GoRoute(
               path: ":uid",
@@ -65,5 +76,9 @@ final router = GoRouter(
                     id: state.pathParameters["uid"],
                   ))
         ]),
+    GoRoute(path: "/ui", builder: (context, state) => const UIComponents()),
+    GoRoute(
+        path: "/controlled-form",
+        builder: (context, state) => ControlledFormExample())
   ],
 );

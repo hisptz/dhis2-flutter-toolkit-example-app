@@ -11,7 +11,9 @@ import '../../state/db.dart';
 import '../../utils/debounce.dart';
 
 class TeiList extends StatefulWidget {
-  const TeiList({super.key});
+  String? programId;
+
+  TeiList({super.key, this.programId});
 
   @override
   State<TeiList> createState() => _TeiListState();
@@ -30,14 +32,8 @@ class _TeiListState extends State<TeiList> {
 
   fetchPage(int page) async {
     String keyword = searchController.text;
-
-    if (keyword.isNotEmpty) {
-      repository.byIdentifiableToken(keyword);
-    } else {
-      repository.clearQuery();
-    }
-    QueryBuilder<D2TrackedEntity> queryBuilder = repository.queryBuilder;
-    Query<D2TrackedEntity> query = queryBuilder.build();
+    repository.initializeQuery();
+    Query<D2TrackedEntity> query = repository.query;
     query
       ..limit = 50
       ..offset = page;
@@ -56,6 +52,13 @@ class _TeiListState extends State<TeiList> {
     setState(() {
       db = Provider.of<DBProvider>(context, listen: false).db;
       repository = D2TrackedEntityRepository(db);
+      if (widget.programId != null) {
+        D2Program? program =
+            D2ProgramRepository(db).getById(int.parse(widget.programId!));
+        if (program != null) {
+          repository.setProgram(program);
+        }
+      }
     });
 
     _pagingController.addPageRequestListener((pageKey) {
@@ -158,16 +161,18 @@ class _TeiListState extends State<TeiList> {
                               builderDelegate:
                                   PagedChildBuilderDelegate<D2TrackedEntity>(
                                       itemBuilder: (context, item, index) {
-                                List<D2TrackedEntityAttributeValue>
+                                List<D2TrackedEntityAttributeValue>?
                                     attributeValues =
                                     D2TrackedEntityAttributeValueRepository(db)
-                                        .byTrackedEntity(item.id)
-                                        .find();
+                                            .byTrackedEntity(item.id)
+                                            .find() ??
+                                        [];
 
-                                List<D2Enrollment> enrollments =
+                                List<D2Enrollment>? enrollments =
                                     D2EnrollmentRepository(db)
-                                        .byTrackedEntity(item.id)
-                                        .find();
+                                            .byTrackedEntity(item.id)
+                                            .find() ??
+                                        [];
 
                                 final attribute = attributeValues.where(
                                     (value) =>
