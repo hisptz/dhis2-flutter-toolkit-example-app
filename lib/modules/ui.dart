@@ -25,6 +25,42 @@ class UIComponents extends StatelessWidget {
             child: Column(
               children: [
                 InputFieldContainer(
+                  input: D2TextInputFieldConfig(
+                    label: 'Long Input Fields',
+                    type: D2InputFieldType.longText,
+                    name: 'longTextInput',
+                    mandatory: false,
+                    clearable: true,
+                  ),
+                  onChange: (value) {},
+                  color: color,
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                // InputFieldContainer(
+                //   input: D2TextInputFieldConfig(
+                //     label: 'Long Input Fields',
+                //     type: D2InputFieldType.text,
+                //     name: 'longTextInput',
+                //     mandatory: false,
+                //     clearable: true,
+                //   ),
+                //   onChange: (value) {},
+                //   color: color,
+                // ),
+                // const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                // InputFieldContainer(
+                //   input: D2TextInputFieldConfig(
+                //     label: 'Tu Input Fields',
+                //     type: D2InputFieldType.text,
+                //     name: 'trueOnlyTextInput',
+                //     mandatory: false,
+                //     clearable: true,
+                //   ),
+                //   onChange: (value) {},
+                //   color: color,
+                // ),
+                // const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                InputFieldContainer(
                   color: color,
                   error: error,
                   value: "",
