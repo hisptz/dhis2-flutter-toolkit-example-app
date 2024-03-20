@@ -33,6 +33,43 @@ class UIComponents extends StatelessWidget {
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
                 InputFieldContainer(
+                  input: D2TextInputFieldConfig(
+                    label: 'Long Input Fields',
+                    type: D2InputFieldType.longText,
+                    name: 'longTextInput',
+                    mandatory: true,
+                    clearable: false,
+                  ),
+                  onChange: (value) {},
+                  color: color,
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                InputFieldContainer(
+                  input: D2BooleanInputFieldConfig(
+                    label: 'Boolean Input Fields',
+                    type: D2InputFieldType.boolean,
+                    name: 'booleanTextInput',
+                    mandatory: false,
+                    clearable: false,
+                  ),
+                  onChange: (value) {},
+                  color: color,
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                InputFieldContainer(
+                  input: D2TrueOnlyInputFieldConfig(
+                    label: 'True Input Fields',
+                    type: D2InputFieldType.trueOnly,
+                    name: 'trueOnlyTextInput',
+                    mandatory: false,
+                    clearable: false,
+                  ),
+                  value: "",
+                  onChange: (value) {},
+                  color: color,
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                InputFieldContainer(
                   color: color,
                   error: error,
                   value: "",
