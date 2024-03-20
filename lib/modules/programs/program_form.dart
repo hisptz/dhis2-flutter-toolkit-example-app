@@ -16,6 +16,7 @@ class ProgramFormExample extends StatefulWidget {
 class _ProgramFormExampleState extends State<ProgramFormExample> {
   D2Program? program;
   late D2FormController controller;
+  late D2TrackedEntity trackedEntity;
 
   @override
   void initState() {
@@ -33,6 +34,8 @@ class _ProgramFormExampleState extends State<ProgramFormExample> {
 
   @override
   Widget build(BuildContext context) {
+    bool registrationProgram = program?.programType == "WITH_REGISTRATION";
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -49,14 +52,20 @@ class _ProgramFormExampleState extends State<ProgramFormExample> {
                           return Text(
                               "Values: ${controller.formValues.toString()}");
                         }),
-                    D2TrackerRegistrationForm(
-                      controller: controller,
-                      program: program!,
-                      options: D2TrackerRegistrationFormOptions(
-                          color: Colors.blue,
-                          showTitle: false,
-                          showRegistrationMetaInfo: true),
-                    ),
+                    registrationProgram
+                        ? D2TrackerRegistrationForm(
+                            color: Colors.blue,
+                            controller: controller,
+                            program: program!,
+                            options: D2TrackerFormOptions(
+                              showTitle: false,
+                            ),
+                          )
+                        : D2TrackerEventForm(
+                            color: Colors.blue,
+                            controller: controller,
+                            programStage: program!.programStages.first,
+                            options: D2TrackerFormOptions(showTitle: true)),
                   ],
                 )
               : Center(

@@ -24,6 +24,14 @@ class UIComponents extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                D2PeriodSelector(
+                  d2onUpdate: () {},
+                  d2showRange: true,
+                  d2showFixed: true,
+                  d2showRelative: true,
+                  d2Color: color,
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
                 InputFieldContainer(
                   color: color,
                   error: error,
@@ -96,7 +104,7 @@ class UIComponents extends StatelessWidget {
                       mandatory: true,
                       clearable: true,
                       name: "numberField",
-                      type: D2InputFieldType.dateAndTime),
+                      type: D2InputFieldType.dateTime),
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
                 InputFieldContainer(
